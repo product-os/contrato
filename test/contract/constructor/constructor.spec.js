@@ -1,0 +1,53 @@
+/*
+ * Copyright 2017 resin.io
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+'use strict'
+
+const ava = require('ava')
+const Contract = require('../../../lib/contract')
+const MatcherCache = require('../../../lib/matcher-cache')
+const ObjectSet = require('../../../lib/object-set')
+
+ava.test('should create a simple contract', (test) => {
+  const contract = new Contract({
+    type: 'arch.sw',
+    name: 'armv7hf',
+    slug: 'armv7hf'
+  })
+
+  test.deepEqual(contract.metadata, {
+    hash: 'e3d3b7f2e5820db4b45975380a3f467bc2ff2999',
+    children: {
+      typeMatchers: {},
+      searchCache: new MatcherCache(),
+      types: new Set(),
+      map: {},
+      byType: {},
+      byTypeSlug: {}
+    },
+    requirements: {
+      matchers: {},
+      types: new Set(),
+      compiled: new ObjectSet()
+    }
+  })
+
+  test.deepEqual(contract.raw, {
+    type: 'arch.sw',
+    name: 'armv7hf',
+    slug: 'armv7hf'
+  })
+})

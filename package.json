@@ -1,0 +1,42 @@
+{
+  "name": "contrato",
+  "version": "0.0.1",
+  "description": "The official contracts implementation",
+  "main": "main.js",
+  "homepage": "https://github.com/resin-io-modules/contrato",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:resin-io-modules/contrato.git"
+  },
+  "scripts": {
+    "test": "nyc --reporter=lcov ava",
+    "lint": "eslint lib test",
+    "jsdoc": "jsdoc --configure jsdoc.conf.json"
+  },
+  "author": "Resin Inc. <hello@resin.io>",
+  "license": "Apache-2.0",
+  "ava": {
+    "concurrency": 5
+  },
+  "dependencies": {
+    "debug": "^3.0.1",
+    "handlebars": "^4.0.10",
+    "js-combinatorics": "^0.5.2",
+    "lodash": "^4.17.4",
+    "object-hash": "^1.1.8"
+  },
+  "devDependencies": {
+    "ava": "^0.22.0",
+    "eslint": "^4.5.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsdoc": "^3.1.2",
+    "eslint-plugin-lodash": "^2.4.5",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "ink-docstrap": "^1.3.0",
+    "jsdoc-to-markdown": "^3.0.0",
+    "nyc": "^11.1.0"
+  }
+}

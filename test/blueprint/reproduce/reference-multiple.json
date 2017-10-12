@@ -1,0 +1,151 @@
+{
+  "universe": [
+    {
+      "slug": "amd64",
+      "version": "1",
+      "type": "arch.sw",
+      "name": "Intel 64-bit (x86-64)",
+      "requires": [
+        { "type": "hw.device-type", "arch": "amd64" }
+      ]
+    },
+    {
+      "slug": "armv7hf",
+      "version": "1",
+      "type": "arch.sw",
+      "name": "ARM v7",
+      "requires": [
+        {
+          "or": [
+            { "type": "hw.device-type", "arch": "armv7hf" },
+            { "type": "hw.device-type", "arch": "aarch64" }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "rpi",
+      "version": "1",
+      "type": "arch.sw",
+      "name": "ARM v7",
+      "requires": [
+        {
+          "or": [
+            { "type": "hw.device-type", "arch": "rpi" },
+            { "type": "hw.device-type", "arch": "armv7hf" },
+            { "type": "hw.device-type", "arch": "aarch64" }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "aarch64",
+      "version": "1",
+      "type": "arch.sw",
+      "name": "ARM v8",
+      "requires": [
+        { "type": "hw.device-type", "arch": "aarch64" }
+      ]
+    },
+    {
+      "slug": "am571x-evm",
+      "type": "hw.device-type",
+      "name": "AM571X-EVM",
+      "arch": "armv7hf"
+    },
+    {
+      "slug": "fedora",
+      "name": "Fedora {{version}}",
+      "version": "25",
+      "type": "sw.os",
+      "requires": [
+        {
+          "or": [
+            { "type": "arch.sw", "slug": "rpi" },
+            { "type": "arch.sw", "slug": "armv7hf" },
+            { "type": "arch.sw", "slug": "aarch64" },
+            { "type": "arch.sw", "slug": "amd64" }
+          ]
+        }
+      ]
+    }
+  ],
+  "blueprint": {
+    "skeleton": {
+      "type": "meta.foo",
+      "foo": "bar"
+    },
+    "layout": {
+      "hw.device-type": 1,
+      "arch.sw": "1+",
+      "sw.os": 1
+    }
+  },
+  "contexts": [
+    {
+      "type": "meta.foo",
+      "foo": "bar",
+      "children": {
+        "arch": {
+          "sw": {
+            "armv7hf": {
+              "slug": "armv7hf",
+              "version": "1",
+              "type": "arch.sw",
+              "name": "ARM v7",
+              "requires": [
+                {
+                  "or": [
+                    { "type": "hw.device-type", "arch": "armv7hf" },
+                    { "type": "hw.device-type", "arch": "aarch64" }
+                  ]
+                }
+              ]
+            },
+            "rpi": {
+              "slug": "rpi",
+              "version": "1",
+              "type": "arch.sw",
+              "name": "ARM v7",
+              "requires": [
+                {
+                  "or": [
+                    { "type": "hw.device-type", "arch": "rpi" },
+                    { "type": "hw.device-type", "arch": "armv7hf" },
+                    { "type": "hw.device-type", "arch": "aarch64" }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "hw": {
+          "device-type": {
+            "slug": "am571x-evm",
+            "type": "hw.device-type",
+            "name": "AM571X-EVM",
+            "arch": "armv7hf"
+          }
+        },
+        "sw": {
+          "os": {
+            "slug": "fedora",
+            "name": "Fedora 25",
+            "version": "25",
+            "type": "sw.os",
+            "requires": [
+              {
+                "or": [
+                  { "type": "arch.sw", "slug": "rpi" },
+                  { "type": "arch.sw", "slug": "armv7hf" },
+                  { "type": "arch.sw", "slug": "aarch64" },
+                  { "type": "arch.sw", "slug": "amd64" }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

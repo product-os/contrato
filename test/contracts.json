@@ -1,0 +1,101 @@
+{
+  "sw.os": {
+    "debian": {
+      "wheezy": {
+        "hash": "087286e83d18dae62a7e90f548292986ca954f46",
+        "object": {
+          "name": "Debian Wheezy",
+          "version": "wheezy",
+          "slug": "debian",
+          "type": "sw.os"
+        }
+      },
+      "jessie": {
+        "hash": "fa29f539a1ddee52abb253c0edc85a8cb6bb7479",
+        "object": {
+          "name": "Debian Jessie",
+          "version": "jessie",
+          "slug": "debian",
+          "type": "sw.os"
+        }
+      },
+      "sid": {
+        "hash": "f42cb27bb7bdd52406d5aed91e129690d91e2662",
+        "object": {
+          "name": "Debian Sid",
+          "version": "sid",
+          "slug": "debian",
+          "type": "sw.os"
+        }
+      }
+    },
+    "fedora": {
+      "24": {
+        "hash": "4243313344383862aa52ba7252ffb43d4bfe8d56",
+        "object": {
+          "name": "Fedora 24",
+          "version": "24",
+          "slug": "fedora",
+          "type": "sw.os"
+        }
+      },
+      "25": {
+        "hash": "8f48261762737239c02f271ade94f7b2ef54eca9",
+        "object": {
+          "name": "Fedora 25",
+          "version": "25",
+          "slug": "fedora",
+          "type": "sw.os"
+        }
+      }
+    }
+  },
+  "arch.sw": {
+    "amd64": {
+      "object": {
+        "name": "Intel 64-bit (x86-64)",
+        "type": "arch.sw",
+        "slug": "amd64"
+      }
+    },
+    "i386": {
+      "object": {
+        "name": "Intel 32-bit (x86)",
+        "type": "arch.sw",
+        "slug": "i386"
+      }
+    }
+  },
+  "sw.blob": {
+    "nodejs": {
+      "4.8.0": {
+        "hash": "d7ddfd68e664a8488d882e83e32148f83b8855ff",
+        "object": {
+          "name": "Node.js",
+          "version": "4.8.0",
+          "slug": "nodejs",
+          "type": "sw.blob"
+        }
+      },
+      "7.0.0": {
+        "object": {
+          "name": "Node.js",
+          "version": "7.0.0",
+          "slug": "nodejs",
+          "type": "sw.blob"
+        }
+      }
+    }
+  },
+  "hw.device-type": {
+    "artik10": {
+      "object": {
+        "slug": "artik10",
+        "type": "hw.device-type",
+        "name": "Samsung Artik 10",
+        "arch": "armv7hf"
+      }
+    }
+  }
+}
+

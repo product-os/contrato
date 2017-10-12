@@ -1,0 +1,171 @@
+{
+  "universe": [
+    {
+      "slug": "nodejs",
+      "type": "sw.stack",
+      "name": "Node.js",
+      "version": "0.10.48"
+    },
+    {
+      "slug": "nodejs",
+      "type": "sw.stack",
+      "name": "Node.js",
+      "version": "0.12.18"
+    },
+    {
+      "slug": "am571x-evm",
+      "type": "hw.device-type",
+      "name": "AM571X-EVM",
+      "arch": "armv7hf"
+    },
+    {
+      "slug": "apalis-imx6q",
+      "type": "hw.device-type",
+      "name": "Toradex Apalis",
+      "arch": "armv7hf"
+    },
+    {
+      "slug": "ts7700",
+      "type": "hw.device-type",
+      "name": "Technologic TS-7700",
+      "arch": "armel"
+    }
+  ],
+  "blueprint": {
+    "skeleton": {
+      "type": "meta.context"
+    },
+    "layout": {
+      "sw.stack": 1,
+      "hw.device-type": 1
+    }
+  },
+  "contexts": [
+    {
+      "type": "meta.context",
+      "children": {
+        "hw": {
+          "device-type": {
+            "slug": "am571x-evm",
+            "type": "hw.device-type",
+            "name": "AM571X-EVM",
+            "arch": "armv7hf"
+          }
+        },
+        "sw": {
+          "stack": {
+            "slug": "nodejs",
+            "type": "sw.stack",
+            "name": "Node.js",
+            "version": "0.10.48"
+          }
+        }
+      }
+    },
+    {
+      "type": "meta.context",
+      "children": {
+        "hw": {
+          "device-type": {
+            "slug": "apalis-imx6q",
+            "type": "hw.device-type",
+            "name": "Toradex Apalis",
+            "arch": "armv7hf"
+          }
+        },
+        "sw": {
+          "stack": {
+            "slug": "nodejs",
+            "type": "sw.stack",
+            "name": "Node.js",
+            "version": "0.10.48"
+          }
+        }
+      }
+    },
+    {
+      "type": "meta.context",
+      "children": {
+        "hw": {
+          "device-type": {
+            "slug": "ts7700",
+            "type": "hw.device-type",
+            "name": "Technologic TS-7700",
+            "arch": "armel"
+          }
+        },
+        "sw": {
+          "stack": {
+            "slug": "nodejs",
+            "type": "sw.stack",
+            "name": "Node.js",
+            "version": "0.10.48"
+          }
+        }
+      }
+    },
+    {
+      "type": "meta.context",
+      "children": {
+        "hw": {
+          "device-type": {
+            "slug": "am571x-evm",
+            "type": "hw.device-type",
+            "name": "AM571X-EVM",
+            "arch": "armv7hf"
+          }
+        },
+        "sw": {
+          "stack": {
+            "slug": "nodejs",
+            "type": "sw.stack",
+            "name": "Node.js",
+            "version": "0.12.18"
+          }
+        }
+      }
+    },
+    {
+      "type": "meta.context",
+      "children": {
+        "hw": {
+          "device-type": {
+            "slug": "apalis-imx6q",
+            "type": "hw.device-type",
+            "name": "Toradex Apalis",
+            "arch": "armv7hf"
+          }
+        },
+        "sw": {
+          "stack": {
+            "slug": "nodejs",
+            "type": "sw.stack",
+            "name": "Node.js",
+            "version": "0.12.18"
+          }
+        }
+      }
+    },
+    {
+      "type": "meta.context",
+      "children": {
+        "hw": {
+          "device-type": {
+            "slug": "ts7700",
+            "type": "hw.device-type",
+            "name": "Technologic TS-7700",
+            "arch": "armel"
+          }
+        },
+        "sw": {
+          "stack": {
+            "slug": "nodejs",
+            "type": "sw.stack",
+            "name": "Node.js",
+            "version": "0.12.18"
+          }
+        }
+      }
+    }
+  ]
+}

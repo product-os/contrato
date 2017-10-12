@@ -1,0 +1,111 @@
+{
+  "universe": [
+    {
+      "slug": "nodejs",
+      "type": "sw.stack",
+      "name": "Node.js",
+      "version": "0.10.48",
+      "requires": [
+        {
+          "type": "arch.sw",
+          "slug": "armel"
+        }
+      ]
+    },
+    {
+      "slug": "nodejs",
+      "type": "sw.stack",
+      "name": "Node.js",
+      "version": "0.12.18",
+      "requires": [
+        {
+          "type": "arch.sw",
+          "slug": "arm7"
+        }
+      ]
+    },
+    {
+      "slug": "armv7hf",
+      "type": "arch.sw",
+      "name": "armv7hf",
+      "aliases": [ "arm7" ]
+    },
+    {
+      "slug": "armel",
+      "type": "arch.sw",
+      "name": "armel",
+      "aliases": [ "arm6" ]
+    },
+    {
+      "slug": "amd64",
+      "type": "arch.sw",
+      "name": "Intel x86-64",
+      "aliases": [ "x86-64" ]
+    }
+  ],
+  "blueprint": {
+    "skeleton": {
+      "type": "meta.context"
+    },
+    "layout": {
+      "sw.stack": 1,
+      "arch.sw": 1
+    }
+  },
+  "contexts": [
+    {
+      "type": "meta.context",
+      "children": {
+        "arch": {
+          "sw": {
+            "slug": "armel",
+            "type": "arch.sw",
+            "name": "armel",
+            "aliases": [ "arm6" ]
+          }
+        },
+        "sw": {
+          "stack": {
+            "slug": "nodejs",
+            "type": "sw.stack",
+            "name": "Node.js",
+            "version": "0.10.48",
+            "requires": [
+              {
+                "type": "arch.sw",
+                "slug": "armel"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "type": "meta.context",
+      "children": {
+        "arch": {
+          "sw": {
+            "slug": "armv7hf",
+            "type": "arch.sw",
+            "name": "armv7hf",
+            "aliases": [ "arm7" ]
+          }
+        },
+        "sw": {
+          "stack": {
+            "slug": "nodejs",
+            "type": "sw.stack",
+            "name": "Node.js",
+            "version": "0.12.18",
+            "requires": [
+              {
+                "type": "arch.sw",
+                "slug": "arm7"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

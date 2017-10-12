@@ -1,0 +1,95 @@
+{
+  "universe": [
+    {
+      "slug": "am571x-evm",
+      "type": "hw.device-type",
+      "name": "AM571X-EVM",
+      "arch": "armv7hf"
+    },
+    {
+      "slug": "apalis-imx6q",
+      "type": "hw.device-type",
+      "name": "Toradex Apalis",
+      "arch": "armv7hf"
+    },
+    {
+      "slug": "ts7700",
+      "type": "hw.device-type",
+      "name": "Technologic TS-7700",
+      "arch": "armel"
+    }
+  ],
+  "blueprint": {
+    "skeleton": {
+      "type": "meta.context"
+    },
+    "layout": {
+      "hw.device-type": 2
+    }
+  },
+  "contexts": [
+    {
+      "type": "meta.context",
+      "children": {
+        "hw": {
+          "device-type": {
+            "am571x-evm": {
+              "slug": "am571x-evm",
+              "type": "hw.device-type",
+              "name": "AM571X-EVM",
+              "arch": "armv7hf"
+            },
+            "apalis-imx6q": {
+              "slug": "apalis-imx6q",
+              "type": "hw.device-type",
+              "name": "Toradex Apalis",
+              "arch": "armv7hf"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "meta.context",
+      "children": {
+        "hw": {
+          "device-type": {
+            "am571x-evm": {
+              "slug": "am571x-evm",
+              "type": "hw.device-type",
+              "name": "AM571X-EVM",
+              "arch": "armv7hf"
+            },
+            "ts7700": {
+              "slug": "ts7700",
+              "type": "hw.device-type",
+              "name": "Technologic TS-7700",
+              "arch": "armel"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "meta.context",
+      "children": {
+        "hw": {
+          "device-type": {
+            "apalis-imx6q": {
+              "slug": "apalis-imx6q",
+              "type": "hw.device-type",
+              "name": "Toradex Apalis",
+              "arch": "armv7hf"
+            },
+            "ts7700": {
+              "slug": "ts7700",
+              "type": "hw.device-type",
+              "name": "Technologic TS-7700",
+              "arch": "armel"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

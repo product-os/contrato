@@ -1,0 +1,147 @@
+{
+  "universe": [
+    {
+      "slug": "amd64",
+      "version": "1",
+      "type": "arch.sw",
+      "name": "Intel 64-bit (x86-64)",
+      "requires": [
+        { "type": "hw.device-type", "arch": "amd64" }
+      ]
+    },
+    {
+      "slug": "armv7hf",
+      "version": "1",
+      "type": "arch.sw",
+      "name": "ARM v7",
+      "requires": [
+        {
+          "or": [
+            { "type": "hw.device-type", "arch": "armv7hf" },
+            { "type": "hw.device-type", "arch": "aarch64" }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "am571x-evm",
+      "type": "hw.device-type",
+      "name": "AM571X-EVM",
+      "arch": "armv7hf"
+    },
+    {
+      "slug": "intel-nuc",
+      "type": "hw.device-type",
+      "name": "Intel NUC",
+      "arch": "amd64"
+    },
+    {
+      "slug": "raspbian",
+      "name": "Raspbian Wheezy",
+      "version": "wheezy",
+      "type": "sw.os",
+      "requires": [
+        { "type": "arch.sw", "slug": "armv7hf" }
+      ]
+    },
+    {
+      "slug": "fedora",
+      "name": "Fedora {{version}}",
+      "version": "25",
+      "type": "sw.os",
+      "requires": [
+        { "type": "arch.sw", "slug": "amd64" }
+      ]
+    }
+  ],
+  "blueprint": {
+    "skeleton": {
+      "type": "meta.foo",
+      "foo": "bar"
+    },
+    "layout": {
+      "hw.device-type": 1,
+      "arch.sw": "1+",
+      "sw.os": 1
+    }
+  },
+  "contexts": [
+    {
+      "type": "meta.foo",
+      "foo": "bar",
+      "children": {
+        "arch": {
+          "sw": {
+            "slug": "armv7hf",
+            "version": "1",
+            "type": "arch.sw",
+            "name": "ARM v7",
+            "requires": [
+              {
+                "or": [
+                  { "type": "hw.device-type", "arch": "armv7hf" },
+                  { "type": "hw.device-type", "arch": "aarch64" }
+                ]
+              }
+            ]
+          }
+        },
+        "hw": {
+          "device-type": {
+            "slug": "am571x-evm",
+            "type": "hw.device-type",
+            "name": "AM571X-EVM",
+            "arch": "armv7hf"
+          }
+        },
+        "sw": {
+          "os": {
+            "slug": "raspbian",
+            "name": "Raspbian Wheezy",
+            "version": "wheezy",
+            "type": "sw.os",
+            "requires": [
+              { "type": "arch.sw", "slug": "armv7hf" }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "type": "meta.foo",
+      "foo": "bar",
+      "children": {
+        "arch": {
+          "sw": {
+            "slug": "amd64",
+            "version": "1",
+            "type": "arch.sw",
+            "name": "Intel 64-bit (x86-64)",
+            "requires": [
+              { "type": "hw.device-type", "arch": "amd64" }
+            ]
+          }
+        },
+        "hw": {
+          "device-type": {
+            "slug": "intel-nuc",
+            "type": "hw.device-type",
+            "name": "Intel NUC",
+            "arch": "amd64"
+          }
+        },
+        "sw": {
+          "os": {
+            "slug": "fedora",
+            "name": "Fedora 25",
+            "version": "25",
+            "type": "sw.os",
+            "requires": [
+              { "type": "arch.sw", "slug": "amd64" }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}
