@@ -2,7 +2,7 @@
   "plugins": [],
   "opts": {
     "access": "public",
-    "destination": "./www",
+    "destination": "./docs",
     "pedantic": true,
     "readme": "README.md",
     "template": "./node_modules/ink-docstrap/template"

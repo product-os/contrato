@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Documentation Class: Blueprint</title>
+	<title>Documentation Classes</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -72,15 +72,13 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Class: Blueprint</h1>
+	<h1 class="page-title">Classes</h1>
 <section>
 
 <header>
     
         <h2>
-            <span class="ancestors"><a href="module-contrato.html">contrato</a>.</span>
         
-        Blueprint
         </h2>
         
     
@@ -91,100 +89,8 @@
     <div class="container-overview">
     
         
-<hr>
-<dt>
-    <h4 class="name" id="Blueprint"><span class="type-signature"></span>new Blueprint(layout, skeleton)</h4>
-    
-    
-    <p class="summary">Create a blueprint contract</p>
-    
-</dt>
-<dd>
-
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
 
         
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>layout</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">the blueprint layout</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>skeleton</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">the blueprint skeleton</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
 <dl class="details">
     
 
@@ -224,33 +130,7 @@
 </dl>
 
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <h5>Example</h5>
         
-    <pre class="sunlight-highlight-javascript">const blueprint = new Blueprint({
-  &#x27;arch.sw&#x27;: 1,
-  &#x27;hw.device-type&#x27;: 1
-}, {
-  type: &#x27;my-context&#x27;,
-  slug: &#x27;{{children.arch.sw.slug}}-{{children.hw.device-type.slug}}&#x27;
-})</pre>
-
-
-    
-</dd>
-
     
     </div>
 
@@ -259,191 +139,23 @@
     
 
     
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
+        <h3 class="subsection-title">Classes</h3>
 
         <dl>
-            
-<hr>
-<dt>
-    <h4 class="name" id="reproduce"><span class="type-signature"></span>reproduce(contract)</h4>
-    
-    
-    <p class="summary">Reproduce the blueprint in a universe</p>
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        This method will generate a set of contexts that consist of
-every possible valid combination that matches the blueprint
-layout.
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
+            <dt><a href="module-contrato.Blueprint.html">Blueprint</a></dt>
+            <dd>Create a blueprint contract</dd>
         
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>contract</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">contract</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    valid contexts
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Array.&lt;Object></span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-        <h5>Example</h5>
-        
-    <pre class="sunlight-highlight-javascript">const contract = new Contract({ ... })
-contract.addChildren([ ... ])
-
-const blueprint = new Blueprint({
-  &#x27;hw.device-type&#x27;: 1,
-  &#x27;arch.sw&#x27;: 1
-})
-
-const contexts = blueprint.reproduce(contract)
-
-contexts.forEach((context) =&gt; {
-  console.log(context.toJSON())
-})</pre>
-
-
-    
-</dd>
-
+            <dt><a href="module-contrato.Contract.html">Contract</a></dt>
+            <dd>Create a contract object</dd>
         </dl>
+    
+
+    
+
+    
+
+    
+
     
 
     
@@ -493,7 +205,7 @@ contexts.forEach((context) =&gt; {
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.0</a>
 	
-		on 2017-10-12T16:43:22+01:00
+		on 2017-10-12T16:45:36+01:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
