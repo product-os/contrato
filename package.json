@@ -9,7 +9,7 @@
     "url": "git@github.com:resin-io-modules/contrato.git"
   },
   "scripts": {
-    "test": "nyc --reporter=lcov ava",
+    "test": "nyc --reporter=lcov --report-dir=docs ava",
     "lint": "eslint lib test",
     "jsdoc": "jsdoc --configure jsdoc.conf.json"
   },

@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for partials.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="prettify.css" />
+    <link rel="stylesheet" href="base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="index.html">All files</a> partials.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">56.76% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>21/37</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/4</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">80% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>8/10</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">56.76% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>21/37</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">38x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">41x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">50x</span>
+<span class="cline-any cline-yes">50x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/*
+ * Copyright 2017 resin.io
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+&nbsp;
+'use strict'
+&nbsp;
+const _ = require('lodash')
+const path = require('path')
+const fs = require('fs')
+const debug = require('debug')('partials')
+const handlebars = require('handlebars')
+const utils = require('./utils')
+&nbsp;
+/**
+ * @summary Delimiter to use between contract references
+ * @type {String}
+ * @private
+ */
+const REFERENCE_DELIMITER = '+'
+&nbsp;
+/**
+ * @summary Calculate the paths to search for a partial given a contract
+ * @function
+ * @private
+ *
+ * @param {String} name - partial name (without extension)
+ * @param {Object} context - context contract
+ * @param {Object} options - options
+ * @param {String} options.baseDirectory - partials directory
+ * @param {String[]} options.structure - the type hierarchy of the partials directory
+ *
+ * @returns {String[]} possible partial paths
+ *
+ * @example
+ * const context = new Contract({ ... })
+ * context.addChildren([ ... ])
+ *
+ * const paths = partials.findPartial('my-partial', context, {
+ *   baseDirectory: 'my/partials',
+ *   // The base directory hierarchy is &lt;distro&gt;/&lt;stack&gt;
+ *   structure: [ 'sw.os', 'sw.stack' ]
+ * })
+ *
+ * paths.forEach((path) =&gt; {
+ *   console.log(`Trying to load ${path}...`)
+ * })
+ */
+exports.findPartial = (name, context, options) =&gt; {
+  return _.chain(options.structure)
+    .map((type) =&gt; {
+      const contracts = _.sortBy(context.getChildrenByType(type), (contract) =&gt; {
+        return contract.getSlug()
+      })
+&nbsp;
+      return [
+        _.join(_.invokeMap(contracts, 'getReferenceString'), REFERENCE_DELIMITER),
+        _.join(_.invokeMap(contracts, 'getSlug'), REFERENCE_DELIMITER)
+      ]
+    })
+    .thru((combinations) =&gt; {
+      const fallbackPaths = _.chain(combinations)
+        .map(_.last)
+        .reduce((accumulator, value, index, collection) =&gt; {
+          return [ _.take(collection, index + 1) ].concat(accumulator)
+        }, [])
+        .value()
+&nbsp;
+      return utils.cartesianProductWith(combinations, (accumulator, element) =&gt; {
+        return accumulator.concat([ element ])
+      }).concat(fallbackPaths)
+    })
+    .map((references) =&gt; {
+      return [ _.join(references, REFERENCE_DELIMITER), name ]
+    })
+    .concat([ [ name ] ])
+    .map((paths) =&gt; {
+      const absolutePath = [ options.baseDirectory ].concat(paths)
+      return `${path.join(...absolutePath)}.tpl`
+    })
+    .uniq()
+    .value()
+}
+&nbsp;
+handlebars.registerHelper('import', <span class="fstat-no" title="function not covered" >(o</span>ptions) =&gt; {
+  const settings = <span class="cstat-no" title="statement not covered" >options.data.root.settings</span>
+  const partialPaths = <span class="cstat-no" title="statement not covered" >exports.findPartial(options.hash.partial, settings.context, {</span>
+    baseDirectory: path.join(settings.directory, options.hash.combination),
+    structure: _.map(_.split(options.hash.combination, REFERENCE_DELIMITER), _.trim)
+  })
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  for (const partialPath of partialPaths) {</span>
+    const partialContent = <span class="cstat-no" title="statement not covered" >_.attempt(fs.readFileSync, partialPath, {</span>
+      encoding: 'utf8'
+    })
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (_.isError(partialContent)) {</span>
+<span class="cstat-no" title="statement not covered" >      if (partialContent.code === 'ENOENT') {</span>
+<span class="cstat-no" title="statement not covered" >        debug(`Ignoring ${partialPath}`)</span>
+<span class="cstat-no" title="statement not covered" >        continue</span>
+      }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      throw partialContent</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    debug(`Using ${partialPath}`)</span>
+&nbsp;
+    // We need to prevent handlebars from encoding the string as HTML,
+    // and then we need to parse and recurse through the imported partials,
+    // in case they have any interpolation that needs to be resolved.
+    const safeContent = <span class="cstat-no" title="statement not covered" >new handlebars.SafeString(partialContent.slice(0, partialContent.length - 1))</span>
+    const builtContent = <span class="cstat-no" title="statement not covered" >handlebars.compile(safeContent.toString())(options.data.root)</span>
+<span class="cstat-no" title="statement not covered" >    return new handlebars.SafeString(builtContent)</span>
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  throw new Error(`Partial not found: ${options.hash.partial}`)</span>
+})
+&nbsp;
+exports.buildTemplate = <span class="fstat-no" title="function not covered" >(t</span>emplate, context, options) =&gt; {
+  const data = <span class="cstat-no" title="statement not covered" >_.merge({</span>
+    settings: {
+      directory: options.directory,
+      context
+    }
+  }, context.toJSON().children)
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  return utils.stripExtraBlankLines(handlebars.compile(template)(data))</span>
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Oct 12 2017 16:57:21 GMT+0100 (BST)
+</div>
+</div>
+<script src="prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="sorter.js"></script>
+</body>
+</html>
