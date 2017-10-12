@@ -1,6 +1,8 @@
 Contrato
 ========
 
+[![CircleCI](https://circleci.com/gh/resin-io-modules/contrato/tree/master.svg?style=svg)](https://circleci.com/gh/resin-io-modules/contrato/tree/master)
+
 > The official contracts implementation
 
 Documentation
