@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Documentation Class: Blueprint</title>
+	<title>Documentation Class: MatcherCache</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -40,7 +40,7 @@
 			<li class="dropdown">
 				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="module-contrato.Blueprint.html">contrato.Blueprint</a></li><li><a href="module-contrato.Contract.html">contrato.Contract</a></li>
+					<li><a href="Blueprint.html">Blueprint</a></li><li><a href="MatcherCache.html">MatcherCache</a></li><li><a href="module-contrato.Blueprint.html">contrato.Blueprint</a></li><li><a href="module-contrato.Contract.html">contrato.Contract</a></li><li><a href="ObjectSet.html">ObjectSet</a></li>
 				</ul>
 			</li>
 			
@@ -72,15 +72,13 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Class: Blueprint</h1>
+	<h1 class="page-title">Class: MatcherCache</h1>
 <section>
 
 <header>
     
         <h2>
-            <span class="ancestors"><a href="module-contrato.html">contrato</a>.</span>
-        
-        Blueprint
+        MatcherCache
         </h2>
         
     
@@ -93,10 +91,104 @@
         
 <hr>
 <dt>
-    <h4 class="name" id="Blueprint"><span class="type-signature"></span>new Blueprint(layout, skeleton)</h4>
+    <h4 class="name" id="MatcherCache"><span class="type-signature"></span>new MatcherCache()</h4>
     
     
-    <p class="summary">A blueprint contract data structure</p>
+    <p class="summary">Create a matcher cache object</p>
+    
+</dt>
+<dd>
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        <dl>
+            
+<hr>
+<dt>
+    <h4 class="name" id="add"><span class="type-signature"></span>add(matcher, value)</h4>
+    
+    
+    <p class="summary">Add a value to the matcher cache</p>
     
 </dt>
 <dd>
@@ -134,7 +226,7 @@
 
         <tr>
             
-                <td class="name"><code>layout</code></td>
+                <td class="name"><code>matcher</code></td>
             
 
             <td class="type">
@@ -151,20 +243,20 @@
 
             
 
-            <td class="description last">the blueprint layout</td>
+            <td class="description last">matcher contract</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>skeleton</code></td>
+                <td class="name"><code>value</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Object</span>
+<span class="param-type">Any</span>
 
 
 
@@ -175,7 +267,7 @@
 
             
 
-            <td class="description last">the blueprint skeleton</td>
+            <td class="description last">cached value</td>
         </tr>
 
     
@@ -239,54 +331,32 @@
     
         <h5>Example</h5>
         
-    <pre class="sunlight-highlight-javascript">const blueprint = new Blueprint({
-  &#x27;arch.sw&#x27;: 1,
-  &#x27;hw.device-type&#x27;: 1
-}, {
-  type: &#x27;my-context&#x27;,
-  slug: &#x27;{{children.arch.sw.slug}}-{{children.hw.device-type.slug}}&#x27;
+    <pre class="sunlight-highlight-javascript">const cache = new MatcherCache()
+const matcher = Contract.createMatcher({
+  type: &#x27;sw.os&#x27;,
+  slug: &#x27;debian&#x27;
+})
+
+cache.add(matcher, {
+  foo: &#x27;bar&#x27;
 })</pre>
 
 
     
 </dd>
 
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        <dl>
+        
             
 <hr>
 <dt>
-    <h4 class="name" id="reproduce"><span class="type-signature"></span>reproduce(contract)</h4>
+    <h4 class="name" id="get"><span class="type-signature"></span>get(matcher)</h4>
     
     
-    <p class="summary">Reproduce the blueprint in a universe</p>
+    <p class="summary">Attempt to retrieve a value from the cache</p>
     
 </dt>
 <dd>
 
-    
-    <div class="description">
-        This method will generate a set of contexts that consist of
-every possible valid combination that matches the blueprint
-layout.
-    </div>
     
 
     
@@ -320,7 +390,7 @@ layout.
 
         <tr>
             
-                <td class="name"><code>contract</code></td>
+                <td class="name"><code>matcher</code></td>
             
 
             <td class="type">
@@ -337,7 +407,7 @@ layout.
 
             
 
-            <td class="description last">contract</td>
+            <td class="description last">matcher contract</td>
         </tr>
 
     
@@ -401,7 +471,7 @@ layout.
     
             
 <div class="param-desc">
-    valid contexts
+    value
 </div>
 
 
@@ -412,7 +482,7 @@ layout.
     </dt>
     <dd>
         
-<span class="param-type">Array.&lt;Object></span>
+<span class="param-type">Any</span>
 
 
 
@@ -425,19 +495,447 @@ layout.
     
         <h5>Example</h5>
         
-    <pre class="sunlight-highlight-javascript">const contract = new Contract({ ... })
-contract.addChildren([ ... ])
+    <pre class="sunlight-highlight-javascript">const cache = new MatcherCache()
 
-const blueprint = new Blueprint({
-  &#x27;hw.device-type&#x27;: 1,
-  &#x27;arch.sw&#x27;: 1
+const matcher = Contract.createMatcher({
+  type: &#x27;sw.os&#x27;,
+  slug: &#x27;debian&#x27;
 })
 
-const contexts = blueprint.reproduce(contract)
+cache.add(matcher, {
+  foo: &#x27;bar&#x27;
+})
 
-contexts.forEach((context) =&gt; {
-  console.log(context.toJSON())
-})</pre>
+console.log(cache.get(matcher))
+&gt; {
+&gt;   foo: &#x27;bar&#x27;
+&gt; }</pre>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="getTypes"><span class="type-signature"></span>getTypes()</h4>
+    
+    
+    <p class="summary">Get the list of types known in the cache</p>
+    
+</dt>
+<dd>
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    types
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Set</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">const cache = new MatcherCache()
+
+cache.add(Contract.createMatcher({
+  type: &#x27;sw.os&#x27;,
+  slug: &#x27;debian&#x27;
+}), {
+  foo: &#x27;bar&#x27;
+})
+
+console.log(cache.getTypes())
+&gt; Set (&#x27;sw.os&#x27;)</pre>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="merge"><span class="type-signature"></span>merge(cache)</h4>
+    
+    
+    <p class="summary">Merge a cache with another cache</p>
+    
+</dt>
+<dd>
+
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>cache</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">source cache</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    cache instance
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">const cache1 = new MatcherCache()
+cache1.add({ ... }, [ ... [)
+cache1.add({ ... }, [ ... [)
+
+const cache2 = new MatcherCache()
+cache2.add({ ... }, [ ... [)
+cache2.add({ ... }, [ ... [)
+
+cache1.merge(cache2)</pre>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="resetType"><span class="type-signature"></span>resetType(type)</h4>
+    
+    
+    <p class="summary">Remove all the cache entries of a specific type</p>
+    
+</dt>
+<dd>
+
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">contract type</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">const cache = new MatcherCache()
+
+const matcher = Contract.createMatcher({
+  type: &#x27;sw.os&#x27;,
+  slug: &#x27;debian&#x27;
+})
+
+cache.add(matcher, {
+  foo: &#x27;bar&#x27;
+})
+
+cache.resetType(&#x27;sw.os&#x27;)
+
+console.log(cache.get(matcher))
+&gt; null</pre>
 
 
     
@@ -493,7 +991,7 @@ contexts.forEach((context) =&gt; {
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
 	
-		on 2017-10-13T12:01:49+01:00
+		on 2017-10-13T11:57:53+01:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

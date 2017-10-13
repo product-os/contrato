@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Documentation Module: contrato</title>
+	<title>Documentation Class: constructor</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -40,7 +40,7 @@
 			<li class="dropdown">
 				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="module-contrato.Blueprint.html">contrato.Blueprint</a></li><li><a href="module-contrato.Contract.html">contrato.Contract</a></li>
+					<li><a href="Blueprint.html">Blueprint</a></li><li><a href="MatcherCache.html">MatcherCache</a></li><li><a href="module-contrato.Blueprint.html">contrato.Blueprint</a></li><li><a href="module-contrato.Contract.html">contrato.Contract</a></li><li><a href="module-contrato.Contract_constructor.html">contrato.Contract#constructor</a></li><li><a href="ObjectSet.html">ObjectSet</a></li>
 				</ul>
 			</li>
 			
@@ -72,10 +72,17 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Module: contrato</h1>
+	<h1 class="page-title">Class: constructor</h1>
 <section>
 
 <header>
+    
+        <h2>
+            <span class="ancestors"><a href="module-contrato.html">contrato</a><a href="module-contrato.Contract.html">.Contract</a>#</span>
+        
+        constructor
+        </h2>
+        
     
 </header>
 
@@ -84,8 +91,190 @@
     <div class="container-overview">
     
         
+<hr>
+<dt>
+    <h4 class="name" id="constructor"><span class="type-signature"></span>new constructor(object [, options])</h4>
+    
+    
+    <p class="summary">Create a contract object</p>
+    
+</dt>
+<dd>
+
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
 
         
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>object</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">the contract plain object</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">options
+                <h6 class="method-params-label method-subparams-label">Properties</h6>
+                
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>hash</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+
+            <td class="description last">whether to hash the contract</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
 <dl class="details">
     
 
@@ -125,7 +314,31 @@
 </dl>
 
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h5>Example</h5>
         
+    <pre class="sunlight-highlight-javascript">const contract = new Contract({
+  type: &#x27;arch.sw&#x27;,
+  name: &#x27;armv7hf&#x27;,
+  slug: &#x27;armv7hf&#x27;
+})</pre>
+
+
+    
+</dd>
+
     
     </div>
 
@@ -133,16 +346,6 @@
 
     
 
-    
-        <h3 class="subsection-title">Classes</h3>
-
-        <dl>
-            <dt><a href="module-contrato.Blueprint.html">Blueprint</a></dt>
-            <dd>A blueprint contract data structure</dd>
-        
-            <dt><a href="module-contrato.Contract.html">Contract</a></dt>
-            <dd>A contract data structure</dd>
-        </dl>
     
 
     
@@ -200,7 +403,7 @@
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
 	
-		on 2017-10-13T12:01:49+01:00
+		on 2017-10-13T11:54:34+01:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
