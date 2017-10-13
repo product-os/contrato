@@ -5,10 +5,7 @@ Contrato
 
 > The official contracts implementation
 
-Documentation
--------------
-
-Head over to the [documentation site][docs].
+[**Documentation**](https://resin-io-modules.github.io/contrato/) | [**Code Coverage**](https://resin-io-modules.github.io/contrato/lcov-report/)
 
 Tests
 -----
@@ -42,5 +39,3 @@ License
 -------
 
 The project is licensed under the Apache 2.0 license.
-
-[docs]: https://resin-io-modules.github.io/contrato/
