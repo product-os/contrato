@@ -245,6 +245,7 @@ ava.test('should find a partial in a two level structure with one contract of ea
     'path/to/partials/raspberrypi3@rev1+armv7hf/my-partial.tpl',
     'path/to/partials/raspberrypi3+armv7hf@1/my-partial.tpl',
     'path/to/partials/raspberrypi3+armv7hf/my-partial.tpl',
+    'path/to/partials/raspberrypi3@rev1/my-partial.tpl',
     'path/to/partials/raspberrypi3/my-partial.tpl',
     'path/to/partials/my-partial.tpl'
   ])
