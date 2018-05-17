@@ -38,31 +38,85 @@ ava.test('should reject invalid base contract', (test) => {
 })
 
 const extendedSchema = {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "extended.schema",
-  "type": 'object',
-  "properties": {
-    "test": {
-      "type": "string",
+  '$schema': 'http://json-schema.org/draft-07/schema#',
+  '$id': 'extended.schema',
+  'type': 'object',
+  'properties': {
+    'test': {
+      'type': 'string',
     },
-    "optional": {
-      "type": "string"
+    'optional': {
+      'type': 'string'
     }
   },
-  "required": [ "test" ]
+  'required': [ 'test' ]
 }
 
 const extendedContract = {
   test: 'test'
 }
 
-ava.test('should validate base contract', (test) => {
+ava.test('should validate extended contract', (test) => {
   test.is(true,
-    validation.checkValidContract(_.merge(baseContract, extendedContract), extendedSchema))
+    validation.checkValidContract(_.merge({}, baseContract, extendedContract), extendedSchema))
 })
 
 ava.test('Should reject invald extended contract', (test) => {
   test.throws(() => {
     validation.checkValidContract(extendedContract, extendedSchema)
   }, 'data should have required property \'slug\'')
+})
+
+ava.test('Should reject invald extended contract', (test) => {
+  test.throws(() => {
+    validation.checkValidContract(baseContract, extendedSchema)
+  }, 'data should have required property \'test\'')
+})
+
+const nestedSchema = {
+  '$schema': 'http://json-schema.org/draft-07/schema#',
+  '$id': 'nested.schema',
+  'type': 'object',
+  'properties': {
+    'data': {
+      'type': 'object',
+      'properties': {
+        'test': {
+          'type': 'string',
+        },
+        'optional': {
+          'type': 'string'
+        }
+      },
+      'required': [ 'test' ]
+    }
+  },
+  'required': [ 'data' ]
+}
+
+const nestedContract = {
+  data: { test: 'test' }
+}
+
+ava.test('should validate nested contract', (test) => {
+  test.is(true,
+    validation.checkValidContract(_.merge({}, baseContract, nestedContract), nestedSchema))
+})
+
+ava.test('Should reject invald nested contract', (test) => {
+  test.throws(() => {
+    validation.checkValidContract(nestedContract, nestedSchema)
+  }, 'data should have required property \'slug\'')
+})
+
+ava.test('Should reject invald nested contract', (test) => {
+  test.throws(() => {
+    validation.checkValidContract(baseContract, nestedSchema)
+  }, 'data should have required property \'data\'')
+})
+
+ava.test('Should reject invald nested contract', (test) => {
+  test.throws(() => {
+    validation.checkValidContract(_.merge({}, baseContract, { data: {} }), nestedSchema)
+  }, 'data.data should have required property \'test\'')
 })
