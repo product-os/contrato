@@ -21,10 +21,10 @@ const _ = require('lodash')
 const validation = require('../../lib/validation')
 
 const baseContract = {
-  'slug': 'slug',
-  'type': 'type',
-  'version': 'version',
-  'name': 'name',
+  slug: 'slug',
+  type: 'type',
+  version: 'version',
+  name: 'name'
 }
 
 ava.test('should validate base contract', (test) => {
@@ -33,23 +33,23 @@ ava.test('should validate base contract', (test) => {
 
 ava.test('should reject invalid base contract', (test) => {
   test.throws(() => {
-      validation.checkValidContract(_.omit(baseContract, 'slug'))
-    }, "data should have required property \'slug\'")
+    validation.checkValidContract(_.omit(baseContract, 'slug'))
+  }, 'data should have required property \'slug\'')
 })
 
 const extendedSchema = {
-  '$schema': 'http://json-schema.org/draft-07/schema#',
-  '$id': 'extended.schema',
-  'type': 'object',
-  'properties': {
-    'test': {
-      'type': 'string',
+  $schema: 'http://json-schema.org/draft-07/schema#',
+  $id: 'extended.schema',
+  type: 'object',
+  properties: {
+    test: {
+      type: 'string'
     },
-    'optional': {
-      'type': 'string'
+    optional: {
+      type: 'string'
     }
   },
-  'required': [ 'test' ]
+  required: [ 'test' ]
 }
 
 const extendedContract = {
@@ -74,28 +74,30 @@ ava.test('Should reject invald extended contract', (test) => {
 })
 
 const nestedSchema = {
-  '$schema': 'http://json-schema.org/draft-07/schema#',
-  '$id': 'nested.schema',
-  'type': 'object',
-  'properties': {
-    'data': {
-      'type': 'object',
-      'properties': {
-        'test': {
-          'type': 'string',
+  $schema: 'http://json-schema.org/draft-07/schema#',
+  $id: 'nested.schema',
+  type: 'object',
+  properties: {
+    data: {
+      type: 'object',
+      properties: {
+        test: {
+          type: 'string'
         },
-        'optional': {
-          'type': 'string'
+        optional: {
+          type: 'string'
         }
       },
-      'required': [ 'test' ]
+      required: [ 'test' ]
     }
   },
-  'required': [ 'data' ]
+  required: [ 'data' ]
 }
 
 const nestedContract = {
-  data: { test: 'test' }
+  data: {
+    test: 'test'
+  }
 }
 
 ava.test('should validate nested contract', (test) => {
@@ -117,6 +119,8 @@ ava.test('Should reject invald nested contract', (test) => {
 
 ava.test('Should reject invald nested contract', (test) => {
   test.throws(() => {
-    validation.checkValidContract(_.merge({}, baseContract, { data: {} }), nestedSchema)
+    validation.checkValidContract(_.merge({}, baseContract, {
+      data: {}
+    }), nestedSchema)
   }, 'data.data should have required property \'test\'')
 })
