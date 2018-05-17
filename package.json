@@ -19,6 +19,7 @@
     "concurrency": 5
   },
   "dependencies": {
+    "ajv": "^6.5.0",
     "debug": "^3.0.1",
     "handlebars": "^4.0.10",
     "handlebars-helpers": "^0.10.0",

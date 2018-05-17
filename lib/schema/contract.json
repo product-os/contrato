@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "contract.json",
+  "type": "object",
+  "properties": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "type": {
+      "type": "string",
+      "pattern": "^[a-z0-9-.]+$"
+    },
+    "name": {
+      "type": "string",
+      "pattern": "^.*\\S.*$"
+    },
+    "data": {
+      "type": "object"
+    }
+  },
+  "required": [ "slug", "version", "type", "name" ]
+}
