@@ -73,9 +73,9 @@ ava.test('Should reject invald extended contract', (test) => {
   }, 'data should have required property \'test\'')
 })
 
-const nestedSchema = {
+const overlappingSchema = {
   $schema: 'http://json-schema.org/draft-07/schema#',
-  $id: 'nested.schema',
+  $id: 'overlapping.schema',
   type: 'object',
   properties: {
     data: {
@@ -94,33 +94,68 @@ const nestedSchema = {
   required: [ 'data' ]
 }
 
-const nestedContract = {
+const overlappingContract = {
   data: {
     test: 'test'
   }
 }
 
-ava.test('should validate nested contract', (test) => {
+ava.test('should validate overlapping contract', (test) => {
   test.is(true,
-    validation.checkValidContract(_.merge({}, baseContract, nestedContract), nestedSchema))
+    validation.checkValidContract(_.merge({}, baseContract, overlappingContract), overlappingSchema))
 })
 
-ava.test('Should reject invald nested contract', (test) => {
+ava.test('Should reject invald overlapping contract', (test) => {
   test.throws(() => {
-    validation.checkValidContract(nestedContract, nestedSchema)
+    validation.checkValidContract(overlappingContract, overlappingSchema)
   }, 'data should have required property \'slug\'')
 })
 
-ava.test('Should reject invald nested contract', (test) => {
+ava.test('Should reject invald overlapping contract', (test) => {
   test.throws(() => {
-    validation.checkValidContract(baseContract, nestedSchema)
+    validation.checkValidContract(baseContract, overlappingSchema)
   }, 'data should have required property \'data\'')
 })
 
-ava.test('Should reject invald nested contract', (test) => {
+ava.test('Should reject invald overlapping contract', (test) => {
   test.throws(() => {
-    validation.checkValidContract(_.merge({}, baseContract, {
-      data: {}
-    }), nestedSchema)
+    validation.checkValidContract(_.merge({},
+      baseContract,
+      _.omit(overlappingContract, 'data.test')), overlappingSchema)
   }, 'data.data should have required property \'test\'')
+})
+
+const referencingSchema = {
+  $schema: 'http://json-schema.org/draft-07/schema#',
+  $id: 'referencing.schema',
+  type: 'object',
+  properties: {
+    data:
+      {
+        $ref: 'contract.json'
+      }
+  },
+  required: [ 'data' ]
+}
+
+const referencingContract = {
+  data: {
+    slug: 'slug',
+    type: 'type',
+    version: 'version',
+    name: 'name'
+  }
+}
+
+ava.test('should validate self referencing contract', (test) => {
+  test.is(true,
+    validation.checkValidContract(_.merge({}, baseContract, referencingContract), referencingSchema))
+})
+
+ava.test('Should reject invald overlapping contract', (test) => {
+  test.throws(() => {
+    validation.checkValidContract(_.merge({},
+      baseContract,
+      _.omit(referencingContract, 'data.slug')), referencingSchema)
+  }, 'data.data should have required property \'slug\'')
 })
