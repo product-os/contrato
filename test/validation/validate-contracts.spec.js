@@ -24,7 +24,10 @@ const baseContract = {
   slug: 'slug',
   type: 'type',
   version: 'version',
-  name: 'name'
+  componentVersion: 'componentVersion',
+  aliases: [],
+  data: {},
+  tags: []
 }
 
 ava.test('should validate base contract', (test) => {
@@ -34,7 +37,7 @@ ava.test('should validate base contract', (test) => {
 ava.test('should reject invalid base contract', (test) => {
   test.throws(() => {
     validation.checkValidContract(_.omit(baseContract, 'slug'))
-  }, 'data should have required property \'slug\'')
+  }, 'data should have required property \'.slug\'')
 })
 
 const extendedSchema = {
@@ -42,35 +45,36 @@ const extendedSchema = {
   $id: 'extended.schema',
   type: 'object',
   properties: {
-    test: {
-      type: 'string'
-    },
-    optional: {
-      type: 'string'
+    data: {
+      type: 'object',
+      properties: {
+        test: {
+          type: 'string'
+        },
+        optional: {
+          type: 'string'
+        }
+      },
+      required: [ 'test' ]
     }
-  },
-  required: [ 'test' ]
+  }
 }
 
-const extendedContract = {
-  test: 'test'
-}
-
-ava.test('should validate extended contract', (test) => {
-  test.is(true,
-    validation.checkValidContract(_.merge({}, baseContract, extendedContract), extendedSchema))
+const extendedContract = _.merge({}, baseContract, {
+  data:
+    {
+      test: 'test'
+    }
 })
 
-ava.test('Should reject invald extended contract', (test) => {
-  test.throws(() => {
-    validation.checkValidContract(extendedContract, extendedSchema)
-  }, 'data should have required property \'slug\'')
+ava.test('should validate extended contract', (test) => {
+  test.is(true, validation.checkValidContract(extendedContract, extendedSchema))
 })
 
 ava.test('Should reject invald extended contract', (test) => {
   test.throws(() => {
     validation.checkValidContract(baseContract, extendedSchema)
-  }, 'data should have required property \'test\'')
+  }, 'data.data should have required property \'test\'')
 })
 
 const overlappingSchema = {
@@ -94,34 +98,25 @@ const overlappingSchema = {
   required: [ 'data' ]
 }
 
-const overlappingContract = {
+const overlappingContract = _.merge({}, baseContract, {
   data: {
     test: 'test'
   }
-}
-
-ava.test('should validate overlapping contract', (test) => {
-  test.is(true,
-    validation.checkValidContract(_.merge({}, baseContract, overlappingContract), overlappingSchema))
 })
 
-ava.test('Should reject invald overlapping contract', (test) => {
-  test.throws(() => {
-    validation.checkValidContract(overlappingContract, overlappingSchema)
-  }, 'data should have required property \'slug\'')
+ava.test('should validate overlapping contract', (test) => {
+  test.is(true, validation.checkValidContract(overlappingContract, overlappingSchema))
 })
 
 ava.test('Should reject invald overlapping contract', (test) => {
   test.throws(() => {
     validation.checkValidContract(baseContract, overlappingSchema)
-  }, 'data should have required property \'data\'')
+  }, 'data.data should have required property \'test\'')
 })
 
 ava.test('Should reject invald overlapping contract', (test) => {
   test.throws(() => {
-    validation.checkValidContract(_.merge({},
-      baseContract,
-      _.omit(overlappingContract, 'data.test')), overlappingSchema)
+    validation.checkValidContract(_.omit(overlappingContract, 'data.test'), overlappingSchema)
   }, 'data.data should have required property \'test\'')
 })
 
@@ -138,41 +133,33 @@ const referencingSchema = {
   required: [ 'data' ]
 }
 
-const referencingContract = {
-  data: {
-    slug: 'slug',
-    type: 'type',
-    version: 'version',
-    name: 'name'
-  }
-}
+const referencingContract = _.merge({}, baseContract, {
+  data: baseContract
+})
 
 ava.test('should validate self referencing contract', (test) => {
-  test.is(true,
-    validation.checkValidContract(_.merge({}, baseContract, referencingContract), referencingSchema))
+  test.is(true, validation.checkValidContract(referencingContract, referencingSchema))
 })
 
-ava.test('Should reject invald overlapping contract', (test) => {
+ava.test('Should reject invald self referencing contract', (test) => {
   test.throws(() => {
-    validation.checkValidContract(_.merge({},
-      baseContract,
-      _.omit(referencingContract, 'data.slug')), referencingSchema)
-  }, 'data.data should have required property \'slug\'')
+    validation.checkValidContract(_.omit(referencingContract, 'data.slug'), referencingSchema)
+  }, 'data.data should have required property \'.slug\'')
 })
 
-const taggedContract = {
+const taggedContract = _.merge({}, baseContract, {
   tags: [ 'valid' ]
-}
+})
 
-ava.test('Should reject invald tagged contract', (test) => {
-  test.is(true, validation.checkValidContract(_.merge({}, baseContract, taggedContract)))
+ava.test('Should validate tagged contract', (test) => {
+  test.is(true, validation.checkValidContract(taggedContract))
 })
 
 ava.test('Should reject invald tagged contract', (test) => {
   taggedContract.tags.push('valid')
 
   test.throws(() => {
-    validation.checkValidContract(_.merge({}, baseContract, taggedContract))
+    validation.checkValidContract(taggedContract)
   }, 'data.tags should NOT have duplicate items (items ## 1 and 0 are identical)')
 })
 
@@ -180,6 +167,166 @@ ava.test('Should reject invald tagged contract', (test) => {
   taggedContract.tags.push(' non valid ')
 
   test.throws(() => {
-    validation.checkValidContract(_.merge({}, baseContract, taggedContract))
+    validation.checkValidContract(taggedContract)
   }, 'data.tags[2] should match pattern "^[\\S]+(?: [\\S]+)*$"')
+})
+
+const requireContract = _.merge({}, baseContract, {
+  requires: [
+    {
+      or: [
+        { type: 'type' },
+        {
+          or: [
+            {
+              slug: 'slug'
+            }
+          ]
+        }
+      ]
+    }
+  ]
+})
+
+const externalRequireContract = _.merge({}, baseContract, {
+  requires: [
+    { data:
+      {
+        a: 'a'
+      }
+    }
+  ]
+})
+
+const badExternalRequireContract = _.merge({}, baseContract, {
+  requires: [
+    {
+      or: [
+        { type: 'type' },
+        {
+          or: [
+            {
+              a: 'a'
+            }
+          ]
+        }
+      ]
+    }
+  ]
+})
+
+const badExternalRequireContract2 = _.merge({}, baseContract, {
+  requires: [
+    {
+      or: [
+        { version: 'version' },
+      ]
+    }
+  ]
+})
+
+ava.test('should validate require contract', (test) => {
+  test.is(true, validation.checkValidContract(requireContract))
+})
+
+ava.test('should validate require contract with unknown fields', (test) => {
+  test.is(true, validation.checkValidContract(externalRequireContract))
+})
+
+ava.test('should reject bad require contract with unknown fields', (test) => {
+  test.throws(() => {
+    validation.checkValidContract(badExternalRequireContract)
+  })
+})
+
+ava.test('should reject bad require contract that only specifies version', (test) => {
+  test.throws(() => {
+    validation.checkValidContract(badExternalRequireContract2)
+  })
+})
+
+const capabilitiesContract = _.merge({}, baseContract, {
+  capabilities: [
+    {
+      'slug': 'slug',
+      'componentVersion': 'componentVersion'
+    },
+    {
+      'slug': 'slug'
+    }
+  ]
+})
+
+const badCapabilitiesContract = _.merge({}, baseContract, {
+  capabilities: [
+    {
+      'componentVersion': 'componentVersion'
+    }
+  ]
+})
+
+ava.test('should validate capabilities contract', (test) => {
+  test.is(true, validation.checkValidContract(capabilitiesContract))
+})
+
+ava.test('should reject bad capabilities contract', (test) => {
+  test.throws(() => {
+    validation.checkValidContract(badCapabilitiesContract)
+  }, 'data.capabilities[0] should have required property \'slug\'')
+})
+
+const conflictsContract = _.merge({}, baseContract, {
+  conflicts: [
+    {
+      'slug': 'slug',
+      'version': 'version'
+    },
+    {
+      'slug': 'slug'
+    }
+  ]
+})
+
+const badConflictsContract = _.merge({}, baseContract, {
+  conflicts: [
+    {
+      'a': 'a'
+    }
+  ]
+})
+
+ava.test('should validate conflicts contract', (test) => {
+  test.is(true, validation.checkValidContract(conflictsContract))
+})
+
+ava.test('should reject bad conflicts contract', (test) => {
+  test.throws(() => {
+    validation.checkValidContract(badConflictsContract)
+  }, 'data.conflicts[0] should NOT have additional properties')
+})
+
+const assetsContract = _.merge({}, baseContract, {
+  assets: {
+    a: {
+      url: 'https://test.url',
+      checksum: 'checksum',
+      checksumType: 'sha256'
+    }
+  }
+})
+
+ava.test('should validate assets contract', (test) => {
+  test.is(true, validation.checkValidContract(assetsContract))
+})
+
+ava.test('should reject bad assets contract', (test) => {
+  test.throws(() => {
+    validation.checkValidContract(_.omit(assetsContract, 'assets.a.url'))
+  }, 'data.assets[\'a\'] should have required property \'url\'')
+})
+
+ava.test('should reject bad assets contract', (test) => {
+  test.throws(() => {
+    validation.checkValidContract(_.omit(assetsContract, 'assets.a.checksumType'))
+  }, 'data.assets[\'a\'] should have property checksumType when property checksum is present')
 })

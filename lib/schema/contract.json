@@ -1,127 +1,189 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "contract.json",
-  "type": "object",
 
   "definitions": {
-    "requireTemplate": {
-      "$id": "requireTemplate",
+    "baseContract": {
+      "$id": "baseContract",
       "type": "object",
-      "anyOf": [
-        { "$ref": "contract.json#/properties/type" },
-        { "$ref": "contract.json#/properties/slug" },
-        { "$ref": "contract.json#/properties/version" }
-      ]
-    },
-    "variantsTemplate": {
-      "$id": "variantsTemplate",
-      "type": "object",
-      "anyOf": [
-        { "$ref": "contract.json#/properties/type" },
-        { "$ref": "contract.json#/properties/version" }
-      ]
-    }
-  },
-
-  "properties": {
-    "slug": {
-      "type": "string",
-      "pattern": "^[a-z0-9-]+$"
-    },
-    "version": {
-      "type": "string",
-      "minLength": 1
-    },
-    "type": {
-      "type": "string",
-      "pattern": "^[a-z0-9-.]+$"
-    },
-    "name": {
-      "type": "string",
-      "pattern": "^.*\\S.*$"
-    },
-    "data": {
-      "type": "object"
-    },
-    "requires": {
-      "type": "array",
-      "additionalItems": false,
-      "items": {
-        "type": "object",
-        "anyOf": [
-          {
-            "$ref": "#/definitions/requireTemplate"
-          },
-          {
-            "properties": {
-              "or": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/definitions/requireTemplate"
-                }
-              }
-            }
-          }
-        ]
-      }
-    },
-    "variants": {
-      "type": "array",
-      "additionalItems": false,
-      "items": {
-        "type": "object",
-        "anyOf": [
-          {
-            "$ref": "#/definitions/variantsTemplate"
-          },
-          {
-            "properties": {
-              "variants": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/definitions/variantsTemplate"
-                }
-              }
-            }
-          }
-        ]
-      }
-    },
-    "tags": {
-      "type": "array",
-      "uniqueItems": true,
-      "additionalItems": false,
-      "items": {
-        "type": "string",
-        "pattern": "^[\\S]+(?: [\\S]+)*$"
-      }
-    },
-    "assets": {
-      "type": "object",
+      "additionalProperties": false,
       "properties": {
-        "url": {
+        "slug": {
           "type": "string",
-          "pattern": "^[a-z0-9-]+:\/\/(([a-z0-9-.])+\/)*[a-z0-9-.]+$"
+          "pattern": "^[a-z0-9-]+$"
         },
-        "name": {
-          "type": "string",
-          "pattern": "[a-z0-9-.]+$"
-        },
-        "checksum": {
+        "version": {
           "type": "string",
           "minLength": 1
         },
-        "checksumType": {
+        "componentVersion": {
           "type": "string",
-          "enum": [ "sha256" ]
+          "minLength": 1
+        },
+        "type": {
+          "type": "string",
+          "pattern": "^[a-z0-9-.]+$"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^.*\\S.*$"
+        },
+        "aliases": {
+          "type": "array",
+          "additionalItems": false,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/properties/slug"
+          }
+        },
+        "data": {
+          "type": "object"
+        },
+        "extends": {
+          "allOf": [
+            {
+              "$ref": "#"
+            },
+            {
+              "required": [ "slug", "aliases" ]
+            }
+          ]
+        },
+        "requires": {
+          "$ref": "contract.json#/definitions/recursiveOR"
+        },
+        "tags": {
+          "type": "array",
+          "uniqueItems": true,
+          "additionalItems": false,
+          "items": {
+            "type": "string",
+            "pattern": "^[\\S]+(?: [\\S]+)*$"
+          }
+        },
+        "capabilities": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "slug": {
+                "$ref": "#/properties/slug"
+              },
+              "componentVersion": {
+                "$ref": "#/properties/componentVersion"
+              }
+            },
+            "required": [ "slug" ]
+          }
+        },
+        "conflicts": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "slug": {
+                "$ref": "#/properties/slug"
+              },
+              "version": {
+                "$ref": "#/properties/version"
+              }
+            },
+            "required": [ "slug" ]
+          }
+        },
+        "assets": {
+          "type": "object",
+          "additionalProperties": false,
+          "patternProperties": {
+            "^.*$": {
+              "type": "object",
+              "properties": {
+                "url": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9-]+:\/\/(([a-z0-9-.])+\/)*[a-z0-9-.]+$"
+                },
+                "name": {
+                  "type": "string",
+                  "pattern": "[a-z0-9-.]+$"
+                },
+                "checksum": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "checksumType": {
+                  "type": "string",
+                  "enum": [ "sha256" ]
+                }
+              },
+              "required": [ "url" ],
+              "dependencies": {
+                "checksum": [ "checksumType" ]
+              }
+            }
+          }
+        },
+        "children": {
+          "type": "object"
         }
-      },
-      "required": [ "url" ],
-      "dependencies": {
-        "checksum": [ "checksumType" ]
+      }
+    },
+
+    "partialContract": {
+      "$id": "partialContract",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "contract.json#/definitions/baseContract"
+        },
+        {
+          "dependencies": {
+            "version": [ "slug" ]
+          }
+        }
+      ]
+    },
+
+    "recursiveOR": {
+      "$id": "recursiveOR",
+      "type": "array",
+      "additionalItems": false,
+      "items": {
+        "anyOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "or": {
+                "$ref": "recursiveOR"
+              }
+            }
+          },
+          {
+            "$ref": "contract.json#/definitions/partialContract"
+          }
+        ]
       }
     }
   },
-  
-  "required": [ "slug", "version", "type", "name" ]
+
+  "allOf": [
+    {
+      "$ref": "#/definitions/baseContract"
+    },
+    {
+      "required": [
+        "slug",
+        "version",
+        "type",
+        "componentVersion",
+        "aliases",
+        "tags",
+        "data"
+      ]
+    }
+  ]
 }
