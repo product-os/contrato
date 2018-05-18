@@ -159,3 +159,27 @@ ava.test('Should reject invald overlapping contract', (test) => {
       _.omit(referencingContract, 'data.slug')), referencingSchema)
   }, 'data.data should have required property \'slug\'')
 })
+
+const taggedContract = {
+  tags: [ 'valid' ]
+}
+
+ava.test('Should reject invald tagged contract', (test) => {
+  test.is(true, validation.checkValidContract(_.merge({}, baseContract, taggedContract)))
+})
+
+ava.test('Should reject invald tagged contract', (test) => {
+  taggedContract.tags.push('valid')
+
+  test.throws(() => {
+    validation.checkValidContract(_.merge({}, baseContract, taggedContract))
+  }, 'data.tags should NOT have duplicate items (items ## 1 and 0 are identical)')
+})
+
+ava.test('Should reject invald tagged contract', (test) => {
+  taggedContract.tags.push(' non valid ')
+
+  test.throws(() => {
+    validation.checkValidContract(_.merge({}, baseContract, taggedContract))
+  }, 'data.tags[2] should match pattern "^[\\S]+(?: [\\S]+)*$"')
+})

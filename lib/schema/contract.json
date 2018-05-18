@@ -45,6 +45,7 @@
     },
     "requires": {
       "type": "array",
+      "additionalItems": false,
       "items": {
         "type": "object",
         "anyOf": [
@@ -66,6 +67,7 @@
     },
     "variants": {
       "type": "array",
+      "additionalItems": false,
       "items": {
         "type": "object",
         "anyOf": [
@@ -83,6 +85,15 @@
             }
           }
         ]
+      }
+    },
+    "tags": {
+      "type": "array",
+      "uniqueItems": true,
+      "additionalItems": false,
+      "items": {
+        "type": "string",
+        "pattern": "^[\\S]+(?: [\\S]+)*$"
       }
     }
   },
