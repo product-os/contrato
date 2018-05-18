@@ -95,7 +95,33 @@
         "type": "string",
         "pattern": "^[\\S]+(?: [\\S]+)*$"
       }
+    },
+    "assets": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+:\/\/(([a-z0-9-.])+\/)*[a-z0-9-.]+$"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "[a-z0-9-.]+$"
+        },
+        "checksum": {
+          "type": "string",
+          "minLength": 1
+        },
+        "checksumType": {
+          "type": "string",
+          "enum": [ "sha256" ]
+        }
+      },
+      "required": [ "url" ],
+      "dependencies": {
+        "checksum": [ "checksumType" ]
+      }
     }
   },
+  
   "required": [ "slug", "version", "type", "name" ]
 }
