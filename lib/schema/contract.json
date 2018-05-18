@@ -127,7 +127,21 @@
           }
         },
         "children": {
-          "type": "object"
+          "$id": "childNamespace",
+          "type": "object",
+          "additionalProperties": false,
+          "patternProperties": {
+            "^.*$": {
+              "oneOf": [
+                {
+                  "$ref": "contract.json"
+                },
+                {
+                  "$ref": "childNamespace"
+                }
+              ]
+            }
+          }
         }
       }
     },

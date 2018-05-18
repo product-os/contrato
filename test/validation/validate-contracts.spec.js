@@ -330,3 +330,42 @@ ava.test('should reject bad assets contract', (test) => {
     validation.checkValidContract(_.omit(assetsContract, 'assets.a.checksumType'))
   }, 'data.assets[\'a\'] should have property checksumType when property checksum is present')
 })
+
+const fatherContract = _.merge({}, baseContract, {
+  children: {
+    base: baseContract
+  }
+})
+
+const grampaContract = _.merge({}, baseContract, {
+  children: {
+    father: {
+      child1: baseContract,
+      child2: baseContract
+    }
+  }
+})
+
+const badFamilyContract = _.merge({}, baseContract, {
+  children: {
+    a: {
+      b: {
+        c: true
+      }
+    }
+  }
+})
+
+ava.test('should validate father contract', (test) => {
+  test.is(true, validation.checkValidContract(fatherContract))
+})
+
+ava.test('should validate grampa contract', (test) => {
+  test.is(true, validation.checkValidContract(grampaContract))
+})
+
+ava.test('should reject bad family contract', (test) => {
+  test.throws(() => {
+    validation.checkValidContract(badFamilyContract)
+  })
+})
