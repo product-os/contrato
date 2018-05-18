@@ -2,6 +2,27 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "contract.json",
   "type": "object",
+
+  "definitions": {
+    "requireTemplate": {
+      "$id": "requireTemplate",
+      "type": "object",
+      "anyOf": [
+        { "$ref": "contract.json#/properties/type" },
+        { "$ref": "contract.json#/properties/slug" },
+        { "$ref": "contract.json#/properties/version" }
+      ]
+    },
+    "variantsTemplate": {
+      "$id": "variantsTemplate",
+      "type": "object",
+      "anyOf": [
+        { "$ref": "contract.json#/properties/type" },
+        { "$ref": "contract.json#/properties/version" }
+      ]
+    }
+  },
+
   "properties": {
     "slug": {
       "type": "string",
@@ -21,6 +42,48 @@
     },
     "data": {
       "type": "object"
+    },
+    "requires": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "anyOf": [
+          {
+            "$ref": "#/definitions/requireTemplate"
+          },
+          {
+            "properties": {
+              "or": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/requireTemplate"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "variants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "anyOf": [
+          {
+            "$ref": "#/definitions/variantsTemplate"
+          },
+          {
+            "properties": {
+              "variants": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/variantsTemplate"
+                }
+              }
+            }
+          }
+        ]
+      }
     }
   },
   "required": [ "slug", "version", "type", "name" ]
