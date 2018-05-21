@@ -21,13 +21,13 @@ const Contract = require('../../lib/contract')
 
 ava.test('should build contract templates', (test) => {
   const contracts = Contract.build({
-    name: 'Debian {{data.codename}}',
+    name: 'Debian {{this.data.codename}}',
     slug: 'debian',
     version: 'wheezy',
     type: 'sw.os',
     data: {
       codename: 'Wheezy',
-      url: 'https://contracts.org/downloads/{{type}}/{{slug}}/{{version}}.tar.gz'
+      url: 'https://contracts.org/downloads/{{this.type}}/{{this.slug}}/{{this.version}}.tar.gz'
     }
   })
 
@@ -48,9 +48,9 @@ ava.test('should build contract templates', (test) => {
 ava.test('should support slug and type templates', (test) => {
   const contracts = Contract.build({
     name: 'Debian Wheezy',
-    slug: '{{data.slug}}',
+    slug: '{{this.data.slug}}',
     version: 'wheezy',
-    type: '{{data.type}}',
+    type: '{{this.data.type}}',
     data: {
       slug: 'debian',
       type: 'sw.os'
@@ -109,7 +109,7 @@ ava.test('should expand contract variants', (test) => {
 
 ava.test('should build contracts with variants and templates', (test) => {
   const contracts = Contract.build({
-    name: 'debian {{version}}',
+    name: 'debian {{this.version}}',
     slug: 'debian',
     type: 'sw.os',
     variants: [

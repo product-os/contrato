@@ -36,7 +36,7 @@ ava.test('should compile a contract without templates', (test) => {
 ava.test('should compile a single top level template', (test) => {
   test.deepEqual(template.compileContract({
     type: 'distro',
-    name: 'Debian {{version}}',
+    name: 'Debian {{this.version}}',
     version: 'wheezy',
     slug: 'debian'
   }), {
@@ -53,13 +53,13 @@ ava.test('should compile templates inside arrays', (test) => {
     name: 'Debian',
     slug: 'debian',
     random: [
-      '{{name}}',
-      '{{name}}',
-      '{{name}}'
+      '{{this.name}}',
+      '{{this.name}}',
+      '{{this.name}}'
     ],
     requires: [
       {
-        name: '{{name}} ({{type}})'
+        name: '{{this.name}} ({{this.type}})'
       }
     ]
   }), {
@@ -82,9 +82,9 @@ ava.test('should compile templates inside arrays', (test) => {
 ava.test('should compile multiple top level templates', (test) => {
   test.deepEqual(template.compileContract({
     type: 'distro',
-    name: 'Debian {{version}}',
+    name: 'Debian {{this.version}}',
     version: 'wheezy',
-    slug: 'debian-{{version}}'
+    slug: 'debian-{{this.version}}'
   }), {
     type: 'distro',
     name: 'Debian wheezy',
@@ -102,7 +102,7 @@ ava.test('should compile a single nested template', (test) => {
     data: {
       foo: {
         bar: {
-          baz: '{{type}}'
+          baz: '{{this.type}}'
         }
       }
     }
@@ -125,12 +125,12 @@ ava.test('should leave missing values as interpolations', (test) => {
   test.deepEqual(template.compileContract({
     type: 'distro',
     name: 'Debian',
-    version: '{{data.distroName}}',
+    version: '{{this.data.distroName}}',
     slug: 'debian'
   }), {
     type: 'distro',
     name: 'Debian',
-    version: '{{data.distroName}}',
+    version: '{{this.data.distroName}}',
     slug: 'debian'
   })
 })
@@ -139,11 +139,11 @@ ava.test('should be able to blacklist a top level element', (test) => {
   const result = template.compileContract({
     type: 'distro',
     version: '7',
-    name: 'Debian v{{version}}',
+    name: 'Debian v{{this.version}}',
     data: {
       name: 'debian'
     },
-    slug: '{{data.name}}'
+    slug: '{{this.data.name}}'
   }, {
     blacklist: new Set([ 'name' ])
   })
@@ -151,7 +151,7 @@ ava.test('should be able to blacklist a top level element', (test) => {
   test.deepEqual(result, {
     type: 'distro',
     version: '7',
-    name: 'Debian v{{version}}',
+    name: 'Debian v{{this.version}}',
     data: {
       name: 'debian'
     },
@@ -163,14 +163,14 @@ ava.test('should be able to blacklist a nested element', (test) => {
   const result = template.compileContract({
     type: 'distro',
     version: '7',
-    name: 'Debian v{{version}}',
+    name: 'Debian v{{this.version}}',
     data: {
       name: 'debian',
       foo: {
-        type: '{{type}}'
+        type: '{{this.type}}'
       }
     },
-    slug: '{{data.name}}'
+    slug: '{{this.data.name}}'
   }, {
     blacklist: new Set([ 'data.foo.type' ])
   })
@@ -182,7 +182,7 @@ ava.test('should be able to blacklist a nested element', (test) => {
     data: {
       name: 'debian',
       foo: {
-        type: '{{type}}'
+        type: '{{this.type}}'
       }
     },
     slug: 'debian'
@@ -193,14 +193,14 @@ ava.test('should be able to blacklist more than one element', (test) => {
   const result = template.compileContract({
     type: 'distro',
     version: '7',
-    name: 'Debian v{{version}}',
+    name: 'Debian v{{this.version}}',
     data: {
       name: 'debian',
       foo: {
-        type: '{{type}}'
+        type: '{{this.type}}'
       }
     },
-    slug: '{{data.name}}'
+    slug: '{{this.data.name}}'
   }, {
     blacklist: new Set([ 'data.foo.type', 'name' ])
   })
@@ -208,11 +208,11 @@ ava.test('should be able to blacklist more than one element', (test) => {
   test.deepEqual(result, {
     type: 'distro',
     version: '7',
-    name: 'Debian v{{version}}',
+    name: 'Debian v{{this.version}}',
     data: {
       name: 'debian',
       foo: {
-        type: '{{type}}'
+        type: '{{this.type}}'
       }
     },
     slug: 'debian'
@@ -224,9 +224,9 @@ ava.test('should be able to blacklist elements inside arrays', (test) => {
     slug: 'debian',
     type: 'distro',
     random: [
-      '{{slug}}',
-      '{{slug}}',
-      '{{slug}}'
+      '{{this.slug}}',
+      '{{this.slug}}',
+      '{{this.slug}}'
     ]
   }, {
     blacklist: new Set([ 'random.1' ])
@@ -237,7 +237,7 @@ ava.test('should be able to blacklist elements inside arrays', (test) => {
     type: 'distro',
     random: [
       'debian',
-      '{{slug}}',
+      '{{this.slug}}',
       'debian'
     ]
   })
@@ -247,14 +247,14 @@ ava.test('should be able to blacklist a whole subtree', (test) => {
   const result = template.compileContract({
     type: 'distro',
     version: '7',
-    name: 'Debian v{{version}}',
+    name: 'Debian v{{this.version}}',
     data: {
       name: 'debian',
       foo: {
-        type: '{{type}}'
+        type: '{{this.type}}'
       }
     },
-    slug: '{{data.name}}'
+    slug: '{{this.data.name}}'
   }, {
     blacklist: new Set([ 'data' ])
   })
@@ -266,7 +266,7 @@ ava.test('should be able to blacklist a whole subtree', (test) => {
     data: {
       name: 'debian',
       foo: {
-        type: '{{type}}'
+        type: '{{this.type}}'
       }
     },
     slug: 'debian'

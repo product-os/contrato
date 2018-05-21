@@ -23,7 +23,7 @@ ava.test('should resolve templates for which the values exist', (test) => {
   const contract = new Contract({
     type: 'arch.sw',
     version: '7',
-    name: 'ARM v{{version}}',
+    name: 'ARM v{{this.version}}',
     slug: 'armv7hf'
   })
 
@@ -40,15 +40,15 @@ ava.test('should resolve templates for which the values exist', (test) => {
 ava.test('should not resolve templates for which the values do not exist', (test) => {
   const contract = new Contract({
     type: 'arch.sw',
-    name: '{{displayName}}',
+    name: '{{this.displayName}}',
     slug: 'armv7hf'
   })
 
-  test.is(contract.metadata.hash, '537e4d8e9c1483499c00476d72d5fd635a4b0460')
+  test.is(contract.metadata.hash, '9c847d98c15460b417934b5185bb39c316a1386a')
 
   test.deepEqual(contract.raw, {
     type: 'arch.sw',
-    name: '{{displayName}}',
+    name: '{{this.displayName}}',
     slug: 'armv7hf'
   })
 })
@@ -57,7 +57,7 @@ ava.test('should not hash a templated contract if the hash option is false', (te
   const contract = new Contract({
     type: 'arch.sw',
     version: '7',
-    name: 'ARM v{{version}}',
+    name: 'ARM v{{this.version}}',
     slug: 'armv7hf'
   }, {
     hash: false
