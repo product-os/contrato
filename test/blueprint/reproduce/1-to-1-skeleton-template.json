@@ -40,7 +40,7 @@
   "blueprint": {
     "skeleton": {
       "type": "x.device",
-      "slug": "board-{{children.hw.device-type.slug}}"
+      "slug": "board-{{this.children.hw.device-type.slug}}"
     },
     "layout": {
       "hw.device-type": 1

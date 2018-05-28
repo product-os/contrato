@@ -46,7 +46,7 @@
     },
     {
       "slug": "fedora",
-      "name": "Fedora {{version}}",
+      "name": "Fedora {{this.version}}",
       "version": "25",
       "type": "sw.os",
       "requires": [
