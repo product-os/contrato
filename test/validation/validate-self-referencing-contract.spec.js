@@ -41,13 +41,15 @@ const referencingContract = _.merge({}, baseContract, {
 
 ava.test('should validate self referencing contract', (test) => {
   test.deepEqual(
-    { success: true, errors: [] },
+    {
+      success: true, errors: []
+    },
     validation.checkContract(referencingContract, referencingSchema)
   )
 })
 
 ava.test('Should reject invald self referencing contract', (test) => {
-  let { success, errors } = validation.checkContract(_.omit(referencingContract, 'data.slug'), referencingSchema)
-  test.is(false, success)
-  test.is('data.data should have required property \'.slug\'', errors[0])
+  const result = validation.checkContract(_.omit(referencingContract, 'data.slug'), referencingSchema)
+  test.is(false, result.success)
+  test.is('data.data should have required property \'.slug\'', result.errors[0])
 })

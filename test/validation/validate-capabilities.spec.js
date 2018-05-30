@@ -25,11 +25,11 @@ const baseContract = require('./common/baseContract')
 const capabilitiesContract = _.merge({}, baseContract, {
   capabilities: [
     {
-      'slug': 'slug',
-      'componentVersion': 'componentVersion'
+      slug: 'slug',
+      componentVersion: 'componentVersion'
     },
     {
-      'slug': 'slug'
+      slug: 'slug'
     }
   ]
 })
@@ -37,20 +37,22 @@ const capabilitiesContract = _.merge({}, baseContract, {
 const badCapabilitiesContract = _.merge({}, baseContract, {
   capabilities: [
     {
-      'componentVersion': 'componentVersion'
+      componentVersion: 'componentVersion'
     }
   ]
 })
 
 ava.test('should validate capabilities contract', (test) => {
   test.deepEqual(
-    { success: true, errors: [] },
+    {
+      success: true, errors: []
+    },
     validation.checkContract(capabilitiesContract)
   )
 })
 
 ava.test('should reject bad capabilities contract', (test) => {
-  let { success, errors } = validation.checkContract(badCapabilitiesContract)
-  test.is(false, success)
-  test.is('data.capabilities[0] should have required property \'slug\'', errors[0])
+  const result = validation.checkContract(badCapabilitiesContract)
+  test.is(false, result.success)
+  test.is('data.capabilities[0] should have required property \'slug\'', result.errors[0])
 })

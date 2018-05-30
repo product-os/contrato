@@ -24,13 +24,15 @@ const baseContract = require('./common/baseContract')
 
 ava.test('should validate base contract', (test) => {
   test.deepEqual(
-    { success: true, errors: [] },
+    {
+      success: true, errors: []
+    },
     validation.checkContract(baseContract)
   )
 })
 
 ava.test('should reject invalid base contract', (test) => {
-  let { success, errors } = validation.checkContract(_.omit(baseContract, 'slug'))
-  test.is(false, success)
-  test.is('data should have required property \'.slug\'', errors[0])
+  const result = validation.checkContract(_.omit(baseContract, 'slug'))
+  test.is(false, result.success)
+  test.is('data should have required property \'.slug\'', result.errors[0])
 })

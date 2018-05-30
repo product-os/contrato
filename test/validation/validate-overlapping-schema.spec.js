@@ -51,19 +51,21 @@ const overlappingContract = _.merge({}, baseContract, {
 
 ava.test('should validate overlapping contract', (test) => {
   test.deepEqual(
-    { success: true, errors: [] },
+    {
+      success: true, errors: []
+    },
     validation.checkContract(overlappingContract, overlappingSchema)
   )
 })
 
 ava.test('Should reject invald overlapping contract', (test) => {
-  let { success, errors } = validation.checkContract(baseContract, overlappingSchema)
-  test.is(false, success)
-  test.is('data.data should have required property \'test\'', errors[0])
+  const result = validation.checkContract(baseContract, overlappingSchema)
+  test.is(false, result.success)
+  test.is('data.data should have required property \'test\'', result.errors[0])
 })
 
 ava.test('Should reject invald overlapping contract', (test) => {
-  let { success, errors } = validation.checkContract(_.omit(overlappingContract, 'data.test'), overlappingSchema)
-  test.is(false, success)
-  test.is('data.data should have required property \'test\'', errors[0])
+  const result = validation.checkContract(_.omit(overlappingContract, 'data.test'), overlappingSchema)
+  test.is(false, result.success)
+  test.is('data.data should have required property \'test\'', result.errors[0])
 })

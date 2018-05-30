@@ -29,7 +29,7 @@ const conflictsContract = _.merge({}, baseContract, {
       version: '1'
     },
     {
-      'slug': 'slug'
+      slug: 'slug'
     }
   ]
 })
@@ -37,19 +37,21 @@ const conflictsContract = _.merge({}, baseContract, {
 const badConflictsContract = _.merge({}, baseContract, {
   conflicts: [
     {
-      'a': 'a'
+      prop: 'prop'
     }
   ]
 })
 
 ava.test('should validate conflicts contract', (test) => {
   test.deepEqual(
-    { success: true, errors: [] },
+    {
+      success: true, errors: []
+    },
     validation.checkContract(conflictsContract)
   )
 })
 
 ava.test('should reject bad conflicts contract', (test) => {
-  let { success, errors } = validation.checkContract(badConflictsContract)
-  test.is(false, success)
+  const result = validation.checkContract(badConflictsContract)
+  test.is(false, result.success)
 })

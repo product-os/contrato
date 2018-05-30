@@ -51,13 +51,15 @@ const extendedContract = _.merge({}, baseContract, {
 
 ava.test('should validate extended contract', (test) => {
   test.deepEqual(
-    { success: true, errors: [] },
+    {
+      success: true, errors: []
+    },
     validation.checkContract(extendedContract, extendedSchema)
   )
 })
 
 ava.test('Should reject invald extended contract', (test) => {
-  let { success, errors } = validation.checkContract(baseContract, extendedSchema)
-  test.is(false, success)
-  test.is('data.data should have required property \'test\'', errors[0])
+  const result = validation.checkContract(baseContract, extendedSchema)
+  test.is(false, result.success)
+  test.is('data.data should have required property \'test\'', result.errors[0])
 })

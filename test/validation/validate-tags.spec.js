@@ -28,7 +28,9 @@ const taggedContract = _.merge({}, baseContract, {
 
 ava.test('Should validate tagged contract', (test) => {
   test.deepEqual(
-    { success: true, errors: [] },
+    {
+      success: true, errors: []
+    },
     validation.checkContract(taggedContract)
   )
 })
@@ -36,15 +38,15 @@ ava.test('Should validate tagged contract', (test) => {
 ava.test('Should reject invald tagged contract', (test) => {
   taggedContract.tags.push('valid')
 
-  let { success, errors } = validation.checkContract(taggedContract)
-  test.is(false, success)
-  test.is('data.tags should NOT have duplicate items (items ## 1 and 0 are identical)', errors[0])
+  const result = validation.checkContract(taggedContract)
+  test.is(false, result.success)
+  test.is('data.tags should NOT have duplicate items (items ## 1 and 0 are identical)', result.errors[0])
 })
 
 ava.test('Should reject invald tagged contract', (test) => {
   taggedContract.tags.push(' non valid ')
 
-  let { success, errors } = validation.checkContract(taggedContract)
-  test.is(false, success)
-  test.is('data.tags[2] should match pattern "^[\\S]+(?: [\\S]+)*$"', errors[0])
+  const result = validation.checkContract(taggedContract)
+  test.is(false, result.success)
+  test.is('data.tags[2] should match pattern "^[\\S]+(?: [\\S]+)*$"', result.errors[0])
 })

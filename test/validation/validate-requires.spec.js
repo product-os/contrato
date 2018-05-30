@@ -26,7 +26,9 @@ const requireContract = _.merge({}, baseContract, {
   requires: [
     {
       or: [
-        { type: 'type' },
+        {
+          type: 'type'
+        },
         {
           or: [
             {
@@ -41,9 +43,9 @@ const requireContract = _.merge({}, baseContract, {
 
 const externalRequireContract = _.merge({}, baseContract, {
   requires: [
-    { data:
-      {
-        a: 'a'
+    {
+      data: {
+        prop: 'prop'
       }
     }
   ]
@@ -53,11 +55,13 @@ const badExternalRequireContract = _.merge({}, baseContract, {
   requires: [
     {
       or: [
-        { type: 'type' },
+        {
+          type: 'type'
+        },
         {
           or: [
             {
-              a: 'a'
+              prop: 'prop'
             }
           ]
         }
@@ -70,7 +74,9 @@ const badExternalRequireContract2 = _.merge({}, baseContract, {
   requires: [
     {
       or: [
-        { version: '1' },
+        {
+          version: '1'
+        }
       ]
     }
   ]
@@ -78,24 +84,28 @@ const badExternalRequireContract2 = _.merge({}, baseContract, {
 
 ava.test('should validate require contract', (test) => {
   test.deepEqual(
-    { success: true, errors: [] },
+    {
+      success: true, errors: []
+    },
     validation.checkContract(requireContract)
   )
 })
 
 ava.test('should validate require contract with unknown fields', (test) => {
   test.deepEqual(
-    { success: true, errors: [] },
+    {
+      success: true, errors: []
+    },
     validation.checkContract(externalRequireContract)
   )
 })
 
 ava.test('should reject bad require contract with unknown fields', (test) => {
-  let { success, errors } = validation.checkContract(badExternalRequireContract)
-  test.is(false, success)
+  const result = validation.checkContract(badExternalRequireContract)
+  test.is(false, result.success)
 })
 
 ava.test('should reject bad require contract that only specifies version', (test) => {
-  let { success, errors } = validation.checkContract(badExternalRequireContract2)
-  test.is(false, success)
+  const result = validation.checkContract(badExternalRequireContract2)
+  test.is(false, result.success)
 })

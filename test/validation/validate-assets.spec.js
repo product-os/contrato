@@ -24,7 +24,7 @@ const baseContract = require('./common/baseContract')
 
 const assetsContract = _.merge({}, baseContract, {
   assets: {
-    a: {
+    asset: {
       url: 'https://test.url',
       checksum: 'checksum',
       checksumType: 'sha256'
@@ -34,19 +34,21 @@ const assetsContract = _.merge({}, baseContract, {
 
 ava.test('should validate assets contract', (test) => {
   test.deepEqual(
-    { success: true, errors: [] },
+    {
+      success: true, errors: []
+    },
     validation.checkContract(assetsContract)
   )
 })
 
 ava.test('should reject bad assets contract', (test) => {
-  let { success, errors } = validation.checkContract(_.omit(assetsContract, 'assets.a.url'))
-  test.is(false, success)
-  test.is('data.assets[\'a\'] should have required property \'url\'', errors[0])
+  const result = validation.checkContract(_.omit(assetsContract, 'assets.asset.url'))
+  test.is(false, result.success)
+  test.is('data.assets[\'asset\'] should have required property \'url\'', result.errors[0])
 })
 
 ava.test('should reject bad assets contract', (test) => {
-  let { success, errors } = validation.checkContract(_.omit(assetsContract, 'assets.a.checksumType'))
-  test.is(false, success)
-  test.is('data.assets[\'a\'] should have property checksumType when property checksum is present', errors[0])
+  const result = validation.checkContract(_.omit(assetsContract, 'assets.asset.checksumType'))
+  test.is(false, result.success)
+  test.is('data.assets[\'asset\'] should have property checksumType when property checksum is present', result.errors[0])
 })

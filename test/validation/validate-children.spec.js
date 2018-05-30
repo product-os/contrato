@@ -39,9 +39,9 @@ const grampaContract = _.merge({}, baseContract, {
 
 const badFamilyContract = _.merge({}, baseContract, {
   children: {
-    a: {
-      b: {
-        c: true
+    father: {
+      child: {
+        prop: true
       }
     }
   }
@@ -49,19 +49,23 @@ const badFamilyContract = _.merge({}, baseContract, {
 
 ava.test('should validate father contract', (test) => {
   test.deepEqual(
-    { success: true, errors: [] },
+    {
+      success: true, errors: []
+    },
     validation.checkContract(fatherContract)
   )
 })
 
 ava.test('should validate grampa contract', (test) => {
   test.deepEqual(
-    { success: true, errors: [] },
+    {
+      success: true, errors: []
+    },
     validation.checkContract(grampaContract)
   )
 })
 
 ava.test('should reject bad family contract', (test) => {
-  let { success, errors } = validation.checkContract(badFamilyContract)
-  test.is(false, success)
+  const result = validation.checkContract(badFamilyContract)
+  test.is(false, result.success)
 })
