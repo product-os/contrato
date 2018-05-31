@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 resin.io
+ * Copyright 2018 resin.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,13 +52,14 @@ const extendedContract = _.merge({}, baseContract, {
 ava.test('should validate extended contract', (test) => {
   test.deepEqual(
     {
-      success: true, errors: []
+      success: true,
+      errors: []
     },
     validation.checkContract(extendedContract, extendedSchema)
   )
 })
 
-ava.test('Should reject invald extended contract', (test) => {
+ava.test('Should reject invalid extended contract', (test) => {
   const result = validation.checkContract(baseContract, extendedSchema)
   test.is(false, result.success)
   test.is('data.data should have required property \'test\'', result.errors[0])

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 resin.io
+ * Copyright 2018 resin.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,13 +29,14 @@ const taggedContract = _.merge({}, baseContract, {
 ava.test('Should validate tagged contract', (test) => {
   test.deepEqual(
     {
-      success: true, errors: []
+      success: true,
+      errors: []
     },
     validation.checkContract(taggedContract)
   )
 })
 
-ava.test('Should reject invald tagged contract', (test) => {
+ava.test('Should reject invalid tagged contract', (test) => {
   taggedContract.tags.push('valid')
 
   const result = validation.checkContract(taggedContract)
@@ -43,7 +44,7 @@ ava.test('Should reject invald tagged contract', (test) => {
   test.is('data.tags should NOT have duplicate items (items ## 1 and 0 are identical)', result.errors[0])
 })
 
-ava.test('Should reject invald tagged contract', (test) => {
+ava.test('Should reject invalid tagged contract', (test) => {
   taggedContract.tags.push(' non valid ')
 
   const result = validation.checkContract(taggedContract)

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 resin.io
+ * Copyright 2018 resin.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,8 @@ const baseContract = require('./common/baseContract')
 ava.test('should validate base contract', (test) => {
   test.deepEqual(
     {
-      success: true, errors: []
+      success: true,
+      errors: []
     },
     validation.checkContract(baseContract)
   )

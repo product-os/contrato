@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 resin.io
+ * Copyright 2018 resin.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,13 +42,14 @@ const referencingContract = _.merge({}, baseContract, {
 ava.test('should validate self referencing contract', (test) => {
   test.deepEqual(
     {
-      success: true, errors: []
+      success: true,
+      errors: []
     },
     validation.checkContract(referencingContract, referencingSchema)
   )
 })
 
-ava.test('Should reject invald self referencing contract', (test) => {
+ava.test('Should reject invalid self referencing contract', (test) => {
   const result = validation.checkContract(_.omit(referencingContract, 'data.slug'), referencingSchema)
   test.is(false, result.success)
   test.is('data.data should have required property \'.slug\'', result.errors[0])

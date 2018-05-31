@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 resin.io
+ * Copyright 2018 resin.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,19 +52,20 @@ const overlappingContract = _.merge({}, baseContract, {
 ava.test('should validate overlapping contract', (test) => {
   test.deepEqual(
     {
-      success: true, errors: []
+      success: true,
+      errors: []
     },
     validation.checkContract(overlappingContract, overlappingSchema)
   )
 })
 
-ava.test('Should reject invald overlapping contract', (test) => {
+ava.test('Should reject invalid overlapping contract', (test) => {
   const result = validation.checkContract(baseContract, overlappingSchema)
   test.is(false, result.success)
   test.is('data.data should have required property \'test\'', result.errors[0])
 })
 
-ava.test('Should reject invald overlapping contract', (test) => {
+ava.test('Should reject invalid overlapping contract', (test) => {
   const result = validation.checkContract(_.omit(overlappingContract, 'data.test'), overlappingSchema)
   test.is(false, result.success)
   test.is('data.data should have required property \'test\'', result.errors[0])
