@@ -60,8 +60,7 @@
           "sw": {
             "slug": "armel",
             "type": "arch.sw",
-            "name": "armel",
-            "aliases": [ "arm6" ]
+            "name": "armel"
           }
         },
         "sw": {
@@ -85,10 +84,10 @@
       "children": {
         "arch": {
           "sw": {
-            "slug": "armv7hf",
+            "slug": "arm7",
             "type": "arch.sw",
             "name": "armv7hf",
-            "aliases": [ "arm7" ]
+            "canonicalSlug": "armv7hf"
           }
         },
         "sw": {

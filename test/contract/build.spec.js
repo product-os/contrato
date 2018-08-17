@@ -146,3 +146,92 @@ ava.test('should build contracts with variants and templates', (test) => {
     })
   ])
 })
+
+ava.test('should expand contract aliases', (test) => {
+  const contracts = Contract.build({
+    slug: 'debian',
+    type: 'sw.os',
+    version: 'jessie',
+    aliases: [ 'foo', 'bar' ]
+  })
+
+  test.deepEqual(contracts, [
+    new Contract({
+      slug: 'foo',
+      version: 'jessie',
+      type: 'sw.os',
+      canonicalSlug: 'debian'
+    }),
+    new Contract({
+      slug: 'bar',
+      version: 'jessie',
+      type: 'sw.os',
+      canonicalSlug: 'debian'
+    }),
+    new Contract({
+      slug: 'debian',
+      version: 'jessie',
+      type: 'sw.os'
+    })
+  ])
+})
+
+ava.test('should build contracts with variants and aliases', (test) => {
+  const contracts = Contract.build({
+    name: 'debian {{this.version}}',
+    slug: 'debian',
+    type: 'sw.os',
+    variants: [
+      {
+        version: 'wheezy'
+      },
+      {
+        version: 'jessie'
+      }
+    ],
+    aliases: [ 'foo', 'bar' ]
+  })
+
+  test.deepEqual(contracts, [
+    new Contract({
+      name: 'debian wheezy',
+      slug: 'foo',
+      type: 'sw.os',
+      version: 'wheezy',
+      canonicalSlug: 'debian'
+    }),
+    new Contract({
+      name: 'debian wheezy',
+      slug: 'bar',
+      type: 'sw.os',
+      version: 'wheezy',
+      canonicalSlug: 'debian'
+    }),
+    new Contract({
+      name: 'debian wheezy',
+      slug: 'debian',
+      version: 'wheezy',
+      type: 'sw.os'
+    }),
+    new Contract({
+      name: 'debian jessie',
+      slug: 'foo',
+      type: 'sw.os',
+      version: 'jessie',
+      canonicalSlug: 'debian'
+    }),
+    new Contract({
+      name: 'debian jessie',
+      slug: 'bar',
+      type: 'sw.os',
+      version: 'jessie',
+      canonicalSlug: 'debian'
+    }),
+    new Contract({
+      name: 'debian jessie',
+      slug: 'debian',
+      version: 'jessie',
+      type: 'sw.os'
+    })
+  ])
+})
