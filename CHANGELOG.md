@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## v0.0.6 - 2018-08-17
+
+- Add aliases support
+
 ## v0.0.5 - 2018-04-18
 
 - Add a collection of Handlebars templates to the partial system
