@@ -59,7 +59,8 @@ ava.test('should parse a layout with one number selector', (test) => {
           cardinality: _.merge(cardinality.parse([ 1, 1 ]), {
             type: 'hw.device-type'
           }),
-          filter: undefined
+          filter: undefined,
+          type: 'hw.device-type'
         }
       },
       types: new Set([ 'hw.device-type' ])
@@ -85,7 +86,8 @@ ava.test('should parse a layout with one finite and one infinite selectors', (te
           cardinality: _.merge(cardinality.parse([ 2, 2 ]), {
             type: 'hw.device-type'
           }),
-          filter: undefined
+          filter: undefined,
+          type: 'hw.device-type'
         }
       },
       types: new Set([ 'hw.device-type' ])
@@ -96,7 +98,8 @@ ava.test('should parse a layout with one finite and one infinite selectors', (te
           cardinality: _.merge(cardinality.parse([ 1, Infinity ]), {
             type: 'arch.sw'
           }),
-          filter: undefined
+          filter: undefined,
+          type: 'arch.sw'
         }
       },
       types: new Set([ 'arch.sw' ])
@@ -125,7 +128,8 @@ ava.test('should support object layout selectors', (test) => {
           cardinality: _.merge(cardinality.parse([ 2, 2 ]), {
             type: 'hw.device-type'
           }),
-          filter: undefined
+          filter: undefined,
+          type: 'hw.device-type'
         }
       },
       types: new Set([ 'hw.device-type' ])
@@ -136,7 +140,8 @@ ava.test('should support object layout selectors', (test) => {
           cardinality: _.merge(cardinality.parse([ 1, Infinity ]), {
             type: 'arch.sw'
           }),
-          filter: filterFunction
+          filter: filterFunction,
+          type: 'arch.sw'
         }
       },
       types: new Set([ 'arch.sw' ])
