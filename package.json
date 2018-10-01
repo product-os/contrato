@@ -25,6 +25,7 @@
     "js-combinatorics": "^0.5.2",
     "lodash": "^4.17.4",
     "object-hash": "^1.1.8",
+    "semver": "^5.5.1",
     "skhema": "^2.3.0"
   },
   "devDependencies": {
