@@ -1,0 +1,301 @@
+{
+  "universe": [
+		{
+			"slug": "raspberry-pi",
+			"type": "hw.device-type",
+			"version": "1.0.0",
+			"capabilities": {
+				"sw.arch": {
+					"slug": "arm6",
+					"version": "1",
+					"type": "sw.arch",
+					"name": "ARM v6"
+				}
+			},
+			"consists_of": [
+				{
+					"sw.arch": {
+						"slug": "arm6",
+						"version": "1",
+						"type": "sw.arch",
+						"name": "ARM v6"
+					}
+				}
+			]
+		},
+		{
+			"slug": "resin-intel",
+			"type": "hw.device-type",
+			"version": "1.0.0",
+			"capabilities": {
+				"sw.arch": {
+					"slug": "i386",
+					"version": "1",
+					"type": "sw.arch",
+					"name": "i386"
+				}
+			},
+			"consists_of": [
+				{
+					"sw.arch": {
+						"slug": "i386",
+						"version": "1",
+						"type": "sw.arch",
+						"name": "i386"
+					}
+				}
+			]
+		},
+    {
+      "slug": "arm6",
+      "version": "1",
+      "type": "sw.arch",
+      "name": "ARM v6"
+		},
+		{
+			"slug": "i386",
+			"version": "1",
+			"type": "sw.arch",
+			"name": "i386"
+		},
+		{
+			"slug": "resinOS-arm6",
+			"type": "resinOS",
+			"version": "2.15",
+			"requires": [
+				{
+					"type": "api",
+					"slug": "resin-api",
+					"version": "3+"
+				},
+				{
+				 "type": "sw.arch",
+					"slug": "arm6"
+				}
+			],
+			"consists_of": [
+				{
+					"slug": "supervisor-arm6",
+					"family": "supervisor",
+					"version": "2.12",
+					"type": "service-container",
+					"requires": [
+						{
+							"type": "api",
+							"slug": "resin-api",
+							"version": "3+"
+						},
+						{
+						 "type": "sw.arch",
+							"slug": "arm6"
+						}
+					]
+				}
+			],
+			"data": {
+				"built_for_arch": {
+					"slug": "arm6",
+					"type": "sw.arch",
+					"version": "1.0.0"
+				}
+			}
+		}
+  ],
+  "blueprint": {
+    "skeleton": {
+			"slug": "resinOS-{{this.children.device-type.slug}}",
+			"version": "2.15+rev1",
+			"type": "OS-image",
+			"consists_of": {
+				"resinOS": "{{>this.children.resinOS}}",
+				"device-type": "{{>this.children.device-type}}"
+			},
+			"mappings": [
+				{ 
+					"capability":  {
+						"from": "device-type",
+						"label": "sw.arch"
+					},
+					"requirement": {
+						"from": "resinOS",
+						"type": "sw.arch"
+					}
+				}
+			]
+    },
+    "layout": {
+			"device-type": {
+				"cardinality": 1,
+				"type": "hw.device-type"
+			},
+			"resinOS": {
+				"cardinality": 1,
+				"type": "resinOS"
+			}
+		}
+  },
+  "contexts": [
+		{
+			"slug": "resinOS-raspberry-pi",
+			"type": "OS-image",
+			"version": "2.15+rev1",
+			"mappings": [
+				{ 
+					"capability":  {
+						"from": "device-type",
+						"label": "sw.arch"
+					},
+					"requirement": {
+						"from": "resinOS",
+						"type": "sw.arch"
+					}
+				}
+			],
+			"requires": [
+			  {
+			    "resinOS": [
+			      {
+			        "slug": "resin-api",
+							"type": "api",
+							"version": "3+"
+			      }
+			    ]
+			  }
+			],
+			"consists_of": {
+				"device-type": {
+					"slug": "raspberry-pi",
+					"type": "hw.device-type",
+					"version": "1.0.0",
+					"capabilities": {
+						"sw.arch": {
+							"name": "ARM v6",
+							"slug": "arm6",
+							"type": "sw.arch",
+							"version": "1"
+						}
+					},
+					"consists_of": [
+						{
+							"sw.arch": {
+								"name": "ARM v6",
+								"slug": "arm6",
+								"type": "sw.arch",
+								"version": "1"
+							}
+						}
+					]
+				},
+				"resinOS": {
+					"slug": "resinOS-arm6",
+					"type": "resinOS",
+					"version": "2.15",
+					"consists_of": [
+						{
+							"slug": "supervisor-arm6",
+							"type": "service-container",
+							"version": "2.12",
+							"family": "supervisor",
+							"requires": [
+								{
+									"slug": "resin-api",
+									"type": "api",
+									"version": "3+"
+								},
+								{
+									"slug": "arm6",
+									"type": "sw.arch"
+								}
+							]
+						}
+					],
+					"data": {
+						"built_for_arch": {
+							"slug": "arm6",
+							"type": "sw.arch",
+							"version": "1.0.0"
+						}
+					},
+					"requires": [
+						{
+							"slug": "resin-api",
+							"type": "api",
+							"version": "3+"
+						},
+						{
+							"slug": "arm6",
+							"type": "sw.arch"
+						}
+					]
+				}
+			},
+			"children": {
+				"device-type": {
+					"capabilities": {
+						"sw.arch": {
+							"name": "ARM v6",
+							"slug": "arm6",
+							"type": "sw.arch",
+							"version": "1"
+						}
+					},
+					"consists_of": [
+						{
+							"sw.arch": {
+								"name": "ARM v6",
+								"slug": "arm6",
+								"type": "sw.arch",
+								"version": "1"
+							}
+						}
+					],
+					"slug": "raspberry-pi",
+					"type": "hw.device-type",
+					"version": "1.0.0"
+				},
+				"resinOS": {
+					"consists_of": [
+						{
+							"family": "supervisor",
+							"requires": [
+								{
+									"slug": "resin-api",
+									"type": "api",
+									"version": "3+"
+								},
+								{
+									"slug": "arm6",
+									"type": "sw.arch"
+								}
+							],
+							"slug": "supervisor-arm6",
+							"type": "service-container",
+							"version": "2.12"
+						}
+					],
+					"data": {
+						"built_for_arch": {
+							"slug": "arm6",
+							"type": "sw.arch",
+							"version": "1.0.0"
+						}
+					},
+					"requires": [
+						{
+							"slug": "resin-api",
+							"type": "api",
+							"version": "3+"
+						},
+						{
+							"slug": "arm6",
+							"type": "sw.arch"
+						}
+					],
+					"slug": "resinOS-arm6",
+					"type": "resinOS",
+					"version": "2.15"
+				}
+			}
+		}
+	]
+}

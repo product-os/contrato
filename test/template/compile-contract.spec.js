@@ -47,6 +47,77 @@ ava.test('should compile a single top level template', (test) => {
   })
 })
 
+ava.test('should compile a single top level object splice', (test) => {
+  test.deepEqual(template.compileContract({
+    type: 'distro',
+    name: '{{>this.version}}',
+    version: {
+      a: true
+    },
+    slug: 'debian'
+  }), {
+    type: 'distro',
+    name: {
+      a: true
+    },
+    version: {
+      a: true
+    },
+    slug: 'debian'
+  })
+})
+
+ava.test('should compile adjacent top level object splice', (test) => {
+  test.deepEqual(template.compileContract({
+    type: 'distro',
+    name: '{{>this.version}}',
+    b: '{{>this.version}}',
+    version: {
+      a: true
+    },
+    slug: 'debian'
+  }), {
+    type: 'distro',
+    name: {
+      a: true
+    },
+    version: {
+      a: true
+    },
+    b: {
+      a: true
+    },
+    slug: 'debian'
+  })
+})
+
+
+
+ava.test('should compile a multiple top level object splice', (test) => {
+  test.deepEqual(template.compileContract({
+    type: 'distro',
+    name: '{{>this.version}}',
+    slug: 'debian',
+    b: '{{>this.version}}',
+    version: {
+      a: true
+    },
+  }), {
+    type: 'distro',
+    name: {
+      a: true
+    },
+    version: {
+      a: true
+    },
+    b: {
+      a: true
+    },
+    slug: 'debian'
+  })
+})
+
+
 ava.test('should compile templates inside arrays', (test) => {
   test.deepEqual(template.compileContract({
     type: 'distro',

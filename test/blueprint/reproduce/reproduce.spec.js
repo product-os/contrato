@@ -34,7 +34,7 @@ _.each([
   'reference-nested',
   'requirements-or-2',
   'requirements-simple-2',
-  'requirements-simple-2-aliases'
+  'requirements-simple-2-aliases',
 ], (testName) => {
   const testCase = require(`./${testName}.json`)
 

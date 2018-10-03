@@ -1,0 +1,264 @@
+{
+  "universe": [
+    {
+      "slug": "aarch64",
+      "version": "1",
+      "type": "sw.arch",
+      "name": "ARM v8"
+    },
+    {
+      "slug": "amd64",
+      "version": "1",
+      "type": "sw.arch",
+      "name": "Intel 64-bit (x86-64)"
+    },
+    {
+      "slug": "armel",
+      "version": "1",
+      "type": "sw.arch",
+      "name": "ARM v5"
+    },
+    {
+      "slug": "armhf",
+      "version": "1",
+      "type": "sw.arch",
+      "name": "ARM Hard Float"
+    },
+    {
+      "slug": "rpi",
+      "version": "1",
+      "type": "sw.arch",
+      "name": "ARM v6"
+    },
+    {
+      "slug": "i386",
+      "version": "1",
+      "type": "sw.arch",
+      "name": "Intel 32-bit (x86)"
+    },
+    {
+      "slug": "armv7hf",
+      "version": "1",
+      "type": "sw.arch",
+      "name": "ARM v7"
+    }
+  ],
+  "blueprint": {
+    "skeleton": {
+      "slug": "raspberry-pi-{{this.children.myarch.slug}}",
+      "type": "test",
+      "capabilities": {
+        "arch": "{{>this.children.myarch}}"
+      },
+      "consists_of": {
+        "arch": "{{>this.children.myarch}}"
+      }
+    },
+    "layout": {
+      "myarch": {
+				"cardinality": 1,
+				"type": "sw.arch",
+				"version": "latest"
+      }
+    }
+  },
+  "contexts": [
+    {
+      "slug": "raspberry-pi-aarch64",
+      "type": "test",
+      "capabilities": {
+        "arch": {
+          "slug": "aarch64",
+          "version": "1",
+          "type": "sw.arch",
+          "name": "ARM v8"
+        }
+      },
+      "consists_of": {
+        "arch": {
+          "slug": "aarch64",
+          "version": "1",
+          "type": "sw.arch",
+          "name": "ARM v8"
+        }
+      },
+      "children": {
+        "myarch": {
+          "slug": "aarch64",
+          "version": "1",
+          "type": "sw.arch",
+          "name": "ARM v8"
+        }
+      }
+    },
+    {
+      "slug": "raspberry-pi-amd64",
+      "type": "test",
+      "capabilities": {
+        "arch": {
+          "slug": "amd64",
+          "version": "1",
+          "type": "sw.arch",
+          "name": "Intel 64-bit (x86-64)"
+        }
+      },
+      "consists_of": {
+        "arch": {
+          "slug": "amd64",
+          "version": "1",
+          "type": "sw.arch",
+          "name": "Intel 64-bit (x86-64)"
+        }
+      }
+      ,
+      "children": {
+        "myarch": {
+          "slug": "amd64",
+          "version": "1",
+          "type": "sw.arch",
+          "name": "Intel 64-bit (x86-64)"
+        }
+      }
+    },
+    {
+      "slug": "raspberry-pi-armel",
+      "type": "test",
+      "capabilities": {
+        "arch": {
+          "slug": "armel",
+          "version": "1",
+          "type": "sw.arch",
+          "name": "ARM v5"
+        }
+      },
+      "consists_of": {
+        "arch": {
+          "slug": "armel",
+          "version": "1",
+          "type": "sw.arch",
+          "name": "ARM v5"
+        }
+      },
+      "children": {
+        "myarch": {
+          "slug": "armel",
+          "version": "1",
+          "type": "sw.arch",
+          "name": "ARM v5"
+        }
+      }
+    },
+    {
+      "slug": "raspberry-pi-armhf",
+      "type": "test",
+      "capabilities": {
+        "arch": {
+          "slug": "armhf",
+          "version": "1",
+          "type": "sw.arch",
+          "name": "ARM Hard Float"
+        }
+      },
+      "consists_of": {
+        "arch": {
+          "slug": "armhf",
+          "version": "1",
+          "type": "sw.arch",
+          "name": "ARM Hard Float"
+        }
+      },
+      "children": {
+        "myarch": {
+          "slug": "armhf",
+          "version": "1",
+          "type": "sw.arch",
+          "name": "ARM Hard Float"
+        }
+      }
+    },
+    {
+      "slug": "raspberry-pi-rpi",
+      "type": "test",
+      "capabilities": {
+        "arch": {
+          "slug": "rpi",
+          "version": "1",
+          "type": "sw.arch",
+          "name": "ARM v6"
+        }
+      },
+      "consists_of": {
+        "arch": {
+          "slug": "rpi",
+          "version": "1",
+          "type": "sw.arch",
+          "name": "ARM v6"
+        }
+      },
+      "children": {
+        "myarch": {
+          "slug": "rpi",
+          "version": "1",
+          "type": "sw.arch",
+          "name": "ARM v6"
+        }
+      }
+    },
+    {
+      "slug": "raspberry-pi-i386",
+      "type": "test",
+      "capabilities": {
+        "arch": {
+          "slug": "i386",
+          "version": "1",
+          "type": "sw.arch",
+          "name": "Intel 32-bit (x86)"
+        }
+      },
+      "consists_of": {
+        "arch": {
+          "slug": "i386",
+          "version": "1",
+          "type": "sw.arch",
+          "name": "Intel 32-bit (x86)"
+        }
+      },
+      "children": {
+        "myarch": {
+          "slug": "i386",
+          "version": "1",
+          "type": "sw.arch",
+          "name": "Intel 32-bit (x86)"
+        }
+      }
+    },
+    {
+      "slug": "raspberry-pi-armv7hf",
+      "type": "test",
+      "capabilities": {
+        "arch": {
+          "slug": "armv7hf",
+          "version": "1",
+          "type": "sw.arch",
+          "name": "ARM v7"
+        }
+      },
+      "consists_of": {
+        "arch": {
+          "slug": "armv7hf",
+          "version": "1",
+          "type": "sw.arch",
+          "name": "ARM v7"
+        }
+      },
+      "children": {
+        "myarch": {
+          "slug": "armv7hf",
+          "version": "1",
+          "type": "sw.arch",
+          "name": "ARM v7"
+        }
+      }
+    }
+  ]
+}

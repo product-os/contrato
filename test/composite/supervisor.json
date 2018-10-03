@@ -1,0 +1,158 @@
+{
+	"universe": [
+		{
+			"slug": "raspberry-pi",
+			"type": "hw.device-type",
+			"version": "1.0.0",
+			"capabilities": {
+				"sw.arch": {
+					"slug": "arm6",
+					"version": "1",
+					"type": "sw.arch",
+					"name": "ARM v6"
+				}
+			},
+			"consists_of": [
+				{
+					"sw.arch": {
+						"slug": "arm6",
+						"version": "1",
+						"type": "sw.arch",
+						"name": "ARM v6"
+					}
+				}
+			]
+		},
+		{
+			"slug": "resin-intel",
+			"type": "hw.device-type",
+			"version": "1.0.0",
+			"capabilities": {
+				"sw.arch": {
+					"slug": "i386",
+					"version": "1",
+					"type": "sw.arch",
+					"name": "i386"
+				}
+			},
+			"consists_of": [
+				{
+					"sw.arch": {
+						"slug": "i386",
+						"version": "1",
+						"type": "sw.arch",
+						"name": "i386"
+					}
+				}
+			]
+		},
+    {
+      "slug": "arm6",
+      "version": "1",
+      "type": "sw.arch",
+      "name": "ARM v6"
+		},
+		{
+			"slug": "i386",
+			"version": "1",
+			"type": "sw.arch",
+			"name": "i386"
+		}
+	],
+	"blueprint": {
+		"skeleton": {
+			"slug": "supervisor-{{this.children.build_for_arch.slug}}",
+			"family": "supervisor",
+			"version": "2.12",
+			"type": "service-container",
+			"requires": [
+				{
+					"type": "api",
+					"slug": "resin-api",
+					"version": "3+"
+				},
+				{
+					"type": "{{this.children.build_for_arch.type}}",
+					"slug": "{{this.children.build_for_arch.slug}}"
+				}
+			],
+			"data": {
+				"build_for_arch": "{{>this.children.build_for_arch}}"
+			}
+		},
+		"layout": {
+      "build_for_arch": {
+        "cardinality": 1,
+        "type": "sw.arch"
+      }
+		}
+	},
+	"contexts": [
+		{
+			"slug": "supervisor-arm6",
+			"type": "service-container",
+			"version": "2.12",
+			"family": "supervisor",
+			"requires": [
+				{
+					"slug": "resin-api",
+					"type": "api",
+					"version": "3+"
+				},
+				{
+					"slug": "arm6",
+					"type": "sw.arch"
+				}
+			],
+			"children": {
+				"build_for_arch": {
+					"name": "ARM v6",
+					"slug": "arm6",
+					"type": "sw.arch",
+					"version": "1"
+				}
+			},
+			"data": {
+				"build_for_arch": {
+					"name": "ARM v6",
+					"slug": "arm6",
+					"type": "sw.arch",
+					"version": "1"
+				}
+			}
+		},
+		{
+			"slug": "supervisor-i386",
+			"type": "service-container",
+			"version": "2.12",
+			"family": "supervisor",
+			"requires": [
+				{
+					"slug": "resin-api",
+					"type": "api",
+					"version": "3+"
+				},
+				{
+					"slug": "i386",
+					"type": "sw.arch"
+				}
+			],
+			"children": {
+				"build_for_arch": {
+					"slug": "i386",
+					"version": "1",
+					"type": "sw.arch",
+					"name": "i386"
+				}
+			},
+			"data": {
+				"build_for_arch": {
+					"slug": "i386",
+					"version": "1",
+					"type": "sw.arch",
+					"name": "i386"
+				}
+			}
+		}
+ ]
+}
