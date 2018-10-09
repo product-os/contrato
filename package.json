@@ -1,5 +1,5 @@
 {
-  "name": "contrato",
+  "name": "@resin/contrato",
   "version": "0.0.6",
   "description": "The official contracts implementation",
   "main": "lib/index.js",
@@ -24,7 +24,9 @@
     "handlebars-helpers": "^0.10.0",
     "js-combinatorics": "^0.5.2",
     "lodash": "^4.17.4",
-    "object-hash": "^1.1.8"
+    "object-hash": "^1.1.8",
+    "semver": "^5.5.1",
+    "skhema": "^2.3.0"
   },
   "devDependencies": {
     "ava": "^0.22.0",
