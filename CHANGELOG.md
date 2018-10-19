@@ -5,6 +5,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v0.0.6 - 2018-08-17
 
+## v0.0.7 - 2018-10-19
+
+* Partials: Return correct path combinations given 3 versioned contracts [Juan Cruz Viotti]
+* Test: Add missing test case for find partial [Trong Nghia Nguyen]
+
 - Add aliases support
 
 ## v0.0.5 - 2018-04-18
