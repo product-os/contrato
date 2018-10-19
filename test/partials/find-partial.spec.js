@@ -415,19 +415,19 @@ ava.test('should find a partial in a three level structure with one contract wit
       type: 'arch.sw',
       name: 'armv7hf',
       slug: 'armv7hf',
-      version: '1',
+      version: '1'
     }),
     new Contract({
       type: 'hw.device-type',
       name: 'Raspberry Pi 3',
       slug: 'raspberrypi3',
-      version: 'rev1',
+      version: 'rev1'
     }),
     new Contract({
       type: 'sw.os',
       name: 'Debian Wheezy',
       slug: 'debian',
-      version: '7',
+      version: '7'
     })
   ])
 
@@ -440,25 +440,15 @@ ava.test('should find a partial in a three level structure with one contract wit
     'path/to/partials/raspberrypi3@rev1+debian+armv7hf@1/my-partial.tpl',
     'path/to/partials/raspberrypi3@rev1+debian+armv7hf/my-partial.tpl',
     'path/to/partials/raspberrypi3+debian@7+armv7hf@1/my-partial.tpl',
+    'path/to/partials/raspberrypi3+debian@7+armv7hf/my-partial.tpl',
     'path/to/partials/raspberrypi3+debian+armv7hf@1/my-partial.tpl',
     'path/to/partials/raspberrypi3+debian+armv7hf/my-partial.tpl',
-    'path/to/partials/raspberrypi3@rev1+armv7hf@1/my-partial.tpl',
     'path/to/partials/raspberrypi3@rev1+debian@7/my-partial.tpl',
-    'path/to/partials/raspberrypi3@rev1+armv7hf/my-partial.tpl',
     'path/to/partials/raspberrypi3@rev1+debian/my-partial.tpl',
-    'path/to/partials/raspberrypi3+armv7hf@1/my-partial.tpl',
     'path/to/partials/raspberrypi3+debian@7/my-partial.tpl',
-    'path/to/partials/raspberrypi3+armv7hf/my-partial.tpl',
     'path/to/partials/raspberrypi3+debian/my-partial.tpl',
-    'path/to/partials/debian@7+armv7hf@1/my-partial.tpl',
     'path/to/partials/raspberrypi3@rev1/my-partial.tpl',
-    'path/to/partials/debian@7+armv7hf/my-partial.tpl',
-    'path/to/partials/debian+armv7hf/my-partial.tpl',
     'path/to/partials/raspberrypi3/my-partial.tpl',
-    'path/to/partials/armv7hf@1/my-partial.tpl',
-    'path/to/partials/debian@7/my-partial.tpl',
-    'path/to/partials/armv7hf/my-partial.tpl',
-    'path/to/partials/debian/my-partial.tpl',
     'path/to/partials/my-partial.tpl'
   ])
 })

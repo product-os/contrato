@@ -1,5 +1,5 @@
 {
-  "name": "contrato",
+  "name": "@balena/contrato",
   "version": "0.0.6",
   "description": "The official contracts implementation",
   "main": "lib/index.js",
