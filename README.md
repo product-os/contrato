@@ -5,7 +5,7 @@ Contrato
 
 > The official contracts implementation
 
-[**Documentation**](https://resin-io.github.io/contrato/) | [**Code Coverage**](https://resin-io.github.io/contrato/lcov-report/)
+[**Documentation**](https://balena-io.github.io/contrato/) | [**Code Coverage**](https://balena-io.github.io/contrato/lcov-report/)
 
 Tests
 -----
