@@ -5,6 +5,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v0.0.6 - 2018-08-17
 
+## 0.1.0 - 2019-08-19
+
+* Add circleci configuration file [Cameron Diver]
+* Only perform a version check if child version is valid [Cameron Diver]
+* Feature: Add support for 'latest' in selectors [Andreas Fitzek]
+* Feature: Add sequence generation for Blueprints [Andreas Fitzek]
+* Feature: Add support for skhema filters in blueprint selectors [Andreas Fitzek]
+
 ## v0.0.7 - 2018-10-19
 
 * Partials: Return correct path combinations given 3 versioned contracts [Juan Cruz Viotti]
