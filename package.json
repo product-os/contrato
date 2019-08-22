@@ -14,6 +14,7 @@
     "jsdoc": "jsdoc --configure jsdoc.conf.json"
   },
   "author": "Resin Inc. <hello@resin.io>",
+  "types": "index.d.ts",
   "license": "Apache-2.0",
   "ava": {
     "concurrency": 5
