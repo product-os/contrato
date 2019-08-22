@@ -16,19 +16,14 @@
 
 type Dictionary<T> = { [key: string]: T };
 
-declare module 'contrato' {
+declare module '@balena/contrato' {
 	export type Template = unknown;
 	export type Layout = Dictionary<unknown>;
 	export type Skeleton = Dictionary<unknown>;
-
-	export interface ContractObject {
-		slug: string;
-		version?: string;
-		[key: string]: unknown;
-	}
+	export type ContractObject = Dictionary<unknown>;
 
 	export class Contract {
-		public constructor(object: ContractObject, options: { hash?: boolean });
+		public constructor(object: ContractObject, options?: { hash?: boolean });
 		public getVersion(): string;
 		public getSlug(): string;
 		public getAllSlugs(): Set<string>;
@@ -39,19 +34,19 @@ declare module 'contrato' {
 		public toJSON(): ContractObject;
 		public addChild(
 			contract: Contract,
-			options: { rehash?: boolean; rebuild?: boolean },
+			options?: { rehash?: boolean; rebuild?: boolean },
 		): Contract;
 		public removeChild(
 			contract: Contract,
-			options: { rehash?: boolean },
+			options?: { rehash?: boolean },
 		): Contract;
 		public addChildren(
 			contracts: Contract[],
-			options: { rehash?: boolean },
+			options?: { rehash?: boolean },
 		): Contract;
 		public getChildrenTypes(): Set<string>;
 		public getChildByHash(childHash: string): Contract | undefined;
-		public getChildren(options: { types?: Set<string> }): Contract[];
+		public getChildren(options?: { types?: Set<string> }): Contract[];
 		public getchildrenByType(type: string);
 		public findChildren(matcher: Contract): Contract[];
 		public getChildrenCombinations(options: {
@@ -69,16 +64,16 @@ declare module 'contrato' {
 		}): Contract[];
 		public satisfiesChildContract(
 			contract: Contract,
-			options: { types?: Set<string> },
+			options?: { types?: Set<string> },
 		): boolean;
-		public areChildrenSatisfied(options: { types?: Set<string> }): boolean;
+		public areChildrenSatisfied(options?: { types?: Set<string> }): boolean;
 		public static isEqual(contract1: Contract, contract2: Contract): boolean;
 		public static build(source: ContractObject): Contract[];
 	}
 
 	export class Blueprint extends Contract {
 		public constructor(layout: Layout, skeleton: Skeleton);
-		public reproduce(contract: Contract): Array<Contract[]>;
+		public reproduce(contract: Contract): Contract[];
 	}
 
 	export function query(
