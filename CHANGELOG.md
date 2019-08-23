@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v0.0.6 - 2018-08-17
 
+## 0.2.1 - 2019-08-22
+
+* Fix typings module name and optional params [Cameron Diver]
+
 ## 0.2.0 - 2019-08-22
 
 * Add typescript types to project [Cameron Diver]
