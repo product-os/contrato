@@ -5,6 +5,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v0.0.6 - 2018-08-17
 
+# v0.3.0
+## (2020-07-17)
+
+* Add logical operator support in templates [Stevche Radevski]
+
 ## 0.2.1 - 2019-08-22
 
 * Fix typings module name and optional params [Cameron Diver]
