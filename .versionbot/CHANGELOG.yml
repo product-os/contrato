@@ -1,181 +1,202 @@
 - commits:
-  - author: Stevche Radevski
-    body: |-
-      Handlebars supports very basic if condition checking, but it only checks for
-      existence of a field. There are times when we want to combine conditions in order
-      to generate something as part of a blueprint, without defining a completely separate
-      blueprint for it (like generating network config schema if a dt has a wifi chip or
-      a usb port to which we can connect a dongle).
-    footers:
-      change-type: minor
-      signed-off-by: Stevche Radevski <stevche@balena.io>
-    hash: 90c3356b356920b8a6dd95a478dd6cb39e6ad148
-    subject: Add logical operator support in templates
-  date: "2020-07-17T12:02:34Z"
+    - subject: Add .versionbot/CHANGELOG.yml for nested changelogs
+      hash: 783273aac70fd631d5a80e33b55ef468be4c3ec7
+      body: ''
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+  version: 0.3.1
+  date: 2020-08-04T21:46:25.163Z
+- commits:
+    - author: Stevche Radevski
+      body: >-
+        Handlebars supports very basic if condition checking, but it only checks
+        for
+
+        existence of a field. There are times when we want to combine conditions
+        in order
+
+        to generate something as part of a blueprint, without defining a
+        completely separate
+
+        blueprint for it (like generating network config schema if a dt has a
+        wifi chip or
+
+        a usb port to which we can connect a dongle).
+      footers:
+        change-type: minor
+        signed-off-by: Stevche Radevski <stevche@balena.io>
+      hash: 90c3356b356920b8a6dd95a478dd6cb39e6ad148
+      subject: Add logical operator support in templates
+  date: '2020-07-17T12:02:34Z'
   version: 0.3.0
 - commits:
-  - author: Cameron Diver
-    body: ""
-    footers:
-      change-type: patch
-      signed-off-by: Cameron Diver <cameron@balena.io>
-    hash: c3c9b195470b99e817554c679079c2b81c519c35
-    subject: Fix typings module name and optional params
-  date: "2019-08-23T09:38:58Z"
+    - author: Cameron Diver
+      body: ''
+      footers:
+        change-type: patch
+        signed-off-by: Cameron Diver <cameron@balena.io>
+      hash: c3c9b195470b99e817554c679079c2b81c519c35
+      subject: Fix typings module name and optional params
+  date: '2019-08-23T09:38:58Z'
   version: 0.2.1
 - commits:
-  - author: Cameron Diver
-    body: ""
-    footers:
-      change-type: minor
-      signed-off-by: Cameron Diver <cameron@balena.io>
-    hash: 9ac1ee649cf45492d36aa8efa750e6a0cbb3e77a
-    subject: Add typescript types to project
-  date: "2019-08-22T11:27:13Z"
+    - author: Cameron Diver
+      body: ''
+      footers:
+        change-type: minor
+        signed-off-by: Cameron Diver <cameron@balena.io>
+      hash: 9ac1ee649cf45492d36aa8efa750e6a0cbb3e77a
+      subject: Add typescript types to project
+  date: '2019-08-22T11:27:13Z'
   version: 0.2.0
 - commits:
-  - author: Andreas Fitzek
-    body: |-
-      This adds support to specify a filter in the blueprint selector.
-      This filter is a json schema, and only components are selected that
-      match this schema.
-    footers:
-      change-type: minor
-      signed-off-by: Andreas Fitzek <andreas@resin.io>
-    hash: 59f4634503cff3ee0203deb248135472c2212186
-    subject: 'Feature: Add support for skhema filters in blueprint selectors'
-  - author: Andreas Fitzek
-    body: |-
-      This adds a sequence method to Blueprints, which will build a path
-      to the most advanced version of the combosition of the blueprint.
-      The steps in the path will work in a way that all requirements of
-      each contract are satisfied at all time and each step will only
-      increment the version of one component.
-      This is only true for non infinite components atm, components that
-      are added to the result of the blueprint by an infinite selector, will
-      just be filled up with whatever is available, so that path algorithm
-      only operates on the finite selectors.
-      This also add semver range version matching for requirements and
-      selectors.
-    footers:
-      change-type: patch
-      signed-off-by: Andreas Fitzek <andreas@resin.io>
-    hash: 4f9e5ac31cb4f0a523f221dba806e978c54586b0
-    subject: 'Feature: Add sequence generation for Blueprints'
-  - author: Andreas Fitzek
-    body: |-
-      The `version` field in selectors can now hold the `latest`
-      keyword, which will mean, that the selector will only collect
-      the latest X versions of the component. X is the minimum of the
-      cardinality of the selector and the available contracts.
-    footers:
-      change-type: patch
-      signed-off-by: Andreas Fitzek <andreas@resin.io>
-    hash: 8df73c5340311dc341c94a7fd28645e9aa710073
-    subject: 'Feature: Add support for ''latest'' in selectors'
-  - author: Andreas Fitzek
-    body: ""
-    hash: 8a3a954b555ea7187b9bb7ff6e81d98b43ec94cf
-    subject: bubble-up-requirements for features
-  - author: Andreas Fitzek
-    body: ""
-    hash: 6c425225944422072ecc4a33adaae5fc0b2c7d57
-    subject: handle single selector edge case
-  - author: Andreas Fitzek
-    body: ""
-    hash: f08dc1c786623f3724e7ef6cc145ea28db071edf
-    subject: bubble up capabilities
-  - author: Cameron Diver
-    body: ""
-    footers:
-      change-type: patch
-      signed-off-by: Cameron Diver <cameron@balena.io>
-    hash: fcff89632b202d1326ba5755fc85b1a979061a2f
-    subject: Only perform a version check if child version is valid
-  - author: Cameron Diver
-    body: ""
-    footers:
-      change-type: minor
-      signed-off-by: Cameron Diver <cameron@balena.io>
-    hash: 860f896be05636eb6aa1dd17c05b143468023c12
-    subject: Add circleci configuration file
-  date: "2019-08-20T08:12:13Z"
+    - author: Andreas Fitzek
+      body: |-
+        This adds support to specify a filter in the blueprint selector.
+        This filter is a json schema, and only components are selected that
+        match this schema.
+      footers:
+        change-type: minor
+        signed-off-by: Andreas Fitzek <andreas@resin.io>
+      hash: 59f4634503cff3ee0203deb248135472c2212186
+      subject: 'Feature: Add support for skhema filters in blueprint selectors'
+    - author: Andreas Fitzek
+      body: |-
+        This adds a sequence method to Blueprints, which will build a path
+        to the most advanced version of the combosition of the blueprint.
+        The steps in the path will work in a way that all requirements of
+        each contract are satisfied at all time and each step will only
+        increment the version of one component.
+        This is only true for non infinite components atm, components that
+        are added to the result of the blueprint by an infinite selector, will
+        just be filled up with whatever is available, so that path algorithm
+        only operates on the finite selectors.
+        This also add semver range version matching for requirements and
+        selectors.
+      footers:
+        change-type: patch
+        signed-off-by: Andreas Fitzek <andreas@resin.io>
+      hash: 4f9e5ac31cb4f0a523f221dba806e978c54586b0
+      subject: 'Feature: Add sequence generation for Blueprints'
+    - author: Andreas Fitzek
+      body: |-
+        The `version` field in selectors can now hold the `latest`
+        keyword, which will mean, that the selector will only collect
+        the latest X versions of the component. X is the minimum of the
+        cardinality of the selector and the available contracts.
+      footers:
+        change-type: patch
+        signed-off-by: Andreas Fitzek <andreas@resin.io>
+      hash: 8df73c5340311dc341c94a7fd28645e9aa710073
+      subject: 'Feature: Add support for ''latest'' in selectors'
+    - author: Andreas Fitzek
+      body: ''
+      hash: 8a3a954b555ea7187b9bb7ff6e81d98b43ec94cf
+      subject: bubble-up-requirements for features
+    - author: Andreas Fitzek
+      body: ''
+      hash: 6c425225944422072ecc4a33adaae5fc0b2c7d57
+      subject: handle single selector edge case
+    - author: Andreas Fitzek
+      body: ''
+      hash: f08dc1c786623f3724e7ef6cc145ea28db071edf
+      subject: bubble up capabilities
+    - author: Cameron Diver
+      body: ''
+      footers:
+        change-type: patch
+        signed-off-by: Cameron Diver <cameron@balena.io>
+      hash: fcff89632b202d1326ba5755fc85b1a979061a2f
+      subject: Only perform a version check if child version is valid
+    - author: Cameron Diver
+      body: ''
+      footers:
+        change-type: minor
+        signed-off-by: Cameron Diver <cameron@balena.io>
+      hash: 860f896be05636eb6aa1dd17c05b143468023c12
+      subject: Add circleci configuration file
+  date: '2019-08-20T08:12:13Z'
   version: 0.1.0
 - commits:
-  - author: Trong Nghia Nguyen
-    body: ""
-    footers:
-      change-type: patch
-      signed-off-by: Trong Nghia Nguyen <nghiant2710@gmail.com>
-    hash: 0507f6e912e65db2537947864b959455305a9564
-    subject: 'test: Add missing test case for find partial'
-  - author: Juan Cruz Viotti
-    body: ""
-    footers:
-      change-type: patch
-      signed-off-by: Juan Cruz Viotti <juan@balena.io>
-    hash: 9ec696838ad22e19092958b9fe1c6c2bdaa0c573
-    subject: 'partials: Return correct path combinations given 3 versioned contracts'
-  date: "2018-10-19T13:31:07Z"
+    - author: Trong Nghia Nguyen
+      body: ''
+      footers:
+        change-type: patch
+        signed-off-by: Trong Nghia Nguyen <nghiant2710@gmail.com>
+      hash: 0507f6e912e65db2537947864b959455305a9564
+      subject: 'test: Add missing test case for find partial'
+    - author: Juan Cruz Viotti
+      body: ''
+      footers:
+        change-type: patch
+        signed-off-by: Juan Cruz Viotti <juan@balena.io>
+      hash: 9ec696838ad22e19092958b9fe1c6c2bdaa0c573
+      subject: 'partials: Return correct path combinations given 3 versioned contracts'
+  date: '2018-10-19T13:31:07Z'
   version: 0.0.7
 - commits:
-  - author: Trong Nghia Nguyen
-    body: |-
-      Contract can have a list of aliases.
-      Each alias will be expanded as a separate contract
-      and has all properties of canonical contract excepts the slug
-    footers:
-      change-type: minor
-      signed-off-by: Trong Nghia Nguyen <nghiant2710@gmail.com>
-    hash: 63d65d1c6c0297da1adffaf8dde6cb4b4af64a78
-    subject: 'aliases: Add contract aliases support'
-  - author: Trong Nghia Nguyen
-    body: ""
-    footers:
-      signed-off-by: Trong Nghia Nguyen <nghiant2710@gmail.com>
-    hash: e059fdc16aa6c1687866d56db5f97003f45d4b8e
-    subject: 'test: Add test cases for aliases support'
-  - author: Giovanni Garufi
-    body: ""
-    footers:
-      change-type: major
-    hash: 62fa88dbee7e6c719172d02c348e8e85e8d0b848
-    subject: Changed template references so that each reference to the current contract
-      must be qualified via `this`
-  date: "2018-08-17T10:37:41Z"
+    - author: Trong Nghia Nguyen
+      body: |-
+        Contract can have a list of aliases.
+        Each alias will be expanded as a separate contract
+        and has all properties of canonical contract excepts the slug
+      footers:
+        change-type: minor
+        signed-off-by: Trong Nghia Nguyen <nghiant2710@gmail.com>
+      hash: 63d65d1c6c0297da1adffaf8dde6cb4b4af64a78
+      subject: 'aliases: Add contract aliases support'
+    - author: Trong Nghia Nguyen
+      body: ''
+      footers:
+        signed-off-by: Trong Nghia Nguyen <nghiant2710@gmail.com>
+      hash: e059fdc16aa6c1687866d56db5f97003f45d4b8e
+      subject: 'test: Add test cases for aliases support'
+    - author: Giovanni Garufi
+      body: ''
+      footers:
+        change-type: major
+      hash: 62fa88dbee7e6c719172d02c348e8e85e8d0b848
+      subject: >-
+        Changed template references so that each reference to the current
+        contract must be qualified via `this`
+  date: '2018-08-17T10:37:41Z'
   version: 0.0.6
 - commits:
-  - author: Juan Cruz Viotti
-    body: ""
-    footers:
-      signed-off-by: Juan Cruz Viotti <jv@jviotti.com>
-    hash: 7ff9fb135e764c7fe99cb24438beda28b3bffaf3
-    subject: Add handlebars helpers
-  date: "2018-04-18T16:09:11Z"
+    - author: Juan Cruz Viotti
+      body: ''
+      footers:
+        signed-off-by: Juan Cruz Viotti <jv@jviotti.com>
+      hash: 7ff9fb135e764c7fe99cb24438beda28b3bffaf3
+      subject: Add handlebars helpers
+  date: '2018-04-18T16:09:11Z'
   version: 0.0.5
 - commits:
-  - author: Trong Nghia Nguyen
-    body: Combinatorics.combination only works with array is less than 31 in length
-    hash: 06f9747766d554deef4e81ed2a96edbfd2496253
-    subject: Use bigCombination instead of Combination to handle larger array.
-  date: "2018-04-09T11:59:52Z"
+    - author: Trong Nghia Nguyen
+      body: >-
+        Combinatorics.combination only works with array is less than 31 in
+        length
+      hash: 06f9747766d554deef4e81ed2a96edbfd2496253
+      subject: Use bigCombination instead of Combination to handle larger array.
+  date: '2018-04-09T11:59:52Z'
   version: 0.0.4
 - commits:
-  - author: Juan Cruz Viotti
-    body: ""
-    footers:
-      fixes: https://github.com/resin-io-playground/base-img-generator/issues/2
-      signed-off-by: Juan Cruz Viotti <jv@jviotti.com>
-    hash: 9fad84a88e5c7db5e7f8bb018f4f8255986c7f8f
-    subject: Use versioned contracts in partials default paths
-  date: "2018-03-07T17:14:19Z"
+    - author: Juan Cruz Viotti
+      body: ''
+      footers:
+        fixes: 'https://github.com/resin-io-playground/base-img-generator/issues/2'
+        signed-off-by: Juan Cruz Viotti <jv@jviotti.com>
+      hash: 9fad84a88e5c7db5e7f8bb018f4f8255986c7f8f
+      subject: Use versioned contracts in partials default paths
+  date: '2018-03-07T17:14:19Z'
   version: 0.0.3
 - commits:
-  - author: Juan Cruz Viotti
-    body: ""
-    footers:
-      signed-off-by: Juan Cruz Viotti <jv@jviotti.com>
-    hash: 4c50ab2dbc07dbfd31d571aa516a52aaf31c177d
-    subject: Expose partials.buildTemplate()
-  date: "2017-10-13T11:28:00Z"
+    - author: Juan Cruz Viotti
+      body: ''
+      footers:
+        signed-off-by: Juan Cruz Viotti <jv@jviotti.com>
+      hash: 4c50ab2dbc07dbfd31d571aa516a52aaf31c177d
+      subject: Expose partials.buildTemplate()
+  date: '2017-10-13T11:28:00Z'
   version: 0.0.2

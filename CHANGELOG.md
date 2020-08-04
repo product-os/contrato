@@ -5,6 +5,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v0.0.6 - 2018-08-17
 
+# v0.3.1
+## (2020-08-04)
+
+* Add .versionbot/CHANGELOG.yml for nested changelogs [Pagan Gazzard]
+
 # v0.3.0
 ## (2020-07-17)
 
