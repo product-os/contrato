@@ -1,4 +1,17 @@
 - commits:
+    - subject: Remove handlebars-helpers to shrink bundle size
+      hash: 1305553f48747e0e450c89254790e67674c252b7
+      body: |
+        We can re-add specific helpers as necessary without needing to bloat
+        with the entirety of the helpers package
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: Pagan Gazzard
+      nested: []
+  version: 0.5.0
+  date: 2020-08-05T08:38:30.030Z
+- commits:
     - subject: Update skhema to 5.x
       hash: 1eb7058e8e34d708c03c5270e849aff4576773e7
       body: |

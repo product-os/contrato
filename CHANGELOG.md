@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v0.0.6 - 2018-08-17
 
+## 0.5.0 - 2020-08-05
+
+* Remove handlebars-helpers to shrink bundle size [Pagan Gazzard]
+
 ## 0.4.0 - 2020-08-04
 
 
