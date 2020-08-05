@@ -22,7 +22,6 @@
   "dependencies": {
     "debug": "^3.2.6",
     "handlebars": "^4.7.6",
-    "handlebars-helpers": "^0.10.0",
     "js-combinatorics": "^0.5.5",
     "lodash": "^4.17.19",
     "object-hash": "^1.3.1",
