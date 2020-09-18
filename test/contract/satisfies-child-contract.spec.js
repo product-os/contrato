@@ -206,6 +206,113 @@ ava.test('should return true given no requirements in a disjunction', (test) => 
   })))
 })
 
+ava.test('should return false given a partially unfulfilled not operator', (test) => {
+  const contract = new Contract({
+    type: 'foo',
+    slug: 'bar'
+  })
+
+  contract.addChildren([
+    new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+  ])
+
+  test.false(contract.satisfiesChildContract(new Contract({
+    name: 'Node.js',
+    slug: 'nodejs',
+    type: 'sw.stack',
+    requires: [
+      {
+        not: [
+          {
+            slug: CONTRACTS['sw.os'].fedora['24'].object.slug,
+            type: 'sw.os'
+          },
+          {
+            slug: CONTRACTS['sw.os'].debian.wheezy.object.slug,
+            type: 'sw.os'
+          }
+        ]
+      }
+    ]
+  })))
+})
+
+ava.test('should return false given an unfulfilled not operator', (test) => {
+  const contract = new Contract({
+    type: 'foo',
+    slug: 'bar'
+  })
+
+  contract.addChildren([
+    new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+  ])
+
+  test.false(contract.satisfiesChildContract(new Contract({
+    name: 'Node.js',
+    slug: 'nodejs',
+    type: 'sw.stack',
+    requires: [
+      {
+        not: [
+          {
+            slug: CONTRACTS['sw.os'].debian.wheezy.object.slug,
+            type: 'sw.os'
+          }
+        ]
+      }
+    ]
+  })))
+})
+
+ava.test('should return false given a fulfilled not operator', (test) => {
+  const contract = new Contract({
+    type: 'foo',
+    slug: 'bar'
+  })
+
+  contract.addChildren([
+    new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+  ])
+
+  test.true(contract.satisfiesChildContract(new Contract({
+    name: 'Node.js',
+    slug: 'nodejs',
+    type: 'sw.stack',
+    requires: [
+      {
+        not: [
+          {
+            slug: 'foo-bar',
+            type: 'sw.os'
+          }
+        ]
+      }
+    ]
+  })))
+})
+
+ava.test('should return true given an empty not operator', (test) => {
+  const contract = new Contract({
+    type: 'foo',
+    slug: 'bar'
+  })
+
+  contract.addChildren([
+    new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+  ])
+
+  test.true(contract.satisfiesChildContract(new Contract({
+    name: 'Node.js',
+    slug: 'nodejs',
+    type: 'sw.stack',
+    requires: [
+      {
+        not: []
+      }
+    ]
+  })))
+})
+
 ava.test('should return false given two unfulfilled requirements', (test) => {
   const contract = new Contract({
     type: 'foo',
