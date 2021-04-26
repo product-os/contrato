@@ -16,11 +16,18 @@
 
 type Dictionary<T> = { [key: string]: T };
 
+interface Person {
+	firstName: string;
+	lastName: string;
+	age: number;
+}
+
 declare module '@balena/contrato' {
 	export type Template = unknown;
 	export type Layout = Dictionary<unknown>;
 	export type Skeleton = Dictionary<unknown>;
-	export type ContractObject = Dictionary<unknown>;
+	export type ContractObject =
+		import('./cuetypes').components['schemas']['Contract'];
 
 	export class Contract {
 		public constructor(object: ContractObject, options?: { hash?: boolean });
