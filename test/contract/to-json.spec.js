@@ -20,13 +20,13 @@ const ava = require('ava')
 const Contract = require('../../lib/contract')
 const CONTRACTS = require('../contracts.json')
 
-ava.test('should convert a contract into a JSON object', (test) => {
+ava('should convert a contract into a JSON object', (test) => {
   const source = CONTRACTS['sw.os'].debian.wheezy.object
   const contract = new Contract(source)
   test.deepEqual(contract.toJSON(), source)
 })
 
-ava.test('should handle a contract with one child', (test) => {
+ava('should handle a contract with one child', (test) => {
   const container = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -45,7 +45,7 @@ ava.test('should handle a contract with one child', (test) => {
   })
 })
 
-ava.test('should handle a contract with two children of the same type and slug', (test) => {
+ava('should handle a contract with two children of the same type and slug', (test) => {
   const container = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -72,7 +72,7 @@ ava.test('should handle a contract with two children of the same type and slug',
   })
 })
 
-ava.test('should handle a contract with two children of the same type but different slugs', (test) => {
+ava('should handle a contract with two children of the same type but different slugs', (test) => {
   const container = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -97,7 +97,7 @@ ava.test('should handle a contract with two children of the same type but differ
   })
 })
 
-ava.test('should handle a contract with two children of different types', (test) => {
+ava('should handle a contract with two children of different types', (test) => {
   const container = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -120,7 +120,7 @@ ava.test('should handle a contract with two children of different types', (test)
   })
 })
 
-ava.test('should not expand one child with aliases', (test) => {
+ava('should not expand one child with aliases', (test) => {
   const contract1 = new Contract({
     type: 'hw.device-type',
     name: 'Raspberry Pi',
@@ -148,7 +148,7 @@ ava.test('should not expand one child with aliases', (test) => {
   test.deepEqual(new Contract(container.toJSON()), container)
 })
 
-ava.test('should expand aliases in two children of the same type', (test) => {
+ava('should expand aliases in two children of the same type', (test) => {
   const contract1 = new Contract({
     type: 'hw.device-type',
     name: 'Raspberry Pi',
@@ -189,7 +189,7 @@ ava.test('should expand aliases in two children of the same type', (test) => {
   test.deepEqual(new Contract(container.toJSON()), container)
 })
 
-ava.test('should correctly handle one aliased and one non aliased child of the same type', (test) => {
+ava('should correctly handle one aliased and one non aliased child of the same type', (test) => {
   const contract1 = new Contract({
     type: 'hw.device-type',
     name: 'Raspberry Pi',
@@ -228,7 +228,7 @@ ava.test('should correctly handle one aliased and one non aliased child of the s
   test.deepEqual(new Contract(container.toJSON()), container)
 })
 
-ava.test('should correctly handle one none aliased and one aliased child of the same type', (test) => {
+ava('should correctly handle one none aliased and one aliased child of the same type', (test) => {
   const contract1 = new Contract({
     type: 'hw.device-type',
     name: 'Intel NUC',

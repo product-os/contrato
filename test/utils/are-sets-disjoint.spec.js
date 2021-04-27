@@ -19,7 +19,7 @@
 const ava = require('ava')
 const utils = require('../../lib/utils')
 
-ava.test('should return true if sets are disjoint', (test) => {
+ava('should return true if sets are disjoint', (test) => {
   const set1 = new Set([ 'foo', 'bar' ])
   const set2 = new Set([ 'baz', 'qux' ])
 
@@ -27,7 +27,7 @@ ava.test('should return true if sets are disjoint', (test) => {
   test.true(utils.areSetsDisjoint(set2, set1))
 })
 
-ava.test('should return false if sets are not disjoint', (test) => {
+ava('should return false if sets are not disjoint', (test) => {
   const set1 = new Set([ 'foo', 'bar' ])
   const set2 = new Set([ 'bar', 'baz' ])
 
@@ -35,11 +35,11 @@ ava.test('should return false if sets are not disjoint', (test) => {
   test.false(utils.areSetsDisjoint(set2, set1))
 })
 
-ava.test('should return true if both sets are empty', (test) => {
+ava('should return true if both sets are empty', (test) => {
   test.true(utils.areSetsDisjoint(new Set(), new Set()))
 })
 
-ava.test('should return true if one of the sets is empty', (test) => {
+ava('should return true if one of the sets is empty', (test) => {
   const set1 = new Set([ 'foo', 'bar' ])
   const set2 = new Set()
 

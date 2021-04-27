@@ -27,7 +27,7 @@ _.each([
 ], (testName) => {
   const testCase = require(`./${testName}.json`)
 
-  ava.test(testName, (test) => {
+  ava(testName, (test) => {
     const contracts = _.flatMap(testCase.universe1, Contract.build)
     const container = new Contract({
       type: 'meta.universe'

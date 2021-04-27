@@ -19,7 +19,7 @@
 const ava = require('ava')
 const ObjectSet = require('../../lib/object-set')
 
-ava.test('should calculate the intersection of two sets', (test) => {
+ava('should calculate the intersection of two sets', (test) => {
   const set1 = new ObjectSet()
   const set2 = new ObjectSet()
 
@@ -48,7 +48,7 @@ ava.test('should calculate the intersection of two sets', (test) => {
   ])
 })
 
-ava.test('should return the instance', (test) => {
+ava('should return the instance', (test) => {
   const set1 = new ObjectSet()
   const set2 = new ObjectSet()
 
@@ -63,7 +63,7 @@ ava.test('should return the instance', (test) => {
   test.deepEqual(set1.intersection(set2), set1)
 })
 
-ava.test('should calculate the intersection of two disjoint sets', (test) => {
+ava('should calculate the intersection of two disjoint sets', (test) => {
   const set1 = new ObjectSet()
   const set2 = new ObjectSet()
 
@@ -84,7 +84,7 @@ ava.test('should calculate the intersection of two disjoint sets', (test) => {
   test.deepEqual(set1.getAll(), [])
 })
 
-ava.test('should return an empty array if the left set is empty', (test) => {
+ava('should return an empty array if the left set is empty', (test) => {
   const set1 = new ObjectSet()
   const set2 = new ObjectSet()
 
@@ -97,7 +97,7 @@ ava.test('should return an empty array if the left set is empty', (test) => {
   test.deepEqual(set1.getAll(), [])
 })
 
-ava.test('should return an empty array if the right set is empty', (test) => {
+ava('should return an empty array if the right set is empty', (test) => {
   const set1 = new ObjectSet()
   const set2 = new ObjectSet()
 
@@ -110,7 +110,7 @@ ava.test('should return an empty array if the right set is empty', (test) => {
   test.deepEqual(set1.getAll(), [])
 })
 
-ava.test('should take custom ids into account', (test) => {
+ava('should take custom ids into account', (test) => {
   const set1 = new ObjectSet()
   const set2 = new ObjectSet()
 
@@ -147,7 +147,7 @@ ava.test('should take custom ids into account', (test) => {
   ])
 })
 
-ava.test('should trust ids rather than objects', (test) => {
+ava('should trust ids rather than objects', (test) => {
   const set1 = new ObjectSet()
   const set2 = new ObjectSet()
 

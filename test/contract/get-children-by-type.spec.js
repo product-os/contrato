@@ -20,7 +20,7 @@ const ava = require('ava')
 const Contract = require('../../lib/contract')
 const CONTRACTS = require('../contracts.json')
 
-ava.test('should return all contracts of the type if the type exists', (test) => {
+ava('should return all contracts of the type if the type exists', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
   const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
@@ -40,7 +40,7 @@ ava.test('should return all contracts of the type if the type exists', (test) =>
   ])
 })
 
-ava.test('should always return the same results', (test) => {
+ava('should always return the same results', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
   const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
@@ -72,7 +72,7 @@ ava.test('should always return the same results', (test) => {
   ])
 })
 
-ava.test('should return nothing if the type does not exist', (test) => {
+ava('should return nothing if the type does not exist', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
   const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
@@ -88,7 +88,7 @@ ava.test('should return nothing if the type does not exist', (test) => {
   test.deepEqual(container.getChildrenByType('arch.sw'), [])
 })
 
-ava.test('should not return the same contract multiple times if it contains aliases', (test) => {
+ava('should not return the same contract multiple times if it contains aliases', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
   const contract2 = new Contract({
     type: 'hw.device-type',

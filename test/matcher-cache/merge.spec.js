@@ -20,14 +20,14 @@ const ava = require('ava')
 const MatcherCache = require('../../lib/matcher-cache')
 const Contract = require('../../lib/contract')
 
-ava.test('should merge two empty caches', (test) => {
+ava('should merge two empty caches', (test) => {
   const cache1 = new MatcherCache()
   const cache2 = new MatcherCache()
   cache1.merge(cache2)
   test.deepEqual(cache1.data, {})
 })
 
-ava.test('should merge a non empty cache with one type into an empty cache', (test) => {
+ava('should merge a non empty cache with one type into an empty cache', (test) => {
   const cache1 = new MatcherCache()
   const cache2 = new MatcherCache()
 
@@ -60,7 +60,7 @@ ava.test('should merge a non empty cache with one type into an empty cache', (te
   })
 })
 
-ava.test('should merge a non empty cache with two types into an empty cache', (test) => {
+ava('should merge a non empty cache with two types into an empty cache', (test) => {
   const cache1 = new MatcherCache()
   const cache2 = new MatcherCache()
 
@@ -95,7 +95,7 @@ ava.test('should merge a non empty cache with two types into an empty cache', (t
   })
 })
 
-ava.test('should merge two non empty caches with disjoint types', (test) => {
+ava('should merge two non empty caches with disjoint types', (test) => {
   const cache1 = new MatcherCache()
   const cache2 = new MatcherCache()
 
@@ -130,7 +130,7 @@ ava.test('should merge two non empty caches with disjoint types', (test) => {
   })
 })
 
-ava.test('should omit types in common', (test) => {
+ava('should omit types in common', (test) => {
   const cache1 = new MatcherCache()
   const cache2 = new MatcherCache()
 
@@ -165,7 +165,7 @@ ava.test('should omit types in common', (test) => {
   })
 })
 
-ava.test('should return the instance', (test) => {
+ava('should return the instance', (test) => {
   const cache1 = new MatcherCache()
   const cache2 = new MatcherCache()
 

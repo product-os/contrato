@@ -19,7 +19,7 @@
 const ava = require('ava')
 const ObjectSet = require('../../lib/object-set')
 
-ava.test('should return true if the object exists', (test) => {
+ava('should return true if the object exists', (test) => {
   const set = new ObjectSet([
     {
       foo: 1
@@ -34,7 +34,7 @@ ava.test('should return true if the object exists', (test) => {
   }))
 })
 
-ava.test('should return false if the object does not exist', (test) => {
+ava('should return false if the object does not exist', (test) => {
   const set = new ObjectSet([
     {
       foo: 1

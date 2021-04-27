@@ -20,7 +20,7 @@ const ava = require('ava')
 const MatcherCache = require('../../../lib/matcher-cache')
 const Contract = require('../../../lib/contract')
 
-ava.test('should take a contract with a single child', (test) => {
+ava('should take a contract with a single child', (test) => {
   const contract = new Contract({
     type: 'misc.collection',
     slug: 'my-collection',
@@ -73,7 +73,7 @@ ava.test('should take a contract with a single child', (test) => {
   test.deepEqual(new Contract(contract.raw), contract)
 })
 
-ava.test('should take a contract with two children of the same type', (test) => {
+ava('should take a contract with two children of the same type', (test) => {
   const contract = new Contract({
     type: 'misc.collection',
     slug: 'my-collection',
@@ -149,7 +149,7 @@ ava.test('should take a contract with two children of the same type', (test) => 
   test.deepEqual(new Contract(contract.raw), contract)
 })
 
-ava.test('should take a contract with two children of the same type and slug', (test) => {
+ava('should take a contract with two children of the same type and slug', (test) => {
   const contract = new Contract({
     type: 'misc.collection',
     slug: 'my-collection',
@@ -237,7 +237,7 @@ ava.test('should take a contract with two children of the same type and slug', (
   test.deepEqual(new Contract(contract.raw), contract)
 })
 
-ava.test('should take a contract with two children of different types', (test) => {
+ava('should take a contract with two children of different types', (test) => {
   const contract = new Contract({
     type: 'misc.collection',
     slug: 'my-collection',

@@ -19,7 +19,7 @@
 const ava = require('ava')
 const template = require('../../lib/template')
 
-ava.test('should compile a contract without templates', (test) => {
+ava('should compile a contract without templates', (test) => {
   test.deepEqual(template.compileContract({
     type: 'distro',
     name: 'Debian',
@@ -33,7 +33,7 @@ ava.test('should compile a contract without templates', (test) => {
   })
 })
 
-ava.test('should compile a single top level template', (test) => {
+ava('should compile a single top level template', (test) => {
   test.deepEqual(template.compileContract({
     type: 'distro',
     name: 'Debian {{this.version}}',
@@ -47,7 +47,7 @@ ava.test('should compile a single top level template', (test) => {
   })
 })
 
-ava.test('should compile templates inside arrays', (test) => {
+ava('should compile templates inside arrays', (test) => {
   test.deepEqual(template.compileContract({
     type: 'distro',
     name: 'Debian',
@@ -79,7 +79,7 @@ ava.test('should compile templates inside arrays', (test) => {
   })
 })
 
-ava.test('should compile multiple top level templates', (test) => {
+ava('should compile multiple top level templates', (test) => {
   test.deepEqual(template.compileContract({
     type: 'distro',
     name: 'Debian {{this.version}}',
@@ -93,7 +93,7 @@ ava.test('should compile multiple top level templates', (test) => {
   })
 })
 
-ava.test('should compile a single nested template', (test) => {
+ava('should compile a single nested template', (test) => {
   test.deepEqual(template.compileContract({
     type: 'distro',
     name: 'Debian',
@@ -121,7 +121,7 @@ ava.test('should compile a single nested template', (test) => {
   })
 })
 
-ava.test('should leave missing values as interpolations', (test) => {
+ava('should leave missing values as interpolations', (test) => {
   test.deepEqual(template.compileContract({
     type: 'distro',
     name: 'Debian',
@@ -135,7 +135,7 @@ ava.test('should leave missing values as interpolations', (test) => {
   })
 })
 
-ava.test('should be able to blacklist a top level element', (test) => {
+ava('should be able to blacklist a top level element', (test) => {
   const result = template.compileContract({
     type: 'distro',
     version: '7',
@@ -159,7 +159,7 @@ ava.test('should be able to blacklist a top level element', (test) => {
   })
 })
 
-ava.test('should be able to blacklist a nested element', (test) => {
+ava('should be able to blacklist a nested element', (test) => {
   const result = template.compileContract({
     type: 'distro',
     version: '7',
@@ -189,7 +189,7 @@ ava.test('should be able to blacklist a nested element', (test) => {
   })
 })
 
-ava.test('should be able to blacklist more than one element', (test) => {
+ava('should be able to blacklist more than one element', (test) => {
   const result = template.compileContract({
     type: 'distro',
     version: '7',
@@ -219,7 +219,7 @@ ava.test('should be able to blacklist more than one element', (test) => {
   })
 })
 
-ava.test('should be able to blacklist elements inside arrays', (test) => {
+ava('should be able to blacklist elements inside arrays', (test) => {
   const result = template.compileContract({
     slug: 'debian',
     type: 'distro',
@@ -243,7 +243,7 @@ ava.test('should be able to blacklist elements inside arrays', (test) => {
   })
 })
 
-ava.test('should be able to blacklist a whole subtree', (test) => {
+ava('should be able to blacklist a whole subtree', (test) => {
   const result = template.compileContract({
     type: 'distro',
     version: '7',

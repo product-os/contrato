@@ -19,7 +19,7 @@
 const ava = require('ava')
 const ObjectSet = require('../../lib/object-set')
 
-ava.test('should return true if the id exists', (test) => {
+ava('should return true if the id exists', (test) => {
   const set = new ObjectSet()
 
   set.add({
@@ -37,7 +37,7 @@ ava.test('should return true if the id exists', (test) => {
   test.true(set.hasId('aaa'))
 })
 
-ava.test('should return false if the id does not exist', (test) => {
+ava('should return false if the id does not exist', (test) => {
   const set = new ObjectSet()
 
   set.add({

@@ -19,7 +19,7 @@
 const ava = require('ava')
 const Contract = require('../../lib/contract')
 
-ava.test('should return the version if there is one', (test) => {
+ava('should return the version if there is one', (test) => {
   const contract = new Contract({
     type: 'sw.os',
     name: 'Debian Wheezy',
@@ -30,7 +30,7 @@ ava.test('should return the version if there is one', (test) => {
   test.is(contract.getVersion(), 'wheezy')
 })
 
-ava.test('should return undefined if there is not one', (test) => {
+ava('should return undefined if there is not one', (test) => {
   const contract = new Contract({
     type: 'sw.os',
     name: 'Debian Wheezy',

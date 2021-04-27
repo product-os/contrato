@@ -20,12 +20,12 @@ const ava = require('ava')
 const MatcherCache = require('../../lib/matcher-cache')
 const Contract = require('../../lib/contract')
 
-ava.test('should return an empty set if the cache is empty', (test) => {
+ava('should return an empty set if the cache is empty', (test) => {
   const cache = new MatcherCache()
   test.deepEqual(cache.getTypes(), new Set())
 })
 
-ava.test('should return a single type if there is only one entry', (test) => {
+ava('should return a single type if there is only one entry', (test) => {
   const cache = new MatcherCache()
 
   const matcher1 = Contract.createMatcher({
@@ -38,7 +38,7 @@ ava.test('should return a single type if there is only one entry', (test) => {
   test.deepEqual(cache.getTypes(), new Set([ 'sw.os' ]))
 })
 
-ava.test('should not return duplicated types', (test) => {
+ava('should not return duplicated types', (test) => {
   const cache = new MatcherCache()
 
   const matcher1 = Contract.createMatcher({
@@ -57,7 +57,7 @@ ava.test('should not return duplicated types', (test) => {
   test.deepEqual(cache.getTypes(), new Set([ 'sw.os' ]))
 })
 
-ava.test('should return all added types', (test) => {
+ava('should return all added types', (test) => {
   const cache = new MatcherCache()
 
   const matcher1 = Contract.createMatcher({
@@ -76,7 +76,7 @@ ava.test('should return all added types', (test) => {
   test.deepEqual(cache.getTypes(), new Set([ 'sw.os', 'sw.stack' ]))
 })
 
-ava.test('should not return reset types', (test) => {
+ava('should not return reset types', (test) => {
   const cache = new MatcherCache()
 
   const matcher1 = Contract.createMatcher({

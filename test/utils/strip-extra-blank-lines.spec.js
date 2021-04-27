@@ -20,7 +20,7 @@ const ava = require('ava')
 const _ = require('lodash')
 const utils = require('../../lib/utils')
 
-ava.test('should replace two blank lines with one', (test) => {
+ava('should replace two blank lines with one', (test) => {
   const result = _.split(utils.stripExtraBlankLines(_.join([
     'Hello',
     '',
@@ -40,7 +40,7 @@ ava.test('should replace two blank lines with one', (test) => {
   ])
 })
 
-ava.test('should replace three blank lines with one', (test) => {
+ava('should replace three blank lines with one', (test) => {
   const result = _.split(utils.stripExtraBlankLines(_.join([
     'Hello',
     '',
@@ -62,7 +62,7 @@ ava.test('should replace three blank lines with one', (test) => {
   ])
 })
 
-ava.test('should remove a single leading blank line', (test) => {
+ava('should remove a single leading blank line', (test) => {
   const result = _.split(utils.stripExtraBlankLines(_.join([
     '',
     'Hello'
@@ -73,7 +73,7 @@ ava.test('should remove a single leading blank line', (test) => {
   ])
 })
 
-ava.test('should remove two leading blank lines', (test) => {
+ava('should remove two leading blank lines', (test) => {
   const result = _.split(utils.stripExtraBlankLines(_.join([
     '',
     '',
@@ -85,7 +85,7 @@ ava.test('should remove two leading blank lines', (test) => {
   ])
 })
 
-ava.test('should remove a single trailing blank line', (test) => {
+ava('should remove a single trailing blank line', (test) => {
   const result = _.split(utils.stripExtraBlankLines(_.join([
     'Hello',
     ''
@@ -96,7 +96,7 @@ ava.test('should remove a single trailing blank line', (test) => {
   ])
 })
 
-ava.test('should remove two trailing blank lines', (test) => {
+ava('should remove two trailing blank lines', (test) => {
   const result = _.split(utils.stripExtraBlankLines(_.join([
     'Hello',
     '',

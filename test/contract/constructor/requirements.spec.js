@@ -32,7 +32,7 @@ const createContractObjectSet = (contracts) => {
   return set
 }
 
-ava.test('should create a simple contract with empty requirements', (test) => {
+ava('should create a simple contract with empty requirements', (test) => {
   const contract = new Contract({
     type: 'arch.sw',
     name: 'armv7hf',
@@ -54,7 +54,7 @@ ava.test('should create a simple contract with empty requirements', (test) => {
   })
 })
 
-ava.test('should create a contract with a single top level requirement', (test) => {
+ava('should create a contract with a single top level requirement', (test) => {
   const contract = new Contract({
     type: 'arch.sw',
     name: 'armv7hf',
@@ -98,7 +98,7 @@ ava.test('should create a contract with a single top level requirement', (test) 
   })
 })
 
-ava.test('should ignore duplicate top level requirements matchers', (test) => {
+ava('should ignore duplicate top level requirements matchers', (test) => {
   const contract = new Contract({
     type: 'arch.sw',
     name: 'armv7hf',
@@ -154,7 +154,7 @@ ava.test('should ignore duplicate top level requirements matchers', (test) => {
   })
 })
 
-ava.test('should create a contract with two top level requirements', (test) => {
+ava('should create a contract with two top level requirements', (test) => {
   const contract = new Contract({
     type: 'sw.os',
     name: 'Debian',
@@ -216,7 +216,7 @@ ava.test('should create a contract with two top level requirements', (test) => {
   })
 })
 
-ava.test('should create a contract with a single or requirement', (test) => {
+ava('should create a contract with a single or requirement', (test) => {
   const contract = new Contract({
     type: 'arch.sw',
     name: 'armv7hf',
@@ -288,7 +288,7 @@ ava.test('should create a contract with a single or requirement', (test) => {
   })
 })
 
-ava.test('should ignore duplicate matchers from or requirements', (test) => {
+ava('should ignore duplicate matchers from or requirements', (test) => {
   const contract = new Contract({
     type: 'arch.sw',
     name: 'armv7hf',

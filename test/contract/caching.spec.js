@@ -21,7 +21,7 @@ const Contract = require('../../lib/contract')
 const MatcherCache = require('../../lib/matcher-cache')
 const CONTRACTS = require('../contracts.json')
 
-ava.test('should have an empty cache by default', (test) => {
+ava('should have an empty cache by default', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
 
@@ -34,7 +34,7 @@ ava.test('should have an empty cache by default', (test) => {
   test.deepEqual(container.metadata.children.searchCache, new MatcherCache())
 })
 
-ava.test('should create an entry after a successful search', (test) => {
+ava('should create an entry after a successful search', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
 
@@ -58,7 +58,7 @@ ava.test('should create an entry after a successful search', (test) => {
   test.deepEqual(container.metadata.children.searchCache, cache)
 })
 
-ava.test('should be able to store multiple entries', (test) => {
+ava('should be able to store multiple entries', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
 
@@ -89,7 +89,7 @@ ava.test('should be able to store multiple entries', (test) => {
   test.deepEqual(container.metadata.children.searchCache, cache)
 })
 
-ava.test('should still store an entry if there were no results', (test) => {
+ava('should still store an entry if there were no results', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
 
@@ -113,7 +113,7 @@ ava.test('should still store an entry if there were no results', (test) => {
   test.deepEqual(container.metadata.children.searchCache, cache)
 })
 
-ava.test('should honor a matcher over and over again', (test) => {
+ava('should honor a matcher over and over again', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
 
@@ -135,7 +135,7 @@ ava.test('should honor a matcher over and over again', (test) => {
   test.deepEqual(container.findChildren(matcher), [ contract1 ])
 })
 
-ava.test('should clear the cache for a certain type if a contract is added', (test) => {
+ava('should clear the cache for a certain type if a contract is added', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
   const contract3 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
@@ -169,7 +169,7 @@ ava.test('should clear the cache for a certain type if a contract is added', (te
   test.deepEqual(container.metadata.children.searchCache, cache)
 })
 
-ava.test('should clear the cache for a certain type if a contract is removed', (test) => {
+ava('should clear the cache for a certain type if a contract is removed', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
   const contract3 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
@@ -203,7 +203,7 @@ ava.test('should clear the cache for a certain type if a contract is removed', (
   test.deepEqual(container.metadata.children.searchCache, cache)
 })
 
-ava.test('should clear the cache for a certain type if the removed contract did not exist', (test) => {
+ava('should clear the cache for a certain type if the removed contract did not exist', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
   const contract3 = new Contract(CONTRACTS['sw.os'].debian.sid.object)

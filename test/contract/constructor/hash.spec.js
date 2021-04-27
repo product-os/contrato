@@ -20,12 +20,12 @@ const ava = require('ava')
 const Contract = require('../../../lib/contract')
 const CONTRACTS = require('../../contracts.json')
 
-ava.test('should hash the contract by default', (test) => {
+ava('should hash the contract by default', (test) => {
   const contract = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   test.is(typeof contract.metadata.hash, 'string')
 })
 
-ava.test('should not hash the contract if hash is set to false', (test) => {
+ava('should not hash the contract if hash is set to false', (test) => {
   const contract = new Contract(CONTRACTS['sw.os'].debian.wheezy.object, {
     hash: false
   })

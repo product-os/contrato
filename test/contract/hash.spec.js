@@ -19,7 +19,7 @@
 const ava = require('ava')
 const Contract = require('../../lib/contract')
 
-ava.test('should be able to re-hash a mutated contract', (test) => {
+ava('should be able to re-hash a mutated contract', (test) => {
   const contract = new Contract({
     type: 'arch.sw',
     name: 'armv7hf',
@@ -32,7 +32,7 @@ ava.test('should be able to re-hash a mutated contract', (test) => {
   test.is(contract.metadata.hash, '3408d9c3746f9cc45e4c4d1b83b65d0239fbd346')
 })
 
-ava.test('should not re-hash metadata changes', (test) => {
+ava('should not re-hash metadata changes', (test) => {
   const contract = new Contract({
     type: 'arch.sw',
     name: 'armv7hf',

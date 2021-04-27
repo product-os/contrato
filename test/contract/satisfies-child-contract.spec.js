@@ -20,7 +20,7 @@ const ava = require('ava')
 const Contract = require('../../lib/contract')
 const CONTRACTS = require('../contracts.json')
 
-ava.test('should return true given an empty contract and a contract without requirements', (test) => {
+ava('should return true given an empty contract and a contract without requirements', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -34,7 +34,7 @@ ava.test('should return true given an empty contract and a contract without requ
   })))
 })
 
-ava.test('should return false given an empty contract and a contract with requirements', (test) => {
+ava('should return false given an empty contract and a contract with requirements', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -54,7 +54,7 @@ ava.test('should return false given an empty contract and a contract with requir
   })))
 })
 
-ava.test('should return true given a contract without requirements', (test) => {
+ava('should return true given a contract without requirements', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -73,7 +73,7 @@ ava.test('should return true given a contract without requirements', (test) => {
   })))
 })
 
-ava.test('should return true given one fulfilled requirement', (test) => {
+ava('should return true given one fulfilled requirement', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -98,7 +98,7 @@ ava.test('should return true given one fulfilled requirement', (test) => {
   })))
 })
 
-ava.test('should return true given two fulfilled requirements', (test) => {
+ava('should return true given two fulfilled requirements', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -128,7 +128,7 @@ ava.test('should return true given two fulfilled requirements', (test) => {
   })))
 })
 
-ava.test('should return false given one unfulfilled requirement', (test) => {
+ava('should return false given one unfulfilled requirement', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -153,7 +153,7 @@ ava.test('should return false given one unfulfilled requirement', (test) => {
   })))
 })
 
-ava.test('should return false given two requirements where one is not fulfilled', (test) => {
+ava('should return false given two requirements where one is not fulfilled', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -182,7 +182,7 @@ ava.test('should return false given two requirements where one is not fulfilled'
   })))
 })
 
-ava.test('should return true given no requirements in a disjunction', (test) => {
+ava('should return true given no requirements in a disjunction', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -206,7 +206,7 @@ ava.test('should return true given no requirements in a disjunction', (test) => 
   })))
 })
 
-ava.test('should return false given a partially unfulfilled not operator', (test) => {
+ava('should return false given a partially unfulfilled not operator', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -237,7 +237,7 @@ ava.test('should return false given a partially unfulfilled not operator', (test
   })))
 })
 
-ava.test('should return false given an unfulfilled not operator', (test) => {
+ava('should return false given an unfulfilled not operator', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -264,7 +264,7 @@ ava.test('should return false given an unfulfilled not operator', (test) => {
   })))
 })
 
-ava.test('should return false given a fulfilled not operator', (test) => {
+ava('should return false given a fulfilled not operator', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -291,7 +291,7 @@ ava.test('should return false given a fulfilled not operator', (test) => {
   })))
 })
 
-ava.test('should return true given an empty not operator', (test) => {
+ava('should return true given an empty not operator', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -313,7 +313,7 @@ ava.test('should return true given an empty not operator', (test) => {
   })))
 })
 
-ava.test('should return false given two unfulfilled requirements', (test) => {
+ava('should return false given two unfulfilled requirements', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -342,7 +342,7 @@ ava.test('should return false given two unfulfilled requirements', (test) => {
   })))
 })
 
-ava.test('should return true given one fulfilled requirement in a disjunction', (test) => {
+ava('should return true given one fulfilled requirement in a disjunction', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -371,7 +371,7 @@ ava.test('should return true given one fulfilled requirement in a disjunction', 
   })))
 })
 
-ava.test('should return true given one fulfilled and one unfulfilled requirement in a disjunction', (test) => {
+ava('should return true given one fulfilled and one unfulfilled requirement in a disjunction', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -404,7 +404,7 @@ ava.test('should return true given one fulfilled and one unfulfilled requirement
   })))
 })
 
-ava.test('should return false given one unfulfilled requirement in a disjunction', (test) => {
+ava('should return false given one unfulfilled requirement in a disjunction', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -433,7 +433,7 @@ ava.test('should return false given one unfulfilled requirement in a disjunction
   })))
 })
 
-ava.test('should return false given an empty disjunction and an unfulfilled requirement', (test) => {
+ava('should return false given an empty disjunction and an unfulfilled requirement', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -461,7 +461,7 @@ ava.test('should return false given an empty disjunction and an unfulfilled requ
   })))
 })
 
-ava.test('should return false given an fulfilled disjunction and an unfulfilled requirement', (test) => {
+ava('should return false given an fulfilled disjunction and an unfulfilled requirement', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -498,7 +498,7 @@ ava.test('should return false given an fulfilled disjunction and an unfulfilled 
   })))
 })
 
-ava.test('should be able to specify a single type', (test) => {
+ava('should be able to specify a single type', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -529,7 +529,7 @@ ava.test('should be able to specify a single type', (test) => {
   }))
 })
 
-ava.test('should be able to specify multiple types', (test) => {
+ava('should be able to specify multiple types', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -572,7 +572,7 @@ ava.test('should be able to specify multiple types', (test) => {
   }))
 })
 
-ava.test('should return false given one unfulfilled requirement selected type', (test) => {
+ava('should return false given one unfulfilled requirement selected type', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -599,7 +599,7 @@ ava.test('should return false given one unfulfilled requirement selected type', 
   }))
 })
 
-ava.test('should return true given one unfulfilled requirement in a disjunction of a non-selected type', (test) => {
+ava('should return true given one unfulfilled requirement in a disjunction of a non-selected type', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -632,7 +632,7 @@ ava.test('should return true given one unfulfilled requirement in a disjunction 
   }))
 })
 
-ava.test('should return true given two fulfilled requirements from a context with a composite contract', (test) => {
+ava('should return true given two fulfilled requirements from a context with a composite contract', (test) => {
   const container = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -683,7 +683,7 @@ ava.test('should return true given two fulfilled requirements from a context wit
   })))
 })
 
-ava.test('should return false given one unfulfilled requirement from a context with a composite contract', (test) => {
+ava('should return false given one unfulfilled requirement from a context with a composite contract', (test) => {
   const container = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -734,7 +734,7 @@ ava.test('should return false given one unfulfilled requirement from a context w
   })))
 })
 
-ava.test('should return true given one ignored unfulfilled requirement ' +
+ava('should return true given one ignored unfulfilled requirement ' +
          'on a context with a composite contract', (test) => {
   const container = new Contract({
     type: 'foo',
@@ -788,7 +788,7 @@ ava.test('should return true given one ignored unfulfilled requirement ' +
   }))
 })
 
-ava.test('should return true given a fulfilled context as an argument', (test) => {
+ava('should return true given a fulfilled context as an argument', (test) => {
   const container = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -823,7 +823,7 @@ ava.test('should return true given a fulfilled context as an argument', (test) =
   test.true(container.satisfiesChildContract(contract2))
 })
 
-ava.test('should return false given a unfulfilled context as an argument', (test) => {
+ava('should return false given a unfulfilled context as an argument', (test) => {
   const container = new Contract({
     type: 'foo',
     slug: 'bar'

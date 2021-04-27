@@ -20,7 +20,7 @@ const ava = require('ava')
 const Contract = require('../../lib/contract')
 const CONTRACTS = require('../contracts.json')
 
-ava.test('should return an empty set if no children', (test) => {
+ava('should return an empty set if no children', (test) => {
   const container = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -29,7 +29,7 @@ ava.test('should return an empty set if no children', (test) => {
   test.deepEqual(container.getChildrenTypes(), new Set())
 })
 
-ava.test('should return one type given one child', (test) => {
+ava('should return one type given one child', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const container = new Contract({
     type: 'foo',
@@ -41,7 +41,7 @@ ava.test('should return one type given one child', (test) => {
   test.deepEqual(container.getChildrenTypes(), new Set([ 'sw.os' ]))
 })
 
-ava.test('should ignore duplicate types', (test) => {
+ava('should ignore duplicate types', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
   const container = new Contract({
@@ -53,7 +53,7 @@ ava.test('should ignore duplicate types', (test) => {
   test.deepEqual(container.getChildrenTypes(), new Set([ 'sw.os' ]))
 })
 
-ava.test('should return all children types', (test) => {
+ava('should return all children types', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
   const container = new Contract({
@@ -65,7 +65,7 @@ ava.test('should return all children types', (test) => {
   test.deepEqual(container.getChildrenTypes(), new Set([ 'sw.os', 'sw.blob' ]))
 })
 
-ava.test('should update the types when adding a contract', (test) => {
+ava('should update the types when adding a contract', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
   const container = new Contract({
@@ -78,7 +78,7 @@ ava.test('should update the types when adding a contract', (test) => {
   test.deepEqual(container.getChildrenTypes(), new Set([ 'sw.os', 'sw.blob' ]))
 })
 
-ava.test('should consider nested children', (test) => {
+ava('should consider nested children', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
   contract1.addChild(contract2)
@@ -92,7 +92,7 @@ ava.test('should consider nested children', (test) => {
   test.deepEqual(container.getChildrenTypes(), new Set([ 'sw.os', 'sw.blob' ]))
 })
 
-ava.test('should consider two level nested children', (test) => {
+ava('should consider two level nested children', (test) => {
   const contract1 = new Contract(CONTRACTS['hw.device-type'].artik10.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract3 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)

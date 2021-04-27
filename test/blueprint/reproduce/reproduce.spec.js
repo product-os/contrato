@@ -38,7 +38,7 @@ _.each([
 ], (testName) => {
   const testCase = require(`./${testName}.json`)
 
-  ava.test(testName, (test) => {
+  ava(testName, (test) => {
     const contracts = _.flatMap(testCase.universe, Contract.build)
     const container = new Contract({
       type: 'meta.universe'
@@ -52,7 +52,7 @@ _.each([
   })
 })
 
-ava.test('should consider the skeleton when computing the hashes', (test) => {
+ava('should consider the skeleton when computing the hashes', (test) => {
   const blueprint = new Blueprint({
     'hw.device-type': 1
   }, {

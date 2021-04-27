@@ -19,12 +19,12 @@
 const ava = require('ava')
 const ObjectSet = require('../../lib/object-set')
 
-ava.test('should return an empty array if the set is empty', (test) => {
+ava('should return an empty array if the set is empty', (test) => {
   const set = new ObjectSet()
   test.deepEqual(set.getAll(), [])
 })
 
-ava.test('should return the elements in the set', (test) => {
+ava('should return the elements in the set', (test) => {
   const set = new ObjectSet([
     {
       foo: 1

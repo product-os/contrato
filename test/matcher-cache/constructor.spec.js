@@ -19,7 +19,7 @@
 const ava = require('ava')
 const MatcherCache = require('../../lib/matcher-cache')
 
-ava.test('should create an empty cache', (test) => {
+ava('should create an empty cache', (test) => {
   const cache = new MatcherCache()
   test.deepEqual(cache.data, {})
 })

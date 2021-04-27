@@ -19,7 +19,7 @@
 const ava = require('ava')
 const Contract = require('../../lib/contract')
 
-ava.test('should build missing templates', (test) => {
+ava('should build missing templates', (test) => {
   const contract = new Contract({
     name: 'Debian {{this.data.codename}}',
     slug: 'debian',
@@ -45,7 +45,7 @@ ava.test('should build missing templates', (test) => {
   }))
 })
 
-ava.test('should not rehash the contract if the rehash option is set to false', (test) => {
+ava('should not rehash the contract if the rehash option is set to false', (test) => {
   const contract = new Contract({
     name: 'Debian {{this.data.codename}}',
     slug: 'debian',
@@ -77,7 +77,7 @@ ava.test('should not rehash the contract if the rehash option is set to false', 
   test.is(contract.metadata.hash, hash)
 })
 
-ava.test('should return the contract instance', (test) => {
+ava('should return the contract instance', (test) => {
   const contract = new Contract({
     name: 'Debian {{this.data.codename}}',
     slug: 'debian',
@@ -91,7 +91,7 @@ ava.test('should return the contract instance', (test) => {
   test.deepEqual(contract.interpolate(), contract)
 })
 
-ava.test('should not perform interpolation on children', (test) => {
+ava('should not perform interpolation on children', (test) => {
   const contract = new Contract({
     slug: 'debian',
     version: 'wheezy',

@@ -312,7 +312,7 @@ _.each([
   }
 
 ], (testCase) => {
-  ava.test(`should parse ${JSON.stringify(testCase.input)}`, (test) => {
+  ava(`should parse ${JSON.stringify(testCase.input)}`, (test) => {
     test.deepEqual(cardinality.parse(testCase.input), testCase.expected)
   })
 })
@@ -367,9 +367,9 @@ _.each([
     error: 'Invalid cardinality: 1.5,1.5'
   }
 ], (testCase) => {
-  ava.test(`should throw "${testCase.error}" given ${JSON.stringify(testCase.input)}`, (test) => {
+  ava(`should throw "${testCase.error}" given ${JSON.stringify(testCase.input)}`, (test) => {
     test.throws(() => {
       cardinality.parse(testCase.input)
-    }, testCase.error)
+    }, { message: testCase.error })
   })
 })
