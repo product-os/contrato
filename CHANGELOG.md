@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v0.0.6 - 2018-08-17
 
+## 0.7.0 - 2021-04-27
+
+* minor: Update ava from 0.22.0 to 3.15.0 [Thomas Manning]
+
 ## 0.6.0 - 2020-09-18
 
 * Add support for a "not" operator in "requires" [Juan Cruz Viotti]
