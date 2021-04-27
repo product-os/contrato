@@ -20,7 +20,7 @@ const ava = require('ava')
 const Contract = require('../../lib/contract')
 const CONTRACTS = require('../contracts.json')
 
-ava.test('should throw if the type is not valid', (test) => {
+ava('should throw if the type is not valid', (test) => {
   const container = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -37,10 +37,10 @@ ava.test('should throw if the type is not valid', (test) => {
       from: 2,
       to: 2
     })
-  }, 'Invalid cardinality: 2 to 2. The number of foo contracts in the universe is 0')
+  }, { message: 'Invalid cardinality: 2 to 2. The number of foo contracts in the universe is 0' })
 })
 
-ava.test('should return combinations of cardinality 1 for one contract', (test) => {
+ava('should return combinations of cardinality 1 for one contract', (test) => {
   const container = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -62,7 +62,7 @@ ava.test('should return combinations of cardinality 1 for one contract', (test) 
   ])
 })
 
-ava.test('should return combinations of cardinality 1 for two contracts', (test) => {
+ava('should return combinations of cardinality 1 for two contracts', (test) => {
   const container = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -88,7 +88,7 @@ ava.test('should return combinations of cardinality 1 for two contracts', (test)
   ])
 })
 
-ava.test('should return combinations of cardinality 1 for three contracts', (test) => {
+ava('should return combinations of cardinality 1 for three contracts', (test) => {
   const container = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -118,7 +118,7 @@ ava.test('should return combinations of cardinality 1 for three contracts', (tes
   ])
 })
 
-ava.test('should return combinations of cardinality 2 for two contracts', (test) => {
+ava('should return combinations of cardinality 2 for two contracts', (test) => {
   const container = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -142,7 +142,7 @@ ava.test('should return combinations of cardinality 2 for two contracts', (test)
   ])
 })
 
-ava.test('should return combinations of cardinality 2 for three contracts', (test) => {
+ava('should return combinations of cardinality 2 for three contracts', (test) => {
   const container = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -175,7 +175,7 @@ ava.test('should return combinations of cardinality 2 for three contracts', (tes
   ])
 })
 
-ava.test('should throw if "from" is greater than "to"', (test) => {
+ava('should throw if "from" is greater than "to"', (test) => {
   const container = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -192,10 +192,10 @@ ava.test('should throw if "from" is greater than "to"', (test) => {
       from: 2,
       to: 1
     })
-  }, 'Invalid cardinality: 2 to 1. The starting point is greater than the ending point')
+  }, { message: 'Invalid cardinality: 2 to 1. The starting point is greater than the ending point' })
 })
 
-ava.test('should generate combinations from 1 to 2 for one contract', (test) => {
+ava('should generate combinations from 1 to 2 for one contract', (test) => {
   const container = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -217,7 +217,7 @@ ava.test('should generate combinations from 1 to 2 for one contract', (test) => 
   ])
 })
 
-ava.test('should return combinations from 1 to 2 for two contracts', (test) => {
+ava('should return combinations from 1 to 2 for two contracts', (test) => {
   const container = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -247,7 +247,7 @@ ava.test('should return combinations from 1 to 2 for two contracts', (test) => {
   ])
 })
 
-ava.test('should return combinations from 1 to 3 for two contracts', (test) => {
+ava('should return combinations from 1 to 3 for two contracts', (test) => {
   const container = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -277,7 +277,7 @@ ava.test('should return combinations from 1 to 3 for two contracts', (test) => {
   ])
 })
 
-ava.test('should return combinations from 1 to 3 for three contracts', (test) => {
+ava('should return combinations from 1 to 3 for three contracts', (test) => {
   const container = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -323,7 +323,7 @@ ava.test('should return combinations from 1 to 3 for three contracts', (test) =>
   ])
 })
 
-ava.test('should not consider aliases as separate contracts', (test) => {
+ava('should not consider aliases as separate contracts', (test) => {
   const contract1 = new Contract({
     type: 'hw.device-type',
     name: 'Raspberry Pi 2',

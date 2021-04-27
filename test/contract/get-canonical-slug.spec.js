@@ -19,7 +19,7 @@
 const ava = require('ava')
 const Contract = require('../../lib/contract')
 
-ava.test('should return the canonical slug', (test) => {
+ava('should return the canonical slug', (test) => {
   const contract = new Contract({
     type: 'arch.sw',
     name: 'armv7hf',
@@ -30,7 +30,7 @@ ava.test('should return the canonical slug', (test) => {
   test.is(contract.getCanonicalSlug(), 'armhf')
 })
 
-ava.test('should return the slug if canonical slug does not exist', (test) => {
+ava('should return the slug if canonical slug does not exist', (test) => {
   const contract = new Contract({
     type: 'arch.sw',
     name: 'armv7hf',

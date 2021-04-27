@@ -19,7 +19,7 @@
 const ava = require('ava')
 const utils = require('../../lib/utils')
 
-ava.test('should return an empty set for the union of two empty sets', (test) => {
+ava('should return an empty set for the union of two empty sets', (test) => {
   const set1 = new Set()
   const set2 = new Set()
   const result = new Set()
@@ -27,7 +27,7 @@ ava.test('should return an empty set for the union of two empty sets', (test) =>
   test.deepEqual(utils.setUnion(set1, set2), result)
 })
 
-ava.test('should return the union of two disjoint sets', (test) => {
+ava('should return the union of two disjoint sets', (test) => {
   const set1 = new Set([ 1, 2 ])
   const set2 = new Set([ 3, 4 ])
   const result = new Set([ 1, 2, 3, 4 ])
@@ -35,7 +35,7 @@ ava.test('should return the union of two disjoint sets', (test) => {
   test.deepEqual(utils.setUnion(set1, set2), result)
 })
 
-ava.test('should return the union of two joint sets', (test) => {
+ava('should return the union of two joint sets', (test) => {
   const set1 = new Set([ 1, 2 ])
   const set2 = new Set([ 2, 3 ])
   const result = new Set([ 1, 2, 3 ])
@@ -43,7 +43,7 @@ ava.test('should return the union of two joint sets', (test) => {
   test.deepEqual(utils.setUnion(set1, set2), result)
 })
 
-ava.test('should return an inverted result if the arguments are flipped', (test) => {
+ava('should return an inverted result if the arguments are flipped', (test) => {
   const set1 = new Set([ 1, 2 ])
   const set2 = new Set([ 3, 4 ])
 
@@ -54,14 +54,14 @@ ava.test('should return an inverted result if the arguments are flipped', (test)
   test.deepEqual(utils.setUnion(set2, set1), result2)
 })
 
-ava.test('should return the first set if the second one is empty', (test) => {
+ava('should return the first set if the second one is empty', (test) => {
   const set1 = new Set([ 1, 2 ])
   const set2 = new Set()
 
   test.deepEqual(utils.setUnion(set1, set2), set1)
 })
 
-ava.test('should return the second set if the first one is empty', (test) => {
+ava('should return the second set if the first one is empty', (test) => {
   const set1 = new Set()
   const set2 = new Set([ 1, 2 ])
 

@@ -19,17 +19,17 @@
 const ava = require('ava')
 const utils = require('../../lib/utils')
 
-ava.test('should return undefined given an empty set', (test) => {
+ava('should return undefined given an empty set', (test) => {
   const set = new Set()
   test.deepEqual(utils.setFirst(set), undefined)
 })
 
-ava.test('should return the element given an empty set with one element', (test) => {
+ava('should return the element given an empty set with one element', (test) => {
   const set = new Set([ 'foo' ])
   test.deepEqual(utils.setFirst(set), 'foo')
 })
 
-ava.test('should always return the only element', (test) => {
+ava('should always return the only element', (test) => {
   const set = new Set([ 'foo' ])
   test.deepEqual(utils.setFirst(set), 'foo')
   test.deepEqual(utils.setFirst(set), 'foo')
@@ -37,7 +37,7 @@ ava.test('should always return the only element', (test) => {
   test.deepEqual(utils.setFirst(set), 'foo')
 })
 
-ava.test('should return one of the elements given a set with more than one element', (test) => {
+ava('should return one of the elements given a set with more than one element', (test) => {
   const set = new Set([ 'foo', 'bar', 'baz' ])
   test.true(set.has(utils.setFirst(set)))
 })

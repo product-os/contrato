@@ -20,7 +20,7 @@ const ava = require('ava')
 const MatcherCache = require('../../lib/matcher-cache')
 const Contract = require('../../lib/contract')
 
-ava.test('should remove all specified types from the cache', (test) => {
+ava('should remove all specified types from the cache', (test) => {
   const cache = new MatcherCache()
 
   const matcher1 = Contract.createMatcher({
@@ -54,7 +54,7 @@ ava.test('should remove all specified types from the cache', (test) => {
   })
 })
 
-ava.test('should do nothing if the type does not exist', (test) => {
+ava('should do nothing if the type does not exist', (test) => {
   const cache = new MatcherCache()
 
   const matcher1 = Contract.createMatcher({

@@ -20,7 +20,7 @@ const ava = require('ava')
 const MatcherCache = require('../../lib/matcher-cache')
 const Contract = require('../../lib/contract')
 
-ava.test('should return the value if the matcher was cached', (test) => {
+ava('should return the value if the matcher was cached', (test) => {
   const cache = new MatcherCache()
 
   const matcher1 = Contract.createMatcher({
@@ -37,7 +37,7 @@ ava.test('should return the value if the matcher was cached', (test) => {
   })
 })
 
-ava.test('should return null if the matcher was not cached', (test) => {
+ava('should return null if the matcher was not cached', (test) => {
   const cache = new MatcherCache()
 
   const matcher1 = Contract.createMatcher({

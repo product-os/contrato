@@ -19,14 +19,14 @@
 const ava = require('ava')
 const utils = require('../../lib/utils')
 
-ava.test('should return an empty array given an empty set', (test) => {
+ava('should return an empty array given an empty set', (test) => {
   const set = new Set()
   test.deepEqual(utils.setMap(set, (element) => {
     return element * 2
   }), [])
 })
 
-ava.test('should run the iteratee on all elements', (test) => {
+ava('should run the iteratee on all elements', (test) => {
   const set = new Set([ 1, 2, 3 ])
   test.deepEqual(utils.setMap(set, (element) => {
     return element * 2

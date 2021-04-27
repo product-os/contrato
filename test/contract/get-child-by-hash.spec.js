@@ -20,7 +20,7 @@ const ava = require('ava')
 const Contract = require('../../lib/contract')
 const CONTRACTS = require('../contracts.json')
 
-ava.test('should return an existing child given its hash', (test) => {
+ava('should return an existing child given its hash', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
   const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
@@ -36,7 +36,7 @@ ava.test('should return an existing child given its hash', (test) => {
   test.deepEqual(container.getChildByHash(contract2.metadata.hash), contract2)
 })
 
-ava.test('should return nothing if the hash does not exist', (test) => {
+ava('should return nothing if the hash does not exist', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
   const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)

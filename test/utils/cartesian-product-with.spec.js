@@ -20,7 +20,7 @@ const ava = require('ava')
 const _ = require('lodash')
 const utils = require('../../lib/utils')
 
-ava.test('should perform a cartesian product of empty sets', (test) => {
+ava('should perform a cartesian product of empty sets', (test) => {
   const product = utils.cartesianProductWith([
     [],
     [],
@@ -32,7 +32,7 @@ ava.test('should perform a cartesian product of empty sets', (test) => {
   test.deepEqual(product, [])
 })
 
-ava.test('should perform a cartesian product of a valid an and empty set', (test) => {
+ava('should perform a cartesian product of a valid an and empty set', (test) => {
   const product = utils.cartesianProductWith([
     [ 'foo' ],
     [],
@@ -44,7 +44,7 @@ ava.test('should perform a cartesian product of a valid an and empty set', (test
   test.deepEqual(product, [ [ 'foo' ] ])
 })
 
-ava.test('should perform a cartesian product of no sets', (test) => {
+ava('should perform a cartesian product of no sets', (test) => {
   const product = utils.cartesianProductWith([], (accumulator, element) => {
     return _.concat(accumulator, [ element ])
   })
@@ -52,7 +52,7 @@ ava.test('should perform a cartesian product of no sets', (test) => {
   test.deepEqual(product, [])
 })
 
-ava.test('should perform a cartesian product of a one element set', (test) => {
+ava('should perform a cartesian product of a one element set', (test) => {
   const product = utils.cartesianProductWith([
     [ 'foo' ]
   ], (accumulator, element) => {
@@ -64,7 +64,7 @@ ava.test('should perform a cartesian product of a one element set', (test) => {
   ])
 })
 
-ava.test('should calculate the cartesian product of two string sets', (test) => {
+ava('should calculate the cartesian product of two string sets', (test) => {
   const product = utils.cartesianProductWith([
     [ 'hello', 'hi', 'hey' ],
     [ 'there', 'world', 'yo' ]
@@ -85,7 +85,7 @@ ava.test('should calculate the cartesian product of two string sets', (test) => 
   ])
 })
 
-ava.test('should be able to discard combinations by returning undefined', (test) => {
+ava('should be able to discard combinations by returning undefined', (test) => {
   const product = utils.cartesianProductWith([
     [ 'hello', 'hi', 'hey' ],
     [ 'there', 'world', 'yo' ]
@@ -114,7 +114,7 @@ ava.test('should be able to discard combinations by returning undefined', (test)
   ])
 })
 
-ava.test('should be able to discard combinations on a 3 sets product', (test) => {
+ava('should be able to discard combinations on a 3 sets product', (test) => {
   const product = utils.cartesianProductWith([
     [ 1, 2, 3 ],
     [ 4, 5, 6 ],

@@ -19,7 +19,7 @@
 const ava = require('ava')
 const Contract = require('../../lib/contract')
 
-ava.test('should return the type', (test) => {
+ava('should return the type', (test) => {
   const contract = new Contract({
     type: 'arch.sw',
     name: 'armv7hf',

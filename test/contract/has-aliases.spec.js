@@ -19,7 +19,7 @@
 const ava = require('ava')
 const Contract = require('../../lib/contract')
 
-ava.test('should return false given a contract without aliases', (test) => {
+ava('should return false given a contract without aliases', (test) => {
   const contract = new Contract({
     type: 'arch.sw',
     name: 'armv7hf',
@@ -29,7 +29,7 @@ ava.test('should return false given a contract without aliases', (test) => {
   test.false(contract.hasAliases())
 })
 
-ava.test('should return true given a contract with aliases', (test) => {
+ava('should return true given a contract with aliases', (test) => {
   const contract = new Contract({
     type: 'hw.device-type',
     name: 'Raspberry Pi',
@@ -40,7 +40,7 @@ ava.test('should return true given a contract with aliases', (test) => {
   test.true(contract.hasAliases())
 })
 
-ava.test('should return false given a contract with empty aliases', (test) => {
+ava('should return false given a contract with empty aliases', (test) => {
   const contract = new Contract({
     type: 'arch.sw',
     name: 'armv7hf',

@@ -22,7 +22,7 @@ const Contract = require('../../lib/contract')
 const Blueprint = require('../../lib/blueprint')
 const cardinality = require('../../lib/cardinality')
 
-ava.test('should be a contract', (test) => {
+ava('should be a contract', (test) => {
   const blueprint = new Blueprint({
     'hw.device-type': 1
   })
@@ -30,7 +30,7 @@ ava.test('should be a contract', (test) => {
   test.true(blueprint instanceof Contract)
 })
 
-ava.test('should set a proper type', (test) => {
+ava('should set a proper type', (test) => {
   const blueprint = new Blueprint({
     'hw.device-type': 1
   })
@@ -38,7 +38,7 @@ ava.test('should set a proper type', (test) => {
   test.is(blueprint.raw.type, 'meta.blueprint')
 })
 
-ava.test('should be a hashed contract', (test) => {
+ava('should be a hashed contract', (test) => {
   const blueprint = new Blueprint({
     'hw.device-type': 1
   })
@@ -46,7 +46,7 @@ ava.test('should be a hashed contract', (test) => {
   test.is(typeof blueprint.metadata.hash, 'string')
 })
 
-ava.test('should parse a layout with one number selector', (test) => {
+ava('should parse a layout with one number selector', (test) => {
   const blueprint = new Blueprint({
     'hw.device-type': 1
   })
@@ -73,7 +73,7 @@ ava.test('should parse a layout with one number selector', (test) => {
   })
 })
 
-ava.test('should parse a layout with one finite and one infinite selectors', (test) => {
+ava('should parse a layout with one finite and one infinite selectors', (test) => {
   const blueprint = new Blueprint({
     'hw.device-type': 2,
     'arch.sw': '1+'
@@ -110,7 +110,7 @@ ava.test('should parse a layout with one finite and one infinite selectors', (te
   })
 })
 
-ava.test('should support object layout selectors', (test) => {
+ava('should support object layout selectors', (test) => {
   const filterFunction = _.identity
 
   const blueprint = new Blueprint({
@@ -154,7 +154,7 @@ ava.test('should support object layout selectors', (test) => {
   })
 })
 
-ava.test('should allow passing a skeleton object', (test) => {
+ava('should allow passing a skeleton object', (test) => {
   const blueprint = new Blueprint({
     'hw.device-type': 1
   }, {

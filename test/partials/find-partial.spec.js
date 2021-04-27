@@ -20,7 +20,7 @@ const ava = require('ava')
 const partials = require('../../lib/partials')
 const Contract = require('../../lib/contract')
 
-ava.test('should find a partial in a one level structure with one contract of a type', (test) => {
+ava('should find a partial in a one level structure with one contract of a type', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -43,7 +43,7 @@ ava.test('should find a partial in a one level structure with one contract of a 
   ])
 })
 
-ava.test('should find a partial in a one level structure with one alias contract of a type', (test) => {
+ava('should find a partial in a one level structure with one alias contract of a type', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -67,7 +67,7 @@ ava.test('should find a partial in a one level structure with one alias contract
   ])
 })
 
-ava.test('should find a partial in a one level structure with two alias contracts of a type', (test) => {
+ava('should find a partial in a one level structure with two alias contracts of a type', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -97,7 +97,7 @@ ava.test('should find a partial in a one level structure with two alias contract
   ])
 })
 
-ava.test('should find a partial in a one level structure with two contracts of a type with one right version', (test) => {
+ava('should find a partial in a one level structure with two contracts of a type with one right version', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -127,37 +127,7 @@ ava.test('should find a partial in a one level structure with two contracts of a
   ])
 })
 
-ava.test('should find a partial in a one level structure with two contracts of a type with one right version', (test) => {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
-
-  contract.addChildren([
-    new Contract({
-      type: 'arch.sw',
-      version: '3',
-      name: 'armv7hf',
-      slug: 'armv7hf'
-    }),
-    new Contract({
-      type: 'arch.sw',
-      name: 'armel',
-      slug: 'armel'
-    })
-  ])
-
-  test.deepEqual(partials.findPartial('my-partial', contract, {
-    baseDirectory: 'path/to/partials',
-    structure: [ 'arch.sw' ]
-  }), [
-    'path/to/partials/armel+armv7hf@3/my-partial.tpl',
-    'path/to/partials/armel+armv7hf/my-partial.tpl',
-    'path/to/partials/my-partial.tpl'
-  ])
-})
-
-ava.test('should find a partial in a one level structure with two contracts of a type with one right alias', (test) => {
+ava('should find a partial in a one level structure with two contracts of a type with one right alias', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -188,7 +158,7 @@ ava.test('should find a partial in a one level structure with two contracts of a
   ])
 })
 
-ava.test('should find a partial in a one level structure with two contracts of a type with one left version', (test) => {
+ava('should find a partial in a one level structure with two contracts of a type with one left version', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -218,7 +188,7 @@ ava.test('should find a partial in a one level structure with two contracts of a
   ])
 })
 
-ava.test('should find a partial in a one level structure with two contracts of a type with one left alias', (test) => {
+ava('should find a partial in a one level structure with two contracts of a type with one left alias', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -249,7 +219,7 @@ ava.test('should find a partial in a one level structure with two contracts of a
   ])
 })
 
-ava.test('should find a partial in a one level structure with two contracts of a type with two versions', (test) => {
+ava('should find a partial in a one level structure with two contracts of a type with two versions', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -280,7 +250,7 @@ ava.test('should find a partial in a one level structure with two contracts of a
   ])
 })
 
-ava.test('should find a partial in a one level structure with one contract of a type with a version', (test) => {
+ava('should find a partial in a one level structure with one contract of a type with a version', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -305,7 +275,7 @@ ava.test('should find a partial in a one level structure with one contract of a 
   ])
 })
 
-ava.test('should find a partial in a two level structure with one contract of each type', (test) => {
+ava('should find a partial in a two level structure with one contract of each type', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -334,7 +304,7 @@ ava.test('should find a partial in a two level structure with one contract of ea
   ])
 })
 
-ava.test('should find a partial in a two level structure with one contract of each type with versions', (test) => {
+ava('should find a partial in a two level structure with one contract of each type with versions', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -369,7 +339,7 @@ ava.test('should find a partial in a two level structure with one contract of ea
   ])
 })
 
-ava.test('should find a partial in a three level structure with one contract of each type', (test) => {
+ava('should find a partial in a three level structure with one contract of each type', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -404,7 +374,7 @@ ava.test('should find a partial in a three level structure with one contract of 
   ])
 })
 
-ava.test('should find a partial in a three level structure with one contract with version of each type', (test) => {
+ava('should find a partial in a three level structure with one contract with version of each type', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'

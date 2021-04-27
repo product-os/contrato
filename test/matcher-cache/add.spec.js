@@ -20,7 +20,7 @@ const ava = require('ava')
 const MatcherCache = require('../../lib/matcher-cache')
 const Contract = require('../../lib/contract')
 
-ava.test('should add one value to the cache', (test) => {
+ava('should add one value to the cache', (test) => {
   const cache = new MatcherCache()
 
   const matcher1 = Contract.createMatcher({
@@ -40,7 +40,7 @@ ava.test('should add one value to the cache', (test) => {
   })
 })
 
-ava.test('should add two values to the cache using the same type', (test) => {
+ava('should add two values to the cache using the same type', (test) => {
   const cache = new MatcherCache()
 
   const matcher1 = Contract.createMatcher({
@@ -70,7 +70,7 @@ ava.test('should add two values to the cache using the same type', (test) => {
   })
 })
 
-ava.test('should add two values to the cache using different types', (test) => {
+ava('should add two values to the cache using different types', (test) => {
   const cache = new MatcherCache()
 
   const matcher1 = Contract.createMatcher({

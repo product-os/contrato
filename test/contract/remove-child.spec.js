@@ -25,7 +25,7 @@ const SKELETON = {
   slug: 'bar'
 }
 
-ava.test('should delete a contract from a set of contracts', (test) => {
+ava('should delete a contract from a set of contracts', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
   const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
@@ -39,7 +39,7 @@ ava.test('should delete a contract from a set of contracts', (test) => {
   test.deepEqual(container, expected)
 })
 
-ava.test('should ignore contracts that are not in the set', (test) => {
+ava('should ignore contracts that are not in the set', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
   const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
@@ -53,7 +53,7 @@ ava.test('should ignore contracts that are not in the set', (test) => {
   test.deepEqual(container, expected)
 })
 
-ava.test('should remove a slug object if it becomes empty after the removal', (test) => {
+ava('should remove a slug object if it becomes empty after the removal', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
 
@@ -66,7 +66,7 @@ ava.test('should remove a slug object if it becomes empty after the removal', (t
   test.deepEqual(container, expected)
 })
 
-ava.test('should correctly handle number versions', (test) => {
+ava('should correctly handle number versions', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].fedora['24'].object)
   const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
@@ -80,7 +80,7 @@ ava.test('should correctly handle number versions', (test) => {
   test.deepEqual(container, expected)
 })
 
-ava.test('should ignore an invalid version of an existing contract', (test) => {
+ava('should ignore an invalid version of an existing contract', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
   const contract3 = new Contract(CONTRACTS['sw.os'].debian.sid.object)
@@ -94,7 +94,7 @@ ava.test('should ignore an invalid version of an existing contract', (test) => {
   test.deepEqual(container, expected)
 })
 
-ava.test('should take versions into account before removing a contract from the slug object', (test) => {
+ava('should take versions into account before removing a contract from the slug object', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].fedora['24'].object)
   const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
@@ -108,7 +108,7 @@ ava.test('should take versions into account before removing a contract from the 
   test.deepEqual(container, expected)
 })
 
-ava.test('should take versions into account before removing a contract from the type object', (test) => {
+ava('should take versions into account before removing a contract from the type object', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
 
@@ -121,7 +121,7 @@ ava.test('should take versions into account before removing a contract from the 
   test.deepEqual(container, expected)
 })
 
-ava.test('should remove a type object if it becomes empty after the removal', (test) => {
+ava('should remove a type object if it becomes empty after the removal', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
 
@@ -134,7 +134,7 @@ ava.test('should remove a type object if it becomes empty after the removal', (t
   test.deepEqual(container, expected)
 })
 
-ava.test('should return the object instance', (test) => {
+ava('should return the object instance', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
   const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
@@ -144,7 +144,7 @@ ava.test('should return the object instance', (test) => {
   test.deepEqual(container.removeChild(contract2), container)
 })
 
-ava.test('should return the object instance even if the type does not exist', (test) => {
+ava('should return the object instance even if the type does not exist', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
   const contract3 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
@@ -154,7 +154,7 @@ ava.test('should return the object instance even if the type does not exist', (t
   test.deepEqual(container.removeChild(contract3), container)
 })
 
-ava.test('should remove a contract with aliases', (test) => {
+ava('should remove a contract with aliases', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
   const contract2 = new Contract({
     type: 'hw.device-type',
@@ -172,7 +172,7 @@ ava.test('should remove a contract with aliases', (test) => {
   test.deepEqual(container, expected)
 })
 
-ava.test('should remove a contract with aliases when there is another aliased contract of the same type', (test) => {
+ava('should remove a contract with aliases when there is another aliased contract of the same type', (test) => {
   const contract1 = new Contract({
     type: 'hw.device-type',
     name: 'Intel NUC',
@@ -196,7 +196,7 @@ ava.test('should remove a contract with aliases when there is another aliased co
   test.deepEqual(container, expected)
 })
 
-ava.test('should remove a contract with aliases when there are two aliased contracts of the same type', (test) => {
+ava('should remove a contract with aliases when there are two aliased contracts of the same type', (test) => {
   const contract1 = new Contract({
     type: 'hw.device-type',
     name: 'Intel NUC',
@@ -227,7 +227,7 @@ ava.test('should remove a contract with aliases when there are two aliased contr
   test.deepEqual(container, expected)
 })
 
-ava.test('should re-hash the universe', (test) => {
+ava('should re-hash the universe', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
   const contract3 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
@@ -241,7 +241,7 @@ ava.test('should re-hash the universe', (test) => {
   test.is(container.metadata.hash, hash.hashObject(container.raw))
 })
 
-ava.test('should not re-hash the universe if the rehash option is false', (test) => {
+ava('should not re-hash the universe if the rehash option is false', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
   const contract3 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)

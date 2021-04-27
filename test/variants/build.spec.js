@@ -19,7 +19,7 @@
 const ava = require('ava')
 const variants = require('../../lib/variants')
 
-ava.test('should build a contract with no variants', (test) => {
+ava('should build a contract with no variants', (test) => {
   test.deepEqual(variants.build({
     slug: 'debian',
     type: 'distro',
@@ -33,7 +33,7 @@ ava.test('should build a contract with no variants', (test) => {
   ])
 })
 
-ava.test('should build a contract with empty variants', (test) => {
+ava('should build a contract with empty variants', (test) => {
   test.deepEqual(variants.build({
     slug: 'debian',
     type: 'distro',
@@ -48,7 +48,7 @@ ava.test('should build a contract with empty variants', (test) => {
   ])
 })
 
-ava.test('should build a contract with two variants', (test) => {
+ava('should build a contract with two variants', (test) => {
   test.deepEqual(variants.build({
     slug: 'nodejs_{{data.arch}}',
     type: 'blob',
@@ -114,7 +114,7 @@ ava.test('should build a contract with two variants', (test) => {
   ])
 })
 
-ava.test('should supported nested variants', (test) => {
+ava('should supported nested variants', (test) => {
   test.deepEqual(variants.build({
     slug: 'nodejs_{{data.arch}}',
     type: 'blob',
@@ -211,7 +211,7 @@ ava.test('should supported nested variants', (test) => {
   ])
 })
 
-ava.test('should merge arrays correctly', (test) => {
+ava('should merge arrays correctly', (test) => {
   test.deepEqual(variants.build({
     slug: 'foo',
     type: 'blob',

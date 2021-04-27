@@ -19,7 +19,7 @@
 const ava = require('ava')
 const Contract = require('../../lib/contract')
 
-ava.test('should compute the intersection of one type and two contracts with or operators', (test) => {
+ava('should compute the intersection of one type and two contracts with or operators', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -97,7 +97,7 @@ ava.test('should compute the intersection of one type and two contracts with or 
   ])
 })
 
-ava.test('should return nothing if the from contract does not contain the referenced contracts', (test) => {
+ava('should return nothing if the from contract does not contain the referenced contracts', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -154,7 +154,7 @@ ava.test('should return nothing if the from contract does not contain the refere
   test.deepEqual(references, [])
 })
 
-ava.test('should compute the intersection of more than one type, from more than two contracts', (test) => {
+ava('should compute the intersection of more than one type, from more than two contracts', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -295,7 +295,7 @@ ava.test('should compute the intersection of more than one type, from more than 
   ])
 })
 
-ava.test('should return nothing if there is no intersection', (test) => {
+ava('should return nothing if there is no intersection', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -359,7 +359,7 @@ ava.test('should return nothing if there is no intersection', (test) => {
   test.deepEqual(references, [])
 })
 
-ava.test('should not discard contracts of a type not defined in another contracts', (test) => {
+ava('should not discard contracts of a type not defined in another contracts', (test) => {
   const contract = new Contract({
     type: 'foo',
     slug: 'bar'

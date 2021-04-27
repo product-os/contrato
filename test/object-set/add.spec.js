@@ -19,7 +19,7 @@
 const ava = require('ava')
 const ObjectSet = require('../../lib/object-set')
 
-ava.test('should add an object to an empty set', (test) => {
+ava('should add an object to an empty set', (test) => {
   const set = new ObjectSet()
 
   set.add({
@@ -33,7 +33,7 @@ ava.test('should add an object to an empty set', (test) => {
   ])
 })
 
-ava.test('should add an object to a non empty set', (test) => {
+ava('should add an object to a non empty set', (test) => {
   const set = new ObjectSet([
     {
       foo: 1
@@ -54,7 +54,7 @@ ava.test('should add an object to a non empty set', (test) => {
   ])
 })
 
-ava.test('should not add a duplicate object', (test) => {
+ava('should not add a duplicate object', (test) => {
   const set = new ObjectSet([
     {
       foo: 1
@@ -72,7 +72,7 @@ ava.test('should not add a duplicate object', (test) => {
   ])
 })
 
-ava.test('should allow the user to set a custom id', (test) => {
+ava('should allow the user to set a custom id', (test) => {
   const set = new ObjectSet([])
 
   set.add({

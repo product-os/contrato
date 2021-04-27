@@ -19,7 +19,7 @@
 const ava = require('ava')
 const Contract = require('../../lib/contract')
 
-ava.test('should build contract templates', (test) => {
+ava('should build contract templates', (test) => {
   const contracts = Contract.build({
     name: 'Debian {{this.data.codename}}',
     slug: 'debian',
@@ -45,7 +45,7 @@ ava.test('should build contract templates', (test) => {
   ])
 })
 
-ava.test('should support slug and type templates', (test) => {
+ava('should support slug and type templates', (test) => {
   const contracts = Contract.build({
     name: 'Debian Wheezy',
     slug: '{{this.data.slug}}',
@@ -71,7 +71,7 @@ ava.test('should support slug and type templates', (test) => {
   ])
 })
 
-ava.test('should expand contract variants', (test) => {
+ava('should expand contract variants', (test) => {
   const contracts = Contract.build({
     slug: 'debian',
     type: 'sw.os',
@@ -107,7 +107,7 @@ ava.test('should expand contract variants', (test) => {
   ])
 })
 
-ava.test('should build contracts with variants and templates', (test) => {
+ava('should build contracts with variants and templates', (test) => {
   const contracts = Contract.build({
     name: 'debian {{this.version}}',
     slug: 'debian',
@@ -147,7 +147,7 @@ ava.test('should build contracts with variants and templates', (test) => {
   ])
 })
 
-ava.test('should expand contract aliases', (test) => {
+ava('should expand contract aliases', (test) => {
   const contracts = Contract.build({
     slug: 'debian',
     type: 'sw.os',
@@ -176,7 +176,7 @@ ava.test('should expand contract aliases', (test) => {
   ])
 })
 
-ava.test('should build contracts with variants and aliases', (test) => {
+ava('should build contracts with variants and aliases', (test) => {
   const contracts = Contract.build({
     name: 'debian {{this.version}}',
     slug: 'debian',

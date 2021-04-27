@@ -21,7 +21,7 @@ const Contract = require('../../lib/contract')
 const MatcherCache = require('../../lib/matcher-cache')
 const CONTRACTS = require('../contracts.json')
 
-ava.test('should add a contract to a contract without children', (test) => {
+ava('should add a contract to a contract without children', (test) => {
   const container = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -58,7 +58,7 @@ ava.test('should add a contract to a contract without children', (test) => {
   })
 })
 
-ava.test('should add two contracts of different types', (test) => {
+ava('should add two contracts of different types', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
 
@@ -104,7 +104,7 @@ ava.test('should add two contracts of different types', (test) => {
   })
 })
 
-ava.test('should not add a contract twice', (test) => {
+ava('should not add a contract twice', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const container = new Contract({
     type: 'foo',
@@ -141,7 +141,7 @@ ava.test('should not add a contract twice', (test) => {
   })
 })
 
-ava.test('should two contracts of same type but different slugs', (test) => {
+ava('should two contracts of same type but different slugs', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
 
@@ -186,7 +186,7 @@ ava.test('should two contracts of same type but different slugs', (test) => {
   })
 })
 
-ava.test('should add a new version of an existing contract', (test) => {
+ava('should add a new version of an existing contract', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
 
@@ -232,7 +232,7 @@ ava.test('should add a new version of an existing contract', (test) => {
   })
 })
 
-ava.test('should add two new versions of an existing contract', (test) => {
+ava('should add two new versions of an existing contract', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
   const contract3 = new Contract(CONTRACTS['sw.os'].debian.sid.object)
@@ -290,7 +290,7 @@ ava.test('should add two new versions of an existing contract', (test) => {
   })
 })
 
-ava.test('should return the instance', (test) => {
+ava('should return the instance', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const container = new Contract({
     type: 'foo',
@@ -300,7 +300,7 @@ ava.test('should return the instance', (test) => {
   test.deepEqual(container.addChild(contract1), container)
 })
 
-ava.test('should re-hash the parent contract', (test) => {
+ava('should re-hash the parent contract', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const container = new Contract({
     type: 'foo',
@@ -312,7 +312,7 @@ ava.test('should re-hash the parent contract', (test) => {
   test.not(container.metadata.hash, hash)
 })
 
-ava.test('should not re-hash the parent contract if the rehash option is false', (test) => {
+ava('should not re-hash the parent contract if the rehash option is false', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const container = new Contract({
     type: 'foo',

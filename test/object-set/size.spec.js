@@ -19,12 +19,12 @@
 const ava = require('ava')
 const ObjectSet = require('../../lib/object-set')
 
-ava.test('should return zero if the set has no objects', (test) => {
+ava('should return zero if the set has no objects', (test) => {
   const set = new ObjectSet()
   test.is(set.size(), 0)
 })
 
-ava.test('should return one if the set has one object', (test) => {
+ava('should return one if the set has one object', (test) => {
   const set = new ObjectSet([
     {
       foo: 1
@@ -34,7 +34,7 @@ ava.test('should return one if the set has one object', (test) => {
   test.is(set.size(), 1)
 })
 
-ava.test('should return two if the set has two object', (test) => {
+ava('should return two if the set has two object', (test) => {
   const set = new ObjectSet([
     {
       foo: 1
@@ -47,7 +47,7 @@ ava.test('should return two if the set has two object', (test) => {
   test.is(set.size(), 2)
 })
 
-ava.test('should ignore duplicates', (test) => {
+ava('should ignore duplicates', (test) => {
   const set = new ObjectSet([
     {
       foo: 1
@@ -60,7 +60,7 @@ ava.test('should ignore duplicates', (test) => {
   test.is(set.size(), 1)
 })
 
-ava.test('should change if new objects are added', (test) => {
+ava('should change if new objects are added', (test) => {
   const set = new ObjectSet()
 
   set.add({

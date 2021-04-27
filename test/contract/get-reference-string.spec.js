@@ -19,7 +19,7 @@
 const ava = require('ava')
 const Contract = require('../../lib/contract')
 
-ava.test('should return the reference string of a contract without a version', (test) => {
+ava('should return the reference string of a contract without a version', (test) => {
   const contract = new Contract({
     type: 'sw.arch',
     slug: 'armv7hf',
@@ -29,7 +29,7 @@ ava.test('should return the reference string of a contract without a version', (
   test.is(contract.getReferenceString(), 'armv7hf')
 })
 
-ava.test('should return the reference string of a contract with a version', (test) => {
+ava('should return the reference string of a contract with a version', (test) => {
   const contract = new Contract({
     type: 'sw.os',
     slug: 'debian',

@@ -19,7 +19,7 @@
 const ava = require('ava')
 const Contract = require('../../lib/contract')
 
-ava.test('should return true if the contracts are equal', (test) => {
+ava('should return true if the contracts are equal', (test) => {
   const contract1 = new Contract({
     type: 'arch.sw',
     name: 'armv7hf',
@@ -35,7 +35,7 @@ ava.test('should return true if the contracts are equal', (test) => {
   test.true(Contract.isEqual(contract1, contract2))
 })
 
-ava.test('should return false if the contracts are different', (test) => {
+ava('should return false if the contracts are different', (test) => {
   const contract1 = new Contract({
     type: 'arch.sw',
     name: 'armv7hf',
@@ -51,7 +51,7 @@ ava.test('should return false if the contracts are different', (test) => {
   test.false(Contract.isEqual(contract1, contract2))
 })
 
-ava.test('should return false if the contracts are different but have not been hashed', (test) => {
+ava('should return false if the contracts are different but have not been hashed', (test) => {
   const contract1 = new Contract({
     type: 'arch.sw',
     name: 'armv7hf',
@@ -71,7 +71,7 @@ ava.test('should return false if the contracts are different but have not been h
   test.false(Contract.isEqual(contract1, contract2))
 })
 
-ava.test('should return true if the contracts are equal but have not been hashed', (test) => {
+ava('should return true if the contracts are equal but have not been hashed', (test) => {
   const contract1 = new Contract({
     type: 'arch.sw',
     name: 'armv7hf',

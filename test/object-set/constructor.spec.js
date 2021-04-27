@@ -19,12 +19,12 @@
 const ava = require('ava')
 const ObjectSet = require('../../lib/object-set')
 
-ava.test('should create an empty set', (test) => {
+ava('should create an empty set', (test) => {
   const set = new ObjectSet()
   test.deepEqual(set.getAll(), [])
 })
 
-ava.test('should create a set with objects', (test) => {
+ava('should create a set with objects', (test) => {
   const set = new ObjectSet([
     {
       foo: 1
@@ -44,7 +44,7 @@ ava.test('should create a set with objects', (test) => {
   ])
 })
 
-ava.test('should ignore duplicate objects', (test) => {
+ava('should ignore duplicate objects', (test) => {
   const set = new ObjectSet([
     {
       foo: 1
@@ -61,7 +61,7 @@ ava.test('should ignore duplicate objects', (test) => {
   ])
 })
 
-ava.test('should be able to set objects with custom ids', (test) => {
+ava('should be able to set objects with custom ids', (test) => {
   const set = new ObjectSet([
     [
       {

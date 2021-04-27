@@ -19,7 +19,7 @@
 const ava = require('ava')
 const Contract = require('../../lib/contract')
 
-ava.test('should create contract instance', (test) => {
+ava('should create contract instance', (test) => {
   const matcher = Contract.createMatcher({
     type: 'arch.sw',
     slug: 'armv7hf'
@@ -28,7 +28,7 @@ ava.test('should create contract instance', (test) => {
   test.true(matcher instanceof Contract)
 })
 
-ava.test('should include the properties in data', (test) => {
+ava('should include the properties in data', (test) => {
   const matcher = Contract.createMatcher({
     type: 'arch.sw',
     slug: 'armv7hf'
@@ -40,7 +40,7 @@ ava.test('should include the properties in data', (test) => {
   })
 })
 
-ava.test('should set the type appropriately', (test) => {
+ava('should set the type appropriately', (test) => {
   const matcher = Contract.createMatcher({
     type: 'arch.sw',
     slug: 'armv7hf'
@@ -49,7 +49,7 @@ ava.test('should set the type appropriately', (test) => {
   test.is(matcher.getType(), 'meta.matcher')
 })
 
-ava.test('should be able to set the operation name', (test) => {
+ava('should be able to set the operation name', (test) => {
   const matcher = Contract.createMatcher({
     type: 'arch.sw',
     slug: 'armv7hf'

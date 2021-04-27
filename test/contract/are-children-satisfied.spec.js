@@ -19,7 +19,7 @@
 const ava = require('ava')
 const Contract = require('../../lib/contract')
 
-ava.test('should return true given a satisfied context', (test) => {
+ava('should return true given a satisfied context', (test) => {
   const contract = new Contract({
     type: 'foo',
     bar: 'bar'
@@ -66,7 +66,7 @@ ava.test('should return true given a satisfied context', (test) => {
   test.true(contract.areChildrenSatisfied())
 })
 
-ava.test('should return false given an unsatisfied context', (test) => {
+ava('should return false given an unsatisfied context', (test) => {
   const contract = new Contract({
     type: 'foo',
     bar: 'bar'
@@ -113,7 +113,7 @@ ava.test('should return false given an unsatisfied context', (test) => {
   test.false(contract.areChildrenSatisfied())
 })
 
-ava.test('should return false given a requirement over a contract that does not exist', (test) => {
+ava('should return false given a requirement over a contract that does not exist', (test) => {
   const contract = new Contract({
     type: 'foo',
     bar: 'bar'
@@ -136,7 +136,7 @@ ava.test('should return false given a requirement over a contract that does not 
   test.false(contract.areChildrenSatisfied())
 })
 
-ava.test('should return true given a requirement over a contract that does not ' +
+ava('should return true given a requirement over a contract that does not ' +
          'exist for which the type was not passed', (test) => {
   const contract = new Contract({
     type: 'foo',
@@ -162,7 +162,7 @@ ava.test('should return true given a requirement over a contract that does not '
   }))
 })
 
-ava.test('should return true given one satisfied type in a satisfied context', (test) => {
+ava('should return true given one satisfied type in a satisfied context', (test) => {
   const contract = new Contract({
     type: 'foo',
     bar: 'bar'
@@ -211,7 +211,7 @@ ava.test('should return true given one satisfied type in a satisfied context', (
   }))
 })
 
-ava.test('should return true given one satisfied type in an unsatisfied context', (test) => {
+ava('should return true given one satisfied type in an unsatisfied context', (test) => {
   const contract = new Contract({
     type: 'foo',
     bar: 'bar'
@@ -260,7 +260,7 @@ ava.test('should return true given one satisfied type in an unsatisfied context'
   }))
 })
 
-ava.test('should return true given one unknown type in an unsatisfied context', (test) => {
+ava('should return true given one unknown type in an unsatisfied context', (test) => {
   const contract = new Contract({
     type: 'foo',
     bar: 'bar'
@@ -309,7 +309,7 @@ ava.test('should return true given one unknown type in an unsatisfied context', 
   }))
 })
 
-ava.test('should return false given one unsatisfied type in an unsatisfied context', (test) => {
+ava('should return false given one unsatisfied type in an unsatisfied context', (test) => {
   const contract = new Contract({
     type: 'foo',
     bar: 'bar'
@@ -358,7 +358,7 @@ ava.test('should return false given one unsatisfied type in an unsatisfied conte
   }))
 })
 
-ava.test('should return false given one unsatisfied and one satisfied type in an unsatisfied context', (test) => {
+ava('should return false given one unsatisfied and one satisfied type in an unsatisfied context', (test) => {
   const contract = new Contract({
     type: 'foo',
     bar: 'bar'
@@ -407,7 +407,7 @@ ava.test('should return false given one unsatisfied and one satisfied type in an
   }))
 })
 
-ava.test('should return true given two satisfied types in a satisfied context', (test) => {
+ava('should return true given two satisfied types in a satisfied context', (test) => {
   const contract = new Contract({
     type: 'foo',
     bar: 'bar'
@@ -456,7 +456,7 @@ ava.test('should return true given two satisfied types in a satisfied context', 
   }))
 })
 
-ava.test('should return true given a context with other satisfied contexts', (test) => {
+ava('should return true given a context with other satisfied contexts', (test) => {
   const container = new Contract({
     type: 'foo',
     bar: 'bar'
@@ -511,7 +511,7 @@ ava.test('should return true given a context with other satisfied contexts', (te
   test.true(container.areChildrenSatisfied())
 })
 
-ava.test('should return false given a context with unsatisfied contexts', (test) => {
+ava('should return false given a context with unsatisfied contexts', (test) => {
   const container = new Contract({
     type: 'foo',
     bar: 'bar'

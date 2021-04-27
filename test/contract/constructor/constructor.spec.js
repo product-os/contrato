@@ -21,7 +21,7 @@ const Contract = require('../../../lib/contract')
 const MatcherCache = require('../../../lib/matcher-cache')
 const ObjectSet = require('../../../lib/object-set')
 
-ava.test('should create a simple contract', (test) => {
+ava('should create a simple contract', (test) => {
   const contract = new Contract({
     type: 'arch.sw',
     name: 'armv7hf',

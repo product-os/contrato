@@ -20,7 +20,7 @@ const ava = require('ava')
 const Contract = require('../../lib/contract')
 const CONTRACTS = require('../contracts.json')
 
-ava.test('should find nothing given no properties', (test) => {
+ava('should find nothing given no properties', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const container = new Contract({
     type: 'foo',
@@ -32,7 +32,7 @@ ava.test('should find nothing given no properties', (test) => {
   test.deepEqual(container.findChildren({}), [])
 })
 
-ava.test('should find a specific unique contract based on its type and name', (test) => {
+ava('should find a specific unique contract based on its type and name', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
   const container = new Contract({
@@ -50,7 +50,7 @@ ava.test('should find a specific unique contract based on its type and name', (t
   ])
 })
 
-ava.test('should find a specific unique contract based on its type and slug', (test) => {
+ava('should find a specific unique contract based on its type and slug', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
   const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
@@ -70,7 +70,7 @@ ava.test('should find a specific unique contract based on its type and slug', (t
   ])
 })
 
-ava.test('should find a specific unique contract based on another property', (test) => {
+ava('should find a specific unique contract based on another property', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
   const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
@@ -90,7 +90,7 @@ ava.test('should find a specific unique contract based on another property', (te
   ])
 })
 
-ava.test('should find multiple contracts based on a type', (test) => {
+ava('should find multiple contracts based on a type', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
   const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
@@ -111,7 +111,7 @@ ava.test('should find multiple contracts based on a type', (test) => {
   ])
 })
 
-ava.test('should find nothing based on a non-existent type', (test) => {
+ava('should find nothing based on a non-existent type', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
   const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
@@ -128,7 +128,7 @@ ava.test('should find nothing based on a non-existent type', (test) => {
   })), [])
 })
 
-ava.test('should find nothing because of an invalid type', (test) => {
+ava('should find nothing because of an invalid type', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
   const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
@@ -146,7 +146,7 @@ ava.test('should find nothing because of an invalid type', (test) => {
   })), [])
 })
 
-ava.test('should find a contract based on one of its aliases', (test) => {
+ava('should find a contract based on one of its aliases', (test) => {
   const contract1 = new Contract({
     type: 'hw.device-type',
     name: 'Raspberry Pi 2',
@@ -174,7 +174,7 @@ ava.test('should find a contract based on one of its aliases', (test) => {
   })), [ contract2 ])
 })
 
-ava.test('should find a nested contract by its type and slug', (test) => {
+ava('should find a nested contract by its type and slug', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
   const contract3 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
@@ -196,7 +196,7 @@ ava.test('should find a nested contract by its type and slug', (test) => {
   ])
 })
 
-ava.test('should find a nested contract by its type and another property', (test) => {
+ava('should find a nested contract by its type and another property', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
   const contract3 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
@@ -218,7 +218,7 @@ ava.test('should find a nested contract by its type and another property', (test
   ])
 })
 
-ava.test('should fail to find a nested contract with an incorrect slug', (test) => {
+ava('should fail to find a nested contract with an incorrect slug', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
   const contract3 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
@@ -238,7 +238,7 @@ ava.test('should fail to find a nested contract with an incorrect slug', (test) 
   })), [])
 })
 
-ava.test('should fail to find a nested contract with an incorrect type', (test) => {
+ava('should fail to find a nested contract with an incorrect type', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
   const contract3 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
@@ -258,7 +258,7 @@ ava.test('should fail to find a nested contract with an incorrect type', (test) 
   })), [])
 })
 
-ava.test('should be able to find a two level nested children using its type', (test) => {
+ava('should be able to find a two level nested children using its type', (test) => {
   const contract1 = new Contract(CONTRACTS['hw.device-type'].artik10.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract3 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)

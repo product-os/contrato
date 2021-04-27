@@ -20,7 +20,7 @@ const ava = require('ava')
 const Contract = require('../../lib/contract')
 const CONTRACTS = require('../contracts.json')
 
-ava.test('should get nothing if no children', (test) => {
+ava('should get nothing if no children', (test) => {
   const container = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -29,7 +29,7 @@ ava.test('should get nothing if no children', (test) => {
   test.deepEqual(container.getChildren(), [])
 })
 
-ava.test('should get the paths of a one child container', (test) => {
+ava('should get the paths of a one child container', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const container = new Contract({
     type: 'foo',
@@ -43,7 +43,7 @@ ava.test('should get the paths of a one child container', (test) => {
   ])
 })
 
-ava.test('should get the paths of two contracts with different slugs', (test) => {
+ava('should get the paths of two contracts with different slugs', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
   const container = new Contract({
@@ -59,7 +59,7 @@ ava.test('should get the paths of two contracts with different slugs', (test) =>
   ])
 })
 
-ava.test('should get the paths of two contracts with same slugs', (test) => {
+ava('should get the paths of two contracts with same slugs', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
   const container = new Contract({
@@ -75,7 +75,7 @@ ava.test('should get the paths of two contracts with same slugs', (test) => {
   ])
 })
 
-ava.test('should be able to filter by one type', (test) => {
+ava('should be able to filter by one type', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
   const container = new Contract({
@@ -92,7 +92,7 @@ ava.test('should be able to filter by one type', (test) => {
   ])
 })
 
-ava.test('should be able to filter by two types', (test) => {
+ava('should be able to filter by two types', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
   const contract3 = new Contract(CONTRACTS['hw.device-type'].artik10.object)
@@ -111,7 +111,7 @@ ava.test('should be able to filter by two types', (test) => {
   ])
 })
 
-ava.test('should ignore unknown types', (test) => {
+ava('should ignore unknown types', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
   const container = new Contract({
@@ -128,7 +128,7 @@ ava.test('should ignore unknown types', (test) => {
   ])
 })
 
-ava.test('should return an empty array if no type matches', (test) => {
+ava('should return an empty array if no type matches', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
   const container = new Contract({
@@ -143,7 +143,7 @@ ava.test('should return an empty array if no type matches', (test) => {
   }), [])
 })
 
-ava.test('should not return the same contract multiple times if it contains aliases', (test) => {
+ava('should not return the same contract multiple times if it contains aliases', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
   const contract2 = new Contract({
     type: 'hw.device-type',
@@ -165,7 +165,7 @@ ava.test('should not return the same contract multiple times if it contains alia
   ])
 })
 
-ava.test('should return nested children', (test) => {
+ava('should return nested children', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
   contract1.addChild(contract2)
@@ -183,7 +183,7 @@ ava.test('should return nested children', (test) => {
   ])
 })
 
-ava.test('should return two level nested children', (test) => {
+ava('should return two level nested children', (test) => {
   const contract1 = new Contract(CONTRACTS['hw.device-type'].artik10.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract3 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
@@ -204,7 +204,7 @@ ava.test('should return two level nested children', (test) => {
   ])
 })
 
-ava.test('should return nested children that match the desired type', (test) => {
+ava('should return nested children that match the desired type', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
   contract1.addChild(contract2)

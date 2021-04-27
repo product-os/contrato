@@ -21,7 +21,7 @@ const Contract = require('../../lib/contract')
 const childrenTree = require('../../lib/children-tree')
 const CONTRACTS = require('../contracts.json')
 
-ava.test('should build a tree with one children', (test) => {
+ava('should build a tree with one children', (test) => {
   const container = new Contract({
     type: 'foo',
     slug: 'bar'
@@ -52,7 +52,7 @@ ava.test('should build a tree with one children', (test) => {
   })
 })
 
-ava.test('should build a tree with two contracts of different types', (test) => {
+ava('should build a tree with two contracts of different types', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
 
@@ -92,7 +92,7 @@ ava.test('should build a tree with two contracts of different types', (test) => 
   })
 })
 
-ava.test('should build a tree with two contracts of the same type', (test) => {
+ava('should build a tree with two contracts of the same type', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
 
@@ -131,7 +131,7 @@ ava.test('should build a tree with two contracts of the same type', (test) => {
   })
 })
 
-ava.test('should build a tree with two versions of the same slug', (test) => {
+ava('should build a tree with two versions of the same slug', (test) => {
   const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
   const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
 
@@ -171,7 +171,7 @@ ava.test('should build a tree with two versions of the same slug', (test) => {
   })
 })
 
-ava.test('should create a tree of two variants of the same contract', (test) => {
+ava('should create a tree of two variants of the same contract', (test) => {
   const contract1 = new Contract({
     type: 'sw.os',
     slug: 'Debian Wheezy',

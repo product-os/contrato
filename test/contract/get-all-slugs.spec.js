@@ -19,7 +19,7 @@
 const ava = require('ava')
 const Contract = require('../../lib/contract')
 
-ava.test('should return only the slug given a contract without aliases', (test) => {
+ava('should return only the slug given a contract without aliases', (test) => {
   const contract = new Contract({
     type: 'arch.sw',
     name: 'armv7hf',
@@ -29,7 +29,7 @@ ava.test('should return only the slug given a contract without aliases', (test) 
   test.deepEqual(contract.getAllSlugs(), new Set([ 'armv7hf' ]))
 })
 
-ava.test('should include the aliases if present', (test) => {
+ava('should include the aliases if present', (test) => {
   const contract = new Contract({
     type: 'hw.device-type',
     name: 'Raspberry Pi',
@@ -44,7 +44,7 @@ ava.test('should include the aliases if present', (test) => {
   ]))
 })
 
-ava.test('should return only the slug if aliases is empty', (test) => {
+ava('should return only the slug if aliases is empty', (test) => {
   const contract = new Contract({
     type: 'arch.sw',
     name: 'armv7hf',

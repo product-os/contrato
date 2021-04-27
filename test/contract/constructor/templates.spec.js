@@ -19,7 +19,7 @@
 const ava = require('ava')
 const Contract = require('../../../lib/contract')
 
-ava.test('should resolve templates for which the values exist', (test) => {
+ava('should resolve templates for which the values exist', (test) => {
   const contract = new Contract({
     type: 'arch.sw',
     version: '7',
@@ -37,7 +37,7 @@ ava.test('should resolve templates for which the values exist', (test) => {
   })
 })
 
-ava.test('should not resolve templates for which the values do not exist', (test) => {
+ava('should not resolve templates for which the values do not exist', (test) => {
   const contract = new Contract({
     type: 'arch.sw',
     name: '{{this.displayName}}',
@@ -53,7 +53,7 @@ ava.test('should not resolve templates for which the values do not exist', (test
   })
 })
 
-ava.test('should not hash a templated contract if the hash option is false', (test) => {
+ava('should not hash a templated contract if the hash option is false', (test) => {
   const contract = new Contract({
     type: 'arch.sw',
     version: '7',
