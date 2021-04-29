@@ -135,17 +135,7 @@
 <a name='L87'></a><a href='#L87'>87</a>
 <a name='L88'></a><a href='#L88'>88</a>
 <a name='L89'></a><a href='#L89'>89</a>
-<a name='L90'></a><a href='#L90'>90</a>
-<a name='L91'></a><a href='#L91'>91</a>
-<a name='L92'></a><a href='#L92'>92</a>
-<a name='L93'></a><a href='#L93'>93</a>
-<a name='L94'></a><a href='#L94'>94</a>
-<a name='L95'></a><a href='#L95'>95</a>
-<a name='L96'></a><a href='#L96'>96</a>
-<a name='L97'></a><a href='#L97'>97</a>
-<a name='L98'></a><a href='#L98'>98</a>
-<a name='L99'></a><a href='#L99'>99</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L90'></a><a href='#L90'>90</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -164,21 +154,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -260,85 +242,76 @@
 &nbsp;
 'use strict'
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
+import * as _ from 'lodash';
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable '_'.
-const _ = require('lodash')
-&nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Contract'.
-const Contract = require('../../../lib/contract')
-&nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Blueprint'... Remove this comment to see the full error message
-const Blueprint = require('../../../lib/blueprint')
-&nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'hash'.
-const hash = require('../../../lib/hash')
+import Contract from '../../../lib/contract';
+import Blueprint from '../../../lib/blueprint';
+import { hashObject } from '../../../lib/hash';
 &nbsp;
 _.each([
-  '1-to-1',
-  '1-to-1-skeleton-no-template',
-  '1-to-1-skeleton-template',
-  '1-to-2',
-  '1-to-all',
-  'cartesian-simple-2',
-  'reference-single',
-  'reference-multiple',
-  'reference-nested',
-  'requirements-or-2',
-  'requirements-simple-2',
-  'requirements-simple-2-aliases'
+	'1-to-1',
+	'1-to-1-skeleton-no-template',
+	'1-to-1-skeleton-template',
+	'1-to-2',
+	'1-to-all',
+	'cartesian-simple-2',
+	'reference-single',
+	'reference-multiple',
+	'reference-nested',
+	'requirements-or-2',
+	'requirements-simple-2',
+	'requirements-simple-2-aliases'
 ], (testName) =&gt; {
-  // @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
-  const testCase = require(`./${testName}.json`)
+	const testCase = require(`./${testName}.json`);
 &nbsp;
-  ava(testName, (test) =&gt; {
-    const contracts = _.flatMap(testCase.universe, Contract.build)
-    const container = new Contract({
-      type: 'meta.universe'
-    })
+	test(testName, (test) =&gt; {
+		const contracts = _.flatMap(testCase.universe, Contract.build)
+		const container = new Contract({
+			type: 'meta.universe'
+		})
 &nbsp;
-    container.addChildren(contracts)
+		container.addChildren(contracts)
 &nbsp;
-    const blueprint = new Blueprint(testCase.blueprint.layout, testCase.blueprint.skeleton)
-    const result = blueprint.reproduce(container)
-    test.deepEqual(testCase.contexts, _.invokeMap(result, 'toJSON'))
-  })
+		const blueprint = new Blueprint(testCase.blueprint.layout, testCase.blueprint.skeleton)
+		const result = blueprint.reproduce(container)
+		test.deepEqual(testCase.contexts, _.invokeMap(result, 'toJSON'))
+	})
 })
 &nbsp;
-ava('should consider the skeleton when computing the hashes', (test) =&gt; {
-  const blueprint = new Blueprint({
-    'hw.device-type': 1
-  }, {
-    type: 'hw.context.device-type',
-    foo: 'bar',
-    bar: {
-      baz: 1
-    }
-  })
+test('should consider the skeleton when computing the hashes', (test) =&gt; {
+	const blueprint = new Blueprint({
+		'hw.device-type': 1
+	}, {
+		type: 'hw.context.device-type',
+		foo: 'bar',
+		bar: {
+			baz: 1
+		}
+	})
 &nbsp;
-  const contract1 = new Contract({
-    type: 'hw.device-type',
-    name: 'Intel Edison',
-    slug: 'intel-edison'
-  })
+	const contract1 = new Contract({
+		type: 'hw.device-type',
+		name: 'Intel Edison',
+		slug: 'intel-edison'
+	})
 &nbsp;
-  const contract2 = new Contract({
-    type: 'hw.device-type',
-    name: 'Intel NUC',
-    slug: 'intel-nuc'
-  })
+	const contract2 = new Contract({
+		type: 'hw.device-type',
+		name: 'Intel NUC',
+		slug: 'intel-nuc'
+	})
 &nbsp;
-  const container = new Contract({
-    type: 'meta.universe'
-  })
+	const container = new Contract({
+		type: 'meta.universe'
+	})
 &nbsp;
-  container.addChildren([ contract1, contract2 ])
-  const contexts = blueprint.reproduce(container)
+	container.addChildren([ contract1, contract2 ])
+	const contexts = blueprint.reproduce(container)
 &nbsp;
-  for (const context of contexts) {
-    test.is(context.metadata.hash, hash.hashObject(context.raw))
-  }
+	for (const context of contexts) {
+		test.is(context.metadata.hash, hashObject(context.raw))
+	}
 })
 &nbsp;</pre></td></tr>
 </table></pre>
@@ -346,7 +319,7 @@ ava('should consider the skeleton when computing the hashes', (test) =&gt; {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Apr 28 2021 17:05:03 GMT+1000 (Australian Eastern Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Apr 30 2021 11:36:21 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="../../../prettify.js"></script>

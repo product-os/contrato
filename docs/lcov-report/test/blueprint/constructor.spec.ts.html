@@ -217,21 +217,7 @@
 <a name='L169'></a><a href='#L169'>169</a>
 <a name='L170'></a><a href='#L170'>170</a>
 <a name='L171'></a><a href='#L171'>171</a>
-<a name='L172'></a><a href='#L172'>172</a>
-<a name='L173'></a><a href='#L173'>173</a>
-<a name='L174'></a><a href='#L174'>174</a>
-<a name='L175'></a><a href='#L175'>175</a>
-<a name='L176'></a><a href='#L176'>176</a>
-<a name='L177'></a><a href='#L177'>177</a>
-<a name='L178'></a><a href='#L178'>178</a>
-<a name='L179'></a><a href='#L179'>179</a>
-<a name='L180'></a><a href='#L180'>180</a>
-<a name='L181'></a><a href='#L181'>181</a>
-<a name='L182'></a><a href='#L182'>182</a>
-<a name='L183'></a><a href='#L183'>183</a>
-<a name='L184'></a><a href='#L184'>184</a>
-<a name='L185'></a><a href='#L185'>185</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L172'></a><a href='#L172'>172</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -250,17 +236,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -404,12 +384,6 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -432,171 +406,158 @@
 &nbsp;
 'use strict'
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
+import * as _ from 'lodash';
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable '_'.
-const _ = require('lodash')
+import Contract from '../../lib/contract';
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Contract'.
-const Contract = require('../../lib/contract')
+import Blueprint from '../../lib/blueprint';
+import { parse } from '../../lib/cardinality';
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Blueprint'... Remove this comment to see the full error message
-const Blueprint = require('../../lib/blueprint')
+test('should be a contract', (test) =&gt; {
+	const blueprint = new Blueprint({
+		'hw.device-type': 1
+	})
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'cardinalit... Remove this comment to see the full error message
-const cardinality = require('../../lib/cardinality')
-&nbsp;
-ava('should be a contract', (test) =&gt; {
-  // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
-  const blueprint = new Blueprint({
-    'hw.device-type': 1
-  })
-&nbsp;
-  test.true(blueprint instanceof Contract)
+	test.true(blueprint instanceof Contract)
 })
 &nbsp;
-ava('should set a proper type', (test) =&gt; {
-  // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
-  const blueprint = new Blueprint({
-    'hw.device-type': 1
-  })
+test('should set a proper type', (test) =&gt; {
+	const blueprint = new Blueprint({
+		'hw.device-type': 1
+	})
 &nbsp;
-  test.is(blueprint.raw.type, 'meta.blueprint')
+	test.is(blueprint.raw.type, 'meta.blueprint')
 })
 &nbsp;
-ava('should be a hashed contract', (test) =&gt; {
-  // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
-  const blueprint = new Blueprint({
-    'hw.device-type': 1
-  })
+test('should be a hashed contract', (test) =&gt; {
+	const blueprint = new Blueprint({
+		'hw.device-type': 1
+	})
 &nbsp;
-  test.is(typeof blueprint.metadata.hash, 'string')
+	test.is(typeof blueprint.metadata.hash, 'string')
 })
 &nbsp;
-ava('should parse a layout with one number selector', (test) =&gt; {
-  // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
-  const blueprint = new Blueprint({
-    'hw.device-type': 1
-  })
+test('should parse a layout with one number selector', (test) =&gt; {
+	const blueprint = new Blueprint({
+		'hw.device-type': 1
+	})
 &nbsp;
-  test.deepEqual(blueprint.metadata.layout, {
-    types: new Set([ 'hw.device-type' ]),
-    finite: {
-      selectors: {
-        'hw.device-type': [ {
-          cardinality: _.merge(cardinality.parse([ 1, 1 ]), {
-            type: 'hw.device-type'
-          }),
-          filter: undefined,
-          version: undefined,
-          type: 'hw.device-type'
-        } ]
-      },
-      types: new Set([ 'hw.device-type' ])
-    },
-    infinite: {
-      selectors: {},
-      types: new Set()
-    }
-  })
+	test.deepEqual(blueprint.metadata.layout, {
+		types: new Set([ 'hw.device-type' ]),
+		finite: {
+			selectors: {
+				'hw.device-type': [ {
+					cardinality: _.merge(parse([ 1, 1 ]), {
+						type: 'hw.device-type'
+					}),
+					filter: undefined,
+					version: undefined,
+					type: 'hw.device-type'
+				} ]
+			},
+			types: new Set([ 'hw.device-type' ])
+		},
+		infinite: {
+			selectors: {},
+			types: new Set()
+		}
+	})
 })
 &nbsp;
-ava('should parse a layout with one finite and one infinite selectors', (test) =&gt; {
-  // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
-  const blueprint = new Blueprint({
-    'hw.device-type': 2,
-    'arch.sw': '1+'
-  })
+test('should parse a layout with one finite and one infinite selectors', (test) =&gt; {
+	const blueprint = new Blueprint({
+		'hw.device-type': 2,
+		'arch.sw': '1+'
+	})
 &nbsp;
-  test.deepEqual(blueprint.metadata.layout, {
-    types: new Set([ 'hw.device-type', 'arch.sw' ]),
-    finite: {
-      selectors: {
-        'hw.device-type': [ {
-          cardinality: _.merge(cardinality.parse([ 2, 2 ]), {
-            type: 'hw.device-type'
-          }),
-          filter: undefined,
-          version: undefined,
-          type: 'hw.device-type'
-        } ]
-      },
-      types: new Set([ 'hw.device-type' ])
-    },
-    infinite: {
-      selectors: {
-        'arch.sw': [ {
-          cardinality: _.merge(cardinality.parse([ 1, Infinity ]), {
-            type: 'arch.sw'
-          }),
-          filter: undefined,
-          version: undefined,
-          type: 'arch.sw'
-        } ]
-      },
-      types: new Set([ 'arch.sw' ])
-    }
-  })
+	test.deepEqual(blueprint.metadata.layout, {
+		types: new Set([ 'hw.device-type', 'arch.sw' ]),
+		finite: {
+			selectors: {
+				'hw.device-type': [ {
+					cardinality: _.merge(parse([ 2, 2 ]), {
+						type: 'hw.device-type'
+					}),
+					filter: undefined,
+					version: undefined,
+					type: 'hw.device-type'
+				} ]
+			},
+			types: new Set([ 'hw.device-type' ])
+		},
+		infinite: {
+			selectors: {
+				'arch.sw': [ {
+					cardinality: _.merge(parse([ 1, Infinity ]), {
+						type: 'arch.sw'
+					}),
+					filter: undefined,
+					version: undefined,
+					type: 'arch.sw'
+				} ]
+			},
+			types: new Set([ 'arch.sw' ])
+		}
+	})
 })
 &nbsp;
-ava('should support object layout selectors', (test) =&gt; {
-  const filterFunction = _.identity
+test('should support object layout selectors', (test) =&gt; {
+	const filterFunction = _.identity
 &nbsp;
-  // @ts-expect-error ts-migrate(2554) FIXME: Expected 2 arguments, but got 1.
-  const blueprint = new Blueprint({
-    'hw.device-type': {
-      cardinality: [ 2, 2 ]
-    },
-    'arch.sw': {
-      cardinality: '1+',
-      filter: filterFunction
-    }
-  })
+	const blueprint = new Blueprint({
+		'hw.device-type': {
+			cardinality: [ 2, 2 ]
+		},
+		'arch.sw': {
+			cardinality: '1+',
+			filter: filterFunction
+		}
+	})
 &nbsp;
-  test.deepEqual(blueprint.metadata.layout, {
-    types: new Set([ 'hw.device-type', 'arch.sw' ]),
-    finite: {
-      selectors: {
-        'hw.device-type': [ {
-          cardinality: _.merge(cardinality.parse([ 2, 2 ]), {
-            type: 'hw.device-type'
-          }),
-          filter: undefined,
-          version: undefined,
-          type: 'hw.device-type'
-        } ]
-      },
-      types: new Set([ 'hw.device-type' ])
-    },
-    infinite: {
-      selectors: {
-        'arch.sw': [ {
-          cardinality: _.merge(cardinality.parse([ 1, Infinity ]), {
-            type: 'arch.sw'
-          }),
-          filter: filterFunction,
-          version: undefined,
-          type: 'arch.sw'
-        } ]
-      },
-      types: new Set([ 'arch.sw' ])
-    }
-  })
+	test.deepEqual(blueprint.metadata.layout, {
+		types: new Set([ 'hw.device-type', 'arch.sw' ]),
+		finite: {
+			selectors: {
+				'hw.device-type': [ {
+					cardinality: _.merge(parse([ 2, 2 ]), {
+						type: 'hw.device-type'
+					}),
+					filter: undefined,
+					version: undefined,
+					type: 'hw.device-type'
+				} ]
+			},
+			types: new Set([ 'hw.device-type' ])
+		},
+		infinite: {
+			selectors: {
+				'arch.sw': [ {
+					cardinality: _.merge(parse([ 1, Infinity ]), {
+						type: 'arch.sw'
+					}),
+					filter: filterFunction,
+					version: undefined,
+					type: 'arch.sw'
+				} ]
+			},
+			types: new Set([ 'arch.sw' ])
+		}
+	})
 })
 &nbsp;
-ava('should allow passing a skeleton object', (test) =&gt; {
-  const blueprint = new Blueprint({
-    'hw.device-type': 1
-  }, {
-    type: 'sw.os-image',
-    name: 'Generic OS Image'
-  })
+test('should allow passing a skeleton object', (test) =&gt; {
+	const blueprint = new Blueprint({
+		'hw.device-type': 1
+	}, {
+		type: 'sw.os-image',
+		name: 'Generic OS Image'
+	})
 &nbsp;
-  test.deepEqual(blueprint.raw.skeleton, {
-    type: 'sw.os-image',
-    name: 'Generic OS Image'
-  })
+	test.deepEqual(blueprint.raw.skeleton, {
+		type: 'sw.os-image',
+		name: 'Generic OS Image'
+	})
 })
 &nbsp;</pre></td></tr>
 </table></pre>
@@ -604,7 +565,7 @@ ava('should allow passing a skeleton object', (test) =&gt; {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Apr 28 2021 17:05:03 GMT+1000 (Australian Eastern Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Apr 30 2021 11:36:21 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="../../prettify.js"></script>

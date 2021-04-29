@@ -14,21 +14,30 @@
  * limitations under the License.
  */
 
-'use strict'
+'use strict';
+
+import {
+	initial,
+	isEqual,
+	isInteger,
+	isNumber,
+	isString,
+	join,
+	size,
+	some,
+	trim,
+} from 'lodash';
 
 /**
  * @module cardinality
  */
-
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable '_'.
-const _ = require('lodash')
 
 /**
  * @summary The length of a cardinality ordered pair (a tuple)
  * @type {Number}
  * @constant
  */
-const ORDERED_LIST_LENGTH = 2
+const ORDERED_LIST_LENGTH: number = 2;
 
 /**
  * @summary Parse a contracts cardinality tuple/string/number
@@ -61,63 +70,59 @@ const ORDERED_LIST_LENGTH = 2
  *   console.log('This is a finite cardinality')
  * }
  */
-// @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-exports.parse = (input) => {
-  if (_.isNumber(input)) {
-    // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-    return exports.parse([ input, input ])
-  }
+export const parse = (
+	input: Array<string | number> | string | number,
+): { from: number; to: number; finite: boolean } => {
+	if (isNumber(input)) {
+		return parse([input, input]);
+	}
 
-  if (_.isString(input)) {
-    const normalizedInput = _.trim(input)
+	if (isString(input)) {
+		const normalizedInput = trim(input);
 
-    if (normalizedInput === '*') {
-      // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-      return exports.parse([ 0, Infinity ])
-    }
+		if (normalizedInput === '*') {
+			return parse([0, Infinity]);
+		}
 
-    if (normalizedInput === '?' || /^1\s*\?$/.test(normalizedInput)) {
-      // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-      return exports.parse([ 0, 1 ])
-    }
+		if (normalizedInput === '?' || /^1\s*\?$/.test(normalizedInput)) {
+			return parse([0, 1]);
+		}
 
-    if (/^[0-9]+$/.test(normalizedInput)) {
-      const number = _.parseInt(normalizedInput)
+		if (/^[0-9]+$/.test(normalizedInput)) {
+			const num = parseInt(normalizedInput, 10);
 
-      // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-      return exports.parse([ number, number ])
-    }
+			return parse([num, num]);
+		}
 
-    // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-    return exports.parse([
-      _.parseInt(_.join(_.initial(normalizedInput), '')),
-      Infinity
-    ])
-  }
+		return parse([parseInt(join(initial(normalizedInput), ''), 10), Infinity]);
+	}
 
-  const [ from, to ] = input
+	const [from, to] = input;
 
-  // Alias an asterisk to Infinity
-  if (_.trim(to) === '*') {
-    // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-    return exports.parse([ from, Infinity ])
-  }
+	// Alias an asterisk to Infinity
+	if (typeof to === 'string' && trim(to) === '*') {
+		return parse([from, Infinity]);
+	}
 
-  if (_.some([
-    _.isEqual(input, [ 0, 0 ]),
-    from < 0,
-    to < 0,
-    _.size(input) !== ORDERED_LIST_LENGTH,
-    from > to,
-    !_.isInteger(from),
-    !_.isInteger(to) && to !== Infinity
-  ])) {
-    throw new Error(`Invalid cardinality: ${input}`)
-  }
+	if (
+		typeof from === 'string' ||
+		typeof to === 'string' ||
+		some([
+			isEqual(input, [0, 0]),
+			from < 0,
+			to < 0,
+			size(input) !== ORDERED_LIST_LENGTH,
+			from > to,
+			!isInteger(from),
+			!isInteger(to) && to !== Infinity,
+		])
+	) {
+		throw new Error(`Invalid cardinality: ${input}`);
+	}
 
-  return {
-    from,
-    to,
-    finite: to !== Infinity
-  }
-}
+	return {
+		from,
+		to,
+		finite: to !== Infinity,
+	};
+};

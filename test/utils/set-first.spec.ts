@@ -16,31 +16,28 @@
 
 'use strict'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
+import { setFirst } from '../../lib/utils';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'utils'.
-const utils = require('../../lib/utils')
-
-ava('should return undefined given an empty set', (test) => {
-  const set = new Set()
-  test.deepEqual(utils.setFirst(set), undefined)
+test('should return undefined given an empty set', (test) => {
+	const set = new Set()
+	test.deepEqual(setFirst(set), undefined)
 })
 
-ava('should return the element given an empty set with one element', (test) => {
-  const set = new Set([ 'foo' ])
-  test.deepEqual(utils.setFirst(set), 'foo')
+test('should return the element given an empty set with one element', (test) => {
+	const set = new Set([ 'foo' ])
+	test.deepEqual(setFirst(set), 'foo')
 })
 
-ava('should always return the only element', (test) => {
-  const set = new Set([ 'foo' ])
-  test.deepEqual(utils.setFirst(set), 'foo')
-  test.deepEqual(utils.setFirst(set), 'foo')
-  test.deepEqual(utils.setFirst(set), 'foo')
-  test.deepEqual(utils.setFirst(set), 'foo')
+test('should always return the only element', (test) => {
+	const set = new Set([ 'foo' ])
+	test.deepEqual(setFirst(set), 'foo')
+	test.deepEqual(setFirst(set), 'foo')
+	test.deepEqual(setFirst(set), 'foo')
+	test.deepEqual(setFirst(set), 'foo')
 })
 
-ava('should return one of the elements given a set with more than one element', (test) => {
-  const set = new Set([ 'foo', 'bar', 'baz' ])
-  test.true(set.has(utils.setFirst(set)))
+test('should return one of the elements given a set with more than one element', (test) => {
+	const set = new Set([ 'foo', 'bar', 'baz' ])
+	test.true(set.has(setFirst(set)))
 })

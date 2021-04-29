@@ -16,13 +16,12 @@
 
 'use strict'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'MatcherCac... Remove this comment to see the full error message
-const MatcherCache = require('../../lib/matcher-cache')
+import test from 'ava';
 
-ava('should create an empty cache', (test) => {
+import MatcherCache from '../../lib/matcher-cache';
+
+test('should create an empty cache', (test) => {
   const cache = new MatcherCache()
   test.deepEqual(cache.data, {})
 })

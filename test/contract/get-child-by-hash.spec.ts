@@ -16,43 +16,39 @@
 
 'use strict'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Contract'.
-const Contract = require('../../lib/contract')
+import Contract from '../../lib/contract';
+import CONTRACTS from '../contracts.json';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'CONTRACTS'... Remove this comment to see the full error message
-const CONTRACTS = require('../contracts.json')
+test('should return an existing child given its hash', (test) => {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+	const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
+	const contract4 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
 
-ava('should return an existing child given its hash', (test) => {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-  const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
-  const contract4 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	container.addChildren([ contract1, contract2, contract3, contract4 ])
 
-  container.addChildren([ contract1, contract2, contract3, contract4 ])
-
-  test.deepEqual(container.getChildByHash(contract2.metadata.hash), contract2)
+	test.deepEqual(container.getChildByHash(contract2.metadata.hash), contract2)
 })
 
-ava('should return nothing if the hash does not exist', (test) => {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-  const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
-  const contract4 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
+test('should return nothing if the hash does not exist', (test) => {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+	const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
+	const contract4 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
 
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([ contract1, contract2, contract3, contract4 ])
+	container.addChildren([ contract1, contract2, contract3, contract4 ])
 
-  test.deepEqual(container.getChildByHash('aaaaaaa'), undefined)
+	test.deepEqual(container.getChildByHash('aaaaaaa'), undefined)
 })

@@ -16,99 +16,94 @@
 
 'use strict'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
+import * as _ from 'lodash';
+import { stripExtraBlankLines } from '../../lib/utils';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable '_'.
-const _ = require('lodash')
+test('should replace two blank lines with one', (test) => {
+	const result = _.split(stripExtraBlankLines(_.join([
+		'Hello',
+		'',
+		'',
+		'World',
+		'',
+		'',
+		'!'
+	], '\n')), '\n')
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'utils'.
-const utils = require('../../lib/utils')
-
-ava('should replace two blank lines with one', (test) => {
-  const result = _.split(utils.stripExtraBlankLines(_.join([
-    'Hello',
-    '',
-    '',
-    'World',
-    '',
-    '',
-    '!'
-  ], '\n')), '\n')
-
-  test.deepEqual(result, [
-    'Hello',
-    '',
-    'World',
-    '',
-    '!'
-  ])
+	test.deepEqual(result, [
+		'Hello',
+		'',
+		'World',
+		'',
+		'!'
+	])
 })
 
-ava('should replace three blank lines with one', (test) => {
-  const result = _.split(utils.stripExtraBlankLines(_.join([
-    'Hello',
-    '',
-    '',
-    '',
-    'World',
-    '',
-    '',
-    '',
-    '!'
-  ], '\n')), '\n')
+test('should replace three blank lines with one', (test) => {
+	const result = _.split(stripExtraBlankLines(_.join([
+		'Hello',
+		'',
+		'',
+		'',
+		'World',
+		'',
+		'',
+		'',
+		'!'
+	], '\n')), '\n')
 
-  test.deepEqual(result, [
-    'Hello',
-    '',
-    'World',
-    '',
-    '!'
-  ])
+	test.deepEqual(result, [
+		'Hello',
+		'',
+		'World',
+		'',
+		'!'
+	])
 })
 
-ava('should remove a single leading blank line', (test) => {
-  const result = _.split(utils.stripExtraBlankLines(_.join([
-    '',
-    'Hello'
-  ], '\n')), '\n')
+test('should remove a single leading blank line', (test) => {
+	const result = _.split(stripExtraBlankLines(_.join([
+		'',
+		'Hello'
+	], '\n')), '\n')
 
-  test.deepEqual(result, [
-    'Hello'
-  ])
+	test.deepEqual(result, [
+		'Hello'
+	])
 })
 
-ava('should remove two leading blank lines', (test) => {
-  const result = _.split(utils.stripExtraBlankLines(_.join([
-    '',
-    '',
-    'Hello'
-  ], '\n')), '\n')
+test('should remove two leading blank lines', (test) => {
+	const result = _.split(stripExtraBlankLines(_.join([
+		'',
+		'',
+		'Hello'
+	], '\n')), '\n')
 
-  test.deepEqual(result, [
-    'Hello'
-  ])
+	test.deepEqual(result, [
+		'Hello'
+	])
 })
 
-ava('should remove a single trailing blank line', (test) => {
-  const result = _.split(utils.stripExtraBlankLines(_.join([
-    'Hello',
-    ''
-  ], '\n')), '\n')
+test('should remove a single trailing blank line', (test) => {
+	const result = _.split(stripExtraBlankLines(_.join([
+		'Hello',
+		''
+	], '\n')), '\n')
 
-  test.deepEqual(result, [
-    'Hello'
-  ])
+	test.deepEqual(result, [
+		'Hello'
+	])
 })
 
-ava('should remove two trailing blank lines', (test) => {
-  const result = _.split(utils.stripExtraBlankLines(_.join([
-    'Hello',
-    '',
-    ''
-  ], '\n')), '\n')
+test('should remove two trailing blank lines', (test) => {
+	const result = _.split(stripExtraBlankLines(_.join([
+		'Hello',
+		'',
+		''
+	], '\n')), '\n')
 
-  test.deepEqual(result, [
-    'Hello'
-  ])
+	test.deepEqual(result, [
+		'Hello'
+	])
 })

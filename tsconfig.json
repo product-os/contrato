@@ -1,6 +1,7 @@
 {
 	"compilerOptions": {
 		"module": "commonjs",
+		"esModuleInterop": true,
 		"outDir": "build",
 		"noUnusedParameters": true,
 		"noUnusedLocals": true,
@@ -10,6 +11,7 @@
 		"target": "es2015",
 		"declaration": true,
 		"skipLibCheck": true,
-    "noImplicitAny": false
+		"noImplicitAny": false,
+		"resolveJsonModule": true
   }
 }

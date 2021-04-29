@@ -16,268 +16,264 @@
 
 'use strict'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Contract'.
-const Contract = require('../../lib/contract')
+import Contract from '../../lib/contract';
+import CONTRACTS from '../contracts.json';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'CONTRACTS'... Remove this comment to see the full error message
-const CONTRACTS = require('../contracts.json')
+test('should find nothing given no properties', (test) => {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-ava('should find nothing given no properties', (test) => {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	container.addChild(contract1)
 
-  container.addChild(contract1)
-
-  test.deepEqual(container.findChildren({}), [])
+	test.deepEqual(container.findChildren({}), [])
 })
 
-ava('should find a specific unique contract based on its type and name', (test) => {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should find a specific unique contract based on its type and name', (test) => {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([ contract1, contract2 ])
+	container.addChildren([ contract1, contract2 ])
 
-  test.deepEqual(container.findChildren(Contract.createMatcher({
-    name: 'Debian Wheezy',
-    type: 'sw.os'
-  })), [
-    contract1
-  ])
+	test.deepEqual(container.findChildren(Contract.createMatcher({
+		name: 'Debian Wheezy',
+		type: 'sw.os'
+	})), [
+		contract1
+	])
 })
 
-ava('should find a specific unique contract based on its type and slug', (test) => {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-  const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
-  const contract4 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should find a specific unique contract based on its type and slug', (test) => {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+	const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
+	const contract4 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([ contract1, contract2, contract3, contract4 ])
+	container.addChildren([ contract1, contract2, contract3, contract4 ])
 
-  test.deepEqual(container.findChildren(Contract.createMatcher({
-    type: 'sw.os',
-    slug: 'fedora'
-  })), [
-    contract3
-  ])
+	test.deepEqual(container.findChildren(Contract.createMatcher({
+		type: 'sw.os',
+		slug: 'fedora'
+	})), [
+		contract3
+	])
 })
 
-ava('should find a specific unique contract based on another property', (test) => {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-  const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
-  const contract4 = new Contract(CONTRACTS['hw.device-type'].artik10.object)
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should find a specific unique contract based on another property', (test) => {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+	const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
+	const contract4 = new Contract(CONTRACTS['hw.device-type'].artik10.object)
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([ contract1, contract2, contract3, contract4 ])
+	container.addChildren([ contract1, contract2, contract3, contract4 ])
 
-  test.deepEqual(container.findChildren(Contract.createMatcher({
-    type: 'hw.device-type',
-    arch: 'armv7hf'
-  })), [
-    contract4
-  ])
+	test.deepEqual(container.findChildren(Contract.createMatcher({
+		type: 'hw.device-type',
+		arch: 'armv7hf'
+	})), [
+		contract4
+	])
 })
 
-ava('should find multiple contracts based on a type', (test) => {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-  const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
-  const contract4 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should find multiple contracts based on a type', (test) => {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+	const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
+	const contract4 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([ contract1, contract2, contract3, contract4 ])
+	container.addChildren([ contract1, contract2, contract3, contract4 ])
 
-  test.deepEqual(container.findChildren(Contract.createMatcher({
-    type: 'sw.os'
-  })), [
-    contract1,
-    contract2,
-    contract3
-  ])
+	test.deepEqual(container.findChildren(Contract.createMatcher({
+		type: 'sw.os'
+	})), [
+		contract1,
+		contract2,
+		contract3
+	])
 })
 
-ava('should find nothing based on a non-existent type', (test) => {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-  const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
-  const contract4 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should find nothing based on a non-existent type', (test) => {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+	const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
+	const contract4 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([ contract1, contract2, contract3, contract4 ])
+	container.addChildren([ contract1, contract2, contract3, contract4 ])
 
-  test.deepEqual(container.findChildren(Contract.createMatcher({
-    type: 'non-existent-type'
-  })), [])
+	test.deepEqual(container.findChildren(Contract.createMatcher({
+		type: 'non-existent-type'
+	})), [])
 })
 
-ava('should find nothing because of an invalid type', (test) => {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-  const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
-  const contract4 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should find nothing because of an invalid type', (test) => {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+	const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
+	const contract4 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([ contract1, contract2, contract3, contract4 ])
+	container.addChildren([ contract1, contract2, contract3, contract4 ])
 
-  test.deepEqual(container.findChildren(Contract.createMatcher({
-    type: 'non-existent-type',
-    slug: 'debian'
-  })), [])
+	test.deepEqual(container.findChildren(Contract.createMatcher({
+		type: 'non-existent-type',
+		slug: 'debian'
+	})), [])
 })
 
-ava('should find a contract based on one of its aliases', (test) => {
-  const contract1 = new Contract({
-    type: 'hw.device-type',
-    name: 'Raspberry Pi 2',
-    slug: 'raspberrypi2',
-    aliases: [ 'rpi2', 'raspberry-pi2' ]
-  })
+test('should find a contract based on one of its aliases', (test) => {
+	const contract1 = new Contract({
+		type: 'hw.device-type',
+		name: 'Raspberry Pi 2',
+		slug: 'raspberrypi2',
+		aliases: [ 'rpi2', 'raspberry-pi2' ]
+	})
 
-  const contract2 = new Contract({
-    type: 'hw.device-type',
-    name: 'Raspberry Pi',
-    slug: 'raspberrypi',
-    aliases: [ 'rpi', 'raspberry-pi' ]
-  })
+	const contract2 = new Contract({
+		type: 'hw.device-type',
+		name: 'Raspberry Pi',
+		slug: 'raspberrypi',
+		aliases: [ 'rpi', 'raspberry-pi' ]
+	})
 
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([ contract1, contract2 ])
+	container.addChildren([ contract1, contract2 ])
 
-  test.deepEqual(container.findChildren(Contract.createMatcher({
-    type: 'hw.device-type',
-    slug: 'rpi'
-  })), [ contract2 ])
+	test.deepEqual(container.findChildren(Contract.createMatcher({
+		type: 'hw.device-type',
+		slug: 'rpi'
+	})), [ contract2 ])
 })
 
-ava('should find a nested contract by its type and slug', (test) => {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-  const contract3 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
+test('should find a nested contract by its type and slug', (test) => {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+	const contract3 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
 
-  contract1.addChild(contract3)
+	contract1.addChild(contract3)
 
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([ contract1, contract2 ])
+	container.addChildren([ contract1, contract2 ])
 
-  test.deepEqual(container.findChildren(Contract.createMatcher({
-    type: 'sw.blob',
-    slug: 'nodejs'
-  })), [
-    contract3
-  ])
+	test.deepEqual(container.findChildren(Contract.createMatcher({
+		type: 'sw.blob',
+		slug: 'nodejs'
+	})), [
+		contract3
+	])
 })
 
-ava('should find a nested contract by its type and another property', (test) => {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-  const contract3 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
+test('should find a nested contract by its type and another property', (test) => {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+	const contract3 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
 
-  contract1.addChild(contract3)
+	contract1.addChild(contract3)
 
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([ contract1, contract2 ])
+	container.addChildren([ contract1, contract2 ])
 
-  test.deepEqual(container.findChildren(Contract.createMatcher({
-    type: 'sw.blob',
-    version: '4.8.0'
-  })), [
-    contract3
-  ])
+	test.deepEqual(container.findChildren(Contract.createMatcher({
+		type: 'sw.blob',
+		version: '4.8.0'
+	})), [
+		contract3
+	])
 })
 
-ava('should fail to find a nested contract with an incorrect slug', (test) => {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-  const contract3 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
+test('should fail to find a nested contract with an incorrect slug', (test) => {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+	const contract3 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
 
-  contract1.addChild(contract3)
+	contract1.addChild(contract3)
 
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([ contract1, contract2 ])
+	container.addChildren([ contract1, contract2 ])
 
-  test.deepEqual(container.findChildren(Contract.createMatcher({
-    type: 'sw.blob',
-    slug: 'java'
-  })), [])
+	test.deepEqual(container.findChildren(Contract.createMatcher({
+		type: 'sw.blob',
+		slug: 'jtest'
+	})), [])
 })
 
-ava('should fail to find a nested contract with an incorrect type', (test) => {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-  const contract3 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
+test('should fail to find a nested contract with an incorrect type', (test) => {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+	const contract3 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
 
-  contract1.addChild(contract3)
+	contract1.addChild(contract3)
 
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([ contract1, contract2 ])
+	container.addChildren([ contract1, contract2 ])
 
-  test.deepEqual(container.findChildren(Contract.createMatcher({
-    type: 'sw.os',
-    slug: 'nodejs'
-  })), [])
+	test.deepEqual(container.findChildren(Contract.createMatcher({
+		type: 'sw.os',
+		slug: 'nodejs'
+	})), [])
 })
 
-ava('should be able to find a two level nested children using its type', (test) => {
-  const contract1 = new Contract(CONTRACTS['hw.device-type'].artik10.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract3 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
-  contract2.addChild(contract3)
-  contract1.addChild(contract2)
+test('should be able to find a two level nested children using its type', (test) => {
+	const contract1 = new Contract(CONTRACTS['hw.device-type'].artik10.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract3 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
+	contract2.addChild(contract3)
+	contract1.addChild(contract2)
 
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([ contract1 ])
+	container.addChildren([ contract1 ])
 
-  test.deepEqual(container.findChildren(Contract.createMatcher({
-    type: 'sw.blob'
-  })), [ contract3 ])
+	test.deepEqual(container.findChildren(Contract.createMatcher({
+		type: 'sw.blob'
+	})), [ contract3 ])
 })

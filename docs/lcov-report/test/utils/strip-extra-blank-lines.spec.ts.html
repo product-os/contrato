@@ -155,13 +155,7 @@
 <a name='L107'></a><a href='#L107'>107</a>
 <a name='L108'></a><a href='#L108'>108</a>
 <a name='L109'></a><a href='#L109'>109</a>
-<a name='L110'></a><a href='#L110'>110</a>
-<a name='L111'></a><a href='#L111'>111</a>
-<a name='L112'></a><a href='#L112'>112</a>
-<a name='L113'></a><a href='#L113'>113</a>
-<a name='L114'></a><a href='#L114'>114</a>
-<a name='L115'></a><a href='#L115'>115</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L110'></a><a href='#L110'>110</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -180,11 +174,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -292,101 +282,96 @@
 &nbsp;
 'use strict'
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
+import * as _ from 'lodash';
+import { stripExtraBlankLines } from '../../lib/utils';
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable '_'.
-const _ = require('lodash')
+test('should replace two blank lines with one', (test) =&gt; {
+	const result = _.split(stripExtraBlankLines(_.join([
+		'Hello',
+		'',
+		'',
+		'World',
+		'',
+		'',
+		'!'
+	], '\n')), '\n')
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'utils'.
-const utils = require('../../lib/utils')
-&nbsp;
-ava('should replace two blank lines with one', (test) =&gt; {
-  const result = _.split(utils.stripExtraBlankLines(_.join([
-    'Hello',
-    '',
-    '',
-    'World',
-    '',
-    '',
-    '!'
-  ], '\n')), '\n')
-&nbsp;
-  test.deepEqual(result, [
-    'Hello',
-    '',
-    'World',
-    '',
-    '!'
-  ])
+	test.deepEqual(result, [
+		'Hello',
+		'',
+		'World',
+		'',
+		'!'
+	])
 })
 &nbsp;
-ava('should replace three blank lines with one', (test) =&gt; {
-  const result = _.split(utils.stripExtraBlankLines(_.join([
-    'Hello',
-    '',
-    '',
-    '',
-    'World',
-    '',
-    '',
-    '',
-    '!'
-  ], '\n')), '\n')
+test('should replace three blank lines with one', (test) =&gt; {
+	const result = _.split(stripExtraBlankLines(_.join([
+		'Hello',
+		'',
+		'',
+		'',
+		'World',
+		'',
+		'',
+		'',
+		'!'
+	], '\n')), '\n')
 &nbsp;
-  test.deepEqual(result, [
-    'Hello',
-    '',
-    'World',
-    '',
-    '!'
-  ])
+	test.deepEqual(result, [
+		'Hello',
+		'',
+		'World',
+		'',
+		'!'
+	])
 })
 &nbsp;
-ava('should remove a single leading blank line', (test) =&gt; {
-  const result = _.split(utils.stripExtraBlankLines(_.join([
-    '',
-    'Hello'
-  ], '\n')), '\n')
+test('should remove a single leading blank line', (test) =&gt; {
+	const result = _.split(stripExtraBlankLines(_.join([
+		'',
+		'Hello'
+	], '\n')), '\n')
 &nbsp;
-  test.deepEqual(result, [
-    'Hello'
-  ])
+	test.deepEqual(result, [
+		'Hello'
+	])
 })
 &nbsp;
-ava('should remove two leading blank lines', (test) =&gt; {
-  const result = _.split(utils.stripExtraBlankLines(_.join([
-    '',
-    '',
-    'Hello'
-  ], '\n')), '\n')
+test('should remove two leading blank lines', (test) =&gt; {
+	const result = _.split(stripExtraBlankLines(_.join([
+		'',
+		'',
+		'Hello'
+	], '\n')), '\n')
 &nbsp;
-  test.deepEqual(result, [
-    'Hello'
-  ])
+	test.deepEqual(result, [
+		'Hello'
+	])
 })
 &nbsp;
-ava('should remove a single trailing blank line', (test) =&gt; {
-  const result = _.split(utils.stripExtraBlankLines(_.join([
-    'Hello',
-    ''
-  ], '\n')), '\n')
+test('should remove a single trailing blank line', (test) =&gt; {
+	const result = _.split(stripExtraBlankLines(_.join([
+		'Hello',
+		''
+	], '\n')), '\n')
 &nbsp;
-  test.deepEqual(result, [
-    'Hello'
-  ])
+	test.deepEqual(result, [
+		'Hello'
+	])
 })
 &nbsp;
-ava('should remove two trailing blank lines', (test) =&gt; {
-  const result = _.split(utils.stripExtraBlankLines(_.join([
-    'Hello',
-    '',
-    ''
-  ], '\n')), '\n')
+test('should remove two trailing blank lines', (test) =&gt; {
+	const result = _.split(stripExtraBlankLines(_.join([
+		'Hello',
+		'',
+		''
+	], '\n')), '\n')
 &nbsp;
-  test.deepEqual(result, [
-    'Hello'
-  ])
+	test.deepEqual(result, [
+		'Hello'
+	])
 })
 &nbsp;</pre></td></tr>
 </table></pre>
@@ -394,7 +379,7 @@ ava('should remove two trailing blank lines', (test) =&gt; {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Apr 28 2021 17:05:03 GMT+1000 (Australian Eastern Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Apr 30 2021 11:36:21 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="../../prettify.js"></script>

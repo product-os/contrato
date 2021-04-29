@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-'use strict'
+'use strict';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable '_'.
-const _ = require('lodash')
+import { flatMap, isEmpty, reduce, trim } from 'lodash';
 
 /**
  * @module utils
@@ -41,16 +40,15 @@ const _ = require('lodash')
  *   console.log('These sets are disjoint')
  * }
  */
-// @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-exports.areSetsDisjoint = (set1, set2) => {
-  for (const element of set1) {
-    if (set2.has(element)) {
-      return false
-    }
-  }
+export const areSetsDisjoint = <T>(set1: Set<T>, set2: Set<T>): boolean => {
+	for (const element of set1) {
+		if (set2.has(element)) {
+			return false;
+		}
+	}
 
-  return true
-}
+	return true;
+};
 
 /**
  * @summary Perform an union operation between sets
@@ -69,16 +67,15 @@ exports.areSetsDisjoint = (set1, set2) => {
  * console.log(utils.setUnion(set1, set2))
  * > Set { 1, 2, 3, 4 }
  */
-// @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-exports.setUnion = (set1, set2) => {
-  const union = new Set(set1)
+export const setUnion = <T>(set1: Set<T>, set2: Set<T>): Set<T> => {
+	const union = new Set(set1);
 
-  for (const element of set2) {
-    union.add(element)
-  }
+	for (const element of set2) {
+		union.add(element);
+	}
 
-  return union
-}
+	return union;
+};
 
 /**
  * @summary Get the first element of a set
@@ -95,10 +92,7 @@ exports.setUnion = (set1, set2) => {
  * console.log(element)
  * > 'foo'
  */
-// @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-exports.setFirst = (set) => {
-  return set.values().next().value
-}
+export const setFirst = <T>(set: Set<T>): T => set.values().next().value;
 
 /**
  * @summary Map a set using an iteratee function
@@ -118,17 +112,15 @@ exports.setFirst = (set) => {
  * console.log(result)
  * > [ 2, 4, 6 ]
  */
-// @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-exports.setMap = (set, iteratee) => {
-  const result = []
+export const setMap = <T, V>(set: Set<T>, iteratee: (arg0: T) => V): V[] => {
+	const result: V[] = [];
 
-  for (const element of set) {
-    // @ts-expect-error ts-migrate(2345) FIXME: Argument of type 'any' is not assignable to parame... Remove this comment to see the full error message
-    result.push(iteratee(element))
-  }
+	for (const element of set) {
+		result.push(iteratee(element));
+	}
 
-  return result
-}
+	return result;
+};
 
 /**
  * @summary Compute the cartisian product of a set of sets
@@ -163,37 +155,39 @@ exports.setMap = (set, iteratee) => {
  * >   [ 2, 4 ]
  * > ]
  */
-// @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-exports.cartesianProductWith = (sets, iteratee) => {
-  // Inspired by https://stackoverflow.com/a/12628791/1641422
-  const ACCUMULATOR = [ [] ]
-  const product = _.reduce(sets, (accumulator, set) => {
-    if (set.length === 0) {
-      return accumulator
-    }
+export const cartesianProductWith = <T, V>(
+	sets: T[][],
+	iteratee: (arg0: V, arg1: T) => V | undefined,
+	init: V[],
+): V[] => {
+	const product = reduce(
+		sets,
+		(accumulator, set) =>
+			set.length === 0
+				? accumulator
+				: flatMap(accumulator, (array) =>
+						reduce(
+							set,
+							(combinations, element) => {
+								const combination = iteratee(array, element);
+								if (combination) {
+									combinations.push(combination);
+								}
 
-    return _.flatMap(accumulator, (array) => {
-      return _.reduce(set, (combinations, element) => {
-        const combination = iteratee(array, element)
-        if (combination) {
-          combinations.push(combination)
-        }
+								return combinations;
+							},
+							[] as V[],
+						),
+				  ),
+		init,
+	);
 
-        return combinations
-      }, [])
-    })
-  }, ACCUMULATOR)
-
-  // We could have filtered the whole product
-  // by non empty arrays, but that means that
-  // we would have to innecessarily traverse
-  // through a huge set of combinations.
-  if (product[0].length === 0) {
-    return []
-  }
-
-  return product
-}
+	// We could have filtered the whole product
+	// by non empty arrays, but that means that
+	// we would have to innecessarily traverse
+	// through a huge set of combinations.
+	return product.length === 0 || isEmpty(product[0]) ? ([] as V[]) : product;
+};
 
 /**
  * @summary Strip extra blank lines from a multi-line text
@@ -207,7 +201,5 @@ exports.cartesianProductWith = (sets, iteratee) => {
  * @example
  * const stripped = utils.stripExtraBlankLines('...')
  */
-// @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-exports.stripExtraBlankLines = (text) => {
-  return _.trim(text.replace(/(\r?\n){3,}/g, '\n\n'))
-}
+export const stripExtraBlankLines = (text: string): string =>
+	trim(text.replace(/(\r?\n){3,}/g, '\n\n'));

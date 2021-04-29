@@ -16,350 +16,346 @@
 
 'use strict'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Contract'.
-const Contract = require('../../lib/contract')
+import Contract from '../../lib/contract';
+import CONTRACTS from '../contracts.json';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'CONTRACTS'... Remove this comment to see the full error message
-const CONTRACTS = require('../contracts.json')
+test('should throw if the type is not valid', (test) => {
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-ava('should throw if the type is not valid', (test) => {
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	container.addChildren([
+		new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+		new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+	])
 
-  container.addChildren([
-    new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-    new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-  ])
-
-  test.throws(() => {
-    container.getChildrenCombinations({
-      type: 'foo',
-      from: 2,
-      to: 2
-    })
-  }, {
-    message: 'Invalid cardinality: 2 to 2. The number of foo contracts in the universe is 0'
-  })
+	test.throws(() => {
+		container.getChildrenCombinations({
+			type: 'foo',
+			from: 2,
+			to: 2
+		})
+	}, {
+		message: 'Invalid cardinality: 2 to 2. The number of foo contracts in the universe is 0'
+	})
 })
 
-ava('should return combinations of cardinality 1 for one contract', (test) => {
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return combinations of cardinality 1 for one contract', (test) => {
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([
-    new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object),
-    new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  ])
+	container.addChildren([
+		new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object),
+		new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	])
 
-  test.deepEqual(container.getChildrenCombinations({
-    type: 'sw.os',
-    from: 1,
-    to: 1
-  }), [
-    [
-      new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-    ]
-  ])
+	test.deepEqual(container.getChildrenCombinations({
+		type: 'sw.os',
+		from: 1,
+		to: 1
+	}), [
+		[
+			new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+		]
+	])
 })
 
-ava('should return combinations of cardinality 1 for two contracts', (test) => {
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return combinations of cardinality 1 for two contracts', (test) => {
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([
-    new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object),
-    new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-    new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-  ])
+	container.addChildren([
+		new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object),
+		new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+		new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+	])
 
-  test.deepEqual(container.getChildrenCombinations({
-    type: 'sw.os',
-    from: 1,
-    to: 1
-  }), [
-    [
-      new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-    ],
-    [
-      new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-    ]
-  ])
+	test.deepEqual(container.getChildrenCombinations({
+		type: 'sw.os',
+		from: 1,
+		to: 1
+	}), [
+		[
+			new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+		],
+		[
+			new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+		]
+	])
 })
 
-ava('should return combinations of cardinality 1 for three contracts', (test) => {
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return combinations of cardinality 1 for three contracts', (test) => {
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([
-    new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object),
-    new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-    new Contract(CONTRACTS['sw.os'].debian.jessie.object),
-    new Contract(CONTRACTS['sw.os'].fedora['25'].object)
-  ])
+	container.addChildren([
+		new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object),
+		new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+		new Contract(CONTRACTS['sw.os'].debian.jessie.object),
+		new Contract(CONTRACTS['sw.os'].fedora['25'].object)
+	])
 
-  test.deepEqual(container.getChildrenCombinations({
-    type: 'sw.os',
-    from: 1,
-    to: 1
-  }), [
-    [
-      new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-    ],
-    [
-      new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-    ],
-    [
-      new Contract(CONTRACTS['sw.os'].fedora['25'].object)
-    ]
-  ])
+	test.deepEqual(container.getChildrenCombinations({
+		type: 'sw.os',
+		from: 1,
+		to: 1
+	}), [
+		[
+			new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+		],
+		[
+			new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+		],
+		[
+			new Contract(CONTRACTS['sw.os'].fedora['25'].object)
+		]
+	])
 })
 
-ava('should return combinations of cardinality 2 for two contracts', (test) => {
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return combinations of cardinality 2 for two contracts', (test) => {
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([
-    new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object),
-    new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-    new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-  ])
+	container.addChildren([
+		new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object),
+		new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+		new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+	])
 
-  test.deepEqual(container.getChildrenCombinations({
-    type: 'sw.os',
-    from: 2,
-    to: 2
-  }), [
-    [
-      new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-      new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-    ]
-  ])
+	test.deepEqual(container.getChildrenCombinations({
+		type: 'sw.os',
+		from: 2,
+		to: 2
+	}), [
+		[
+			new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+			new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+		]
+	])
 })
 
-ava('should return combinations of cardinality 2 for three contracts', (test) => {
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return combinations of cardinality 2 for three contracts', (test) => {
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([
-    new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object),
-    new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-    new Contract(CONTRACTS['sw.os'].debian.jessie.object),
-    new Contract(CONTRACTS['sw.os'].fedora['25'].object)
-  ])
+	container.addChildren([
+		new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object),
+		new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+		new Contract(CONTRACTS['sw.os'].debian.jessie.object),
+		new Contract(CONTRACTS['sw.os'].fedora['25'].object)
+	])
 
-  test.deepEqual(container.getChildrenCombinations({
-    type: 'sw.os',
-    from: 2,
-    to: 2
-  }), [
-    [
-      new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-      new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-    ],
-    [
-      new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-      new Contract(CONTRACTS['sw.os'].fedora['25'].object)
-    ],
-    [
-      new Contract(CONTRACTS['sw.os'].debian.jessie.object),
-      new Contract(CONTRACTS['sw.os'].fedora['25'].object)
-    ]
-  ])
+	test.deepEqual(container.getChildrenCombinations({
+		type: 'sw.os',
+		from: 2,
+		to: 2
+	}), [
+		[
+			new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+			new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+		],
+		[
+			new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+			new Contract(CONTRACTS['sw.os'].fedora['25'].object)
+		],
+		[
+			new Contract(CONTRACTS['sw.os'].debian.jessie.object),
+			new Contract(CONTRACTS['sw.os'].fedora['25'].object)
+		]
+	])
 })
 
-ava('should throw if "from" is greater than "to"', (test) => {
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should throw if "from" is greater than "to"', (test) => {
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([
-    new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-    new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-  ])
+	container.addChildren([
+		new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+		new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+	])
 
-  test.throws(() => {
-    container.getChildrenCombinations({
-      type: 'sw.os',
-      from: 2,
-      to: 1
-    })
-  }, {
-    message: 'Invalid cardinality: 2 to 1. The starting point is greater than the ending point'
-  })
+	test.throws(() => {
+		container.getChildrenCombinations({
+			type: 'sw.os',
+			from: 2,
+			to: 1
+		})
+	}, {
+		message: 'Invalid cardinality: 2 to 1. The starting point is greater than the ending point'
+	})
 })
 
-ava('should generate combinations from 1 to 2 for one contract', (test) => {
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should generate combinations from 1 to 2 for one contract', (test) => {
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([
-    new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object),
-    new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  ])
+	container.addChildren([
+		new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object),
+		new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	])
 
-  test.deepEqual(container.getChildrenCombinations({
-    type: 'sw.os',
-    from: 1,
-    to: 2
-  }), [
-    [
-      new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-    ]
-  ])
+	test.deepEqual(container.getChildrenCombinations({
+		type: 'sw.os',
+		from: 1,
+		to: 2
+	}), [
+		[
+			new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+		]
+	])
 })
 
-ava('should return combinations from 1 to 2 for two contracts', (test) => {
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return combinations from 1 to 2 for two contracts', (test) => {
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([
-    new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object),
-    new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-    new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-  ])
+	container.addChildren([
+		new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object),
+		new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+		new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+	])
 
-  test.deepEqual(container.getChildrenCombinations({
-    type: 'sw.os',
-    from: 1,
-    to: 2
-  }), [
-    [
-      new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-    ],
-    [
-      new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-    ],
-    [
-      new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-      new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-    ]
-  ])
+	test.deepEqual(container.getChildrenCombinations({
+		type: 'sw.os',
+		from: 1,
+		to: 2
+	}), [
+		[
+			new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+		],
+		[
+			new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+		],
+		[
+			new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+			new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+		]
+	])
 })
 
-ava('should return combinations from 1 to 3 for two contracts', (test) => {
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return combinations from 1 to 3 for two contracts', (test) => {
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([
-    new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object),
-    new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-    new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-  ])
+	container.addChildren([
+		new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object),
+		new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+		new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+	])
 
-  test.deepEqual(container.getChildrenCombinations({
-    type: 'sw.os',
-    from: 1,
-    to: 3
-  }), [
-    [
-      new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-    ],
-    [
-      new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-    ],
-    [
-      new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-      new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-    ]
-  ])
+	test.deepEqual(container.getChildrenCombinations({
+		type: 'sw.os',
+		from: 1,
+		to: 3
+	}), [
+		[
+			new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+		],
+		[
+			new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+		],
+		[
+			new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+			new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+		]
+	])
 })
 
-ava('should return combinations from 1 to 3 for three contracts', (test) => {
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return combinations from 1 to 3 for three contracts', (test) => {
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([
-    new Contract(CONTRACTS['sw.os'].fedora['25'].object),
-    new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-    new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-  ])
+	container.addChildren([
+		new Contract(CONTRACTS['sw.os'].fedora['25'].object),
+		new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+		new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+	])
 
-  test.deepEqual(container.getChildrenCombinations({
-    type: 'sw.os',
-    from: 1,
-    to: 3
-  }), [
-    [
-      new Contract(CONTRACTS['sw.os'].fedora['25'].object)
-    ],
-    [
-      new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-    ],
-    [
-      new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-    ],
-    [
-      new Contract(CONTRACTS['sw.os'].fedora['25'].object),
-      new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-    ],
-    [
-      new Contract(CONTRACTS['sw.os'].fedora['25'].object),
-      new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-    ],
-    [
-      new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-      new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-    ],
-    [
-      new Contract(CONTRACTS['sw.os'].fedora['25'].object),
-      new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-      new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-    ]
-  ])
+	test.deepEqual(container.getChildrenCombinations({
+		type: 'sw.os',
+		from: 1,
+		to: 3
+	}), [
+		[
+			new Contract(CONTRACTS['sw.os'].fedora['25'].object)
+		],
+		[
+			new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+		],
+		[
+			new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+		],
+		[
+			new Contract(CONTRACTS['sw.os'].fedora['25'].object),
+			new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+		],
+		[
+			new Contract(CONTRACTS['sw.os'].fedora['25'].object),
+			new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+		],
+		[
+			new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+			new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+		],
+		[
+			new Contract(CONTRACTS['sw.os'].fedora['25'].object),
+			new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+			new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+		]
+	])
 })
 
-ava('should not consider aliases as separate contracts', (test) => {
-  const contract1 = new Contract({
-    type: 'hw.device-type',
-    name: 'Raspberry Pi 2',
-    slug: 'raspberrypi2',
-    aliases: [ 'rpi2', 'raspberry-pi2' ]
-  })
+test('should not consider aliases as separate contracts', (test) => {
+	const contract1 = new Contract({
+		type: 'hw.device-type',
+		name: 'Raspberry Pi 2',
+		slug: 'raspberrypi2',
+		aliases: [ 'rpi2', 'raspberry-pi2' ]
+	})
 
-  const contract2 = new Contract({
-    type: 'hw.device-type',
-    name: 'Raspberry Pi',
-    slug: 'raspberrypi',
-    aliases: [ 'rpi', 'raspberry-pi' ]
-  })
+	const contract2 = new Contract({
+		type: 'hw.device-type',
+		name: 'Raspberry Pi',
+		slug: 'raspberrypi',
+		aliases: [ 'rpi', 'raspberry-pi' ]
+	})
 
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([ contract1, contract2 ])
+	container.addChildren([ contract1, contract2 ])
 
-  test.deepEqual(container.getChildrenCombinations({
-    type: 'hw.device-type',
-    from: 1,
-    to: 1
-  }), [
-    [ contract1 ],
-    [ contract2 ]
-  ])
+	test.deepEqual(container.getChildrenCombinations({
+		type: 'hw.device-type',
+		from: 1,
+		to: 1
+	}), [
+		[ contract1 ],
+		[ contract2 ]
+	])
 })

@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-'use strict'
+'use strict';
 
 /**
  * @module hash
  */
 
-// @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
-const objectHash = require('object-hash')
+import objectHash from 'object-hash';
 
 /**
  * @summary Hash a JavaScript object
@@ -36,13 +35,11 @@ const objectHash = require('object-hash')
  * const string = hash.hashObject({ foo: 'bar' })
  * console.log(string)
  */
-// @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-exports.hashObject = (object) => {
-  return objectHash(object, {
-    algorithm: 'sha1',
-    ignoreUnknown: true,
+export const hashObject = (object: object): string =>
+	objectHash(object, {
+		algorithm: 'sha1',
+		ignoreUnknown: true,
 
-    // This in particular is a HUGE improvement
-    respectType: false
-  })
-}
+		// This in particular is a HUGE improvement
+		respectType: false,
+	});

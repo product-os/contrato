@@ -614,10 +614,7 @@
 <a name='L566'></a><a href='#L566'>566</a>
 <a name='L567'></a><a href='#L567'>567</a>
 <a name='L568'></a><a href='#L568'>568</a>
-<a name='L569'></a><a href='#L569'>569</a>
-<a name='L570'></a><a href='#L570'>570</a>
-<a name='L571'></a><a href='#L571'>571</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L569'></a><a href='#L569'>569</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -636,7 +633,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1204,557 +1200,555 @@
 &nbsp;
 'use strict'
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Contract'.
-const Contract = require('../../lib/contract')
+import Contract from '../../lib/contract';
 &nbsp;
-ava('should return true given a satisfied context', (test) =&gt; {
-  const contract = new Contract({
-    type: 'foo',
-    bar: 'bar'
-  })
+test('should return true given a satisfied context', (test) =&gt; {
+	const contract = new Contract({
+		type: 'foo',
+		bar: 'bar'
+	})
 &nbsp;
-  contract.addChildren([
-    new Contract({
-      type: 'sw.os',
-      name: 'Debian',
-      slug: 'debian',
-      requires: [
-        {
-          or: [
-            {
-              type: 'hw.device-type',
-              slug: 'artik10'
-            },
-            {
-              type: 'hw.device-type',
-              slug: 'raspberry-pi'
-            }
-          ]
-        }
-      ]
-    }),
-    new Contract({
-      type: 'hw.device-type',
-      slug: 'artik10',
-      name: 'Samsung Artik 10',
-      requires: [
-        {
-          type: 'arch.sw',
-          slug: 'armv7hf'
-        }
-      ]
-    }),
-    new Contract({
-      type: 'arch.sw',
-      slug: 'armv7hf',
-      name: 'armv7hf'
-    })
-  ])
+	contract.addChildren([
+		new Contract({
+			type: 'sw.os',
+			name: 'Debian',
+			slug: 'debian',
+			requires: [
+				{
+					or: [
+						{
+							type: 'hw.device-type',
+							slug: 'artik10'
+						},
+						{
+							type: 'hw.device-type',
+							slug: 'raspberry-pi'
+						}
+					]
+				}
+			]
+		}),
+		new Contract({
+			type: 'hw.device-type',
+			slug: 'artik10',
+			name: 'Samsung Artik 10',
+			requires: [
+				{
+					type: 'arch.sw',
+					slug: 'armv7hf'
+				}
+			]
+		}),
+		new Contract({
+			type: 'arch.sw',
+			slug: 'armv7hf',
+			name: 'armv7hf'
+		})
+	])
 &nbsp;
-  test.true(contract.areChildrenSatisfied())
+	test.true(contract.areChildrenSatisfied())
 })
 &nbsp;
-ava('should return false given an unsatisfied context', (test) =&gt; {
-  const contract = new Contract({
-    type: 'foo',
-    bar: 'bar'
-  })
+test('should return false given an unsatisfied context', (test) =&gt; {
+	const contract = new Contract({
+		type: 'foo',
+		bar: 'bar'
+	})
 &nbsp;
-  contract.addChildren([
-    new Contract({
-      type: 'sw.os',
-      name: 'Debian',
-      slug: 'debian',
-      requires: [
-        {
-          or: [
-            {
-              type: 'hw.device-type',
-              slug: 'artik10'
-            },
-            {
-              type: 'hw.device-type',
-              slug: 'raspberry-pi'
-            }
-          ]
-        }
-      ]
-    }),
-    new Contract({
-      type: 'hw.device-type',
-      slug: 'artik10',
-      name: 'Samsung Artik 10',
-      requires: [
-        {
-          type: 'arch.sw',
-          slug: 'amd64'
-        }
-      ]
-    }),
-    new Contract({
-      type: 'arch.sw',
-      slug: 'armv7hf',
-      name: 'armv7hf'
-    })
-  ])
+	contract.addChildren([
+		new Contract({
+			type: 'sw.os',
+			name: 'Debian',
+			slug: 'debian',
+			requires: [
+				{
+					or: [
+						{
+							type: 'hw.device-type',
+							slug: 'artik10'
+						},
+						{
+							type: 'hw.device-type',
+							slug: 'raspberry-pi'
+						}
+					]
+				}
+			]
+		}),
+		new Contract({
+			type: 'hw.device-type',
+			slug: 'artik10',
+			name: 'Samsung Artik 10',
+			requires: [
+				{
+					type: 'arch.sw',
+					slug: 'amd64'
+				}
+			]
+		}),
+		new Contract({
+			type: 'arch.sw',
+			slug: 'armv7hf',
+			name: 'armv7hf'
+		})
+	])
 &nbsp;
-  test.false(contract.areChildrenSatisfied())
+	test.false(contract.areChildrenSatisfied())
 })
 &nbsp;
-ava('should return false given a requirement over a contract that does not exist', (test) =&gt; {
-  const contract = new Contract({
-    type: 'foo',
-    bar: 'bar'
-  })
+test('should return false given a requirement over a contract that does not exist', (test) =&gt; {
+	const contract = new Contract({
+		type: 'foo',
+		bar: 'bar'
+	})
 &nbsp;
-  contract.addChildren([
-    new Contract({
-      type: 'sw.os',
-      name: 'Debian',
-      slug: 'debian',
-      requires: [
-        {
-          type: 'hw.device-type',
-          slug: 'artik10'
-        }
-      ]
-    })
-  ])
+	contract.addChildren([
+		new Contract({
+			type: 'sw.os',
+			name: 'Debian',
+			slug: 'debian',
+			requires: [
+				{
+					type: 'hw.device-type',
+					slug: 'artik10'
+				}
+			]
+		})
+	])
 &nbsp;
-  test.false(contract.areChildrenSatisfied())
+	test.false(contract.areChildrenSatisfied())
 })
 &nbsp;
-ava('should return true given a requirement over a contract that does not ' +
-         'exist for which the type was not passed', (test) =&gt; {
-  const contract = new Contract({
-    type: 'foo',
-    bar: 'bar'
-  })
+test('should return true given a requirement over a contract that does not ' +
+				 'exist for which the type was not passed', (test) =&gt; {
+	const contract = new Contract({
+		type: 'foo',
+		bar: 'bar'
+	})
 &nbsp;
-  contract.addChildren([
-    new Contract({
-      type: 'sw.os',
-      name: 'Debian',
-      slug: 'debian',
-      requires: [
-        {
-          type: 'hw.device-type',
-          slug: 'artik10'
-        }
-      ]
-    })
-  ])
+	contract.addChildren([
+		new Contract({
+			type: 'sw.os',
+			name: 'Debian',
+			slug: 'debian',
+			requires: [
+				{
+					type: 'hw.device-type',
+					slug: 'artik10'
+				}
+			]
+		})
+	])
 &nbsp;
-  test.true(contract.areChildrenSatisfied({
-    types: new Set([ 'arch.sw' ])
-  }))
+	test.true(contract.areChildrenSatisfied({
+		types: new Set([ 'arch.sw' ])
+	}))
 })
 &nbsp;
-ava('should return true given one satisfied type in a satisfied context', (test) =&gt; {
-  const contract = new Contract({
-    type: 'foo',
-    bar: 'bar'
-  })
+test('should return true given one satisfied type in a satisfied context', (test) =&gt; {
+	const contract = new Contract({
+		type: 'foo',
+		bar: 'bar'
+	})
 &nbsp;
-  contract.addChildren([
-    new Contract({
-      type: 'sw.os',
-      name: 'Debian',
-      slug: 'debian',
-      requires: [
-        {
-          or: [
-            {
-              type: 'hw.device-type',
-              slug: 'artik10'
-            },
-            {
-              type: 'hw.device-type',
-              slug: 'raspberry-pi'
-            }
-          ]
-        }
-      ]
-    }),
-    new Contract({
-      type: 'hw.device-type',
-      slug: 'artik10',
-      name: 'Samsung Artik 10',
-      requires: [
-        {
-          type: 'arch.sw',
-          slug: 'armv7hf'
-        }
-      ]
-    }),
-    new Contract({
-      type: 'arch.sw',
-      slug: 'armv7hf',
-      name: 'armv7hf'
-    })
-  ])
+	contract.addChildren([
+		new Contract({
+			type: 'sw.os',
+			name: 'Debian',
+			slug: 'debian',
+			requires: [
+				{
+					or: [
+						{
+							type: 'hw.device-type',
+							slug: 'artik10'
+						},
+						{
+							type: 'hw.device-type',
+							slug: 'raspberry-pi'
+						}
+					]
+				}
+			]
+		}),
+		new Contract({
+			type: 'hw.device-type',
+			slug: 'artik10',
+			name: 'Samsung Artik 10',
+			requires: [
+				{
+					type: 'arch.sw',
+					slug: 'armv7hf'
+				}
+			]
+		}),
+		new Contract({
+			type: 'arch.sw',
+			slug: 'armv7hf',
+			name: 'armv7hf'
+		})
+	])
 &nbsp;
-  test.true(contract.areChildrenSatisfied({
-    types: new Set([ 'hw.device-type' ])
-  }))
+	test.true(contract.areChildrenSatisfied({
+		types: new Set([ 'hw.device-type' ])
+	}))
 })
 &nbsp;
-ava('should return true given one satisfied type in an unsatisfied context', (test) =&gt; {
-  const contract = new Contract({
-    type: 'foo',
-    bar: 'bar'
-  })
+test('should return true given one satisfied type in an unsatisfied context', (test) =&gt; {
+	const contract = new Contract({
+		type: 'foo',
+		bar: 'bar'
+	})
 &nbsp;
-  contract.addChildren([
-    new Contract({
-      type: 'sw.os',
-      name: 'Debian',
-      slug: 'debian',
-      requires: [
-        {
-          or: [
-            {
-              type: 'hw.device-type',
-              slug: 'intel-edison'
-            },
-            {
-              type: 'hw.device-type',
-              slug: 'raspberry-pi'
-            }
-          ]
-        }
-      ]
-    }),
-    new Contract({
-      type: 'hw.device-type',
-      slug: 'artik10',
-      name: 'Samsung Artik 10',
-      requires: [
-        {
-          type: 'arch.sw',
-          slug: 'armv7hf'
-        }
-      ]
-    }),
-    new Contract({
-      type: 'arch.sw',
-      slug: 'armv7hf',
-      name: 'armv7hf'
-    })
-  ])
+	contract.addChildren([
+		new Contract({
+			type: 'sw.os',
+			name: 'Debian',
+			slug: 'debian',
+			requires: [
+				{
+					or: [
+						{
+							type: 'hw.device-type',
+							slug: 'intel-edison'
+						},
+						{
+							type: 'hw.device-type',
+							slug: 'raspberry-pi'
+						}
+					]
+				}
+			]
+		}),
+		new Contract({
+			type: 'hw.device-type',
+			slug: 'artik10',
+			name: 'Samsung Artik 10',
+			requires: [
+				{
+					type: 'arch.sw',
+					slug: 'armv7hf'
+				}
+			]
+		}),
+		new Contract({
+			type: 'arch.sw',
+			slug: 'armv7hf',
+			name: 'armv7hf'
+		})
+	])
 &nbsp;
-  test.true(contract.areChildrenSatisfied({
-    types: new Set([ 'arch.sw' ])
-  }))
+	test.true(contract.areChildrenSatisfied({
+		types: new Set([ 'arch.sw' ])
+	}))
 })
 &nbsp;
-ava('should return true given one unknown type in an unsatisfied context', (test) =&gt; {
-  const contract = new Contract({
-    type: 'foo',
-    bar: 'bar'
-  })
+test('should return true given one unknown type in an unsatisfied context', (test) =&gt; {
+	const contract = new Contract({
+		type: 'foo',
+		bar: 'bar'
+	})
 &nbsp;
-  contract.addChildren([
-    new Contract({
-      type: 'sw.os',
-      name: 'Debian',
-      slug: 'debian',
-      requires: [
-        {
-          or: [
-            {
-              type: 'hw.device-type',
-              slug: 'intel-edison'
-            },
-            {
-              type: 'hw.device-type',
-              slug: 'raspberry-pi'
-            }
-          ]
-        }
-      ]
-    }),
-    new Contract({
-      type: 'hw.device-type',
-      slug: 'artik10',
-      name: 'Samsung Artik 10',
-      requires: [
-        {
-          type: 'arch.sw',
-          slug: 'armv7hf'
-        }
-      ]
-    }),
-    new Contract({
-      type: 'arch.sw',
-      slug: 'armv7hf',
-      name: 'armv7hf'
-    })
-  ])
+	contract.addChildren([
+		new Contract({
+			type: 'sw.os',
+			name: 'Debian',
+			slug: 'debian',
+			requires: [
+				{
+					or: [
+						{
+							type: 'hw.device-type',
+							slug: 'intel-edison'
+						},
+						{
+							type: 'hw.device-type',
+							slug: 'raspberry-pi'
+						}
+					]
+				}
+			]
+		}),
+		new Contract({
+			type: 'hw.device-type',
+			slug: 'artik10',
+			name: 'Samsung Artik 10',
+			requires: [
+				{
+					type: 'arch.sw',
+					slug: 'armv7hf'
+				}
+			]
+		}),
+		new Contract({
+			type: 'arch.sw',
+			slug: 'armv7hf',
+			name: 'armv7hf'
+		})
+	])
 &nbsp;
-  test.true(contract.areChildrenSatisfied({
-    types: new Set([ 'foo' ])
-  }))
+	test.true(contract.areChildrenSatisfied({
+		types: new Set([ 'foo' ])
+	}))
 })
 &nbsp;
-ava('should return false given one unsatisfied type in an unsatisfied context', (test) =&gt; {
-  const contract = new Contract({
-    type: 'foo',
-    bar: 'bar'
-  })
+test('should return false given one unsatisfied type in an unsatisfied context', (test) =&gt; {
+	const contract = new Contract({
+		type: 'foo',
+		bar: 'bar'
+	})
 &nbsp;
-  contract.addChildren([
-    new Contract({
-      type: 'sw.os',
-      name: 'Debian',
-      slug: 'debian',
-      requires: [
-        {
-          or: [
-            {
-              type: 'hw.device-type',
-              slug: 'intel-edison'
-            },
-            {
-              type: 'hw.device-type',
-              slug: 'raspberry-pi'
-            }
-          ]
-        }
-      ]
-    }),
-    new Contract({
-      type: 'hw.device-type',
-      slug: 'artik10',
-      name: 'Samsung Artik 10',
-      requires: [
-        {
-          type: 'arch.sw',
-          slug: 'armv7hf'
-        }
-      ]
-    }),
-    new Contract({
-      type: 'arch.sw',
-      slug: 'armv7hf',
-      name: 'armv7hf'
-    })
-  ])
+	contract.addChildren([
+		new Contract({
+			type: 'sw.os',
+			name: 'Debian',
+			slug: 'debian',
+			requires: [
+				{
+					or: [
+						{
+							type: 'hw.device-type',
+							slug: 'intel-edison'
+						},
+						{
+							type: 'hw.device-type',
+							slug: 'raspberry-pi'
+						}
+					]
+				}
+			]
+		}),
+		new Contract({
+			type: 'hw.device-type',
+			slug: 'artik10',
+			name: 'Samsung Artik 10',
+			requires: [
+				{
+					type: 'arch.sw',
+					slug: 'armv7hf'
+				}
+			]
+		}),
+		new Contract({
+			type: 'arch.sw',
+			slug: 'armv7hf',
+			name: 'armv7hf'
+		})
+	])
 &nbsp;
-  test.false(contract.areChildrenSatisfied({
-    types: new Set([ 'hw.device-type' ])
-  }))
+	test.false(contract.areChildrenSatisfied({
+		types: new Set([ 'hw.device-type' ])
+	}))
 })
 &nbsp;
-ava('should return false given one unsatisfied and one satisfied type in an unsatisfied context', (test) =&gt; {
-  const contract = new Contract({
-    type: 'foo',
-    bar: 'bar'
-  })
+test('should return false given one unsatisfied and one satisfied type in an unsatisfied context', (test) =&gt; {
+	const contract = new Contract({
+		type: 'foo',
+		bar: 'bar'
+	})
 &nbsp;
-  contract.addChildren([
-    new Contract({
-      type: 'sw.os',
-      name: 'Debian',
-      slug: 'debian',
-      requires: [
-        {
-          or: [
-            {
-              type: 'hw.device-type',
-              slug: 'intel-edison'
-            },
-            {
-              type: 'hw.device-type',
-              slug: 'raspberry-pi'
-            }
-          ]
-        }
-      ]
-    }),
-    new Contract({
-      type: 'hw.device-type',
-      slug: 'artik10',
-      name: 'Samsung Artik 10',
-      requires: [
-        {
-          type: 'arch.sw',
-          slug: 'armv7hf'
-        }
-      ]
-    }),
-    new Contract({
-      type: 'arch.sw',
-      slug: 'armv7hf',
-      name: 'armv7hf'
-    })
-  ])
+	contract.addChildren([
+		new Contract({
+			type: 'sw.os',
+			name: 'Debian',
+			slug: 'debian',
+			requires: [
+				{
+					or: [
+						{
+							type: 'hw.device-type',
+							slug: 'intel-edison'
+						},
+						{
+							type: 'hw.device-type',
+							slug: 'raspberry-pi'
+						}
+					]
+				}
+			]
+		}),
+		new Contract({
+			type: 'hw.device-type',
+			slug: 'artik10',
+			name: 'Samsung Artik 10',
+			requires: [
+				{
+					type: 'arch.sw',
+					slug: 'armv7hf'
+				}
+			]
+		}),
+		new Contract({
+			type: 'arch.sw',
+			slug: 'armv7hf',
+			name: 'armv7hf'
+		})
+	])
 &nbsp;
-  test.false(contract.areChildrenSatisfied({
-    types: new Set([ 'arch.sw', 'hw.device-type' ])
-  }))
+	test.false(contract.areChildrenSatisfied({
+		types: new Set([ 'arch.sw', 'hw.device-type' ])
+	}))
 })
 &nbsp;
-ava('should return true given two satisfied types in a satisfied context', (test) =&gt; {
-  const contract = new Contract({
-    type: 'foo',
-    bar: 'bar'
-  })
+test('should return true given two satisfied types in a satisfied context', (test) =&gt; {
+	const contract = new Contract({
+		type: 'foo',
+		bar: 'bar'
+	})
 &nbsp;
-  contract.addChildren([
-    new Contract({
-      type: 'sw.os',
-      name: 'Debian',
-      slug: 'debian',
-      requires: [
-        {
-          or: [
-            {
-              type: 'hw.device-type',
-              slug: 'artik10'
-            },
-            {
-              type: 'hw.device-type',
-              slug: 'raspberry-pi'
-            }
-          ]
-        }
-      ]
-    }),
-    new Contract({
-      type: 'hw.device-type',
-      slug: 'artik10',
-      name: 'Samsung Artik 10',
-      requires: [
-        {
-          type: 'arch.sw',
-          slug: 'armv7hf'
-        }
-      ]
-    }),
-    new Contract({
-      type: 'arch.sw',
-      slug: 'armv7hf',
-      name: 'armv7hf'
-    })
-  ])
+	contract.addChildren([
+		new Contract({
+			type: 'sw.os',
+			name: 'Debian',
+			slug: 'debian',
+			requires: [
+				{
+					or: [
+						{
+							type: 'hw.device-type',
+							slug: 'artik10'
+						},
+						{
+							type: 'hw.device-type',
+							slug: 'raspberry-pi'
+						}
+					]
+				}
+			]
+		}),
+		new Contract({
+			type: 'hw.device-type',
+			slug: 'artik10',
+			name: 'Samsung Artik 10',
+			requires: [
+				{
+					type: 'arch.sw',
+					slug: 'armv7hf'
+				}
+			]
+		}),
+		new Contract({
+			type: 'arch.sw',
+			slug: 'armv7hf',
+			name: 'armv7hf'
+		})
+	])
 &nbsp;
-  test.true(contract.areChildrenSatisfied({
-    types: new Set([ 'arch.sw', 'hw.device-type' ])
-  }))
+	test.true(contract.areChildrenSatisfied({
+		types: new Set([ 'arch.sw', 'hw.device-type' ])
+	}))
 })
 &nbsp;
-ava('should return true given a context with other satisfied contexts', (test) =&gt; {
-  const container = new Contract({
-    type: 'foo',
-    bar: 'bar'
-  })
+test('should return true given a context with other satisfied contexts', (test) =&gt; {
+	const container = new Contract({
+		type: 'foo',
+		bar: 'bar'
+	})
 &nbsp;
-  const contract1 = new Contract({
-    type: 'child',
-    slug: 'child-1'
-  })
+	const contract1 = new Contract({
+		type: 'child',
+		slug: 'child-1'
+	})
 &nbsp;
-  const contract2 = new Contract({
-    type: 'child',
-    slug: 'child-2'
-  })
+	const contract2 = new Contract({
+		type: 'child',
+		slug: 'child-2'
+	})
 &nbsp;
-  const contract3 = new Contract({
-    type: 'child',
-    slug: 'child-3'
-  })
+	const contract3 = new Contract({
+		type: 'child',
+		slug: 'child-3'
+	})
 &nbsp;
-  contract1.addChild(new Contract({
-    type: 'sw.os',
-    name: 'Debian',
-    slug: 'debian',
-    requires: [
-      {
-        type: 'hw.device-type',
-        slug: 'artik10'
-      }
-    ]
-  }))
+	contract1.addChild(new Contract({
+		type: 'sw.os',
+		name: 'Debian',
+		slug: 'debian',
+		requires: [
+			{
+				type: 'hw.device-type',
+				slug: 'artik10'
+			}
+		]
+	}))
 &nbsp;
-  contract2.addChild(new Contract({
-    type: 'hw.device-type',
-    slug: 'artik10',
-    name: 'Samsung Artik 10',
-    requires: [
-      {
-        type: 'arch.sw',
-        slug: 'armv7hf'
-      }
-    ]
-  }))
+	contract2.addChild(new Contract({
+		type: 'hw.device-type',
+		slug: 'artik10',
+		name: 'Samsung Artik 10',
+		requires: [
+			{
+				type: 'arch.sw',
+				slug: 'armv7hf'
+			}
+		]
+	}))
 &nbsp;
-  contract3.addChild(new Contract({
-    type: 'arch.sw',
-    slug: 'armv7hf',
-    name: 'armv7hf'
-  }))
+	contract3.addChild(new Contract({
+		type: 'arch.sw',
+		slug: 'armv7hf',
+		name: 'armv7hf'
+	}))
 &nbsp;
-  container.addChildren([ contract1, contract2, contract3 ])
-  test.true(container.areChildrenSatisfied())
+	container.addChildren([ contract1, contract2, contract3 ])
+	test.true(container.areChildrenSatisfied())
 })
 &nbsp;
-ava('should return false given a context with unsatisfied contexts', (test) =&gt; {
-  const container = new Contract({
-    type: 'foo',
-    bar: 'bar'
-  })
+test('should return false given a context with unsatisfied contexts', (test) =&gt; {
+	const container = new Contract({
+		type: 'foo',
+		bar: 'bar'
+	})
 &nbsp;
-  const contract1 = new Contract({
-    type: 'child',
-    slug: 'child-1'
-  })
+	const contract1 = new Contract({
+		type: 'child',
+		slug: 'child-1'
+	})
 &nbsp;
-  const contract2 = new Contract({
-    type: 'child',
-    slug: 'child-2'
-  })
+	const contract2 = new Contract({
+		type: 'child',
+		slug: 'child-2'
+	})
 &nbsp;
-  const contract3 = new Contract({
-    type: 'child',
-    slug: 'child-3'
-  })
+	const contract3 = new Contract({
+		type: 'child',
+		slug: 'child-3'
+	})
 &nbsp;
-  contract1.addChild(new Contract({
-    type: 'sw.os',
-    name: 'Debian',
-    slug: 'debian',
-    requires: [
-      {
-        type: 'hw.device-type',
-        slug: 'artik10'
-      }
-    ]
-  }))
+	contract1.addChild(new Contract({
+		type: 'sw.os',
+		name: 'Debian',
+		slug: 'debian',
+		requires: [
+			{
+				type: 'hw.device-type',
+				slug: 'artik10'
+			}
+		]
+	}))
 &nbsp;
-  contract2.addChild(new Contract({
-    type: 'hw.device-type',
-    slug: 'artik10',
-    name: 'Samsung Artik 10',
-    requires: [
-      {
-        type: 'arch.sw',
-        slug: 'armv7hf'
-      }
-    ]
-  }))
+	contract2.addChild(new Contract({
+		type: 'hw.device-type',
+		slug: 'artik10',
+		name: 'Samsung Artik 10',
+		requires: [
+			{
+				type: 'arch.sw',
+				slug: 'armv7hf'
+			}
+		]
+	}))
 &nbsp;
-  contract3.addChild(new Contract({
-    type: 'arch.sw',
-    slug: 'armel',
-    name: 'armel'
-  }))
+	contract3.addChild(new Contract({
+		type: 'arch.sw',
+		slug: 'armel',
+		name: 'armel'
+	}))
 &nbsp;
-  container.addChildren([ contract1, contract2, contract3 ])
-  test.false(container.areChildrenSatisfied())
+	container.addChildren([ contract1, contract2, contract3 ])
+	test.false(container.areChildrenSatisfied())
 })
 &nbsp;</pre></td></tr>
 </table></pre>
@@ -1762,7 +1756,7 @@ ava('should return false given a context with unsatisfied contexts', (test) =&gt
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Apr 28 2021 17:05:03 GMT+1000 (Australian Eastern Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Apr 30 2021 11:36:21 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="../../prettify.js"></script>

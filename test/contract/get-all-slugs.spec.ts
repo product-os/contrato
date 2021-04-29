@@ -16,44 +16,42 @@
 
 'use strict'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Contract'.
-const Contract = require('../../lib/contract')
+import Contract from '../../lib/contract';
 
-ava('should return only the slug given a contract without aliases', (test) => {
-  const contract = new Contract({
-    type: 'arch.sw',
-    name: 'armv7hf',
-    slug: 'armv7hf'
-  })
+test('should return only the slug given a contract without aliases', (test) => {
+	const contract = new Contract({
+		type: 'arch.sw',
+		name: 'armv7hf',
+		slug: 'armv7hf'
+	})
 
-  test.deepEqual(contract.getAllSlugs(), new Set([ 'armv7hf' ]))
+	test.deepEqual(contract.getAllSlugs(), new Set([ 'armv7hf' ]))
 })
 
-ava('should include the aliases if present', (test) => {
-  const contract = new Contract({
-    type: 'hw.device-type',
-    name: 'Raspberry Pi',
-    slug: 'raspberrypi',
-    aliases: [ 'rpi', 'raspberry-pi' ]
-  })
+test('should include the aliases if present', (test) => {
+	const contract = new Contract({
+		type: 'hw.device-type',
+		name: 'Raspberry Pi',
+		slug: 'raspberrypi',
+		aliases: [ 'rpi', 'raspberry-pi' ]
+	})
 
-  test.deepEqual(contract.getAllSlugs(), new Set([
-    'rpi',
-    'raspberry-pi',
-    'raspberrypi'
-  ]))
+	test.deepEqual(contract.getAllSlugs(), new Set([
+		'rpi',
+		'raspberry-pi',
+		'raspberrypi'
+	]))
 })
 
-ava('should return only the slug if aliases is empty', (test) => {
-  const contract = new Contract({
-    type: 'arch.sw',
-    name: 'armv7hf',
-    slug: 'armv7hf',
-    aliases: []
-  })
+test('should return only the slug if aliases is empty', (test) => {
+	const contract = new Contract({
+		type: 'arch.sw',
+		name: 'armv7hf',
+		slug: 'armv7hf',
+		aliases: []
+	})
 
-  test.deepEqual(contract.getAllSlugs(), new Set([ 'armv7hf' ]))
+	test.deepEqual(contract.getAllSlugs(), new Set([ 'armv7hf' ]))
 })

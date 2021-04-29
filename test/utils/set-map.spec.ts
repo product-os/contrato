@@ -16,22 +16,19 @@
 
 'use strict'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
+import { setMap } from '../../lib/utils';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'utils'.
-const utils = require('../../lib/utils')
-
-ava('should return an empty array given an empty set', (test) => {
-  const set = new Set()
-  test.deepEqual(utils.setMap(set, (element) => {
-    return element * 2
-  }), [])
+test('should return an empty array given an empty set', (test) => {
+	const set = new Set<number>()
+	test.deepEqual(setMap(set, (element) => {
+		return element * 2
+	}), [])
 })
 
-ava('should run the iteratee on all elements', (test) => {
-  const set = new Set([ 1, 2, 3 ])
-  test.deepEqual(utils.setMap(set, (element) => {
-    return element * 2
-  }), [ 2, 4, 6 ])
+test('should run the iteratee on all elements', (test) => {
+	const set = new Set([ 1, 2, 3 ])
+	test.deepEqual(setMap(set, (element) => {
+		return element * 2
+	}), [ 2, 4, 6 ])
 })

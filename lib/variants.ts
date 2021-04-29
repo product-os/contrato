@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-'use strict'
+'use strict';
 
 /**
  * Contract variants are syntax sugar that allows the client
@@ -26,15 +26,15 @@
  * @module variants
  */
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable '_'.
-const _ = require('lodash')
+import { omit, reduce, map, concat, mergeWith, isArray } from 'lodash';
+import { ContractType } from './types/types';
 
 /**
  * @summary The name of the contract property that contains variants
  * @type {String}
  * @constant
  */
-const VARIANTS_PROPERTY = 'variants'
+const VARIANTS_PROPERTY = 'variants';
 
 /**
  * @summary Build contract variants
@@ -68,27 +68,23 @@ const VARIANTS_PROPERTY = 'variants'
  *   ]
  * })
  */
-// @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-exports.build = (contract) => {
-  const variants = contract[VARIANTS_PROPERTY] || []
-  const base = _.omit(contract, [ VARIANTS_PROPERTY ])
+export const build = (contract: ContractType): ContractType[] => {
+	const variants: object[] = contract[VARIANTS_PROPERTY] || [];
+	const base = omit(contract, [VARIANTS_PROPERTY]);
 
-  if (variants.length === 0) {
-    return [ base ]
-  }
-
-  return _.reduce(variants, (accumulator, variation) => {
-    // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-    return _.concat(accumulator, _.map(exports.build(variation), (template) => {
-      return _.mergeWith({}, base, template, (object, source) => {
-        if (_.isArray(object)) {
-          return _.concat(object, source)
-        }
-
-        // _.mergeWith expects "undefined"
-        // eslint-disable-next-line no-undefined
-        return undefined
-      })
-    }))
-  }, [])
-}
+	return variants.length === 0
+		? [base]
+		: reduce(
+				variants,
+				(accumulator, variation) =>
+					concat(
+						accumulator,
+						map(build(variation), (template) =>
+							mergeWith({}, base, template, (object, source) =>
+								isArray(object) ? concat(object, source) : undefined,
+							),
+						),
+					),
+				[] as ContractType[],
+		  );
+};

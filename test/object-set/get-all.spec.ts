@@ -16,33 +16,30 @@
 
 'use strict'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
+import ObjectSet from '../../lib/object-set';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ObjectSet'... Remove this comment to see the full error message
-const ObjectSet = require('../../lib/object-set')
-
-ava('should return an empty array if the set is empty', (test) => {
-  const set = new ObjectSet()
-  test.deepEqual(set.getAll(), [])
+test('should return an empty array if the set is empty', (test) => {
+	const set = new ObjectSet()
+	test.deepEqual(set.getAll(), [])
 })
 
-ava('should return the elements in the set', (test) => {
-  const set = new ObjectSet([
-    {
-      foo: 1
-    },
-    {
-      foo: 2
-    }
-  ])
+test('should return the elements in the set', (test) => {
+	const set = new ObjectSet([
+		{
+			foo: 1
+		},
+		{
+			foo: 2
+		}
+	])
 
-  test.deepEqual(set.getAll(), [
-    {
-      foo: 1
-    },
-    {
-      foo: 2
-    }
-  ])
+	test.deepEqual(set.getAll(), [
+		{
+			foo: 1
+		},
+		{
+			foo: 2
+		}
+	])
 })

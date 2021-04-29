@@ -16,222 +16,216 @@
 
 'use strict'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Contract'.
-const Contract = require('../../lib/contract')
+import MatcherCache from '../../lib/matcher-cache';
+import Contract from '../../lib/contract';
+import CONTRACTS from '../contracts.json';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'MatcherCac... Remove this comment to see the full error message
-const MatcherCache = require('../../lib/matcher-cache')
+test('should have an empty cache by default', (test) => {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'CONTRACTS'... Remove this comment to see the full error message
-const CONTRACTS = require('../contracts.json')
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-ava('should have an empty cache by default', (test) => {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
-
-  container.addChildren([ contract1, contract2 ])
-  test.deepEqual(container.metadata.children.searchCache, new MatcherCache())
+	container.addChildren([ contract1, contract2 ])
+	test.deepEqual(container.metadata.children.searchCache, new MatcherCache())
 })
 
-ava('should create an entry after a successful search', (test) => {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
+test('should create an entry after a successful search', (test) => {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
 
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([ contract1, contract2 ])
+	container.addChildren([ contract1, contract2 ])
 
-  const matcher = Contract.createMatcher({
-    type: 'sw.os',
-    slug: 'debian'
-  })
+	const matcher = Contract.createMatcher({
+		type: 'sw.os',
+		slug: 'debian'
+	})
 
-  container.findChildren(matcher)
+	container.findChildren(matcher)
 
-  const cache = new MatcherCache()
-  cache.add(matcher, [ contract1 ])
+	const cache = new MatcherCache()
+	cache.add(matcher, [ contract1 ])
 
-  test.deepEqual(container.metadata.children.searchCache, cache)
+	test.deepEqual(container.metadata.children.searchCache, cache)
 })
 
-ava('should be able to store multiple entries', (test) => {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
+test('should be able to store multiple entries', (test) => {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
 
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([ contract1, contract2 ])
+	container.addChildren([ contract1, contract2 ])
 
-  const matcher1 = Contract.createMatcher({
-    type: 'sw.os',
-    slug: 'debian'
-  })
+	const matcher1 = Contract.createMatcher({
+		type: 'sw.os',
+		slug: 'debian'
+	})
 
-  const matcher2 = Contract.createMatcher({
-    type: 'sw.os',
-    slug: 'fedora'
-  })
+	const matcher2 = Contract.createMatcher({
+		type: 'sw.os',
+		slug: 'fedora'
+	})
 
-  container.findChildren(matcher1)
-  container.findChildren(matcher2)
+	container.findChildren(matcher1)
+	container.findChildren(matcher2)
 
-  const cache = new MatcherCache()
-  cache.add(matcher1, [ contract1 ])
-  cache.add(matcher2, [ contract2 ])
+	const cache = new MatcherCache()
+	cache.add(matcher1, [ contract1 ])
+	cache.add(matcher2, [ contract2 ])
 
-  test.deepEqual(container.metadata.children.searchCache, cache)
+	test.deepEqual(container.metadata.children.searchCache, cache)
 })
 
-ava('should still store an entry if there were no results', (test) => {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
+test('should still store an entry if there were no results', (test) => {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
 
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([ contract1, contract2 ])
+	container.addChildren([ contract1, contract2 ])
 
-  const matcher = Contract.createMatcher({
-    type: 'sw.os',
-    slug: 'alpine'
-  })
+	const matcher = Contract.createMatcher({
+		type: 'sw.os',
+		slug: 'alpine'
+	})
 
-  container.findChildren(matcher)
+	container.findChildren(matcher)
 
-  const cache = new MatcherCache()
-  cache.add(matcher, [])
+	const cache = new MatcherCache()
+	cache.add(matcher, [])
 
-  test.deepEqual(container.metadata.children.searchCache, cache)
+	test.deepEqual(container.metadata.children.searchCache, cache)
 })
 
-ava('should honor a matcher over and over again', (test) => {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
+test('should honor a matcher over and over again', (test) => {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
 
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([ contract1, contract2 ])
+	container.addChildren([ contract1, contract2 ])
 
-  const matcher = Contract.createMatcher({
-    type: 'sw.os',
-    slug: 'debian'
-  })
+	const matcher = Contract.createMatcher({
+		type: 'sw.os',
+		slug: 'debian'
+	})
 
-  test.deepEqual(container.findChildren(matcher), [ contract1 ])
-  test.deepEqual(container.findChildren(matcher), [ contract1 ])
-  test.deepEqual(container.findChildren(matcher), [ contract1 ])
-  test.deepEqual(container.findChildren(matcher), [ contract1 ])
+	test.deepEqual(container.findChildren(matcher), [ contract1 ])
+	test.deepEqual(container.findChildren(matcher), [ contract1 ])
+	test.deepEqual(container.findChildren(matcher), [ contract1 ])
+	test.deepEqual(container.findChildren(matcher), [ contract1 ])
 })
 
-ava('should clear the cache for a certain type if a contract is added', (test) => {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
-  const contract3 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
-  const contract4 = new Contract(CONTRACTS['hw.device-type'].artik10.object)
-  const contract5 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+test('should clear the cache for a certain type if a contract is added', (test) => {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
+	const contract3 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
+	const contract4 = new Contract(CONTRACTS['hw.device-type'].artik10.object)
+	const contract5 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
 
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([ contract1, contract2, contract3, contract4 ])
+	container.addChildren([ contract1, contract2, contract3, contract4 ])
 
-  const matcher1 = Contract.createMatcher({
-    type: 'sw.os',
-    slug: 'debian'
-  })
+	const matcher1 = Contract.createMatcher({
+		type: 'sw.os',
+		slug: 'debian'
+	})
 
-  const matcher2 = Contract.createMatcher({
-    type: 'sw.blob',
-    slug: 'nodejs'
-  })
+	const matcher2 = Contract.createMatcher({
+		type: 'sw.blob',
+		slug: 'nodejs'
+	})
 
-  container.findChildren(matcher1)
-  container.findChildren(matcher2)
-  container.addChild(contract5)
+	container.findChildren(matcher1)
+	container.findChildren(matcher2)
+	container.addChild(contract5)
 
-  const cache = new MatcherCache()
-  cache.add(matcher2, [ contract3 ])
+	const cache = new MatcherCache()
+	cache.add(matcher2, [ contract3 ])
 
-  test.deepEqual(container.metadata.children.searchCache, cache)
+	test.deepEqual(container.metadata.children.searchCache, cache)
 })
 
-ava('should clear the cache for a certain type if a contract is removed', (test) => {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
-  const contract3 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
-  const contract4 = new Contract(CONTRACTS['hw.device-type'].artik10.object)
-  const contract5 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+test('should clear the cache for a certain type if a contract is removed', (test) => {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
+	const contract3 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
+	const contract4 = new Contract(CONTRACTS['hw.device-type'].artik10.object)
+	const contract5 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
 
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([ contract1, contract2, contract3, contract4, contract5 ])
+	container.addChildren([ contract1, contract2, contract3, contract4, contract5 ])
 
-  const matcher1 = Contract.createMatcher({
-    type: 'sw.os',
-    slug: 'debian'
-  })
+	const matcher1 = Contract.createMatcher({
+		type: 'sw.os',
+		slug: 'debian'
+	})
 
-  const matcher2 = Contract.createMatcher({
-    type: 'sw.blob',
-    slug: 'nodejs'
-  })
+	const matcher2 = Contract.createMatcher({
+		type: 'sw.blob',
+		slug: 'nodejs'
+	})
 
-  container.findChildren(matcher1)
-  container.findChildren(matcher2)
-  container.removeChild(contract5)
+	container.findChildren(matcher1)
+	container.findChildren(matcher2)
+	container.removeChild(contract5)
 
-  const cache = new MatcherCache()
-  cache.add(matcher2, [ contract3 ])
+	const cache = new MatcherCache()
+	cache.add(matcher2, [ contract3 ])
 
-  test.deepEqual(container.metadata.children.searchCache, cache)
+	test.deepEqual(container.metadata.children.searchCache, cache)
 })
 
-ava('should clear the cache for a certain type if the removed contract did not exist', (test) => {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
-  const contract3 = new Contract(CONTRACTS['sw.os'].debian.sid.object)
+test('should clear the cache for a certain type if the removed contract did not exist', (test) => {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
+	const contract3 = new Contract(CONTRACTS['sw.os'].debian.sid.object)
 
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([ contract1, contract2 ])
+	container.addChildren([ contract1, contract2 ])
 
-  const matcher1 = Contract.createMatcher({
-    type: 'sw.os',
-    slug: 'debian'
-  })
+	const matcher1 = Contract.createMatcher({
+		type: 'sw.os',
+		slug: 'debian'
+	})
 
-  container.findChildren(matcher1)
-  container.removeChild(contract3)
+	container.findChildren(matcher1)
+	container.removeChild(contract3)
 
-  const cache = new MatcherCache()
-  cache.add(matcher1, [ contract1 ])
+	const cache = new MatcherCache()
+	cache.add(matcher1, [ contract1 ])
 
-  test.deepEqual(container.metadata.children.searchCache, cache)
+	test.deepEqual(container.metadata.children.searchCache, cache)
 })

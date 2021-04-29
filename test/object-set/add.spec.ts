@@ -16,77 +16,74 @@
 
 'use strict'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
+import ObjectSet from '../../lib/object-set';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ObjectSet'... Remove this comment to see the full error message
-const ObjectSet = require('../../lib/object-set')
+test('should add an object to an empty set', (test) => {
+	const set = new ObjectSet()
 
-ava('should add an object to an empty set', (test) => {
-  const set = new ObjectSet()
+	set.add({
+		foo: 'bar'
+	})
 
-  set.add({
-    foo: 'bar'
-  })
-
-  test.deepEqual(set.getAll(), [
-    {
-      foo: 'bar'
-    }
-  ])
+	test.deepEqual(set.getAll(), [
+		{
+			foo: 'bar'
+		}
+	])
 })
 
-ava('should add an object to a non empty set', (test) => {
-  const set = new ObjectSet([
-    {
-      foo: 1
-    }
-  ])
+test('should add an object to a non empty set', (test) => {
+	const set = new ObjectSet([
+		{
+			foo: 1
+		}
+	])
 
-  set.add({
-    foo: 2
-  })
+	set.add({
+		foo: 2
+	})
 
-  test.deepEqual(set.getAll(), [
-    {
-      foo: 1
-    },
-    {
-      foo: 2
-    }
-  ])
+	test.deepEqual(set.getAll(), [
+		{
+			foo: 1
+		},
+		{
+			foo: 2
+		}
+	])
 })
 
-ava('should not add a duplicate object', (test) => {
-  const set = new ObjectSet([
-    {
-      foo: 1
-    }
-  ])
+test('should not add a duplicate object', (test) => {
+	const set = new ObjectSet([
+		{
+			foo: 1
+		}
+	])
 
-  set.add({
-    foo: 1
-  })
+	set.add({
+		foo: 1
+	})
 
-  test.deepEqual(set.getAll(), [
-    {
-      foo: 1
-    }
-  ])
+	test.deepEqual(set.getAll(), [
+		{
+			foo: 1
+		}
+	])
 })
 
-ava('should allow the user to set a custom id', (test) => {
-  const set = new ObjectSet([])
+test('should allow the user to set a custom id', (test) => {
+	const set = new ObjectSet([])
 
-  set.add({
-    foo: 1
-  }, {
-    id: 'foo'
-  })
+	set.add({
+		foo: 1
+	}, {
+		id: 'foo'
+	})
 
-  test.deepEqual(set.data, {
-    foo: {
-      foo: 1
-    }
-  })
+	test.deepEqual(set.data, {
+		foo: {
+			foo: 1
+		}
+	})
 })

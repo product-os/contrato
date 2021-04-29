@@ -16,45 +16,39 @@
 
 'use strict'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Contract'.
-const Contract = require('../../../lib/contract')
+import MatcherCache from '../../../lib/matcher-cache';
+import Contract from '../../../lib/contract';
+import ObjectSet from '../../../lib/object-set';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'MatcherCac... Remove this comment to see the full error message
-const MatcherCache = require('../../../lib/matcher-cache')
+test('should create a simple contract', (test) => {
+	const contract = new Contract({
+		type: 'arch.sw',
+		name: 'armv7hf',
+		slug: 'armv7hf'
+	})
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ObjectSet'... Remove this comment to see the full error message
-const ObjectSet = require('../../../lib/object-set')
+	test.deepEqual(contract.metadata, {
+		hash: 'e3d3b7f2e5820db4b45975380a3f467bc2ff2999',
+		children: {
+			typeMatchers: {},
+			searchCache: new MatcherCache(),
+			types: new Set(),
+			map: {},
+			byType: {},
+			byTypeSlug: {}
+		},
+		requirements: {
+			matchers: {},
+			types: new Set(),
+			compiled: new ObjectSet()
+		}
+	})
 
-ava('should create a simple contract', (test) => {
-  const contract = new Contract({
-    type: 'arch.sw',
-    name: 'armv7hf',
-    slug: 'armv7hf'
-  })
-
-  test.deepEqual(contract.metadata, {
-    hash: 'e3d3b7f2e5820db4b45975380a3f467bc2ff2999',
-    children: {
-      typeMatchers: {},
-      searchCache: new MatcherCache(),
-      types: new Set(),
-      map: {},
-      byType: {},
-      byTypeSlug: {}
-    },
-    requirements: {
-      matchers: {},
-      types: new Set(),
-      compiled: new ObjectSet()
-    }
-  })
-
-  test.deepEqual(contract.raw, {
-    type: 'arch.sw',
-    name: 'armv7hf',
-    slug: 'armv7hf'
-  })
+	test.deepEqual(contract.raw, {
+		type: 'arch.sw',
+		name: 'armv7hf',
+		slug: 'armv7hf'
+	})
 })

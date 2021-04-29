@@ -157,12 +157,7 @@
 <a name='L109'></a><a href='#L109'>109</a>
 <a name='L110'></a><a href='#L110'>110</a>
 <a name='L111'></a><a href='#L111'>111</a>
-<a name='L112'></a><a href='#L112'>112</a>
-<a name='L113'></a><a href='#L113'>113</a>
-<a name='L114'></a><a href='#L114'>114</a>
-<a name='L115'></a><a href='#L115'>115</a>
-<a name='L116'></a><a href='#L116'>116</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L112'></a><a href='#L112'>112</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -182,10 +177,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -294,102 +286,98 @@
 &nbsp;
 'use strict'
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Contract'.
-const Contract = require('../../lib/contract')
+import Contract from '../../lib/contract';
+import CONTRACTS from '../contracts.json';
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'CONTRACTS'... Remove this comment to see the full error message
-const CONTRACTS = require('../contracts.json')
+test('should return all contracts of the type if the type exists', (test) =&gt; {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+	const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
+	const contract4 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
 &nbsp;
-ava('should return all contracts of the type if the type exists', (test) =&gt; {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-  const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
-  const contract4 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	container.addChildren([ contract1, contract2, contract3, contract4 ])
 &nbsp;
-  container.addChildren([ contract1, contract2, contract3, contract4 ])
-&nbsp;
-  test.deepEqual(container.getChildrenByType('sw.os'), [
-    contract1,
-    contract2,
-    contract3
-  ])
+	test.deepEqual(container.getChildrenByType('sw.os'), [
+		contract1,
+		contract2,
+		contract3
+	])
 })
 &nbsp;
-ava('should always return the same results', (test) =&gt; {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-  const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
-  const contract4 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
+test('should always return the same results', (test) =&gt; {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+	const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
+	const contract4 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
 &nbsp;
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  container.addChildren([ contract1, contract2, contract3, contract4 ])
+	container.addChildren([ contract1, contract2, contract3, contract4 ])
 &nbsp;
-  test.deepEqual(container.getChildrenByType('sw.os'), [
-    contract1,
-    contract2,
-    contract3
-  ])
+	test.deepEqual(container.getChildrenByType('sw.os'), [
+		contract1,
+		contract2,
+		contract3
+	])
 &nbsp;
-  test.deepEqual(container.getChildrenByType('sw.os'), [
-    contract1,
-    contract2,
-    contract3
-  ])
+	test.deepEqual(container.getChildrenByType('sw.os'), [
+		contract1,
+		contract2,
+		contract3
+	])
 &nbsp;
-  test.deepEqual(container.getChildrenByType('sw.os'), [
-    contract1,
-    contract2,
-    contract3
-  ])
+	test.deepEqual(container.getChildrenByType('sw.os'), [
+		contract1,
+		contract2,
+		contract3
+	])
 })
 &nbsp;
-ava('should return nothing if the type does not exist', (test) =&gt; {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-  const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
-  const contract4 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
+test('should return nothing if the type does not exist', (test) =&gt; {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+	const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
+	const contract4 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
 &nbsp;
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  container.addChildren([ contract1, contract2, contract3, contract4 ])
+	container.addChildren([ contract1, contract2, contract3, contract4 ])
 &nbsp;
-  test.deepEqual(container.getChildrenByType('arch.sw'), [])
+	test.deepEqual(container.getChildrenByType('arch.sw'), [])
 })
 &nbsp;
-ava('should not return the same contract multiple times if it contains aliases', (test) =&gt; {
-  const contract1 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
-  const contract2 = new Contract({
-    type: 'hw.device-type',
-    name: 'Raspberry Pi',
-    slug: 'raspberrypi',
-    aliases: [ 'rpi', 'raspberry-pi' ]
-  })
+test('should not return the same contract multiple times if it contains aliases', (test) =&gt; {
+	const contract1 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
+	const contract2 = new Contract({
+		type: 'hw.device-type',
+		name: 'Raspberry Pi',
+		slug: 'raspberrypi',
+		aliases: [ 'rpi', 'raspberry-pi' ]
+	})
 &nbsp;
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  container.addChildren([ contract1, contract2 ])
+	container.addChildren([ contract1, contract2 ])
 &nbsp;
-  test.deepEqual(container.getChildrenByType('hw.device-type'), [
-    contract2
-  ])
+	test.deepEqual(container.getChildrenByType('hw.device-type'), [
+		contract2
+	])
 })
 &nbsp;</pre></td></tr>
 </table></pre>
@@ -397,7 +385,7 @@ ava('should not return the same contract multiple times if it contains aliases',
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Apr 28 2021 17:05:03 GMT+1000 (Australian Eastern Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Apr 30 2021 11:36:21 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="../../prettify.js"></script>

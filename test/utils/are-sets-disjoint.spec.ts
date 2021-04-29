@@ -16,36 +16,33 @@
 
 'use strict'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
+import { areSetsDisjoint } from '../../lib/utils';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'utils'.
-const utils = require('../../lib/utils')
+test('should return true if sets are disjoint', (test) => {
+	const set1 = new Set([ 'foo', 'bar' ])
+	const set2 = new Set([ 'baz', 'qux' ])
 
-ava('should return true if sets are disjoint', (test) => {
-  const set1 = new Set([ 'foo', 'bar' ])
-  const set2 = new Set([ 'baz', 'qux' ])
-
-  test.true(utils.areSetsDisjoint(set1, set2))
-  test.true(utils.areSetsDisjoint(set2, set1))
+	test.true(areSetsDisjoint(set1, set2))
+	test.true(areSetsDisjoint(set2, set1))
 })
 
-ava('should return false if sets are not disjoint', (test) => {
-  const set1 = new Set([ 'foo', 'bar' ])
-  const set2 = new Set([ 'bar', 'baz' ])
+test('should return false if sets are not disjoint', (test) => {
+	const set1 = new Set([ 'foo', 'bar' ])
+	const set2 = new Set([ 'bar', 'baz' ])
 
-  test.false(utils.areSetsDisjoint(set1, set2))
-  test.false(utils.areSetsDisjoint(set2, set1))
+	test.false(areSetsDisjoint(set1, set2))
+	test.false(areSetsDisjoint(set2, set1))
 })
 
-ava('should return true if both sets are empty', (test) => {
-  test.true(utils.areSetsDisjoint(new Set(), new Set()))
+test('should return true if both sets are empty', (test) => {
+	test.true(areSetsDisjoint(new Set(), new Set()))
 })
 
-ava('should return true if one of the sets is empty', (test) => {
-  const set1 = new Set([ 'foo', 'bar' ])
-  const set2 = new Set()
+test('should return true if one of the sets is empty', (test) => {
+	const set1 = new Set([ 'foo', 'bar' ])
+	const set2 = new Set()
 
-  test.true(utils.areSetsDisjoint(set1, set2))
-  test.true(utils.areSetsDisjoint(set2, set1))
+	test.true(areSetsDisjoint(set1, set2))
+	test.true(areSetsDisjoint(set2, set1))
 })

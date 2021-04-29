@@ -424,12 +424,7 @@
 <a name='L376'></a><a href='#L376'>376</a>
 <a name='L377'></a><a href='#L377'>377</a>
 <a name='L378'></a><a href='#L378'>378</a>
-<a name='L379'></a><a href='#L379'>379</a>
-<a name='L380'></a><a href='#L380'>380</a>
-<a name='L381'></a><a href='#L381'>381</a>
-<a name='L382'></a><a href='#L382'>382</a>
-<a name='L383'></a><a href='#L383'>383</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L379'></a><a href='#L379'>379</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -448,11 +443,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -802,9 +793,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -828,369 +820,365 @@
 &nbsp;
 'use strict'
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
-&nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable '_'.
-const _ = require('lodash')
-&nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'cardinalit... Remove this comment to see the full error message
-const cardinality = require('../../lib/cardinality')
+import test from 'ava';
+import * as _ from 'lodash';
+import { parse } from '../../lib/cardinality';
 &nbsp;
 _.each([
 &nbsp;
-  // Fixed points
+	// Fixed points
 &nbsp;
-  {
-    input: [ 1, 1 ],
-    expected: {
-      from: 1,
-      to: 1,
-      finite: true
-    }
-  },
-  {
-    input: [ 2, 2 ],
-    expected: {
-      from: 2,
-      to: 2,
-      finite: true
-    }
-  },
-  {
-    input: [ 3, 3 ],
-    expected: {
-      from: 3,
-      to: 3,
-      finite: true
-    }
-  },
+	{
+		input: [ 1, 1 ],
+		expected: {
+			from: 1,
+			to: 1,
+			finite: true
+		}
+	},
+	{
+		input: [ 2, 2 ],
+		expected: {
+			from: 2,
+			to: 2,
+			finite: true
+		}
+	},
+	{
+		input: [ 3, 3 ],
+		expected: {
+			from: 3,
+			to: 3,
+			finite: true
+		}
+	},
 &nbsp;
-  // Finite ranges
+	// Finite ranges
 &nbsp;
-  {
-    input: [ 1, 2 ],
-    expected: {
-      from: 1,
-      to: 2,
-      finite: true
-    }
-  },
-  {
-    input: [ 2, 3 ],
-    expected: {
-      from: 2,
-      to: 3,
-      finite: true
-    }
-  },
-  {
-    input: [ 1, 3 ],
-    expected: {
-      from: 1,
-      to: 3,
-      finite: true
-    }
-  },
+	{
+		input: [ 1, 2 ],
+		expected: {
+			from: 1,
+			to: 2,
+			finite: true
+		}
+	},
+	{
+		input: [ 2, 3 ],
+		expected: {
+			from: 2,
+			to: 3,
+			finite: true
+		}
+	},
+	{
+		input: [ 1, 3 ],
+		expected: {
+			from: 1,
+			to: 3,
+			finite: true
+		}
+	},
 &nbsp;
-  // Infinite ranges
+	// Infinite ranges
 &nbsp;
-  {
-    input: [ 0, Infinity ],
-    expected: {
-      from: 0,
-      to: Infinity,
-      finite: false
-    }
-  },
-  {
-    input: [ 1, Infinity ],
-    expected: {
-      from: 1,
-      to: Infinity,
-      finite: false
-    }
-  },
-  {
-    input: [ 2, Infinity ],
-    expected: {
-      from: 2,
-      to: Infinity,
-      finite: false
-    }
-  },
+	{
+		input: [ 0, Infinity ],
+		expected: {
+			from: 0,
+			to: Infinity,
+			finite: false
+		}
+	},
+	{
+		input: [ 1, Infinity ],
+		expected: {
+			from: 1,
+			to: Infinity,
+			finite: false
+		}
+	},
+	{
+		input: [ 2, Infinity ],
+		expected: {
+			from: 2,
+			to: Infinity,
+			finite: false
+		}
+	},
 &nbsp;
-  // Syntax sugar (asterisk notation)
+	// Syntax sugar (asterisk notation)
 &nbsp;
-  {
-    input: [ 0, '*' ],
-    expected: {
-      from: 0,
-      to: Infinity,
-      finite: false
-    }
-  },
-  {
-    input: [ 1, '*' ],
-    expected: {
-      from: 1,
-      to: Infinity,
-      finite: false
-    }
-  },
-  {
-    // Surrounding whitespace
-    input: [ 1, '   *   ' ],
-    expected: {
-      from: 1,
-      to: Infinity,
-      finite: false
-    }
-  },
-  {
-    input: [ 3, '*' ],
-    expected: {
-      from: 3,
-      to: Infinity,
-      finite: false
-    }
-  },
+	{
+		input: [ 0, '*' ],
+		expected: {
+			from: 0,
+			to: Infinity,
+			finite: false
+		}
+	},
+	{
+		input: [ 1, '*' ],
+		expected: {
+			from: 1,
+			to: Infinity,
+			finite: false
+		}
+	},
+	{
+		// Surrounding whitespace
+		input: [ 1, '   *   ' ],
+		expected: {
+			from: 1,
+			to: Infinity,
+			finite: false
+		}
+	},
+	{
+		input: [ 3, '*' ],
+		expected: {
+			from: 3,
+			to: Infinity,
+			finite: false
+		}
+	},
 &nbsp;
-  // Syntax sugar (number)
+	// Syntax sugar (number)
 &nbsp;
-  {
-    input: 1,
-    expected: {
-      from: 1,
-      to: 1,
-      finite: true
-    }
-  },
-  {
-    input: 2,
-    expected: {
-      from: 2,
-      to: 2,
-      finite: true
-    }
-  },
-  {
-    input: 3,
-    expected: {
-      from: 3,
-      to: 3,
-      finite: true
-    }
-  },
-  {
-    input: '1',
-    expected: {
-      from: 1,
-      to: 1,
-      finite: true
-    }
-  },
-  {
-    input: '2',
-    expected: {
-      from: 2,
-      to: 2,
-      finite: true
-    }
-  },
-  {
-    input: '3',
-    expected: {
-      from: 3,
-      to: 3,
-      finite: true
-    }
-  },
-  {
-    input: '546',
-    expected: {
-      from: 546,
-      to: 546,
-      finite: true
-    }
-  },
-  {
-    input: '    3    ',
-    expected: {
-      from: 3,
-      to: 3,
-      finite: true
-    }
-  },
+	{
+		input: 1,
+		expected: {
+			from: 1,
+			to: 1,
+			finite: true
+		}
+	},
+	{
+		input: 2,
+		expected: {
+			from: 2,
+			to: 2,
+			finite: true
+		}
+	},
+	{
+		input: 3,
+		expected: {
+			from: 3,
+			to: 3,
+			finite: true
+		}
+	},
+	{
+		input: '1',
+		expected: {
+			from: 1,
+			to: 1,
+			finite: true
+		}
+	},
+	{
+		input: '2',
+		expected: {
+			from: 2,
+			to: 2,
+			finite: true
+		}
+	},
+	{
+		input: '3',
+		expected: {
+			from: 3,
+			to: 3,
+			finite: true
+		}
+	},
+	{
+		input: '546',
+		expected: {
+			from: 546,
+			to: 546,
+			finite: true
+		}
+	},
+	{
+		input: '    3    ',
+		expected: {
+			from: 3,
+			to: 3,
+			finite: true
+		}
+	},
 &nbsp;
-  // Syntax sugar (plus sign)
+	// Syntax sugar (plus sign)
 &nbsp;
-  {
-    input: '1+',
-    expected: {
-      from: 1,
-      to: Infinity,
-      finite: false
-    }
-  },
-  {
-    input: '2+',
-    expected: {
-      from: 2,
-      to: Infinity,
-      finite: false
-    }
-  },
-  {
-    input: '3+',
-    expected: {
-      from: 3,
-      to: Infinity,
-      finite: false
-    }
-  },
-  {
-    input: '546+',
-    expected: {
-      from: 546,
-      to: Infinity,
-      finite: false
-    }
-  },
-  {
-    input: '    3+     ',
-    expected: {
-      from: 3,
-      to: Infinity,
-      finite: false
-    }
-  },
-  {
-    input: '3   +',
-    expected: {
-      from: 3,
-      to: Infinity,
-      finite: false
-    }
-  },
+	{
+		input: '1+',
+		expected: {
+			from: 1,
+			to: Infinity,
+			finite: false
+		}
+	},
+	{
+		input: '2+',
+		expected: {
+			from: 2,
+			to: Infinity,
+			finite: false
+		}
+	},
+	{
+		input: '3+',
+		expected: {
+			from: 3,
+			to: Infinity,
+			finite: false
+		}
+	},
+	{
+		input: '546+',
+		expected: {
+			from: 546,
+			to: Infinity,
+			finite: false
+		}
+	},
+	{
+		input: '    3+     ',
+		expected: {
+			from: 3,
+			to: Infinity,
+			finite: false
+		}
+	},
+	{
+		input: '3   +',
+		expected: {
+			from: 3,
+			to: Infinity,
+			finite: false
+		}
+	},
 &nbsp;
-  // Syntax sugar (standalone asterisk)
+	// Syntax sugar (standalone asterisk)
 &nbsp;
-  {
-    input: '*',
-    expected: {
-      from: 0,
-      to: Infinity,
-      finite: false
-    }
-  },
-  {
-    input: '   *  ',
-    expected: {
-      from: 0,
-      to: Infinity,
-      finite: false
-    }
-  },
+	{
+		input: '*',
+		expected: {
+			from: 0,
+			to: Infinity,
+			finite: false
+		}
+	},
+	{
+		input: '   *  ',
+		expected: {
+			from: 0,
+			to: Infinity,
+			finite: false
+		}
+	},
 &nbsp;
-  // Syntax sugar (question sign)
+	// Syntax sugar (question sign)
 &nbsp;
-  {
-    input: '?',
-    expected: {
-      from: 0,
-      to: 1,
-      finite: true
-    }
-  },
-  {
-    input: '  ?  ',
-    expected: {
-      from: 0,
-      to: 1,
-      finite: true
-    }
-  },
-  {
-    input: '1?',
-    expected: {
-      from: 0,
-      to: 1,
-      finite: true
-    }
-  },
-  {
-    input: '1  ?',
-    expected: {
-      from: 0,
-      to: 1,
-      finite: true
-    }
-  }
+	{
+		input: '?',
+		expected: {
+			from: 0,
+			to: 1,
+			finite: true
+		}
+	},
+	{
+		input: '  ?  ',
+		expected: {
+			from: 0,
+			to: 1,
+			finite: true
+		}
+	},
+	{
+		input: '1?',
+		expected: {
+			from: 0,
+			to: 1,
+			finite: true
+		}
+	},
+	{
+		input: '1  ?',
+		expected: {
+			from: 0,
+			to: 1,
+			finite: true
+		}
+	}
 &nbsp;
 ], (testCase) =&gt; {
-  ava(`should parse ${JSON.stringify(testCase.input)}`, (test) =&gt; {
-    test.deepEqual(cardinality.parse(testCase.input), testCase.expected)
-  })
+	test(`should parse ${JSON.stringify(testCase.input)}`, (test) =&gt; {
+		test.deepEqual(parse(testCase.input), testCase.expected)
+	})
 })
 &nbsp;
 _.each([
-  {
-    input: [ 1, 2, 3 ],
-    error: 'Invalid cardinality: 1,2,3'
-  },
-  {
-    input: [ 1 ],
-    error: 'Invalid cardinality: 1'
-  },
-  {
-    input: [ 2, 1 ],
-    error: 'Invalid cardinality: 2,1'
-  },
-  {
-    input: [ 0, 0 ],
-    error: 'Invalid cardinality: 0,0'
-  },
-  {
-    input: [ 0, -1 ],
-    error: 'Invalid cardinality: 0,-1'
-  },
-  {
-    input: [ -1, 0 ],
-    error: 'Invalid cardinality: -1,0'
-  },
-  {
-    input: [ -5, -5 ],
-    error: 'Invalid cardinality: -5,-5'
-  },
-  {
-    input: [ '*', 1 ],
-    error: 'Invalid cardinality: *,1'
-  },
-  {
-    input: [ '1', '2' ],
-    error: 'Invalid cardinality: 1,2'
-  },
-  {
-    input: [ '1', null ],
-    error: 'Invalid cardinality: 1,'
-  },
-  {
-    input: [ null, '1' ],
-    error: 'Invalid cardinality: ,1'
-  },
-  {
-    input: [ 1.5, 1.5 ],
-    error: 'Invalid cardinality: 1.5,1.5'
-  }
+	{
+		input: [ 1, 2, 3 ],
+		error: 'Invalid cardinality: 1,2,3'
+	},
+	{
+		input: [ 1 ],
+		error: 'Invalid cardinality: 1'
+	},
+	{
+		input: [ 2, 1 ],
+		error: 'Invalid cardinality: 2,1'
+	},
+	{
+		input: [ 0, 0 ],
+		error: 'Invalid cardinality: 0,0'
+	},
+	{
+		input: [ 0, -1 ],
+		error: 'Invalid cardinality: 0,-1'
+	},
+	{
+		input: [ -1, 0 ],
+		error: 'Invalid cardinality: -1,0'
+	},
+	{
+		input: [ -5, -5 ],
+		error: 'Invalid cardinality: -5,-5'
+	},
+	{
+		input: [ '*', 1 ],
+		error: 'Invalid cardinality: *,1'
+	},
+	{
+		input: [ '1', '2' ],
+		error: 'Invalid cardinality: 1,2'
+	},
+	// Removed null test cases because they do not compile with required types
+	// {
+	//   input: [ '1', null ],
+	//   error: 'Invalid cardinality: 1,'
+	// },
+	// {
+	//   input: [ null, '1' ],
+	//   error: 'Invalid cardinality: ,1'
+	// },
+	{
+		input: [ 1.5, 1.5 ],
+		error: 'Invalid cardinality: 1.5,1.5'
+	}
 ], (testCase) =&gt; {
-  ava(`should throw "${testCase.error}" given ${JSON.stringify(testCase.input)}`, (test) =&gt; {
-    test.throws(() =&gt; {
-      cardinality.parse(testCase.input)
-    }, {
-      message: testCase.error
-    })
-  })
+	test(`should throw "${testCase.error}" given ${JSON.stringify(testCase.input)}`, (test) =&gt; {
+		test.throws(() =&gt; {
+			parse(testCase.input);
+		}, {
+			message: testCase.error
+		})
+	})
 })
 &nbsp;</pre></td></tr>
 </table></pre>
@@ -1198,7 +1186,7 @@ _.each([
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Apr 28 2021 17:05:03 GMT+1000 (Australian Eastern Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Apr 30 2021 11:36:21 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="../../prettify.js"></script>

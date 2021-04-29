@@ -16,21 +16,17 @@
 
 'use strict'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'MatcherCac... Remove this comment to see the full error message
-const MatcherCache = require('../../lib/matcher-cache')
+import MatcherCache from '../../lib/matcher-cache';
+import Contract from '../../lib/contract';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Contract'.
-const Contract = require('../../lib/contract')
-
-ava('should return an empty set if the cache is empty', (test) => {
+test('should return an empty set if the cache is empty', (test) => {
   const cache = new MatcherCache()
   test.deepEqual(cache.getTypes(), new Set())
 })
 
-ava('should return a single type if there is only one entry', (test) => {
+test('should return a single type if there is only one entry', (test) => {
   const cache = new MatcherCache()
 
   const matcher1 = Contract.createMatcher({
@@ -43,7 +39,7 @@ ava('should return a single type if there is only one entry', (test) => {
   test.deepEqual(cache.getTypes(), new Set([ 'sw.os' ]))
 })
 
-ava('should not return duplicated types', (test) => {
+test('should not return duplicated types', (test) => {
   const cache = new MatcherCache()
 
   const matcher1 = Contract.createMatcher({
@@ -62,7 +58,7 @@ ava('should not return duplicated types', (test) => {
   test.deepEqual(cache.getTypes(), new Set([ 'sw.os' ]))
 })
 
-ava('should return all added types', (test) => {
+test('should return all added types', (test) => {
   const cache = new MatcherCache()
 
   const matcher1 = Contract.createMatcher({
@@ -81,7 +77,7 @@ ava('should return all added types', (test) => {
   test.deepEqual(cache.getTypes(), new Set([ 'sw.os', 'sw.stack' ]))
 })
 
-ava('should not return reset types', (test) => {
+test('should not return reset types', (test) => {
   const cache = new MatcherCache()
 
   const matcher1 = Contract.createMatcher({

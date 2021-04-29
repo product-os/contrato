@@ -16,104 +16,100 @@
 
 'use strict'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Contract'.
-const Contract = require('../../lib/contract')
+import Contract from '../../lib/contract';
+import CONTRACTS from '../contracts.json';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'CONTRACTS'... Remove this comment to see the full error message
-const CONTRACTS = require('../contracts.json')
+test('should return an empty set if no children', (test) => {
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-ava('should return an empty set if no children', (test) => {
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
-
-  test.deepEqual(container.getChildrenTypes(), new Set())
+	test.deepEqual(container.getChildrenTypes(), new Set())
 })
 
-ava('should return one type given one child', (test) => {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return one type given one child', (test) => {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChild(contract1)
+	container.addChild(contract1)
 
-  test.deepEqual(container.getChildrenTypes(), new Set([ 'sw.os' ]))
+	test.deepEqual(container.getChildrenTypes(), new Set([ 'sw.os' ]))
 })
 
-ava('should ignore duplicate types', (test) => {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should ignore duplicate types', (test) => {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([ contract1, contract2 ])
-  test.deepEqual(container.getChildrenTypes(), new Set([ 'sw.os' ]))
+	container.addChildren([ contract1, contract2 ])
+	test.deepEqual(container.getChildrenTypes(), new Set([ 'sw.os' ]))
 })
 
-ava('should return all children types', (test) => {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return all children types', (test) => {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([ contract1, contract2 ])
-  test.deepEqual(container.getChildrenTypes(), new Set([ 'sw.os', 'sw.blob' ]))
+	container.addChildren([ contract1, contract2 ])
+	test.deepEqual(container.getChildrenTypes(), new Set([ 'sw.os', 'sw.blob' ]))
 })
 
-ava('should update the types when adding a contract', (test) => {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should update the types when adding a contract', (test) => {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([ contract1 ])
-  container.addChildren([ contract2 ])
-  test.deepEqual(container.getChildrenTypes(), new Set([ 'sw.os', 'sw.blob' ]))
+	container.addChildren([ contract1 ])
+	container.addChildren([ contract2 ])
+	test.deepEqual(container.getChildrenTypes(), new Set([ 'sw.os', 'sw.blob' ]))
 })
 
-ava('should consider nested children', (test) => {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
-  contract1.addChild(contract2)
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should consider nested children', (test) => {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
+	contract1.addChild(contract2)
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([ contract1 ])
+	container.addChildren([ contract1 ])
 
-  test.deepEqual(container.getChildrenTypes(), new Set([ 'sw.os', 'sw.blob' ]))
+	test.deepEqual(container.getChildrenTypes(), new Set([ 'sw.os', 'sw.blob' ]))
 })
 
-ava('should consider two level nested children', (test) => {
-  const contract1 = new Contract(CONTRACTS['hw.device-type'].artik10.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract3 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
-  contract2.addChild(contract3)
-  contract1.addChild(contract2)
+test('should consider two level nested children', (test) => {
+	const contract1 = new Contract(CONTRACTS['hw.device-type'].artik10.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract3 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
+	contract2.addChild(contract3)
+	contract1.addChild(contract2)
 
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  container.addChildren([ contract1 ])
+	container.addChildren([ contract1 ])
 
-  test.deepEqual(container.getChildrenTypes(), new Set([
-    'hw.device-type',
-    'sw.os',
-    'sw.blob'
-  ]))
+	test.deepEqual(container.getChildrenTypes(), new Set([
+		'hw.device-type',
+		'sw.os',
+		'sw.blob'
+	]))
 })

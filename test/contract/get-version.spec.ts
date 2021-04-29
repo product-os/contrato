@@ -16,29 +16,27 @@
 
 'use strict'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Contract'.
-const Contract = require('../../lib/contract')
+import Contract from '../../lib/contract';
 
-ava('should return the version if there is one', (test) => {
-  const contract = new Contract({
-    type: 'sw.os',
-    name: 'Debian Wheezy',
-    version: 'wheezy',
-    slug: 'debian'
-  })
+test('should return the version if there is one', (test) => {
+	const contract = new Contract({
+		type: 'sw.os',
+		name: 'Debian Wheezy',
+		version: 'wheezy',
+		slug: 'debian'
+	})
 
-  test.is(contract.getVersion(), 'wheezy')
+	test.is(contract.getVersion(), 'wheezy')
 })
 
-ava('should return undefined if there is not one', (test) => {
-  const contract = new Contract({
-    type: 'sw.os',
-    name: 'Debian Wheezy',
-    slug: 'debian'
-  })
+test('should return undefined if there is not one', (test) => {
+	const contract = new Contract({
+		type: 'sw.os',
+		name: 'Debian Wheezy',
+		slug: 'debian'
+	})
 
-  test.is(contract.getVersion(), undefined)
+	test.is(contract.getVersion(), undefined)
 })

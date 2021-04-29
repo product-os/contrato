@@ -16,80 +16,78 @@
 
 'use strict'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Contract'.
-const Contract = require('../../lib/contract')
+import Contract from '../../lib/contract';
 
-ava('should return true if the contracts are equal', (test) => {
-  const contract1 = new Contract({
-    type: 'arch.sw',
-    name: 'armv7hf',
-    slug: 'armv7hf'
-  })
+test('should return true if the contracts are equal', (test) => {
+	const contract1 = new Contract({
+		type: 'arch.sw',
+		name: 'armv7hf',
+		slug: 'armv7hf'
+	})
 
-  const contract2 = new Contract({
-    type: 'arch.sw',
-    name: 'armv7hf',
-    slug: 'armv7hf'
-  })
+	const contract2 = new Contract({
+		type: 'arch.sw',
+		name: 'armv7hf',
+		slug: 'armv7hf'
+	})
 
-  test.true(Contract.isEqual(contract1, contract2))
+	test.true(Contract.isEqual(contract1, contract2))
 })
 
-ava('should return false if the contracts are different', (test) => {
-  const contract1 = new Contract({
-    type: 'arch.sw',
-    name: 'armv7hf',
-    slug: 'armv7hf'
-  })
+test('should return false if the contracts are different', (test) => {
+	const contract1 = new Contract({
+		type: 'arch.sw',
+		name: 'armv7hf',
+		slug: 'armv7hf'
+	})
 
-  const contract2 = new Contract({
-    type: 'arch.sw',
-    name: 'i386',
-    slug: 'i386'
-  })
+	const contract2 = new Contract({
+		type: 'arch.sw',
+		name: 'i386',
+		slug: 'i386'
+	})
 
-  test.false(Contract.isEqual(contract1, contract2))
+	test.false(Contract.isEqual(contract1, contract2))
 })
 
-ava('should return false if the contracts are different but have not been hashed', (test) => {
-  const contract1 = new Contract({
-    type: 'arch.sw',
-    name: 'armv7hf',
-    slug: 'armv7hf'
-  }, {
-    hash: false
-  })
+test('should return false if the contracts are different but have not been hashed', (test) => {
+	const contract1 = new Contract({
+		type: 'arch.sw',
+		name: 'armv7hf',
+		slug: 'armv7hf'
+	}, {
+		hash: false
+	})
 
-  const contract2 = new Contract({
-    type: 'arch.sw',
-    name: 'i386',
-    slug: 'i386'
-  }, {
-    hash: false
-  })
+	const contract2 = new Contract({
+		type: 'arch.sw',
+		name: 'i386',
+		slug: 'i386'
+	}, {
+		hash: false
+	})
 
-  test.false(Contract.isEqual(contract1, contract2))
+	test.false(Contract.isEqual(contract1, contract2))
 })
 
-ava('should return true if the contracts are equal but have not been hashed', (test) => {
-  const contract1 = new Contract({
-    type: 'arch.sw',
-    name: 'armv7hf',
-    slug: 'armv7hf'
-  }, {
-    hash: false
-  })
+test('should return true if the contracts are equal but have not been hashed', (test) => {
+	const contract1 = new Contract({
+		type: 'arch.sw',
+		name: 'armv7hf',
+		slug: 'armv7hf'
+	}, {
+		hash: false
+	})
 
-  const contract2 = new Contract({
-    type: 'arch.sw',
-    name: 'armv7hf',
-    slug: 'armv7hf'
-  }, {
-    hash: false
-  })
+	const contract2 = new Contract({
+		type: 'arch.sw',
+		name: 'armv7hf',
+		slug: 'armv7hf'
+	}, {
+		hash: false
+	})
 
-  test.true(Contract.isEqual(contract1, contract2))
+	test.true(Contract.isEqual(contract1, contract2))
 })

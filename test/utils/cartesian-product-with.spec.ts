@@ -16,149 +16,144 @@
 
 'use strict'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
+import * as _ from 'lodash';
+import { cartesianProductWith } from '../../lib/utils';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable '_'.
-const _ = require('lodash')
+test('should perform a cartesian product of empty sets', (test) => {
+	const product = cartesianProductWith([
+		[],
+		[],
+		[]
+	], (accumulator, element) => {
+		return _.concat(accumulator, [ element ])
+	}, [[]])
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'utils'.
-const utils = require('../../lib/utils')
-
-ava('should perform a cartesian product of empty sets', (test) => {
-  const product = utils.cartesianProductWith([
-    [],
-    [],
-    []
-  ], (accumulator, element) => {
-    return _.concat(accumulator, [ element ])
-  })
-
-  test.deepEqual(product, [])
+	test.deepEqual(product, [])
 })
 
-ava('should perform a cartesian product of a valid an and empty set', (test) => {
-  const product = utils.cartesianProductWith([
-    [ 'foo' ],
-    [],
-    []
-  ], (accumulator, element) => {
-    return _.concat(accumulator, [ element ])
-  })
+test('should perform a cartesian product of a valid and an empty set', (test) => {
+	const product = cartesianProductWith([
+		[ 'foo' ],
+		[],
+		[]
+	], (accumulator: string[], element: string) => {
+		return _.concat(accumulator, [ element ])
+	}, [[]])
 
-  test.deepEqual(product, [ [ 'foo' ] ])
+	test.deepEqual(product, [ [ 'foo' ] ])
 })
 
-ava('should perform a cartesian product of no sets', (test) => {
-  const product = utils.cartesianProductWith([], (accumulator, element) => {
-    return _.concat(accumulator, [ element ])
-  })
+test('should perform a cartesian product of no sets', (test) => {
+	const product = cartesianProductWith([], (accumulator: any[], element: any) => {
+		return _.concat(accumulator, [ element ])
+	}, [[]])
 
-  test.deepEqual(product, [])
+	test.deepEqual(product, [])
 })
 
-ava('should perform a cartesian product of a one element set', (test) => {
-  const product = utils.cartesianProductWith([
-    [ 'foo' ]
-  ], (accumulator, element) => {
-    return _.concat(accumulator, [ element ])
-  })
+test('should perform a cartesian product of a one element set', (test) => {
+	const product = cartesianProductWith([
+		[ 'foo' ]
+	], (accumulator: string[], element: string) => {
+		return _.concat(accumulator, [ element ])
+	}, [[]])
 
-  test.deepEqual(product, [
-    [ 'foo' ]
-  ])
+	test.deepEqual(product, [
+		[ 'foo' ]
+	])
 })
 
-ava('should calculate the cartesian product of two string sets', (test) => {
-  const product = utils.cartesianProductWith([
-    [ 'hello', 'hi', 'hey' ],
-    [ 'there', 'world', 'yo' ]
-  ], (accumulator, element) => {
-    return _.concat(accumulator, [ element ])
-  })
+test('should calculate the cartesian product of two string sets', (test) => {
+	const product = cartesianProductWith([
+		[ 'hello', 'hi', 'hey' ],
+		[ 'there', 'world', 'yo' ]
+	], (accumulator: string[], element: string) => {
+		return _.concat(accumulator, [ element ])
+	}, [[]])
 
-  test.deepEqual(product, [
-    [ 'hello', 'there' ],
-    [ 'hello', 'world' ],
-    [ 'hello', 'yo' ],
-    [ 'hi', 'there' ],
-    [ 'hi', 'world' ],
-    [ 'hi', 'yo' ],
-    [ 'hey', 'there' ],
-    [ 'hey', 'world' ],
-    [ 'hey', 'yo' ]
-  ])
+	test.deepEqual(product, [
+		[ 'hello', 'there' ],
+		[ 'hello', 'world' ],
+		[ 'hello', 'yo' ],
+		[ 'hi', 'there' ],
+		[ 'hi', 'world' ],
+		[ 'hi', 'yo' ],
+		[ 'hey', 'there' ],
+		[ 'hey', 'world' ],
+		[ 'hey', 'yo' ]
+	])
 })
 
-ava('should be able to discard combinations by returning undefined', (test) => {
-  const product = utils.cartesianProductWith([
-    [ 'hello', 'hi', 'hey' ],
-    [ 'there', 'world', 'yo' ]
-  ], (accumulator, element) => {
-    if (!_.isEqual(accumulator, [ 'hello' ]) && element === 'world') {
-      return undefined
-    }
+test('should be able to discard combinations by returning undefined', (test) => {
+	const product = cartesianProductWith([
+		[ 'hello', 'hi', 'hey' ],
+		[ 'there', 'world', 'yo' ]
+	], (accumulator: string[], element: string) => {
+		if (!_.isEqual(accumulator, [ 'hello' ]) && element === 'world') {
+			return undefined
+		}
 
-    if (_.isEqual(accumulator, [ 'hello' ]) && element === 'yo') {
-      return undefined
-    }
+		if (_.isEqual(accumulator, [ 'hello' ]) && element === 'yo') {
+			return undefined
+		}
 
-    if (_.isEqual(accumulator, [ 'hello' ]) && element === 'there') {
-      return undefined
-    }
+		if (_.isEqual(accumulator, [ 'hello' ]) && element === 'there') {
+			return undefined
+		}
 
-    return _.concat(accumulator, [ element ])
-  })
+		return _.concat(accumulator, [ element ])
+	}, [[]])
 
-  test.deepEqual(product, [
-    [ 'hello', 'world' ],
-    [ 'hi', 'there' ],
-    [ 'hi', 'yo' ],
-    [ 'hey', 'there' ],
-    [ 'hey', 'yo' ]
-  ])
+	test.deepEqual(product, [
+		[ 'hello', 'world' ],
+		[ 'hi', 'there' ],
+		[ 'hi', 'yo' ],
+		[ 'hey', 'there' ],
+		[ 'hey', 'yo' ]
+	])
 })
 
-ava('should be able to discard combinations on a 3 sets product', (test) => {
-  const product = utils.cartesianProductWith([
-    [ 1, 2, 3 ],
-    [ 4, 5, 6 ],
-    [ 7, 8, 9 ]
-  ], (accumulator, element) => {
-    const combination = _.concat(accumulator, [ element ])
+test('should be able to discard combinations on a 3 sets product', (test) => {
+	const product = cartesianProductWith([
+		[ 1, 2, 3 ],
+		[ 4, 5, 6 ],
+		[ 7, 8, 9 ]
+	], (accumulator: number[], element: number) => {
+		const combination = _.concat(accumulator, [ element ])
 
-    // Lets pretend we don't want any combination starting
-    // with two odd numbers
-    if (_.size(combination) > 1 && _.every(combination, (item) => {
-      return item % 2 === 1
-    })) {
-      return undefined
-    }
+		// Lets pretend we don't want any combination starting
+		// with two odd numbers
+		if (_.size(combination) > 1 && _.every(combination, (item) => {
+			return item % 2 === 1
+		})) {
+			return undefined
+		}
 
-    return combination
-  })
+		return combination
+	}, [[]])
 
-  test.deepEqual(product, [
-    [ 1, 4, 7 ],
-    [ 1, 4, 8 ],
-    [ 1, 4, 9 ],
-    [ 1, 6, 7 ],
-    [ 1, 6, 8 ],
-    [ 1, 6, 9 ],
-    [ 2, 4, 7 ],
-    [ 2, 4, 8 ],
-    [ 2, 4, 9 ],
-    [ 2, 5, 7 ],
-    [ 2, 5, 8 ],
-    [ 2, 5, 9 ],
-    [ 2, 6, 7 ],
-    [ 2, 6, 8 ],
-    [ 2, 6, 9 ],
-    [ 3, 4, 7 ],
-    [ 3, 4, 8 ],
-    [ 3, 4, 9 ],
-    [ 3, 6, 7 ],
-    [ 3, 6, 8 ],
-    [ 3, 6, 9 ]
-  ])
+	test.deepEqual(product, [
+		[ 1, 4, 7 ],
+		[ 1, 4, 8 ],
+		[ 1, 4, 9 ],
+		[ 1, 6, 7 ],
+		[ 1, 6, 8 ],
+		[ 1, 6, 9 ],
+		[ 2, 4, 7 ],
+		[ 2, 4, 8 ],
+		[ 2, 4, 9 ],
+		[ 2, 5, 7 ],
+		[ 2, 5, 8 ],
+		[ 2, 5, 9 ],
+		[ 2, 6, 7 ],
+		[ 2, 6, 8 ],
+		[ 2, 6, 9 ],
+		[ 3, 4, 7 ],
+		[ 3, 4, 8 ],
+		[ 3, 4, 9 ],
+		[ 3, 6, 7 ],
+		[ 3, 6, 8 ],
+		[ 3, 6, 9 ]
+	])
 })

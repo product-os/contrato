@@ -16,263 +16,260 @@
 
 'use strict'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
+import { build } from '../../lib/variants';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'variants'.
-const variants = require('../../lib/variants')
-
-ava('should build a contract with no variants', (test) => {
-  test.deepEqual(variants.build({
-    slug: 'debian',
-    type: 'distro',
-    name: 'Debian'
-  }), [
-    {
-      slug: 'debian',
-      type: 'distro',
-      name: 'Debian'
-    }
-  ])
+test('should build a contract with no variants', (test) => {
+	test.deepEqual(build({
+		slug: 'debian',
+		type: 'distro',
+		name: 'Debian'
+	}), [
+		{
+			slug: 'debian',
+			type: 'distro',
+			name: 'Debian'
+		}
+	])
 })
 
-ava('should build a contract with empty variants', (test) => {
-  test.deepEqual(variants.build({
-    slug: 'debian',
-    type: 'distro',
-    name: 'Debian',
-    variants: []
-  }), [
-    {
-      slug: 'debian',
-      type: 'distro',
-      name: 'Debian'
-    }
-  ])
+test('should build a contract with empty variants', (test) => {
+	test.deepEqual(build({
+		slug: 'debian',
+		type: 'distro',
+		name: 'Debian',
+		variants: []
+	}), [
+		{
+			slug: 'debian',
+			type: 'distro',
+			name: 'Debian'
+		}
+	])
 })
 
-ava('should build a contract with two variants', (test) => {
-  test.deepEqual(variants.build({
-    slug: 'nodejs_{{data.arch}}',
-    type: 'blob',
-    name: 'Node.js',
-    data: {
-      libc: 'musl-libc'
-    },
-    variants: [
-      {
-        data: {
-          arch: 'amd64'
-        },
-        requires: [
-          {
-            type: 'arch.sw',
-            slug: 'amd64'
-          }
-        ]
-      },
-      {
-        data: {
-          arch: 'i386'
-        },
-        requires: [
-          {
-            type: 'arch.sw',
-            slug: 'i386'
-          }
-        ]
-      }
-    ]
-  }), [
-    {
-      slug: 'nodejs_{{data.arch}}',
-      type: 'blob',
-      name: 'Node.js',
-      requires: [
-        {
-          type: 'arch.sw',
-          slug: 'amd64'
-        }
-      ],
-      data: {
-        arch: 'amd64',
-        libc: 'musl-libc'
-      }
-    },
-    {
-      slug: 'nodejs_{{data.arch}}',
-      type: 'blob',
-      name: 'Node.js',
-      requires: [
-        {
-          type: 'arch.sw',
-          slug: 'i386'
-        }
-      ],
-      data: {
-        arch: 'i386',
-        libc: 'musl-libc'
-      }
-    }
-  ])
+test('should build a contract with two variants', (test) => {
+	test.deepEqual(build({
+		slug: 'nodejs_{{data.arch}}',
+		type: 'blob',
+		name: 'Node.js',
+		data: {
+			libc: 'musl-libc'
+		},
+		variants: [
+			{
+				data: {
+					arch: 'amd64'
+				},
+				requires: [
+					{
+						type: 'arch.sw',
+						slug: 'amd64'
+					}
+				]
+			},
+			{
+				data: {
+					arch: 'i386'
+				},
+				requires: [
+					{
+						type: 'arch.sw',
+						slug: 'i386'
+					}
+				]
+			}
+		]
+	}), [
+		{
+			slug: 'nodejs_{{data.arch}}',
+			type: 'blob',
+			name: 'Node.js',
+			requires: [
+				{
+					type: 'arch.sw',
+					slug: 'amd64'
+				}
+			],
+			data: {
+				arch: 'amd64',
+				libc: 'musl-libc'
+			}
+		},
+		{
+			slug: 'nodejs_{{data.arch}}',
+			type: 'blob',
+			name: 'Node.js',
+			requires: [
+				{
+					type: 'arch.sw',
+					slug: 'i386'
+				}
+			],
+			data: {
+				arch: 'i386',
+				libc: 'musl-libc'
+			}
+		}
+	])
 })
 
-ava('should supported nested variants', (test) => {
-  test.deepEqual(variants.build({
-    slug: 'nodejs_{{data.arch}}',
-    type: 'blob',
-    name: 'Node.js',
-    data: {
-      libc: 'musl-libc'
-    },
-    variants: [
-      {
-        data: {
-          arch: 'amd64'
-        },
-        requires: [
-          {
-            type: 'arch.sw',
-            slug: 'amd64'
-          }
-        ],
-        variants: [
-          {
-            version: '6.3.0'
-          },
-          {
-            version: '6.4.0'
-          }
-        ]
-      },
-      {
-        data: {
-          arch: 'i386'
-        },
-        requires: [
-          {
-            type: 'arch.sw',
-            slug: 'i386'
-          }
-        ],
-        variants: [
-          {
-            version: '6.3.0'
-          }
-        ]
-      }
-    ]
-  }), [
-    {
-      slug: 'nodejs_{{data.arch}}',
-      type: 'blob',
-      version: '6.3.0',
-      name: 'Node.js',
-      requires: [
-        {
-          type: 'arch.sw',
-          slug: 'amd64'
-        }
-      ],
-      data: {
-        arch: 'amd64',
-        libc: 'musl-libc'
-      }
-    },
-    {
-      slug: 'nodejs_{{data.arch}}',
-      type: 'blob',
-      version: '6.4.0',
-      name: 'Node.js',
-      requires: [
-        {
-          type: 'arch.sw',
-          slug: 'amd64'
-        }
-      ],
-      data: {
-        arch: 'amd64',
-        libc: 'musl-libc'
-      }
-    },
-    {
-      slug: 'nodejs_{{data.arch}}',
-      type: 'blob',
-      version: '6.3.0',
-      name: 'Node.js',
-      requires: [
-        {
-          type: 'arch.sw',
-          slug: 'i386'
-        }
-      ],
-      data: {
-        arch: 'i386',
-        libc: 'musl-libc'
-      }
-    }
-  ])
+test('should supported nested variants', (test) => {
+	test.deepEqual(build({
+		slug: 'nodejs_{{data.arch}}',
+		type: 'blob',
+		name: 'Node.js',
+		data: {
+			libc: 'musl-libc'
+		},
+		variants: [
+			{
+				data: {
+					arch: 'amd64'
+				},
+				requires: [
+					{
+						type: 'arch.sw',
+						slug: 'amd64'
+					}
+				],
+				variants: [
+					{
+						version: '6.3.0'
+					},
+					{
+						version: '6.4.0'
+					}
+				]
+			},
+			{
+				data: {
+					arch: 'i386'
+				},
+				requires: [
+					{
+						type: 'arch.sw',
+						slug: 'i386'
+					}
+				],
+				variants: [
+					{
+						version: '6.3.0'
+					}
+				]
+			}
+		]
+	}), [
+		{
+			slug: 'nodejs_{{data.arch}}',
+			type: 'blob',
+			version: '6.3.0',
+			name: 'Node.js',
+			requires: [
+				{
+					type: 'arch.sw',
+					slug: 'amd64'
+				}
+			],
+			data: {
+				arch: 'amd64',
+				libc: 'musl-libc'
+			}
+		},
+		{
+			slug: 'nodejs_{{data.arch}}',
+			type: 'blob',
+			version: '6.4.0',
+			name: 'Node.js',
+			requires: [
+				{
+					type: 'arch.sw',
+					slug: 'amd64'
+				}
+			],
+			data: {
+				arch: 'amd64',
+				libc: 'musl-libc'
+			}
+		},
+		{
+			slug: 'nodejs_{{data.arch}}',
+			type: 'blob',
+			version: '6.3.0',
+			name: 'Node.js',
+			requires: [
+				{
+					type: 'arch.sw',
+					slug: 'i386'
+				}
+			],
+			data: {
+				arch: 'i386',
+				libc: 'musl-libc'
+			}
+		}
+	])
 })
 
-ava('should merge arrays correctly', (test) => {
-  test.deepEqual(variants.build({
-    slug: 'foo',
-    type: 'blob',
-    name: 'Foo',
-    requires: [
-      {
-        type: 'bar',
-        slug: 'baz'
-      }
-    ],
-    variants: [
-      {
-        requires: [
-          {
-            type: 'arch.sw',
-            slug: 'amd64'
-          }
-        ]
-      },
-      {
-        requires: [
-          {
-            type: 'arch.sw',
-            slug: 'i386'
-          }
-        ]
-      }
-    ]
-  }), [
-    {
-      slug: 'foo',
-      type: 'blob',
-      name: 'Foo',
-      requires: [
-        {
-          type: 'bar',
-          slug: 'baz'
-        },
-        {
-          type: 'arch.sw',
-          slug: 'amd64'
-        }
-      ]
-    },
-    {
-      slug: 'foo',
-      type: 'blob',
-      name: 'Foo',
-      requires: [
-        {
-          type: 'bar',
-          slug: 'baz'
-        },
-        {
-          type: 'arch.sw',
-          slug: 'i386'
-        }
-      ]
-    }
-  ])
+test('should merge arrays correctly', (test) => {
+	test.deepEqual(build({
+		slug: 'foo',
+		type: 'blob',
+		name: 'Foo',
+		requires: [
+			{
+				type: 'bar',
+				slug: 'baz'
+			}
+		],
+		variants: [
+			{
+				requires: [
+					{
+						type: 'arch.sw',
+						slug: 'amd64'
+					}
+				]
+			},
+			{
+				requires: [
+					{
+						type: 'arch.sw',
+						slug: 'i386'
+					}
+				]
+			}
+		]
+	}), [
+		{
+			slug: 'foo',
+			type: 'blob',
+			name: 'Foo',
+			requires: [
+				{
+					type: 'bar',
+					slug: 'baz'
+				},
+				{
+					type: 'arch.sw',
+					slug: 'amd64'
+				}
+			]
+		},
+		{
+			slug: 'foo',
+			type: 'blob',
+			name: 'Foo',
+			requires: [
+				{
+					type: 'bar',
+					slug: 'baz'
+				},
+				{
+					type: 'arch.sw',
+					slug: 'i386'
+				}
+			]
+		}
+	])
 })

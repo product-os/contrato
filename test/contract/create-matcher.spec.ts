@@ -16,49 +16,47 @@
 
 'use strict'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Contract'.
-const Contract = require('../../lib/contract')
+import Contract from '../../lib/contract';
 
-ava('should create contract instance', (test) => {
-  const matcher = Contract.createMatcher({
-    type: 'arch.sw',
-    slug: 'armv7hf'
-  })
+test('should create contract instance', (test) => {
+	const matcher = Contract.createMatcher({
+		type: 'arch.sw',
+		slug: 'armv7hf'
+	})
 
-  test.true(matcher instanceof Contract)
+	test.true(matcher instanceof Contract)
 })
 
-ava('should include the properties in data', (test) => {
-  const matcher = Contract.createMatcher({
-    type: 'arch.sw',
-    slug: 'armv7hf'
-  })
+test('should include the properties in data', (test) => {
+	const matcher = Contract.createMatcher({
+		type: 'arch.sw',
+		slug: 'armv7hf'
+	})
 
-  test.deepEqual(matcher.raw.data, {
-    type: 'arch.sw',
-    slug: 'armv7hf'
-  })
+	test.deepEqual(matcher.raw.data, {
+		type: 'arch.sw',
+		slug: 'armv7hf'
+	})
 })
 
-ava('should set the type appropriately', (test) => {
-  const matcher = Contract.createMatcher({
-    type: 'arch.sw',
-    slug: 'armv7hf'
-  })
+test('should set the type appropriately', (test) => {
+	const matcher = Contract.createMatcher({
+		type: 'arch.sw',
+		slug: 'armv7hf'
+	})
 
-  test.is(matcher.getType(), 'meta.matcher')
+	test.is(matcher.getType(), 'meta.matcher')
 })
 
-ava('should be able to set the operation name', (test) => {
-  const matcher = Contract.createMatcher({
-    type: 'arch.sw',
-    slug: 'armv7hf'
-  }, {
-    operation: 'or'
-  })
+test('should be able to set the operation name', (test) => {
+	const matcher = Contract.createMatcher({
+		type: 'arch.sw',
+		slug: 'armv7hf'
+	}, {
+		operation: 'or'
+	})
 
-  test.is(matcher.raw.operation, 'or')
+	test.is(matcher.raw.operation, 'or')
 })

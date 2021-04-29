@@ -16,23 +16,19 @@
 
 'use strict'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'MatcherCac... Remove this comment to see the full error message
-const MatcherCache = require('../../lib/matcher-cache')
+import MatcherCache from '../../lib/matcher-cache';
+import Contract from '../../lib/contract';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Contract'.
-const Contract = require('../../lib/contract')
-
-ava('should merge two empty caches', (test) => {
+test('should merge two empty caches', (test) => {
   const cache1 = new MatcherCache()
   const cache2 = new MatcherCache()
   cache1.merge(cache2)
   test.deepEqual(cache1.data, {})
 })
 
-ava('should merge a non empty cache with one type into an empty cache', (test) => {
+test('should merge a non empty cache with one type into an empty cache', (test) => {
   const cache1 = new MatcherCache()
   const cache2 = new MatcherCache()
 
@@ -65,7 +61,7 @@ ava('should merge a non empty cache with one type into an empty cache', (test) =
   })
 })
 
-ava('should merge a non empty cache with two types into an empty cache', (test) => {
+test('should merge a non empty cache with two types into an empty cache', (test) => {
   const cache1 = new MatcherCache()
   const cache2 = new MatcherCache()
 
@@ -100,7 +96,7 @@ ava('should merge a non empty cache with two types into an empty cache', (test) 
   })
 })
 
-ava('should merge two non empty caches with disjoint types', (test) => {
+test('should merge two non empty caches with disjoint types', (test) => {
   const cache1 = new MatcherCache()
   const cache2 = new MatcherCache()
 
@@ -135,7 +131,7 @@ ava('should merge two non empty caches with disjoint types', (test) => {
   })
 })
 
-ava('should omit types in common', (test) => {
+test('should omit types in common', (test) => {
   const cache1 = new MatcherCache()
   const cache2 = new MatcherCache()
 
@@ -170,7 +166,7 @@ ava('should omit types in common', (test) => {
   })
 })
 
-ava('should return the instance', (test) => {
+test('should return the instance', (test) => {
   const cache1 = new MatcherCache()
   const cache2 = new MatcherCache()
 

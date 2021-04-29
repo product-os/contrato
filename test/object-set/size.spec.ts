@@ -16,65 +16,63 @@
 
 'use strict'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ObjectSet'... Remove this comment to see the full error message
-const ObjectSet = require('../../lib/object-set')
+import ObjectSet from '../../lib/object-set';
 
-ava('should return zero if the set has no objects', (test) => {
-  const set = new ObjectSet()
-  test.is(set.size(), 0)
+test('should return zero if the set has no objects', (test) => {
+	const set = new ObjectSet()
+	test.is(set.size(), 0)
 })
 
-ava('should return one if the set has one object', (test) => {
-  const set = new ObjectSet([
-    {
-      foo: 1
-    }
-  ])
+test('should return one if the set has one object', (test) => {
+	const set = new ObjectSet([
+		{
+			foo: 1
+		}
+	])
 
-  test.is(set.size(), 1)
+	test.is(set.size(), 1)
 })
 
-ava('should return two if the set has two object', (test) => {
-  const set = new ObjectSet([
-    {
-      foo: 1
-    },
-    {
-      foo: 2
-    }
-  ])
+test('should return two if the set has two object', (test) => {
+	const set = new ObjectSet([
+		{
+			foo: 1
+		},
+		{
+			foo: 2
+		}
+	])
 
-  test.is(set.size(), 2)
+	test.is(set.size(), 2)
 })
 
-ava('should ignore duplicates', (test) => {
-  const set = new ObjectSet([
-    {
-      foo: 1
-    },
-    {
-      foo: 1
-    }
-  ])
+test('should ignore duplicates', (test) => {
+	const set = new ObjectSet([
+		{
+			foo: 1
+		},
+		{
+			foo: 1
+		}
+	])
 
-  test.is(set.size(), 1)
+	test.is(set.size(), 1)
 })
 
-ava('should change if new objects are added', (test) => {
-  const set = new ObjectSet()
+test('should change if new objects are added', (test) => {
+	const set = new ObjectSet()
 
-  set.add({
-    foo: 1
-  })
+	set.add({
+		foo: 1
+	})
 
-  test.is(set.size(), 1)
+	test.is(set.size(), 1)
 
-  set.add({
-    foo: 2
-  })
+	set.add({
+		foo: 2
+	})
 
-  test.is(set.size(), 2)
+	test.is(set.size(), 2)
 })

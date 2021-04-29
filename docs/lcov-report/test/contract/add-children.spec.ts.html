@@ -348,14 +348,7 @@
 <a name='L300'></a><a href='#L300'>300</a>
 <a name='L301'></a><a href='#L301'>301</a>
 <a name='L302'></a><a href='#L302'>302</a>
-<a name='L303'></a><a href='#L303'>303</a>
-<a name='L304'></a><a href='#L304'>304</a>
-<a name='L305'></a><a href='#L305'>305</a>
-<a name='L306'></a><a href='#L306'>306</a>
-<a name='L307'></a><a href='#L307'>307</a>
-<a name='L308'></a><a href='#L308'>308</a>
-<a name='L309'></a><a href='#L309'>309</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L303'></a><a href='#L303'>303</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -375,13 +368,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -680,295 +668,289 @@
 &nbsp;
 'use strict'
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Contract'.
-const Contract = require('../../lib/contract')
+import MatcherCache from '../../lib/matcher-cache';
+import Contract from '../../lib/contract';
+import CONTRACTS from '../contracts.json';
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'MatcherCac... Remove this comment to see the full error message
-const MatcherCache = require('../../lib/matcher-cache')
+test('should add a set of one contract', (test) =&gt; {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'CONTRACTS'... Remove this comment to see the full error message
-const CONTRACTS = require('../contracts.json')
+	container.addChildren([ contract1 ])
 &nbsp;
-ava('should add a set of one contract', (test) =&gt; {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	test.deepEqual(container.metadata.children, {
+		typeMatchers: {},
+		searchCache: new MatcherCache(),
+		types: new Set([ 'sw.os' ]),
+		byType: {
+			'sw.os': new Set([ contract1.metadata.hash ])
+		},
+		byTypeSlug: {
+			'sw.os': {
+				debian: new Set([ contract1.metadata.hash ])
+			}
+		},
+		map: {
+			[contract1.metadata.hash]: contract1
+		}
+	})
 &nbsp;
-  container.addChildren([ contract1 ])
-&nbsp;
-  test.deepEqual(container.metadata.children, {
-    typeMatchers: {},
-    searchCache: new MatcherCache(),
-    types: new Set([ 'sw.os' ]),
-    byType: {
-      'sw.os': new Set([ contract1.metadata.hash ])
-    },
-    byTypeSlug: {
-      'sw.os': {
-        debian: new Set([ contract1.metadata.hash ])
-      }
-    },
-    map: {
-      [contract1.metadata.hash]: contract1
-    }
-  })
-&nbsp;
-  test.deepEqual(container.raw, {
-    type: 'foo',
-    slug: 'bar',
-    children: {
-      sw: {
-        os: contract1.raw
-      }
-    }
-  })
+	test.deepEqual(container.raw, {
+		type: 'foo',
+		slug: 'bar',
+		children: {
+			sw: {
+				os: contract1.raw
+			}
+		}
+	})
 })
 &nbsp;
-ava('should ignore duplicates from contract sets', (test) =&gt; {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should ignore duplicates from contract sets', (test) =&gt; {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  container.addChildren([ contract1, contract1, contract1 ])
+	container.addChildren([ contract1, contract1, contract1 ])
 &nbsp;
-  test.deepEqual(container.metadata.children, {
-    typeMatchers: {},
-    searchCache: new MatcherCache(),
-    types: new Set([ 'sw.os' ]),
-    byType: {
-      'sw.os': new Set([ contract1.metadata.hash ])
-    },
-    byTypeSlug: {
-      'sw.os': {
-        debian: new Set([ contract1.metadata.hash ])
-      }
-    },
-    map: {
-      [contract1.metadata.hash]: contract1
-    }
-  })
+	test.deepEqual(container.metadata.children, {
+		typeMatchers: {},
+		searchCache: new MatcherCache(),
+		types: new Set([ 'sw.os' ]),
+		byType: {
+			'sw.os': new Set([ contract1.metadata.hash ])
+		},
+		byTypeSlug: {
+			'sw.os': {
+				debian: new Set([ contract1.metadata.hash ])
+			}
+		},
+		map: {
+			[contract1.metadata.hash]: contract1
+		}
+	})
 &nbsp;
-  test.deepEqual(container.raw, {
-    type: 'foo',
-    slug: 'bar',
-    children: {
-      sw: {
-        os: contract1.raw
-      }
-    }
-  })
+	test.deepEqual(container.raw, {
+		type: 'foo',
+		slug: 'bar',
+		children: {
+			sw: {
+				os: contract1.raw
+			}
+		}
+	})
 })
 &nbsp;
-ava('should add a set of multiple contracts to an empty universe', (test) =&gt; {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+test('should add a set of multiple contracts to an empty universe', (test) =&gt; {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
 &nbsp;
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  container.addChildren([ contract1, contract2 ])
+	container.addChildren([ contract1, contract2 ])
 &nbsp;
-  test.deepEqual(container.metadata.children, {
-    typeMatchers: {},
-    searchCache: new MatcherCache(),
-    types: new Set([ 'sw.os' ]),
-    byType: {
-      'sw.os': new Set([ contract1.metadata.hash, contract2.metadata.hash ])
-    },
-    byTypeSlug: {
-      'sw.os': {
-        debian: new Set([ contract1.metadata.hash, contract2.metadata.hash ])
-      }
-    },
-    map: {
-      [contract1.metadata.hash]: contract1,
-      [contract2.metadata.hash]: contract2
-    }
-  })
+	test.deepEqual(container.metadata.children, {
+		typeMatchers: {},
+		searchCache: new MatcherCache(),
+		types: new Set([ 'sw.os' ]),
+		byType: {
+			'sw.os': new Set([ contract1.metadata.hash, contract2.metadata.hash ])
+		},
+		byTypeSlug: {
+			'sw.os': {
+				debian: new Set([ contract1.metadata.hash, contract2.metadata.hash ])
+			}
+		},
+		map: {
+			[contract1.metadata.hash]: contract1,
+			[contract2.metadata.hash]: contract2
+		}
+	})
 &nbsp;
-  test.deepEqual(container.raw, {
-    type: 'foo',
-    slug: 'bar',
-    children: {
-      sw: {
-        os: {
-          debian: [ contract1.raw, contract2.raw ]
-        }
-      }
-    }
-  })
+	test.deepEqual(container.raw, {
+		type: 'foo',
+		slug: 'bar',
+		children: {
+			sw: {
+				os: {
+					debian: [ contract1.raw, contract2.raw ]
+				}
+			}
+		}
+	})
 })
 &nbsp;
-ava('should return the instance', (test) =&gt; {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return the instance', (test) =&gt; {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  test.deepEqual(container.addChildren([ contract1, contract2 ]), container)
+	test.deepEqual(container.addChildren([ contract1, contract2 ]), container)
 })
 &nbsp;
-ava('should return the instance if no contracts', (test) =&gt; {
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return the instance if no contracts', (test) =&gt; {
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  test.deepEqual(container.addChildren(), container)
+	test.deepEqual(container.addChildren(), container)
 })
 &nbsp;
-ava('should re-hash the universe', (test) =&gt; {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+test('should re-hash the universe', (test) =&gt; {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
 &nbsp;
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  const hash = container.metadata.hash
-  container.addChildren([ contract1, contract2 ])
-  test.not(container.metadata.hash, hash)
+	const hash = container.metadata.hash
+	container.addChildren([ contract1, contract2 ])
+	test.not(container.metadata.hash, hash)
 })
 &nbsp;
-ava('should not re-hash the universe if the rehash option is false', (test) =&gt; {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+test('should not re-hash the universe if the rehash option is false', (test) =&gt; {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
 &nbsp;
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  const hash = container.metadata.hash
-  container.addChildren([ contract1, contract2 ], {
-    rehash: false
-  })
+	const hash = container.metadata.hash
+	container.addChildren([ contract1, contract2 ], {
+		rehash: false
+	})
 &nbsp;
-  test.is(container.metadata.hash, hash)
+	test.is(container.metadata.hash, hash)
 })
 &nbsp;
-ava('should add a contract of a new slug to an existing type', (test) =&gt; {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-  const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
+test('should add a contract of a new slug to an existing type', (test) =&gt; {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+	const contract3 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
 &nbsp;
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  container.addChildren([ contract1, contract2, contract3 ])
+	container.addChildren([ contract1, contract2, contract3 ])
 &nbsp;
-  test.deepEqual(container.metadata.children, {
-    typeMatchers: {},
-    searchCache: new MatcherCache(),
-    types: new Set([ 'sw.os' ]),
-    byType: {
-      'sw.os': new Set([
-        contract1.metadata.hash,
-        contract2.metadata.hash,
-        contract3.metadata.hash
-      ])
-    },
-    byTypeSlug: {
-      'sw.os': {
-        debian: new Set([
-          contract1.metadata.hash,
-          contract2.metadata.hash
-        ]),
-        fedora: new Set([ contract3.metadata.hash ])
-      }
-    },
-    map: {
-      [contract1.metadata.hash]: contract1,
-      [contract2.metadata.hash]: contract2,
-      [contract3.metadata.hash]: contract3
-    }
-  })
+	test.deepEqual(container.metadata.children, {
+		typeMatchers: {},
+		searchCache: new MatcherCache(),
+		types: new Set([ 'sw.os' ]),
+		byType: {
+			'sw.os': new Set([
+				contract1.metadata.hash,
+				contract2.metadata.hash,
+				contract3.metadata.hash
+			])
+		},
+		byTypeSlug: {
+			'sw.os': {
+				debian: new Set([
+					contract1.metadata.hash,
+					contract2.metadata.hash
+				]),
+				fedora: new Set([ contract3.metadata.hash ])
+			}
+		},
+		map: {
+			[contract1.metadata.hash]: contract1,
+			[contract2.metadata.hash]: contract2,
+			[contract3.metadata.hash]: contract3
+		}
+	})
 &nbsp;
-  test.deepEqual(container.raw, {
-    type: 'foo',
-    slug: 'bar',
-    children: {
-      sw: {
-        os: {
-          debian: [ contract1.raw, contract2.raw ],
-          fedora: contract3.raw
-        }
-      }
-    }
-  })
+	test.deepEqual(container.raw, {
+		type: 'foo',
+		slug: 'bar',
+		children: {
+			sw: {
+				os: {
+					debian: [ contract1.raw, contract2.raw ],
+					fedora: contract3.raw
+				}
+			}
+		}
+	})
 })
 &nbsp;
-ava('should add two contracts of a new slug to an existing type', (test) =&gt; {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-  const contract3 = new Contract(CONTRACTS['sw.os'].fedora['24'].object)
-  const contract4 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
+test('should add two contracts of a new slug to an existing type', (test) =&gt; {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+	const contract3 = new Contract(CONTRACTS['sw.os'].fedora['24'].object)
+	const contract4 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
 &nbsp;
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  container.addChildren([ contract1, contract2, contract3, contract4 ])
+	container.addChildren([ contract1, contract2, contract3, contract4 ])
 &nbsp;
-  test.deepEqual(container.metadata.children, {
-    typeMatchers: {},
-    searchCache: new MatcherCache(),
-    types: new Set([ 'sw.os' ]),
-    byType: {
-      'sw.os': new Set([
-        contract1.metadata.hash,
-        contract2.metadata.hash,
-        contract3.metadata.hash,
-        contract4.metadata.hash
-      ])
-    },
-    byTypeSlug: {
-      'sw.os': {
-        debian: new Set([
-          contract1.metadata.hash,
-          contract2.metadata.hash
-        ]),
-        fedora: new Set([
-          contract3.metadata.hash,
-          contract4.metadata.hash
-        ])
-      }
-    },
-    map: {
-      [contract1.metadata.hash]: contract1,
-      [contract2.metadata.hash]: contract2,
-      [contract3.metadata.hash]: contract3,
-      [contract4.metadata.hash]: contract4
-    }
-  })
+	test.deepEqual(container.metadata.children, {
+		typeMatchers: {},
+		searchCache: new MatcherCache(),
+		types: new Set([ 'sw.os' ]),
+		byType: {
+			'sw.os': new Set([
+				contract1.metadata.hash,
+				contract2.metadata.hash,
+				contract3.metadata.hash,
+				contract4.metadata.hash
+			])
+		},
+		byTypeSlug: {
+			'sw.os': {
+				debian: new Set([
+					contract1.metadata.hash,
+					contract2.metadata.hash
+				]),
+				fedora: new Set([
+					contract3.metadata.hash,
+					contract4.metadata.hash
+				])
+			}
+		},
+		map: {
+			[contract1.metadata.hash]: contract1,
+			[contract2.metadata.hash]: contract2,
+			[contract3.metadata.hash]: contract3,
+			[contract4.metadata.hash]: contract4
+		}
+	})
 &nbsp;
-  test.deepEqual(container.raw, {
-    type: 'foo',
-    slug: 'bar',
-    children: {
-      sw: {
-        os: {
-          debian: [ contract1.raw, contract2.raw ],
-          fedora: [ contract3.raw, contract4.raw ]
-        }
-      }
-    }
-  })
+	test.deepEqual(container.raw, {
+		type: 'foo',
+		slug: 'bar',
+		children: {
+			sw: {
+				os: {
+					debian: [ contract1.raw, contract2.raw ],
+					fedora: [ contract3.raw, contract4.raw ]
+				}
+			}
+		}
+	})
 })
 &nbsp;</pre></td></tr>
 </table></pre>
@@ -976,7 +958,7 @@ ava('should add two contracts of a new slug to an existing type', (test) =&gt; {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Apr 28 2021 17:05:03 GMT+1000 (Australian Eastern Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Apr 30 2021 11:36:21 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="../../prettify.js"></script>

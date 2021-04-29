@@ -906,12 +906,7 @@
 <a name='L858'></a><a href='#L858'>858</a>
 <a name='L859'></a><a href='#L859'>859</a>
 <a name='L860'></a><a href='#L860'>860</a>
-<a name='L861'></a><a href='#L861'>861</a>
-<a name='L862'></a><a href='#L862'>862</a>
-<a name='L863'></a><a href='#L863'>863</a>
-<a name='L864'></a><a href='#L864'>864</a>
-<a name='L865'></a><a href='#L865'>865</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L861'></a><a href='#L861'>861</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -931,10 +926,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -1792,851 +1784,847 @@
 &nbsp;
 'use strict'
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Contract'.
-const Contract = require('../../lib/contract')
+import Contract from '../../lib/contract';
+import CONTRACTS from '../contracts.json';
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'CONTRACTS'... Remove this comment to see the full error message
-const CONTRACTS = require('../contracts.json')
+test('should return true given an empty contract and a contract without requirements', (test) =&gt; {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-ava('should return true given an empty contract and a contract without requirements', (test) =&gt; {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
-&nbsp;
-  test.true(contract.satisfiesChildContract(new Contract({
-    type: 'test',
-    slug: 'foo',
-    name: 'Foo',
-    version: '1.2.3'
-  })))
+	test.true(contract.satisfiesChildContract(new Contract({
+		type: 'test',
+		slug: 'foo',
+		name: 'Foo',
+		version: '1.2.3'
+	})))
 })
 &nbsp;
-ava('should return false given an empty contract and a contract with requirements', (test) =&gt; {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return false given an empty contract and a contract with requirements', (test) =&gt; {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  test.false(contract.satisfiesChildContract(new Contract({
-    type: 'test',
-    slug: 'foo',
-    name: 'Foo',
-    version: '1.2.3',
-    requires: [
-      {
-        type: 'sw.arch',
-        slug: 'amd64'
-      }
-    ]
-  })))
+	test.false(contract.satisfiesChildContract(new Contract({
+		type: 'test',
+		slug: 'foo',
+		name: 'Foo',
+		version: '1.2.3',
+		requires: [
+			{
+				type: 'sw.arch',
+				slug: 'amd64'
+			}
+		]
+	})))
 })
 &nbsp;
-ava('should return true given a contract without requirements', (test) =&gt; {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return true given a contract without requirements', (test) =&gt; {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  contract.addChildren([
-    new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-    new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-  ])
+	contract.addChildren([
+		new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+		new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+	])
 &nbsp;
-  test.true(contract.satisfiesChildContract(new Contract({
-    type: 'test',
-    slug: 'foo',
-    name: 'Foo',
-    version: '1.2.3'
-  })))
+	test.true(contract.satisfiesChildContract(new Contract({
+		type: 'test',
+		slug: 'foo',
+		name: 'Foo',
+		version: '1.2.3'
+	})))
 })
 &nbsp;
-ava('should return true given one fulfilled requirement', (test) =&gt; {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return true given one fulfilled requirement', (test) =&gt; {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  contract.addChildren([
-    new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-    new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-  ])
+	contract.addChildren([
+		new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+		new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+	])
 &nbsp;
-  test.true(contract.satisfiesChildContract(new Contract({
-    name: 'Node.js',
-    slug: 'nodejs',
-    type: 'sw.stack',
-    requires: [
-      {
-        slug: 'debian',
-        version: 'wheezy',
-        type: 'sw.os'
-      }
-    ]
-  })))
+	test.true(contract.satisfiesChildContract(new Contract({
+		name: 'Node.js',
+		slug: 'nodejs',
+		type: 'sw.stack',
+		requires: [
+			{
+				slug: 'debian',
+				version: 'wheezy',
+				type: 'sw.os'
+			}
+		]
+	})))
 })
 &nbsp;
-ava('should return true given two fulfilled requirements', (test) =&gt; {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return true given two fulfilled requirements', (test) =&gt; {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  contract.addChildren([
-    new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-    new Contract(CONTRACTS['sw.os'].debian.jessie.object),
-    new Contract(CONTRACTS['hw.device-type'].artik10.object)
-  ])
+	contract.addChildren([
+		new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+		new Contract(CONTRACTS['sw.os'].debian.jessie.object),
+		new Contract(CONTRACTS['hw.device-type'].artik10.object)
+	])
 &nbsp;
-  test.true(contract.satisfiesChildContract(new Contract({
-    name: 'Node.js',
-    slug: 'nodejs',
-    type: 'sw.stack',
-    requires: [
-      {
-        slug: 'debian',
-        version: 'wheezy',
-        type: 'sw.os'
-      },
-      {
-        slug: 'artik10',
-        type: 'hw.device-type'
-      }
-    ]
-  })))
+	test.true(contract.satisfiesChildContract(new Contract({
+		name: 'Node.js',
+		slug: 'nodejs',
+		type: 'sw.stack',
+		requires: [
+			{
+				slug: 'debian',
+				version: 'wheezy',
+				type: 'sw.os'
+			},
+			{
+				slug: 'artik10',
+				type: 'hw.device-type'
+			}
+		]
+	})))
 })
 &nbsp;
-ava('should return false given one unfulfilled requirement', (test) =&gt; {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return false given one unfulfilled requirement', (test) =&gt; {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  contract.addChildren([
-    new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-    new Contract(CONTRACTS['sw.os'].debian.jessie.object),
-    new Contract(CONTRACTS['hw.device-type'].artik10.object)
-  ])
+	contract.addChildren([
+		new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+		new Contract(CONTRACTS['sw.os'].debian.jessie.object),
+		new Contract(CONTRACTS['hw.device-type'].artik10.object)
+	])
 &nbsp;
-  test.false(contract.satisfiesChildContract(new Contract({
-    name: 'Node.js',
-    slug: 'nodejs',
-    type: 'sw.stack',
-    requires: [
-      {
-        slug: 'void',
-        type: 'sw.os'
-      }
-    ]
-  })))
+	test.false(contract.satisfiesChildContract(new Contract({
+		name: 'Node.js',
+		slug: 'nodejs',
+		type: 'sw.stack',
+		requires: [
+			{
+				slug: 'void',
+				type: 'sw.os'
+			}
+		]
+	})))
 })
 &nbsp;
-ava('should return false given two requirements where one is not fulfilled', (test) =&gt; {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return false given two requirements where one is not fulfilled', (test) =&gt; {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  contract.addChildren([
-    new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-    new Contract(CONTRACTS['sw.os'].debian.jessie.object),
-    new Contract(CONTRACTS['hw.device-type'].artik10.object)
-  ])
+	contract.addChildren([
+		new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+		new Contract(CONTRACTS['sw.os'].debian.jessie.object),
+		new Contract(CONTRACTS['hw.device-type'].artik10.object)
+	])
 &nbsp;
-  test.false(contract.satisfiesChildContract(new Contract({
-    name: 'Node.js',
-    slug: 'nodejs',
-    type: 'sw.stack',
-    requires: [
-      {
-        slug: 'void',
-        type: 'sw.os'
-      },
-      {
-        slug: 'artik10',
-        type: 'hw.device-type'
-      }
-    ]
-  })))
+	test.false(contract.satisfiesChildContract(new Contract({
+		name: 'Node.js',
+		slug: 'nodejs',
+		type: 'sw.stack',
+		requires: [
+			{
+				slug: 'void',
+				type: 'sw.os'
+			},
+			{
+				slug: 'artik10',
+				type: 'hw.device-type'
+			}
+		]
+	})))
 })
 &nbsp;
-ava('should return true given no requirements in a disjunction', (test) =&gt; {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return true given no requirements in a disjunction', (test) =&gt; {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  contract.addChildren([
-    new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-    new Contract(CONTRACTS['sw.os'].debian.jessie.object),
-    new Contract(CONTRACTS['hw.device-type'].artik10.object)
-  ])
+	contract.addChildren([
+		new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+		new Contract(CONTRACTS['sw.os'].debian.jessie.object),
+		new Contract(CONTRACTS['hw.device-type'].artik10.object)
+	])
 &nbsp;
-  test.true(contract.satisfiesChildContract(new Contract({
-    name: 'Node.js',
-    slug: 'nodejs',
-    type: 'sw.stack',
-    requires: [
-      {
-        or: []
-      }
-    ]
-  })))
+	test.true(contract.satisfiesChildContract(new Contract({
+		name: 'Node.js',
+		slug: 'nodejs',
+		type: 'sw.stack',
+		requires: [
+			{
+				or: []
+			}
+		]
+	})))
 })
 &nbsp;
-ava('should return false given a partially unfulfilled not operator', (test) =&gt; {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return false given a partially unfulfilled not operator', (test) =&gt; {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  contract.addChildren([
-    new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  ])
+	contract.addChildren([
+		new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	])
 &nbsp;
-  test.false(contract.satisfiesChildContract(new Contract({
-    name: 'Node.js',
-    slug: 'nodejs',
-    type: 'sw.stack',
-    requires: [
-      {
-        not: [
-          {
-            slug: CONTRACTS['sw.os'].fedora['24'].object.slug,
-            type: 'sw.os'
-          },
-          {
-            slug: CONTRACTS['sw.os'].debian.wheezy.object.slug,
-            type: 'sw.os'
-          }
-        ]
-      }
-    ]
-  })))
+	test.false(contract.satisfiesChildContract(new Contract({
+		name: 'Node.js',
+		slug: 'nodejs',
+		type: 'sw.stack',
+		requires: [
+			{
+				not: [
+					{
+						slug: CONTRACTS['sw.os'].fedora['24'].object.slug,
+						type: 'sw.os'
+					},
+					{
+						slug: CONTRACTS['sw.os'].debian.wheezy.object.slug,
+						type: 'sw.os'
+					}
+				]
+			}
+		]
+	})))
 })
 &nbsp;
-ava('should return false given an unfulfilled not operator', (test) =&gt; {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return false given an unfulfilled not operator', (test) =&gt; {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  contract.addChildren([
-    new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  ])
+	contract.addChildren([
+		new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	])
 &nbsp;
-  test.false(contract.satisfiesChildContract(new Contract({
-    name: 'Node.js',
-    slug: 'nodejs',
-    type: 'sw.stack',
-    requires: [
-      {
-        not: [
-          {
-            slug: CONTRACTS['sw.os'].debian.wheezy.object.slug,
-            type: 'sw.os'
-          }
-        ]
-      }
-    ]
-  })))
+	test.false(contract.satisfiesChildContract(new Contract({
+		name: 'Node.js',
+		slug: 'nodejs',
+		type: 'sw.stack',
+		requires: [
+			{
+				not: [
+					{
+						slug: CONTRACTS['sw.os'].debian.wheezy.object.slug,
+						type: 'sw.os'
+					}
+				]
+			}
+		]
+	})))
 })
 &nbsp;
-ava('should return false given a fulfilled not operator', (test) =&gt; {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return false given a fulfilled not operator', (test) =&gt; {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  contract.addChildren([
-    new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  ])
+	contract.addChildren([
+		new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	])
 &nbsp;
-  test.true(contract.satisfiesChildContract(new Contract({
-    name: 'Node.js',
-    slug: 'nodejs',
-    type: 'sw.stack',
-    requires: [
-      {
-        not: [
-          {
-            slug: 'foo-bar',
-            type: 'sw.os'
-          }
-        ]
-      }
-    ]
-  })))
+	test.true(contract.satisfiesChildContract(new Contract({
+		name: 'Node.js',
+		slug: 'nodejs',
+		type: 'sw.stack',
+		requires: [
+			{
+				not: [
+					{
+						slug: 'foo-bar',
+						type: 'sw.os'
+					}
+				]
+			}
+		]
+	})))
 })
 &nbsp;
-ava('should return true given an empty not operator', (test) =&gt; {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return true given an empty not operator', (test) =&gt; {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  contract.addChildren([
-    new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  ])
+	contract.addChildren([
+		new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	])
 &nbsp;
-  test.true(contract.satisfiesChildContract(new Contract({
-    name: 'Node.js',
-    slug: 'nodejs',
-    type: 'sw.stack',
-    requires: [
-      {
-        not: []
-      }
-    ]
-  })))
+	test.true(contract.satisfiesChildContract(new Contract({
+		name: 'Node.js',
+		slug: 'nodejs',
+		type: 'sw.stack',
+		requires: [
+			{
+				not: []
+			}
+		]
+	})))
 })
 &nbsp;
-ava('should return false given two unfulfilled requirements', (test) =&gt; {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return false given two unfulfilled requirements', (test) =&gt; {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  contract.addChildren([
-    new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-    new Contract(CONTRACTS['sw.os'].debian.jessie.object),
-    new Contract(CONTRACTS['hw.device-type'].artik10.object)
-  ])
+	contract.addChildren([
+		new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+		new Contract(CONTRACTS['sw.os'].debian.jessie.object),
+		new Contract(CONTRACTS['hw.device-type'].artik10.object)
+	])
 &nbsp;
-  test.false(contract.satisfiesChildContract(new Contract({
-    name: 'Node.js',
-    slug: 'nodejs',
-    type: 'sw.stack',
-    requires: [
-      {
-        slug: 'void',
-        type: 'sw.os'
-      },
-      {
-        slug: 'raspberry-pi',
-        type: 'hw.device-type'
-      }
-    ]
-  })))
+	test.false(contract.satisfiesChildContract(new Contract({
+		name: 'Node.js',
+		slug: 'nodejs',
+		type: 'sw.stack',
+		requires: [
+			{
+				slug: 'void',
+				type: 'sw.os'
+			},
+			{
+				slug: 'raspberry-pi',
+				type: 'hw.device-type'
+			}
+		]
+	})))
 })
 &nbsp;
-ava('should return true given one fulfilled requirement in a disjunction', (test) =&gt; {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return true given one fulfilled requirement in a disjunction', (test) =&gt; {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  contract.addChildren([
-    new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-    new Contract(CONTRACTS['sw.os'].debian.jessie.object),
-    new Contract(CONTRACTS['hw.device-type'].artik10.object)
-  ])
+	contract.addChildren([
+		new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+		new Contract(CONTRACTS['sw.os'].debian.jessie.object),
+		new Contract(CONTRACTS['hw.device-type'].artik10.object)
+	])
 &nbsp;
-  test.true(contract.satisfiesChildContract(new Contract({
-    name: 'Node.js',
-    slug: 'nodejs',
-    type: 'sw.stack',
-    requires: [
-      {
-        or: [
-          {
-            slug: 'debian',
-            type: 'sw.os'
-          }
-        ]
-      }
-    ]
-  })))
+	test.true(contract.satisfiesChildContract(new Contract({
+		name: 'Node.js',
+		slug: 'nodejs',
+		type: 'sw.stack',
+		requires: [
+			{
+				or: [
+					{
+						slug: 'debian',
+						type: 'sw.os'
+					}
+				]
+			}
+		]
+	})))
 })
 &nbsp;
-ava('should return true given one fulfilled and one unfulfilled requirement in a disjunction', (test) =&gt; {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return true given one fulfilled and one unfulfilled requirement in a disjunction', (test) =&gt; {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  contract.addChildren([
-    new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-    new Contract(CONTRACTS['sw.os'].debian.jessie.object),
-    new Contract(CONTRACTS['hw.device-type'].artik10.object)
-  ])
+	contract.addChildren([
+		new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+		new Contract(CONTRACTS['sw.os'].debian.jessie.object),
+		new Contract(CONTRACTS['hw.device-type'].artik10.object)
+	])
 &nbsp;
-  test.true(contract.satisfiesChildContract(new Contract({
-    name: 'Node.js',
-    slug: 'nodejs',
-    type: 'sw.stack',
-    requires: [
-      {
-        or: [
-          {
-            slug: 'debian',
-            type: 'sw.os'
-          },
-          {
-            slug: 'void',
-            type: 'sw.os'
-          }
-        ]
-      }
-    ]
-  })))
+	test.true(contract.satisfiesChildContract(new Contract({
+		name: 'Node.js',
+		slug: 'nodejs',
+		type: 'sw.stack',
+		requires: [
+			{
+				or: [
+					{
+						slug: 'debian',
+						type: 'sw.os'
+					},
+					{
+						slug: 'void',
+						type: 'sw.os'
+					}
+				]
+			}
+		]
+	})))
 })
 &nbsp;
-ava('should return false given one unfulfilled requirement in a disjunction', (test) =&gt; {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return false given one unfulfilled requirement in a disjunction', (test) =&gt; {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  contract.addChildren([
-    new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-    new Contract(CONTRACTS['sw.os'].debian.jessie.object),
-    new Contract(CONTRACTS['hw.device-type'].artik10.object)
-  ])
+	contract.addChildren([
+		new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+		new Contract(CONTRACTS['sw.os'].debian.jessie.object),
+		new Contract(CONTRACTS['hw.device-type'].artik10.object)
+	])
 &nbsp;
-  test.false(contract.satisfiesChildContract(new Contract({
-    name: 'Node.js',
-    slug: 'nodejs',
-    type: 'stack',
-    requires: [
-      {
-        or: [
-          {
-            slug: 'void',
-            type: 'sw.os'
-          }
-        ]
-      }
-    ]
-  })))
+	test.false(contract.satisfiesChildContract(new Contract({
+		name: 'Node.js',
+		slug: 'nodejs',
+		type: 'stack',
+		requires: [
+			{
+				or: [
+					{
+						slug: 'void',
+						type: 'sw.os'
+					}
+				]
+			}
+		]
+	})))
 })
 &nbsp;
-ava('should return false given an empty disjunction and an unfulfilled requirement', (test) =&gt; {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return false given an empty disjunction and an unfulfilled requirement', (test) =&gt; {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  contract.addChildren([
-    new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-    new Contract(CONTRACTS['sw.os'].debian.jessie.object),
-    new Contract(CONTRACTS['hw.device-type'].artik10.object)
-  ])
+	contract.addChildren([
+		new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+		new Contract(CONTRACTS['sw.os'].debian.jessie.object),
+		new Contract(CONTRACTS['hw.device-type'].artik10.object)
+	])
 &nbsp;
-  test.false(contract.satisfiesChildContract(new Contract({
-    name: 'Node.js',
-    slug: 'nodejs',
-    type: 'stack',
-    requires: [
-      {
-        or: []
-      },
-      {
-        slug: 'void',
-        type: 'sw.os'
-      }
-    ]
-  })))
+	test.false(contract.satisfiesChildContract(new Contract({
+		name: 'Node.js',
+		slug: 'nodejs',
+		type: 'stack',
+		requires: [
+			{
+				or: []
+			},
+			{
+				slug: 'void',
+				type: 'sw.os'
+			}
+		]
+	})))
 })
 &nbsp;
-ava('should return false given an fulfilled disjunction and an unfulfilled requirement', (test) =&gt; {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return false given an fulfilled disjunction and an unfulfilled requirement', (test) =&gt; {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  contract.addChildren([
-    new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-    new Contract(CONTRACTS['sw.os'].debian.jessie.object),
-    new Contract(CONTRACTS['hw.device-type'].artik10.object)
-  ])
+	contract.addChildren([
+		new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+		new Contract(CONTRACTS['sw.os'].debian.jessie.object),
+		new Contract(CONTRACTS['hw.device-type'].artik10.object)
+	])
 &nbsp;
-  test.false(contract.satisfiesChildContract(new Contract({
-    name: 'Node.js',
-    slug: 'nodejs',
-    type: 'stack',
-    requires: [
-      {
-        or: [
-          {
-            type: 'sw.os',
-            slug: 'void'
-          },
-          {
-            type: 'sw.os',
-            slug: 'debian'
-          }
-        ]
-      },
-      {
-        slug: 'raspberry-pi',
-        type: 'hw.device-type'
-      }
-    ]
-  })))
+	test.false(contract.satisfiesChildContract(new Contract({
+		name: 'Node.js',
+		slug: 'nodejs',
+		type: 'stack',
+		requires: [
+			{
+				or: [
+					{
+						type: 'sw.os',
+						slug: 'void'
+					},
+					{
+						type: 'sw.os',
+						slug: 'debian'
+					}
+				]
+			},
+			{
+				slug: 'raspberry-pi',
+				type: 'hw.device-type'
+			}
+		]
+	})))
 })
 &nbsp;
-ava('should be able to specify a single type', (test) =&gt; {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should be able to specify a single type', (test) =&gt; {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  contract.addChildren([
-    new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-    new Contract(CONTRACTS['sw.os'].debian.jessie.object),
-    new Contract(CONTRACTS['hw.device-type'].artik10.object)
-  ])
+	contract.addChildren([
+		new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+		new Contract(CONTRACTS['sw.os'].debian.jessie.object),
+		new Contract(CONTRACTS['hw.device-type'].artik10.object)
+	])
 &nbsp;
-  test.true(contract.satisfiesChildContract(new Contract({
-    name: 'Node.js',
-    slug: 'nodejs',
-    type: 'sw.stack',
-    requires: [
-      {
-        slug: 'debian',
-        type: 'sw.os'
-      },
-      {
-        slug: 'hello',
-        type: 'test'
-      }
-    ]
-  }), {
-    types: new Set([ 'sw.os' ])
-  }))
+	test.true(contract.satisfiesChildContract(new Contract({
+		name: 'Node.js',
+		slug: 'nodejs',
+		type: 'sw.stack',
+		requires: [
+			{
+				slug: 'debian',
+				type: 'sw.os'
+			},
+			{
+				slug: 'hello',
+				type: 'test'
+			}
+		]
+	}), {
+		types: new Set([ 'sw.os' ])
+	}))
 })
 &nbsp;
-ava('should be able to specify multiple types', (test) =&gt; {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should be able to specify multiple types', (test) =&gt; {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  contract.addChildren([
-    new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-    new Contract(CONTRACTS['sw.os'].debian.jessie.object),
-    new Contract(CONTRACTS['hw.device-type'].artik10.object)
-  ])
+	contract.addChildren([
+		new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+		new Contract(CONTRACTS['sw.os'].debian.jessie.object),
+		new Contract(CONTRACTS['hw.device-type'].artik10.object)
+	])
 &nbsp;
-  test.true(contract.satisfiesChildContract(new Contract({
-    name: 'Node.js',
-    slug: 'nodejs',
-    type: 'sw.stack',
-    requires: [
-      {
-        slug: 'debian',
-        type: 'sw.os'
-      },
-      {
-        or: [
-          {
-            type: 'hw.device-type',
-            slug: 'artik10'
-          },
-          {
-            type: 'hw.device-type',
-            slug: 'raspberry-pi'
-          }
-        ]
-      },
-      {
-        slug: 'hello',
-        type: 'test'
-      }
-    ]
-  }), {
-    types: new Set([ 'sw.os', 'hw.device-type' ])
-  }))
+	test.true(contract.satisfiesChildContract(new Contract({
+		name: 'Node.js',
+		slug: 'nodejs',
+		type: 'sw.stack',
+		requires: [
+			{
+				slug: 'debian',
+				type: 'sw.os'
+			},
+			{
+				or: [
+					{
+						type: 'hw.device-type',
+						slug: 'artik10'
+					},
+					{
+						type: 'hw.device-type',
+						slug: 'raspberry-pi'
+					}
+				]
+			},
+			{
+				slug: 'hello',
+				type: 'test'
+			}
+		]
+	}), {
+		types: new Set([ 'sw.os', 'hw.device-type' ])
+	}))
 })
 &nbsp;
-ava('should return false given one unfulfilled requirement selected type', (test) =&gt; {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return false given one unfulfilled requirement selected type', (test) =&gt; {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  contract.addChildren([
-    new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-    new Contract(CONTRACTS['sw.os'].debian.jessie.object),
-    new Contract(CONTRACTS['hw.device-type'].artik10.object)
-  ])
+	contract.addChildren([
+		new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+		new Contract(CONTRACTS['sw.os'].debian.jessie.object),
+		new Contract(CONTRACTS['hw.device-type'].artik10.object)
+	])
 &nbsp;
-  test.false(contract.satisfiesChildContract(new Contract({
-    name: 'Node.js',
-    slug: 'nodejs',
-    type: 'stack',
-    requires: [
-      {
-        slug: 'void',
-        type: 'sw.os'
-      }
-    ]
-  }), {
-    types: new Set([ 'sw.os' ])
-  }))
+	test.false(contract.satisfiesChildContract(new Contract({
+		name: 'Node.js',
+		slug: 'nodejs',
+		type: 'stack',
+		requires: [
+			{
+				slug: 'void',
+				type: 'sw.os'
+			}
+		]
+	}), {
+		types: new Set([ 'sw.os' ])
+	}))
 })
 &nbsp;
-ava('should return true given one unfulfilled requirement in a disjunction of a non-selected type', (test) =&gt; {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return true given one unfulfilled requirement in a disjunction of a non-selected type', (test) =&gt; {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  contract.addChildren([
-    new Contract(CONTRACTS['hw.device-type'].artik10.object)
-  ])
+	contract.addChildren([
+		new Contract(CONTRACTS['hw.device-type'].artik10.object)
+	])
 &nbsp;
-  test.true(contract.satisfiesChildContract(new Contract({
-    name: 'Debian',
-    slug: 'debian',
-    type: 'sw.os',
-    requires: [
-      {
-        or: [
-          {
-            type: 'hw.device-type',
-            slug: 'intel-edison'
-          },
-          {
-            type: 'hw.device-type',
-            slug: 'raspberry-pi'
-          }
-        ]
-      }
-    ]
-  }), {
-    types: new Set([ 'arch.sw' ])
-  }))
+	test.true(contract.satisfiesChildContract(new Contract({
+		name: 'Debian',
+		slug: 'debian',
+		type: 'sw.os',
+		requires: [
+			{
+				or: [
+					{
+						type: 'hw.device-type',
+						slug: 'intel-edison'
+					},
+					{
+						type: 'hw.device-type',
+						slug: 'raspberry-pi'
+					}
+				]
+			}
+		]
+	}), {
+		types: new Set([ 'arch.sw' ])
+	}))
 })
 &nbsp;
-ava('should return true given two fulfilled requirements from a context with a composite contract', (test) =&gt; {
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return true given two fulfilled requirements from a context with a composite contract', (test) =&gt; {
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  const contract1 = new Contract({
-    type: 'meta.composite',
-    slug: 'test'
-  })
+	const contract1 = new Contract({
+		type: 'meta.composite',
+		slug: 'test'
+	})
 &nbsp;
-  contract1.addChildren([
-    new Contract({
-      type: 'sw.os',
-      slug: 'debian',
-      version: 'wheezy'
-    }),
-    new Contract({
-      type: 'arch.sw',
-      slug: 'amd64',
-      version: '1'
-    })
-  ])
+	contract1.addChildren([
+		new Contract({
+			type: 'sw.os',
+			slug: 'debian',
+			version: 'wheezy'
+		}),
+		new Contract({
+			type: 'arch.sw',
+			slug: 'amd64',
+			version: '1'
+		})
+	])
 &nbsp;
-  container.addChild(contract1)
+	container.addChild(contract1)
 &nbsp;
-  test.true(container.satisfiesChildContract(new Contract({
-    name: 'Node.js',
-    slug: 'nodejs',
-    type: 'sw.stack',
-    requires: [
-      {
-        slug: 'debian',
-        type: 'sw.os'
-      },
-      {
-        or: [
-          {
-            slug: 'amd64',
-            type: 'arch.sw'
-          },
-          {
-            slug: 'i386',
-            type: 'arch.sw'
-          }
-        ]
-      }
-    ]
-  })))
+	test.true(container.satisfiesChildContract(new Contract({
+		name: 'Node.js',
+		slug: 'nodejs',
+		type: 'sw.stack',
+		requires: [
+			{
+				slug: 'debian',
+				type: 'sw.os'
+			},
+			{
+				or: [
+					{
+						slug: 'amd64',
+						type: 'arch.sw'
+					},
+					{
+						slug: 'i386',
+						type: 'arch.sw'
+					}
+				]
+			}
+		]
+	})))
 })
 &nbsp;
-ava('should return false given one unfulfilled requirement from a context with a composite contract', (test) =&gt; {
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return false given one unfulfilled requirement from a context with a composite contract', (test) =&gt; {
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  const contract1 = new Contract({
-    type: 'meta.composite',
-    slug: 'test'
-  })
+	const contract1 = new Contract({
+		type: 'meta.composite',
+		slug: 'test'
+	})
 &nbsp;
-  contract1.addChildren([
-    new Contract({
-      type: 'sw.os',
-      slug: 'debian',
-      version: 'wheezy'
-    }),
-    new Contract({
-      type: 'arch.sw',
-      slug: 'amd64',
-      version: '1'
-    })
-  ])
+	contract1.addChildren([
+		new Contract({
+			type: 'sw.os',
+			slug: 'debian',
+			version: 'wheezy'
+		}),
+		new Contract({
+			type: 'arch.sw',
+			slug: 'amd64',
+			version: '1'
+		})
+	])
 &nbsp;
-  container.addChild(contract1)
+	container.addChild(contract1)
 &nbsp;
-  test.false(container.satisfiesChildContract(new Contract({
-    name: 'Node.js',
-    slug: 'nodejs',
-    type: 'sw.stack',
-    requires: [
-      {
-        slug: 'fedora',
-        type: 'sw.os'
-      },
-      {
-        or: [
-          {
-            slug: 'amd64',
-            type: 'arch.sw'
-          },
-          {
-            slug: 'i386',
-            type: 'arch.sw'
-          }
-        ]
-      }
-    ]
-  })))
+	test.false(container.satisfiesChildContract(new Contract({
+		name: 'Node.js',
+		slug: 'nodejs',
+		type: 'sw.stack',
+		requires: [
+			{
+				slug: 'fedora',
+				type: 'sw.os'
+			},
+			{
+				or: [
+					{
+						slug: 'amd64',
+						type: 'arch.sw'
+					},
+					{
+						slug: 'i386',
+						type: 'arch.sw'
+					}
+				]
+			}
+		]
+	})))
 })
 &nbsp;
-ava('should return true given one ignored unfulfilled requirement ' +
-         'on a context with a composite contract', (test) =&gt; {
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return true given one ignored unfulfilled requirement ' +
+				 'on a context with a composite contract', (test) =&gt; {
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  const contract1 = new Contract({
-    type: 'meta.composite',
-    slug: 'test'
-  })
+	const contract1 = new Contract({
+		type: 'meta.composite',
+		slug: 'test'
+	})
 &nbsp;
-  contract1.addChildren([
-    new Contract({
-      type: 'sw.os',
-      slug: 'debian',
-      version: 'wheezy'
-    }),
-    new Contract({
-      type: 'arch.sw',
-      slug: 'amd64',
-      version: '1'
-    })
-  ])
+	contract1.addChildren([
+		new Contract({
+			type: 'sw.os',
+			slug: 'debian',
+			version: 'wheezy'
+		}),
+		new Contract({
+			type: 'arch.sw',
+			slug: 'amd64',
+			version: '1'
+		})
+	])
 &nbsp;
-  container.addChild(contract1)
+	container.addChild(contract1)
 &nbsp;
-  test.true(container.satisfiesChildContract(new Contract({
-    name: 'Node.js',
-    slug: 'nodejs',
-    type: 'sw.stack',
-    requires: [
-      {
-        slug: 'fedora',
-        type: 'sw.os'
-      },
-      {
-        or: [
-          {
-            slug: 'amd64',
-            type: 'arch.sw'
-          },
-          {
-            slug: 'i386',
-            type: 'arch.sw'
-          }
-        ]
-      }
-    ]
-  }), {
-    types: new Set([ 'arch.sw' ])
-  }))
+	test.true(container.satisfiesChildContract(new Contract({
+		name: 'Node.js',
+		slug: 'nodejs',
+		type: 'sw.stack',
+		requires: [
+			{
+				slug: 'fedora',
+				type: 'sw.os'
+			},
+			{
+				or: [
+					{
+						slug: 'amd64',
+						type: 'arch.sw'
+					},
+					{
+						slug: 'i386',
+						type: 'arch.sw'
+					}
+				]
+			}
+		]
+	}), {
+		types: new Set([ 'arch.sw' ])
+	}))
 })
 &nbsp;
-ava('should return true given a fulfilled context as an argument', (test) =&gt; {
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return true given a fulfilled context as an argument', (test) =&gt; {
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  const contract1 = new Contract({
-    type: 'arch.sw',
-    slug: 'amd64'
-  })
+	const contract1 = new Contract({
+		type: 'arch.sw',
+		slug: 'amd64'
+	})
 &nbsp;
-  const contract2 = new Contract({
-    type: 'meta.composite',
-    slug: 'test'
-  })
+	const contract2 = new Contract({
+		type: 'meta.composite',
+		slug: 'test'
+	})
 &nbsp;
-  contract2.addChildren([
-    new Contract({
-      type: 'sw.os',
-      slug: 'debian',
-      version: 'wheezy',
-      requires: [
-        {
-          type: 'arch.sw',
-          slug: 'amd64'
-        }
-      ]
-    })
-  ])
+	contract2.addChildren([
+		new Contract({
+			type: 'sw.os',
+			slug: 'debian',
+			version: 'wheezy',
+			requires: [
+				{
+					type: 'arch.sw',
+					slug: 'amd64'
+				}
+			]
+		})
+	])
 &nbsp;
-  container.addChild(contract1)
+	container.addChild(contract1)
 &nbsp;
-  test.true(container.satisfiesChildContract(contract2))
+	test.true(container.satisfiesChildContract(contract2))
 })
 &nbsp;
-ava('should return false given a unfulfilled context as an argument', (test) =&gt; {
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should return false given a unfulfilled context as an argument', (test) =&gt; {
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  const contract1 = new Contract({
-    type: 'arch.sw',
-    slug: 'amd64'
-  })
+	const contract1 = new Contract({
+		type: 'arch.sw',
+		slug: 'amd64'
+	})
 &nbsp;
-  const contract2 = new Contract({
-    type: 'meta.composite',
-    slug: 'test'
-  })
+	const contract2 = new Contract({
+		type: 'meta.composite',
+		slug: 'test'
+	})
 &nbsp;
-  contract2.addChildren([
-    new Contract({
-      type: 'sw.os',
-      slug: 'debian',
-      version: 'wheezy',
-      requires: [
-        {
-          type: 'arch.sw',
-          slug: 'armv7hf'
-        }
-      ]
-    })
-  ])
+	contract2.addChildren([
+		new Contract({
+			type: 'sw.os',
+			slug: 'debian',
+			version: 'wheezy',
+			requires: [
+				{
+					type: 'arch.sw',
+					slug: 'armv7hf'
+				}
+			]
+		})
+	])
 &nbsp;
-  container.addChild(contract1)
+	container.addChild(contract1)
 &nbsp;
-  test.false(container.satisfiesChildContract(contract2))
+	test.false(container.satisfiesChildContract(contract2))
 })
 &nbsp;</pre></td></tr>
 </table></pre>
@@ -2644,7 +2632,7 @@ ava('should return false given a unfulfilled context as an argument', (test) =&g
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Apr 28 2021 17:05:03 GMT+1000 (Australian Eastern Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Apr 30 2021 11:36:21 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="../../prettify.js"></script>

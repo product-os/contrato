@@ -14,17 +14,16 @@
  * limitations under the License.
  */
 
-'use strict'
+'use strict';
+
+import { reduce, set } from 'lodash';
+import { ContractType } from '.';
+import Contract from './contract';
+import { setFirst } from './utils';
 
 /**
  * @module children-tree
  */
-
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable '_'.
-const _ = require('lodash')
-
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'utils'.
-const utils = require('./utils')
 
 /**
  * @summary Build a plain children tree out of a built contract
@@ -41,34 +40,42 @@ const utils = require('./utils')
  *
  * const tree = childrenTree.build(contract)
  */
-// @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-exports.build = (contract) => {
-  const tree = {}
+export const build = (contract: Contract): object => {
+	const tree = {};
 
-  for (const type of contract.metadata.children.types) {
-    if (contract.metadata.children.byType[type].size === 1) {
-      const hash = utils.setFirst(contract.metadata.children.byType[type])
-      _.set(tree, type, contract.getChildByHash(hash).toJSON())
-      continue
-    }
+	for (const type of contract.metadata.children.types) {
+		if (contract.metadata.children.byType[type].size === 1) {
+			const hash = setFirst<string>(contract.metadata.children.byType[type]);
+			const child = contract.getChildByHash(hash);
+			if (child === undefined) {
+				throw new Error('Error retrieving child');
+			}
+			set(tree, type, child.toJSON());
+			continue;
+		}
 
-    for (const slug of Object.keys(contract.metadata.children.byTypeSlug[type])) {
-      const sources = []
-      for (const hash of contract.metadata.children.byTypeSlug[type][slug]) {
-        // @ts-expect-error ts-migrate(2345) FIXME: Argument of type 'any' is not assignable to parame... Remove this comment to see the full error message
-        sources.push(contract.getChildByHash(hash).toJSON())
-      }
+		for (const slug of Object.keys(
+			contract.metadata.children.byTypeSlug[type],
+		)) {
+			const sources: object[] = [];
+			for (const hash of contract.metadata.children.byTypeSlug[type][slug]) {
+				const child = contract.getChildByHash(hash);
+				if (child === undefined) {
+					throw new Error('Error retrieving child');
+				}
+				sources.push(child.toJSON());
+			}
 
-      if (sources.length === 0) {
-        continue
-      }
+			if (sources.length === 0) {
+				continue;
+			}
 
-      _.set(tree, `${type}.${slug}`, sources.length === 1 ? sources[0] : sources)
-    }
-  }
+			set(tree, `${type}.${slug}`, sources.length === 1 ? sources[0] : sources);
+		}
+	}
 
-  return tree
-}
+	return tree;
+};
 
 /**
  * @summary Get all source contract children from a children tree
@@ -96,16 +103,17 @@ exports.build = (contract) => {
  *   console.log(sourceContract.slug, sourceContract.version)
  * })
  */
-// @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-exports.getAll = (tree) => {
-  // @ts-expect-error ts-migrate(6133) FIXME: 'key' is declared but its value is never read.
-  return _.reduce(tree, (accumulator, value, key) => {
-    if (!value.slug) {
-      // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-      return accumulator.concat(exports.getAll(value))
-    }
+export const getAll = (tree: any): ContractType[] =>
+	reduce(
+		tree,
+		(accumulator, value, _) => {
+			if (!value.slug) {
+				const out = accumulator.concat(getAll(value));
+				return out;
+			}
 
-    accumulator.push(value)
-    return accumulator
-  }, [])
-}
+			accumulator.push(value);
+			return accumulator;
+		},
+		[] as ContractType[],
+	);

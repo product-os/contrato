@@ -205,13 +205,7 @@
 <a name='L157'></a><a href='#L157'>157</a>
 <a name='L158'></a><a href='#L158'>158</a>
 <a name='L159'></a><a href='#L159'>159</a>
-<a name='L160'></a><a href='#L160'>160</a>
-<a name='L161'></a><a href='#L161'>161</a>
-<a name='L162'></a><a href='#L162'>162</a>
-<a name='L163'></a><a href='#L163'>163</a>
-<a name='L164'></a><a href='#L164'>164</a>
-<a name='L165'></a><a href='#L165'>165</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L160'></a><a href='#L160'>160</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -230,11 +224,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -392,151 +382,146 @@
 &nbsp;
 'use strict'
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
+import * as _ from 'lodash';
+import { cartesianProductWith } from '../../lib/utils';
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable '_'.
-const _ = require('lodash')
+test('should perform a cartesian product of empty sets', (test) =&gt; {
+	const product = cartesianProductWith([
+		[],
+		[],
+		[]
+	], <span class="fstat-no" title="function not covered" >(a</span>ccumulator, element) =&gt; {
+<span class="cstat-no" title="statement not covered" >		return _.concat(accumulator, [ element ])</span>
+	}, [[]])
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'utils'.
-const utils = require('../../lib/utils')
-&nbsp;
-ava('should perform a cartesian product of empty sets', (test) =&gt; {
-  const product = utils.cartesianProductWith([
-    [],
-    [],
-    []
-  ], <span class="fstat-no" title="function not covered" >(a</span>ccumulator, element) =&gt; {
-<span class="cstat-no" title="statement not covered" >    return _.concat(accumulator, [ element ])</span>
-  })
-&nbsp;
-  test.deepEqual(product, [])
+	test.deepEqual(product, [])
 })
 &nbsp;
-ava('should perform a cartesian product of a valid an and empty set', (test) =&gt; {
-  const product = utils.cartesianProductWith([
-    [ 'foo' ],
-    [],
-    []
-  ], (accumulator, element) =&gt; {
-    return _.concat(accumulator, [ element ])
-  })
+test('should perform a cartesian product of a valid and an empty set', (test) =&gt; {
+	const product = cartesianProductWith([
+		[ 'foo' ],
+		[],
+		[]
+	], (accumulator: string[], element: string) =&gt; {
+		return _.concat(accumulator, [ element ])
+	}, [[]])
 &nbsp;
-  test.deepEqual(product, [ [ 'foo' ] ])
+	test.deepEqual(product, [ [ 'foo' ] ])
 })
 &nbsp;
-ava('should perform a cartesian product of no sets', (test) =&gt; {
-  const product = utils.cartesianProductWith([], <span class="fstat-no" title="function not covered" >(a</span>ccumulator, element) =&gt; {
-<span class="cstat-no" title="statement not covered" >    return _.concat(accumulator, [ element ])</span>
-  })
+test('should perform a cartesian product of no sets', (test) =&gt; {
+	const product = cartesianProductWith([], <span class="fstat-no" title="function not covered" >(a</span>ccumulator: any[], element: any) =&gt; {
+<span class="cstat-no" title="statement not covered" >		return _.concat(accumulator, [ element ])</span>
+	}, [[]])
 &nbsp;
-  test.deepEqual(product, [])
+	test.deepEqual(product, [])
 })
 &nbsp;
-ava('should perform a cartesian product of a one element set', (test) =&gt; {
-  const product = utils.cartesianProductWith([
-    [ 'foo' ]
-  ], (accumulator, element) =&gt; {
-    return _.concat(accumulator, [ element ])
-  })
+test('should perform a cartesian product of a one element set', (test) =&gt; {
+	const product = cartesianProductWith([
+		[ 'foo' ]
+	], (accumulator: string[], element: string) =&gt; {
+		return _.concat(accumulator, [ element ])
+	}, [[]])
 &nbsp;
-  test.deepEqual(product, [
-    [ 'foo' ]
-  ])
+	test.deepEqual(product, [
+		[ 'foo' ]
+	])
 })
 &nbsp;
-ava('should calculate the cartesian product of two string sets', (test) =&gt; {
-  const product = utils.cartesianProductWith([
-    [ 'hello', 'hi', 'hey' ],
-    [ 'there', 'world', 'yo' ]
-  ], (accumulator, element) =&gt; {
-    return _.concat(accumulator, [ element ])
-  })
+test('should calculate the cartesian product of two string sets', (test) =&gt; {
+	const product = cartesianProductWith([
+		[ 'hello', 'hi', 'hey' ],
+		[ 'there', 'world', 'yo' ]
+	], (accumulator: string[], element: string) =&gt; {
+		return _.concat(accumulator, [ element ])
+	}, [[]])
 &nbsp;
-  test.deepEqual(product, [
-    [ 'hello', 'there' ],
-    [ 'hello', 'world' ],
-    [ 'hello', 'yo' ],
-    [ 'hi', 'there' ],
-    [ 'hi', 'world' ],
-    [ 'hi', 'yo' ],
-    [ 'hey', 'there' ],
-    [ 'hey', 'world' ],
-    [ 'hey', 'yo' ]
-  ])
+	test.deepEqual(product, [
+		[ 'hello', 'there' ],
+		[ 'hello', 'world' ],
+		[ 'hello', 'yo' ],
+		[ 'hi', 'there' ],
+		[ 'hi', 'world' ],
+		[ 'hi', 'yo' ],
+		[ 'hey', 'there' ],
+		[ 'hey', 'world' ],
+		[ 'hey', 'yo' ]
+	])
 })
 &nbsp;
-ava('should be able to discard combinations by returning undefined', (test) =&gt; {
-  const product = utils.cartesianProductWith([
-    [ 'hello', 'hi', 'hey' ],
-    [ 'there', 'world', 'yo' ]
-  ], (accumulator, element) =&gt; {
-    if (!_.isEqual(accumulator, [ 'hello' ]) &amp;&amp; element === 'world') {
-      return undefined
-    }
+test('should be able to discard combinations by returning undefined', (test) =&gt; {
+	const product = cartesianProductWith([
+		[ 'hello', 'hi', 'hey' ],
+		[ 'there', 'world', 'yo' ]
+	], (accumulator: string[], element: string) =&gt; {
+		if (!_.isEqual(accumulator, [ 'hello' ]) &amp;&amp; element === 'world') {
+			return undefined
+		}
 &nbsp;
-    if (_.isEqual(accumulator, [ 'hello' ]) &amp;&amp; element === 'yo') {
-      return undefined
-    }
+		if (_.isEqual(accumulator, [ 'hello' ]) &amp;&amp; element === 'yo') {
+			return undefined
+		}
 &nbsp;
-    if (_.isEqual(accumulator, [ 'hello' ]) &amp;&amp; element === 'there') {
-      return undefined
-    }
+		if (_.isEqual(accumulator, [ 'hello' ]) &amp;&amp; element === 'there') {
+			return undefined
+		}
 &nbsp;
-    return _.concat(accumulator, [ element ])
-  })
+		return _.concat(accumulator, [ element ])
+	}, [[]])
 &nbsp;
-  test.deepEqual(product, [
-    [ 'hello', 'world' ],
-    [ 'hi', 'there' ],
-    [ 'hi', 'yo' ],
-    [ 'hey', 'there' ],
-    [ 'hey', 'yo' ]
-  ])
+	test.deepEqual(product, [
+		[ 'hello', 'world' ],
+		[ 'hi', 'there' ],
+		[ 'hi', 'yo' ],
+		[ 'hey', 'there' ],
+		[ 'hey', 'yo' ]
+	])
 })
 &nbsp;
-ava('should be able to discard combinations on a 3 sets product', (test) =&gt; {
-  const product = utils.cartesianProductWith([
-    [ 1, 2, 3 ],
-    [ 4, 5, 6 ],
-    [ 7, 8, 9 ]
-  ], (accumulator, element) =&gt; {
-    const combination = _.concat(accumulator, [ element ])
+test('should be able to discard combinations on a 3 sets product', (test) =&gt; {
+	const product = cartesianProductWith([
+		[ 1, 2, 3 ],
+		[ 4, 5, 6 ],
+		[ 7, 8, 9 ]
+	], (accumulator: number[], element: number) =&gt; {
+		const combination = _.concat(accumulator, [ element ])
 &nbsp;
-    // Lets pretend we don't want any combination starting
-    // with two odd numbers
-    if (_.size(combination) &gt; 1 &amp;&amp; _.every(combination, (item) =&gt; {
-      return item % 2 === 1
-    })) {
-      return undefined
-    }
+		// Lets pretend we don't want any combination starting
+		// with two odd numbers
+		if (_.size(combination) &gt; 1 &amp;&amp; _.every(combination, (item) =&gt; {
+			return item % 2 === 1
+		})) {
+			return undefined
+		}
 &nbsp;
-    return combination
-  })
+		return combination
+	}, [[]])
 &nbsp;
-  test.deepEqual(product, [
-    [ 1, 4, 7 ],
-    [ 1, 4, 8 ],
-    [ 1, 4, 9 ],
-    [ 1, 6, 7 ],
-    [ 1, 6, 8 ],
-    [ 1, 6, 9 ],
-    [ 2, 4, 7 ],
-    [ 2, 4, 8 ],
-    [ 2, 4, 9 ],
-    [ 2, 5, 7 ],
-    [ 2, 5, 8 ],
-    [ 2, 5, 9 ],
-    [ 2, 6, 7 ],
-    [ 2, 6, 8 ],
-    [ 2, 6, 9 ],
-    [ 3, 4, 7 ],
-    [ 3, 4, 8 ],
-    [ 3, 4, 9 ],
-    [ 3, 6, 7 ],
-    [ 3, 6, 8 ],
-    [ 3, 6, 9 ]
-  ])
+	test.deepEqual(product, [
+		[ 1, 4, 7 ],
+		[ 1, 4, 8 ],
+		[ 1, 4, 9 ],
+		[ 1, 6, 7 ],
+		[ 1, 6, 8 ],
+		[ 1, 6, 9 ],
+		[ 2, 4, 7 ],
+		[ 2, 4, 8 ],
+		[ 2, 4, 9 ],
+		[ 2, 5, 7 ],
+		[ 2, 5, 8 ],
+		[ 2, 5, 9 ],
+		[ 2, 6, 7 ],
+		[ 2, 6, 8 ],
+		[ 2, 6, 9 ],
+		[ 3, 4, 7 ],
+		[ 3, 4, 8 ],
+		[ 3, 4, 9 ],
+		[ 3, 6, 7 ],
+		[ 3, 6, 8 ],
+		[ 3, 6, 9 ]
+	])
 })
 &nbsp;</pre></td></tr>
 </table></pre>
@@ -544,7 +529,7 @@ ava('should be able to discard combinations on a 3 sets product', (test) =&gt; {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Apr 28 2021 17:05:03 GMT+1000 (Australian Eastern Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Apr 30 2021 11:36:21 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="../../prettify.js"></script>

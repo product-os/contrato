@@ -16,414 +16,410 @@
 
 'use strict'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
+import { findPartial } from '../../lib/partials';
 
-// @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
-const partials = require('../../lib/partials')
+import Contract from '../../lib/contract';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Contract'.
-const Contract = require('../../lib/contract')
+test('should find a partial in a one level structure with one contract of a type', (test) => {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-ava('should find a partial in a one level structure with one contract of a type', (test) => {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	contract.addChildren([
+		new Contract({
+			type: 'arch.sw',
+			name: 'armv7hf',
+			slug: 'armv7hf'
+		})
+	])
 
-  contract.addChildren([
-    new Contract({
-      type: 'arch.sw',
-      name: 'armv7hf',
-      slug: 'armv7hf'
-    })
-  ])
-
-  test.deepEqual(partials.findPartial('my-partial', contract, {
-    baseDirectory: 'path/to/partials',
-    structure: [ 'arch.sw' ]
-  }), [
-    'path/to/partials/armv7hf/my-partial.tpl',
-    'path/to/partials/my-partial.tpl'
-  ])
+	test.deepEqual(findPartial('my-partial', contract, {
+		baseDirectory: 'path/to/partials',
+		structure: [ 'arch.sw' ]
+	}), [
+		'path/to/partials/armv7hf/my-partial.tpl',
+		'path/to/partials/my-partial.tpl'
+	])
 })
 
-ava('should find a partial in a one level structure with one alias contract of a type', (test) => {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should find a partial in a one level structure with one alias contract of a type', (test) => {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  contract.addChildren([
-    new Contract({
-      type: 'arch.sw',
-      name: 'armv7hf',
-      slug: 'armhf',
-      canonicalSlug: 'armv7hf'
-    })
-  ])
+	contract.addChildren([
+		new Contract({
+			type: 'arch.sw',
+			name: 'armv7hf',
+			slug: 'armhf',
+			canonicalSlug: 'armv7hf'
+		})
+	])
 
-  test.deepEqual(partials.findPartial('my-partial', contract, {
-    baseDirectory: 'path/to/partials',
-    structure: [ 'arch.sw' ]
-  }), [
-    'path/to/partials/armv7hf/my-partial.tpl',
-    'path/to/partials/my-partial.tpl'
-  ])
+	test.deepEqual(findPartial('my-partial', contract, {
+		baseDirectory: 'path/to/partials',
+		structure: [ 'arch.sw' ]
+	}), [
+		'path/to/partials/armv7hf/my-partial.tpl',
+		'path/to/partials/my-partial.tpl'
+	])
 })
 
-ava('should find a partial in a one level structure with two alias contracts of a type', (test) => {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should find a partial in a one level structure with two alias contracts of a type', (test) => {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  contract.addChildren([
-    new Contract({
-      type: 'arch.sw',
-      name: 'armv7hf',
-      slug: 'armhf',
-      canonicalSlug: 'armv7hf'
-    }),
-    new Contract({
-      type: 'arch.sw',
-      name: 'armel',
-      slug: 'armv5e',
-      canonicalSlug: 'armel'
-    })
-  ])
+	contract.addChildren([
+		new Contract({
+			type: 'arch.sw',
+			name: 'armv7hf',
+			slug: 'armhf',
+			canonicalSlug: 'armv7hf'
+		}),
+		new Contract({
+			type: 'arch.sw',
+			name: 'armel',
+			slug: 'armv5e',
+			canonicalSlug: 'armel'
+		})
+	])
 
-  test.deepEqual(partials.findPartial('my-partial', contract, {
-    baseDirectory: 'path/to/partials',
-    structure: [ 'arch.sw' ]
-  }), [
-    'path/to/partials/armel+armv7hf/my-partial.tpl',
-    'path/to/partials/my-partial.tpl'
-  ])
+	test.deepEqual(findPartial('my-partial', contract, {
+		baseDirectory: 'path/to/partials',
+		structure: [ 'arch.sw' ]
+	}), [
+		'path/to/partials/armel+armv7hf/my-partial.tpl',
+		'path/to/partials/my-partial.tpl'
+	])
 })
 
-ava('should find a partial in a one level structure with two contracts of a type with one right version', (test) => {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should find a partial in a one level structure with two contracts of a type with one right version', (test) => {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  contract.addChildren([
-    new Contract({
-      type: 'arch.sw',
-      version: '3',
-      name: 'armv7hf',
-      slug: 'armv7hf'
-    }),
-    new Contract({
-      type: 'arch.sw',
-      name: 'armel',
-      slug: 'armel'
-    })
-  ])
+	contract.addChildren([
+		new Contract({
+			type: 'arch.sw',
+			version: '3',
+			name: 'armv7hf',
+			slug: 'armv7hf'
+		}),
+		new Contract({
+			type: 'arch.sw',
+			name: 'armel',
+			slug: 'armel'
+		})
+	])
 
-  test.deepEqual(partials.findPartial('my-partial', contract, {
-    baseDirectory: 'path/to/partials',
-    structure: [ 'arch.sw' ]
-  }), [
-    'path/to/partials/armel+armv7hf@3/my-partial.tpl',
-    'path/to/partials/armel+armv7hf/my-partial.tpl',
-    'path/to/partials/my-partial.tpl'
-  ])
+	test.deepEqual(findPartial('my-partial', contract, {
+		baseDirectory: 'path/to/partials',
+		structure: [ 'arch.sw' ]
+	}), [
+		'path/to/partials/armel+armv7hf@3/my-partial.tpl',
+		'path/to/partials/armel+armv7hf/my-partial.tpl',
+		'path/to/partials/my-partial.tpl'
+	])
 })
 
-ava('should find a partial in a one level structure with two contracts of a type with one right alias', (test) => {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should find a partial in a one level structure with two contracts of a type with one right alias', (test) => {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  contract.addChildren([
-    new Contract({
-      type: 'arch.sw',
-      version: '3',
-      name: 'armv7hf',
-      slug: 'armhf',
-      canonicalSlug: 'armv7hf'
-    }),
-    new Contract({
-      type: 'arch.sw',
-      name: 'armel',
-      slug: 'armel'
-    })
-  ])
+	contract.addChildren([
+		new Contract({
+			type: 'arch.sw',
+			version: '3',
+			name: 'armv7hf',
+			slug: 'armhf',
+			canonicalSlug: 'armv7hf'
+		}),
+		new Contract({
+			type: 'arch.sw',
+			name: 'armel',
+			slug: 'armel'
+		})
+	])
 
-  test.deepEqual(partials.findPartial('my-partial', contract, {
-    baseDirectory: 'path/to/partials',
-    structure: [ 'arch.sw' ]
-  }), [
-    'path/to/partials/armel+armv7hf@3/my-partial.tpl',
-    'path/to/partials/armel+armv7hf/my-partial.tpl',
-    'path/to/partials/my-partial.tpl'
-  ])
+	test.deepEqual(findPartial('my-partial', contract, {
+		baseDirectory: 'path/to/partials',
+		structure: [ 'arch.sw' ]
+	}), [
+		'path/to/partials/armel+armv7hf@3/my-partial.tpl',
+		'path/to/partials/armel+armv7hf/my-partial.tpl',
+		'path/to/partials/my-partial.tpl'
+	])
 })
 
-ava('should find a partial in a one level structure with two contracts of a type with one left version', (test) => {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should find a partial in a one level structure with two contracts of a type with one left version', (test) => {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  contract.addChildren([
-    new Contract({
-      type: 'arch.sw',
-      name: 'armv7hf',
-      slug: 'armv7hf'
-    }),
-    new Contract({
-      type: 'arch.sw',
-      version: '3',
-      name: 'armel',
-      slug: 'armel'
-    })
-  ])
+	contract.addChildren([
+		new Contract({
+			type: 'arch.sw',
+			name: 'armv7hf',
+			slug: 'armv7hf'
+		}),
+		new Contract({
+			type: 'arch.sw',
+			version: '3',
+			name: 'armel',
+			slug: 'armel'
+		})
+	])
 
-  test.deepEqual(partials.findPartial('my-partial', contract, {
-    baseDirectory: 'path/to/partials',
-    structure: [ 'arch.sw' ]
-  }), [
-    'path/to/partials/armel@3+armv7hf/my-partial.tpl',
-    'path/to/partials/armel+armv7hf/my-partial.tpl',
-    'path/to/partials/my-partial.tpl'
-  ])
+	test.deepEqual(findPartial('my-partial', contract, {
+		baseDirectory: 'path/to/partials',
+		structure: [ 'arch.sw' ]
+	}), [
+		'path/to/partials/armel@3+armv7hf/my-partial.tpl',
+		'path/to/partials/armel+armv7hf/my-partial.tpl',
+		'path/to/partials/my-partial.tpl'
+	])
 })
 
-ava('should find a partial in a one level structure with two contracts of a type with one left alias', (test) => {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should find a partial in a one level structure with two contracts of a type with one left alias', (test) => {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  contract.addChildren([
-    new Contract({
-      type: 'arch.sw',
-      name: 'armv7hf',
-      slug: 'armhf',
-      canonicalSlug: 'armv7hf'
-    }),
-    new Contract({
-      type: 'arch.sw',
-      version: '3',
-      name: 'armel',
-      slug: 'armel'
-    })
-  ])
+	contract.addChildren([
+		new Contract({
+			type: 'arch.sw',
+			name: 'armv7hf',
+			slug: 'armhf',
+			canonicalSlug: 'armv7hf'
+		}),
+		new Contract({
+			type: 'arch.sw',
+			version: '3',
+			name: 'armel',
+			slug: 'armel'
+		})
+	])
 
-  test.deepEqual(partials.findPartial('my-partial', contract, {
-    baseDirectory: 'path/to/partials',
-    structure: [ 'arch.sw' ]
-  }), [
-    'path/to/partials/armel@3+armv7hf/my-partial.tpl',
-    'path/to/partials/armel+armv7hf/my-partial.tpl',
-    'path/to/partials/my-partial.tpl'
-  ])
+	test.deepEqual(findPartial('my-partial', contract, {
+		baseDirectory: 'path/to/partials',
+		structure: [ 'arch.sw' ]
+	}), [
+		'path/to/partials/armel@3+armv7hf/my-partial.tpl',
+		'path/to/partials/armel+armv7hf/my-partial.tpl',
+		'path/to/partials/my-partial.tpl'
+	])
 })
 
-ava('should find a partial in a one level structure with two contracts of a type with two versions', (test) => {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should find a partial in a one level structure with two contracts of a type with two versions', (test) => {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  contract.addChildren([
-    new Contract({
-      type: 'arch.sw',
-      version: '1',
-      name: 'armv7hf',
-      slug: 'armv7hf'
-    }),
-    new Contract({
-      type: 'arch.sw',
-      version: '3',
-      name: 'armel',
-      slug: 'armel'
-    })
-  ])
+	contract.addChildren([
+		new Contract({
+			type: 'arch.sw',
+			version: '1',
+			name: 'armv7hf',
+			slug: 'armv7hf'
+		}),
+		new Contract({
+			type: 'arch.sw',
+			version: '3',
+			name: 'armel',
+			slug: 'armel'
+		})
+	])
 
-  test.deepEqual(partials.findPartial('my-partial', contract, {
-    baseDirectory: 'path/to/partials',
-    structure: [ 'arch.sw' ]
-  }), [
-    'path/to/partials/armel@3+armv7hf@1/my-partial.tpl',
-    'path/to/partials/armel+armv7hf/my-partial.tpl',
-    'path/to/partials/my-partial.tpl'
-  ])
+	test.deepEqual(findPartial('my-partial', contract, {
+		baseDirectory: 'path/to/partials',
+		structure: [ 'arch.sw' ]
+	}), [
+		'path/to/partials/armel@3+armv7hf@1/my-partial.tpl',
+		'path/to/partials/armel+armv7hf/my-partial.tpl',
+		'path/to/partials/my-partial.tpl'
+	])
 })
 
-ava('should find a partial in a one level structure with one contract of a type with a version', (test) => {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should find a partial in a one level structure with one contract of a type with a version', (test) => {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  contract.addChildren([
-    new Contract({
-      type: 'arch.sw',
-      name: 'armv7hf',
-      version: '3',
-      slug: 'armv7hf'
-    })
-  ])
+	contract.addChildren([
+		new Contract({
+			type: 'arch.sw',
+			name: 'armv7hf',
+			version: '3',
+			slug: 'armv7hf'
+		})
+	])
 
-  test.deepEqual(partials.findPartial('my-partial', contract, {
-    baseDirectory: 'path/to/partials',
-    structure: [ 'arch.sw' ]
-  }), [
-    'path/to/partials/armv7hf@3/my-partial.tpl',
-    'path/to/partials/armv7hf/my-partial.tpl',
-    'path/to/partials/my-partial.tpl'
-  ])
+	test.deepEqual(findPartial('my-partial', contract, {
+		baseDirectory: 'path/to/partials',
+		structure: [ 'arch.sw' ]
+	}), [
+		'path/to/partials/armv7hf@3/my-partial.tpl',
+		'path/to/partials/armv7hf/my-partial.tpl',
+		'path/to/partials/my-partial.tpl'
+	])
 })
 
-ava('should find a partial in a two level structure with one contract of each type', (test) => {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should find a partial in a two level structure with one contract of each type', (test) => {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  contract.addChildren([
-    new Contract({
-      type: 'arch.sw',
-      name: 'armv7hf',
-      slug: 'armv7hf'
-    }),
-    new Contract({
-      type: 'hw.device-type',
-      name: 'Raspberry Pi 3',
-      slug: 'raspberrypi3'
-    })
-  ])
+	contract.addChildren([
+		new Contract({
+			type: 'arch.sw',
+			name: 'armv7hf',
+			slug: 'armv7hf'
+		}),
+		new Contract({
+			type: 'hw.device-type',
+			name: 'Raspberry Pi 3',
+			slug: 'raspberrypi3'
+		})
+	])
 
-  test.deepEqual(partials.findPartial('my-partial', contract, {
-    baseDirectory: 'path/to/partials',
-    structure: [ 'hw.device-type', 'arch.sw' ]
-  }), [
-    'path/to/partials/raspberrypi3+armv7hf/my-partial.tpl',
-    'path/to/partials/raspberrypi3/my-partial.tpl',
-    'path/to/partials/my-partial.tpl'
-  ])
+	test.deepEqual(findPartial('my-partial', contract, {
+		baseDirectory: 'path/to/partials',
+		structure: [ 'hw.device-type', 'arch.sw' ]
+	}), [
+		'path/to/partials/raspberrypi3+armv7hf/my-partial.tpl',
+		'path/to/partials/raspberrypi3/my-partial.tpl',
+		'path/to/partials/my-partial.tpl'
+	])
 })
 
-ava('should find a partial in a two level structure with one contract of each type with versions', (test) => {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should find a partial in a two level structure with one contract of each type with versions', (test) => {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  contract.addChildren([
-    new Contract({
-      type: 'arch.sw',
-      version: '1',
-      name: 'armv7hf',
-      slug: 'armv7hf'
-    }),
-    new Contract({
-      type: 'hw.device-type',
-      name: 'Raspberry Pi 3',
-      version: 'rev1',
-      slug: 'raspberrypi3'
-    })
-  ])
+	contract.addChildren([
+		new Contract({
+			type: 'arch.sw',
+			version: '1',
+			name: 'armv7hf',
+			slug: 'armv7hf'
+		}),
+		new Contract({
+			type: 'hw.device-type',
+			name: 'Raspberry Pi 3',
+			version: 'rev1',
+			slug: 'raspberrypi3'
+		})
+	])
 
-  test.deepEqual(partials.findPartial('my-partial', contract, {
-    baseDirectory: 'path/to/partials',
-    structure: [ 'hw.device-type', 'arch.sw' ]
-  }), [
-    'path/to/partials/raspberrypi3@rev1+armv7hf@1/my-partial.tpl',
-    'path/to/partials/raspberrypi3@rev1+armv7hf/my-partial.tpl',
-    'path/to/partials/raspberrypi3+armv7hf@1/my-partial.tpl',
-    'path/to/partials/raspberrypi3+armv7hf/my-partial.tpl',
-    'path/to/partials/raspberrypi3@rev1/my-partial.tpl',
-    'path/to/partials/raspberrypi3/my-partial.tpl',
-    'path/to/partials/my-partial.tpl'
-  ])
+	test.deepEqual(findPartial('my-partial', contract, {
+		baseDirectory: 'path/to/partials',
+		structure: [ 'hw.device-type', 'arch.sw' ]
+	}), [
+		'path/to/partials/raspberrypi3@rev1+armv7hf@1/my-partial.tpl',
+		'path/to/partials/raspberrypi3@rev1+armv7hf/my-partial.tpl',
+		'path/to/partials/raspberrypi3+armv7hf@1/my-partial.tpl',
+		'path/to/partials/raspberrypi3+armv7hf/my-partial.tpl',
+		'path/to/partials/raspberrypi3@rev1/my-partial.tpl',
+		'path/to/partials/raspberrypi3/my-partial.tpl',
+		'path/to/partials/my-partial.tpl'
+	])
 })
 
-ava('should find a partial in a three level structure with one contract of each type', (test) => {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should find a partial in a three level structure with one contract of each type', (test) => {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  contract.addChildren([
-    new Contract({
-      type: 'arch.sw',
-      name: 'armv7hf',
-      slug: 'armv7hf'
-    }),
-    new Contract({
-      type: 'hw.device-type',
-      name: 'Raspberry Pi 3',
-      slug: 'raspberrypi3'
-    }),
-    new Contract({
-      type: 'sw.os',
-      name: 'Debian Wheezy',
-      slug: 'debian'
-    })
-  ])
+	contract.addChildren([
+		new Contract({
+			type: 'arch.sw',
+			name: 'armv7hf',
+			slug: 'armv7hf'
+		}),
+		new Contract({
+			type: 'hw.device-type',
+			name: 'Raspberry Pi 3',
+			slug: 'raspberrypi3'
+		}),
+		new Contract({
+			type: 'sw.os',
+			name: 'Debian Wheezy',
+			slug: 'debian'
+		})
+	])
 
-  test.deepEqual(partials.findPartial('my-partial', contract, {
-    baseDirectory: 'path/to/partials',
-    structure: [ 'hw.device-type', 'sw.os', 'arch.sw' ]
-  }), [
-    'path/to/partials/raspberrypi3+debian+armv7hf/my-partial.tpl',
-    'path/to/partials/raspberrypi3+debian/my-partial.tpl',
-    'path/to/partials/raspberrypi3/my-partial.tpl',
-    'path/to/partials/my-partial.tpl'
-  ])
+	test.deepEqual(findPartial('my-partial', contract, {
+		baseDirectory: 'path/to/partials',
+		structure: [ 'hw.device-type', 'sw.os', 'arch.sw' ]
+	}), [
+		'path/to/partials/raspberrypi3+debian+armv7hf/my-partial.tpl',
+		'path/to/partials/raspberrypi3+debian/my-partial.tpl',
+		'path/to/partials/raspberrypi3/my-partial.tpl',
+		'path/to/partials/my-partial.tpl'
+	])
 })
 
-ava('should find a partial in a three level structure with one contract with version of each type', (test) => {
-  const contract = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should find a partial in a three level structure with one contract with version of each type', (test) => {
+	const contract = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 
-  contract.addChildren([
-    new Contract({
-      type: 'arch.sw',
-      name: 'armv7hf',
-      slug: 'armv7hf',
-      version: '1'
-    }),
-    new Contract({
-      type: 'hw.device-type',
-      name: 'Raspberry Pi 3',
-      slug: 'raspberrypi3',
-      version: 'rev1'
-    }),
-    new Contract({
-      type: 'sw.os',
-      name: 'Debian Wheezy',
-      slug: 'debian',
-      version: '7'
-    })
-  ])
+	contract.addChildren([
+		new Contract({
+			type: 'arch.sw',
+			name: 'armv7hf',
+			slug: 'armv7hf',
+			version: '1'
+		}),
+		new Contract({
+			type: 'hw.device-type',
+			name: 'Raspberry Pi 3',
+			slug: 'raspberrypi3',
+			version: 'rev1'
+		}),
+		new Contract({
+			type: 'sw.os',
+			name: 'Debian Wheezy',
+			slug: 'debian',
+			version: '7'
+		})
+	])
 
-  test.deepEqual(partials.findPartial('my-partial', contract, {
-    baseDirectory: 'path/to/partials',
-    structure: [ 'hw.device-type', 'sw.os', 'arch.sw' ]
-  }), [
-    'path/to/partials/raspberrypi3@rev1+debian@7+armv7hf@1/my-partial.tpl',
-    'path/to/partials/raspberrypi3@rev1+debian@7+armv7hf/my-partial.tpl',
-    'path/to/partials/raspberrypi3@rev1+debian+armv7hf@1/my-partial.tpl',
-    'path/to/partials/raspberrypi3@rev1+debian+armv7hf/my-partial.tpl',
-    'path/to/partials/raspberrypi3+debian@7+armv7hf@1/my-partial.tpl',
-    'path/to/partials/raspberrypi3+debian@7+armv7hf/my-partial.tpl',
-    'path/to/partials/raspberrypi3+debian+armv7hf@1/my-partial.tpl',
-    'path/to/partials/raspberrypi3+debian+armv7hf/my-partial.tpl',
-    'path/to/partials/raspberrypi3@rev1+debian@7/my-partial.tpl',
-    'path/to/partials/raspberrypi3@rev1+debian/my-partial.tpl',
-    'path/to/partials/raspberrypi3+debian@7/my-partial.tpl',
-    'path/to/partials/raspberrypi3+debian/my-partial.tpl',
-    'path/to/partials/raspberrypi3@rev1/my-partial.tpl',
-    'path/to/partials/raspberrypi3/my-partial.tpl',
-    'path/to/partials/my-partial.tpl'
-  ])
+	test.deepEqual(findPartial('my-partial', contract, {
+		baseDirectory: 'path/to/partials',
+		structure: [ 'hw.device-type', 'sw.os', 'arch.sw' ]
+	}), [
+		'path/to/partials/raspberrypi3@rev1+debian@7+armv7hf@1/my-partial.tpl',
+		'path/to/partials/raspberrypi3@rev1+debian@7+armv7hf/my-partial.tpl',
+		'path/to/partials/raspberrypi3@rev1+debian+armv7hf@1/my-partial.tpl',
+		'path/to/partials/raspberrypi3@rev1+debian+armv7hf/my-partial.tpl',
+		'path/to/partials/raspberrypi3+debian@7+armv7hf@1/my-partial.tpl',
+		'path/to/partials/raspberrypi3+debian@7+armv7hf/my-partial.tpl',
+		'path/to/partials/raspberrypi3+debian+armv7hf@1/my-partial.tpl',
+		'path/to/partials/raspberrypi3+debian+armv7hf/my-partial.tpl',
+		'path/to/partials/raspberrypi3@rev1+debian@7/my-partial.tpl',
+		'path/to/partials/raspberrypi3@rev1+debian/my-partial.tpl',
+		'path/to/partials/raspberrypi3+debian@7/my-partial.tpl',
+		'path/to/partials/raspberrypi3+debian/my-partial.tpl',
+		'path/to/partials/raspberrypi3@rev1/my-partial.tpl',
+		'path/to/partials/raspberrypi3/my-partial.tpl',
+		'path/to/partials/my-partial.tpl'
+	])
 })

@@ -16,62 +16,60 @@
 
 'use strict'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Contract'.
-const Contract = require('../../../lib/contract')
+import Contract from '../../../lib/contract';
 
-ava('should resolve templates for which the values exist', (test) => {
-  const contract = new Contract({
-    type: 'arch.sw',
-    version: '7',
-    name: 'ARM v{{this.version}}',
-    slug: 'armv7hf'
-  })
+test('should resolve templates for which the values exist', (test) => {
+	const contract = new Contract({
+		type: 'arch.sw',
+		version: '7',
+		name: 'ARM v{{this.version}}',
+		slug: 'armv7hf'
+	})
 
-  test.is(contract.metadata.hash, '0765760c9fefb5bacd69d5d58bfaaab931a75d25')
+	test.is(contract.metadata.hash, '0765760c9fefb5bacd69d5d58bfaaab931a75d25')
 
-  test.deepEqual(contract.raw, {
-    type: 'arch.sw',
-    version: '7',
-    name: 'ARM v7',
-    slug: 'armv7hf'
-  })
+	test.deepEqual(contract.raw, {
+		type: 'arch.sw',
+		version: '7',
+		name: 'ARM v7',
+		slug: 'armv7hf'
+	})
 })
 
-ava('should not resolve templates for which the values do not exist', (test) => {
-  const contract = new Contract({
-    type: 'arch.sw',
-    name: '{{this.displayName}}',
-    slug: 'armv7hf'
-  })
+test('should not resolve templates for which the values do not exist', (test) => {
+	const contract = new Contract({
+		type: 'arch.sw',
+		name: '{{this.displayName}}',
+		slug: 'armv7hf'
+	})
 
-  test.is(contract.metadata.hash, '9c847d98c15460b417934b5185bb39c316a1386a')
+	test.is(contract.metadata.hash, '9c847d98c15460b417934b5185bb39c316a1386a')
 
-  test.deepEqual(contract.raw, {
-    type: 'arch.sw',
-    name: '{{this.displayName}}',
-    slug: 'armv7hf'
-  })
+	test.deepEqual(contract.raw, {
+		type: 'arch.sw',
+		name: '{{this.displayName}}',
+		slug: 'armv7hf'
+	})
 })
 
-ava('should not hash a templated contract if the hash option is false', (test) => {
-  const contract = new Contract({
-    type: 'arch.sw',
-    version: '7',
-    name: 'ARM v{{this.version}}',
-    slug: 'armv7hf'
-  }, {
-    hash: false
-  })
+test('should not hash a templated contract if the hash option is false', (test) => {
+	const contract = new Contract({
+		type: 'arch.sw',
+		version: '7',
+		name: 'ARM v{{this.version}}',
+		slug: 'armv7hf'
+	}, {
+		hash: false
+	})
 
-  test.is(typeof contract.metadata.hash, 'undefined')
+	test.is(typeof contract.metadata.hash, 'undefined')
 
-  test.deepEqual(contract.raw, {
-    type: 'arch.sw',
-    version: '7',
-    name: 'ARM v7',
-    slug: 'armv7hf'
-  })
+	test.deepEqual(contract.raw, {
+		type: 'arch.sw',
+		version: '7',
+		name: 'ARM v7',
+		slug: 'armv7hf'
+	})
 })

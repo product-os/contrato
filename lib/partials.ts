@@ -14,35 +14,41 @@
  * limitations under the License.
  */
 
-'use strict'
+'use strict';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable '_'.
-const _ = require('lodash')
+import Debug from 'debug';
+import fs from 'fs';
+import path from 'path';
+import Handlebars from 'handlebars';
+import {
+	attempt,
+	chain,
+	first,
+	invokeMap,
+	isError,
+	join,
+	last,
+	map,
+	merge,
+	range,
+	reduce,
+	split,
+	take,
+	trim,
+} from 'lodash';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Contract'.
-const Contract = require('./contract')
+import { cartesianProductWith, stripExtraBlankLines } from './utils';
+import Contract from './contract';
+import { ContractType } from './types/types';
 
-// @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
-const path = require('path')
-
-// @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
-const fs = require('fs')
-
-// @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
-const debug = require('debug')('partials')
-
-// @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
-const handlebars = require('handlebars')
-
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'utils'.
-const utils = require('./utils')
+const debug = Debug('partials');
 
 /**
  * @summary Delimiter to use between contract references
  * @type {String}
  * @private
  */
-const REFERENCE_DELIMITER = '+'
+const REFERENCE_DELIMITER: string = '+';
 
 /**
  * @summary Calculate the paths to search for a partial given a contract
@@ -71,128 +77,133 @@ const REFERENCE_DELIMITER = '+'
  *   console.log(`Trying to load ${path}...`)
  * })
  */
-// @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-exports.findPartial = (name, context, options) => {
-  return _.chain(options.structure)
-    .map((type) => {
-      const children = context.getChildrenByType(type)
-      const contracts = _.chain(children).map((contract) => {
-        // We need to replace the alias slug with canonical slug when finding partial
-        // since the aliases will use canonical slug to avoid duplication.
-        const rawContract = contract.toJSON()
-        rawContract.slug = contract.getCanonicalSlug()
-        return new Contract(rawContract)
-      })
-        .sortBy((contract) => {
-          return contract.getSlug()
-        })
-        .value()
+export const findPartial = (
+	name: string,
+	context: ContractType,
+	options: { baseDirectory: string; structure: string[] },
+): string[] =>
+	chain(options.structure)
+		.map((type) => {
+			const children = context.getChildrenByType(type);
+			const contracts = chain(children)
+				.map((contract) => {
+					// We need to replace the alias slug with canonical slug when finding partial
+					// since the aliases will use canonical slug to avoid duplication.
+					const rawContract = contract.toJSON();
+					rawContract.slug = contract.getCanonicalSlug();
+					return new Contract(rawContract);
+				})
+				.sortBy((contract) => contract.getSlug())
+				.value();
 
-      return [
-        _.join(_.invokeMap(contracts, 'getReferenceString'), REFERENCE_DELIMITER),
-        _.join(_.invokeMap(contracts, 'getSlug'), REFERENCE_DELIMITER)
-      ]
-    })
-    .thru((combinations) => {
-      const products = utils.cartesianProductWith(combinations, (accumulator, element) => {
-        return accumulator.concat([ element ])
-      })
+			return [
+				join(invokeMap(contracts, 'getReferenceString'), REFERENCE_DELIMITER),
+				join(invokeMap(contracts, 'getSlug'), REFERENCE_DELIMITER),
+			];
+		})
+		.thru((combinations) => {
+			const products = cartesianProductWith<string, string[]>(
+				combinations,
+				(accumulator: string[], element: string) =>
+					accumulator.concat([element]),
+				[[]],
+			);
 
-      const slices = _.reduce(_.range(options.structure.length, 1, -1), (accumulator, slice) => {
-        return accumulator.concat(_.invokeMap(products, 'slice', 0, slice))
-      }, [])
+			const slices = reduce(
+				range(options.structure.length, 1, -1),
+				(accumulator, slice) =>
+					accumulator.concat(invokeMap(products, 'slice', 0, slice)),
+				[] as string[][],
+			);
 
-      const fallbackPaths = _.chain(combinations)
+			const fallbackPaths = chain(combinations)
+				.reduce(
+					(accumulator, _, index, collection) =>
+						map([map(collection, first), map(collection, last)], (list) =>
+							take(list, index + 1),
+						).concat(accumulator),
+					[] as Array<Array<string | undefined>>,
+				)
+				.value();
 
-        // @ts-expect-error ts-migrate(6133) FIXME: 'value' is declared but its value is never read.
-        .reduce((accumulator, value, index, collection) => {
-          return _.map([
-            _.map(collection, _.first),
-            _.map(collection, _.last)
-          ], (list) => {
-            return _.take(list, index + 1)
-          }).concat(accumulator)
-        }, [])
-        .value()
+			return (products as Array<Array<string | undefined>>)
+				.concat(slices)
+				.concat(fallbackPaths);
+		})
+		.map((references) => [join(references, REFERENCE_DELIMITER), name])
+		.concat([[name]])
+		.map((paths) => {
+			const absolutePath = [options.baseDirectory].concat(paths);
+			return `${path.join(...absolutePath)}.tpl`;
+		})
+		.uniq()
+		.value();
 
-      return products.concat(slices).concat(fallbackPaths)
-    })
-    .map((references) => {
-      return [ _.join(references, REFERENCE_DELIMITER), name ]
-    })
-    .concat([ [ name ] ])
-    .map((paths) => {
-      const absolutePath = [ options.baseDirectory ].concat(paths)
-      return `${path.join(...absolutePath)}.tpl`
-    })
-    .uniq()
-    .value()
-}
+Handlebars.registerHelper('import', (options) => {
+	const settings = options.data.root.settings;
 
-handlebars.registerHelper('import', (options) => {
-  const settings = options.data.root.settings
+	const partialPaths = findPartial(options.hash.partial, settings.context, {
+		baseDirectory: path.join(settings.directory, options.hash.combination),
+		structure: map(split(options.hash.combination, REFERENCE_DELIMITER), trim),
+	});
 
-  // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-  const partialPaths = exports.findPartial(options.hash.partial, settings.context, {
-    baseDirectory: path.join(settings.directory, options.hash.combination),
-    structure: _.map(_.split(options.hash.combination, REFERENCE_DELIMITER), _.trim)
-  })
+	for (const partialPath of partialPaths) {
+		const partialContent = attempt(fs.readFileSync, partialPath, {
+			encoding: 'utf8',
+		});
 
-  for (const partialPath of partialPaths) {
-    const partialContent = _.attempt(fs.readFileSync, partialPath, {
-      encoding: 'utf8'
-    })
+		if (isError(partialContent)) {
+			if ((partialContent as NodeJS.ErrnoException).code === 'ENOENT') {
+				debug(`Ignoring ${partialPath}`);
+				continue;
+			}
 
-    if (_.isError(partialContent)) {
-      if (partialContent.code === 'ENOENT') {
-        debug(`Ignoring ${partialPath}`)
-        continue
-      }
+			throw partialContent;
+		} else if (partialContent instanceof Buffer) {
+			throw new Error(`Error reading file: ${partialPath}`);
+		}
 
-      throw partialContent
-    }
+		debug(`Using ${partialPath}`);
 
-    debug(`Using ${partialPath}`)
+		// We need to prevent handlebars from encoding the string as HTML,
+		// and then we need to parse and recurse through the imported partials,
+		// in case they have any interpolation that needs to be resolved.
+		const safeContent = new Handlebars.SafeString(
+			partialContent.slice(0, partialContent.length - 1),
+		);
+		const builtContent = Handlebars.compile(safeContent.toString())(
+			options.data.root,
+		);
+		return new Handlebars.SafeString(builtContent);
+	}
 
-    // We need to prevent handlebars from encoding the string as HTML,
-    // and then we need to parse and recurse through the imported partials,
-    // in case they have any interpolation that needs to be resolved.
-    const safeContent = new handlebars.SafeString(partialContent.slice(0, partialContent.length - 1))
-    const builtContent = handlebars.compile(safeContent.toString())(options.data.root)
-    return new handlebars.SafeString(builtContent)
-  }
-
-  throw new Error(`Partial not found: ${options.hash.partial}`)
-})
+	throw new Error(`Partial not found: ${options.hash.partial}`);
+});
 
 /**
-* @example
-*
-* {{#if (eq hw.device-type.data.media.installation "sdcard")}}
-*   SD card
-* {{/if}}
-* {{#if (eq hw.device-type.data.media.installation "usbkey")}}
-*  USB drive
-* {{/if}}
-*
-* {{#if (and hw.device-type.connectivity.wifi  hw.device-type.connectivity.ethernet)}}
-*   Choose network interface
-* {{/if}}
-*/
-handlebars.registerHelper({
-  eq: (v1, v2) => { return v1 === v2 },
-  ne: (v1, v2) => { return v1 !== v2 },
-  lt: (v1, v2) => { return v1 < v2 },
-  gt: (v1, v2) => { return v1 > v2 },
-  lte: (v1, v2) => { return v1 <= v2 },
-  gte: (v1, v2) => { return v1 >= v2 },
-  and (...rest) {
-    return rest.every(Boolean)
-  },
-  or (...rest) {
-    return rest.slice(0, -1).some(Boolean)
-  }
-})
+ * @example
+ *
+ * {{#if (eq hw.device-type.data.media.installation "sdcard")}}
+ *   SD card
+ * {{/if}}
+ * {{#if (eq hw.device-type.data.media.installation "usbkey")}}
+ *  USB drive
+ * {{/if}}
+ *
+ * {{#if (and hw.device-type.connectivity.wifi  hw.device-type.connectivity.ethernet)}}
+ *   Choose network interface
+ * {{/if}}
+ */
+Handlebars.registerHelper({
+	eq: (v1, v2) => v1 === v2,
+	ne: (v1, v2) => v1 !== v2,
+	lt: (v1, v2) => v1 < v2,
+	gt: (v1, v2) => v1 > v2,
+	lte: (v1, v2) => v1 <= v2,
+	gte: (v1, v2) => v1 >= v2,
+	and: (...rest) => rest.every(Boolean),
+	or: (...rest) => rest.slice(0, -1).some(Boolean),
+});
 
 /**
  * @summary Build a template using a context contract
@@ -218,14 +229,20 @@ handlebars.registerHelper({
  *
  * console.log(result)
  */
-// @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-exports.buildTemplate = (template, context, options) => {
-  const data = _.merge({
-    settings: {
-      directory: options.directory,
-      context
-    }
-  }, context.toJSON().children)
+export const buildTemplate = (
+	template: string,
+	context: ContractType,
+	options: { directory: string },
+): string => {
+	const data = merge(
+		{
+			settings: {
+				directory: options.directory,
+				context,
+			},
+		},
+		context.toJSON().children,
+	);
 
-  return utils.stripExtraBlankLines(handlebars.compile(template)(data))
-}
+	return stripExtraBlankLines(Handlebars.compile(template)(data));
+};

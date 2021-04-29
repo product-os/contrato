@@ -315,12 +315,7 @@
 <a name='L267'></a><a href='#L267'>267</a>
 <a name='L268'></a><a href='#L268'>268</a>
 <a name='L269'></a><a href='#L269'>269</a>
-<a name='L270'></a><a href='#L270'>270</a>
-<a name='L271'></a><a href='#L271'>271</a>
-<a name='L272'></a><a href='#L272'>272</a>
-<a name='L273'></a><a href='#L273'>273</a>
-<a name='L274'></a><a href='#L274'>274</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L270'></a><a href='#L270'>270</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -340,10 +335,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -610,260 +602,256 @@
 &nbsp;
 'use strict'
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Contract'.
-const Contract = require('../../lib/contract')
+import Contract from '../../lib/contract';
+import CONTRACTS from '../contracts.json';
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'CONTRACTS'... Remove this comment to see the full error message
-const CONTRACTS = require('../contracts.json')
-&nbsp;
-ava('should convert a contract into a JSON object', (test) =&gt; {
-  const source = CONTRACTS['sw.os'].debian.wheezy.object
-  const contract = new Contract(source)
-  test.deepEqual(contract.toJSON(), source)
+test('should convert a contract into a JSON object', (test) =&gt; {
+	const source = CONTRACTS['sw.os'].debian.wheezy.object
+	const contract = new Contract(source)
+	test.deepEqual(contract.toJSON(), source)
 })
 &nbsp;
-ava('should handle a contract with one child', (test) =&gt; {
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should handle a contract with one child', (test) =&gt; {
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  container.addChild(new Contract(CONTRACTS['sw.os'].debian.wheezy.object))
+	container.addChild(new Contract(CONTRACTS['sw.os'].debian.wheezy.object))
 &nbsp;
-  test.deepEqual(container.toJSON(), {
-    type: 'foo',
-    slug: 'bar',
-    children: {
-      sw: {
-        os: CONTRACTS['sw.os'].debian.wheezy.object
-      }
-    }
-  })
+	test.deepEqual(container.toJSON(), {
+		type: 'foo',
+		slug: 'bar',
+		children: {
+			sw: {
+				os: CONTRACTS['sw.os'].debian.wheezy.object
+			}
+		}
+	})
 })
 &nbsp;
-ava('should handle a contract with two children of the same type and slug', (test) =&gt; {
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should handle a contract with two children of the same type and slug', (test) =&gt; {
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  container.addChildren([
-    new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-    new Contract(CONTRACTS['sw.os'].debian.jessie.object)
-  ])
+	container.addChildren([
+		new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+		new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+	])
 &nbsp;
-  test.deepEqual(container.toJSON(), {
-    type: 'foo',
-    slug: 'bar',
-    children: {
-      sw: {
-        os: {
-          debian: [
-            CONTRACTS['sw.os'].debian.wheezy.object,
-            CONTRACTS['sw.os'].debian.jessie.object
-          ]
-        }
-      }
-    }
-  })
+	test.deepEqual(container.toJSON(), {
+		type: 'foo',
+		slug: 'bar',
+		children: {
+			sw: {
+				os: {
+					debian: [
+						CONTRACTS['sw.os'].debian.wheezy.object,
+						CONTRACTS['sw.os'].debian.jessie.object
+					]
+				}
+			}
+		}
+	})
 })
 &nbsp;
-ava('should handle a contract with two children of the same type but different slugs', (test) =&gt; {
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should handle a contract with two children of the same type but different slugs', (test) =&gt; {
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  container.addChildren([
-    new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-    new Contract(CONTRACTS['sw.os'].fedora['25'].object)
-  ])
+	container.addChildren([
+		new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+		new Contract(CONTRACTS['sw.os'].fedora['25'].object)
+	])
 &nbsp;
-  test.deepEqual(container.toJSON(), {
-    type: 'foo',
-    slug: 'bar',
-    children: {
-      sw: {
-        os: {
-          debian: CONTRACTS['sw.os'].debian.wheezy.object,
-          fedora: CONTRACTS['sw.os'].fedora['25'].object
-        }
-      }
-    }
-  })
+	test.deepEqual(container.toJSON(), {
+		type: 'foo',
+		slug: 'bar',
+		children: {
+			sw: {
+				os: {
+					debian: CONTRACTS['sw.os'].debian.wheezy.object,
+					fedora: CONTRACTS['sw.os'].fedora['25'].object
+				}
+			}
+		}
+	})
 })
 &nbsp;
-ava('should handle a contract with two children of different types', (test) =&gt; {
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+test('should handle a contract with two children of different types', (test) =&gt; {
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  container.addChildren([
-    new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
-    new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
-  ])
+	container.addChildren([
+		new Contract(CONTRACTS['sw.os'].debian.wheezy.object),
+		new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
+	])
 &nbsp;
-  test.deepEqual(container.toJSON(), {
-    type: 'foo',
-    slug: 'bar',
-    children: {
-      sw: {
-        os: CONTRACTS['sw.os'].debian.wheezy.object,
-        blob: CONTRACTS['sw.blob'].nodejs['4.8.0'].object
-      }
-    }
-  })
+	test.deepEqual(container.toJSON(), {
+		type: 'foo',
+		slug: 'bar',
+		children: {
+			sw: {
+				os: CONTRACTS['sw.os'].debian.wheezy.object,
+				blob: CONTRACTS['sw.blob'].nodejs['4.8.0'].object
+			}
+		}
+	})
 })
 &nbsp;
-ava('should not expand one child with aliases', (test) =&gt; {
-  const contract1 = new Contract({
-    type: 'hw.device-type',
-    name: 'Raspberry Pi',
-    slug: 'raspberrypi',
-    aliases: [ 'raspberry-pi', 'rpi' ]
-  })
+test('should not expand one child with aliases', (test) =&gt; {
+	const contract1 = new Contract({
+		type: 'hw.device-type',
+		name: 'Raspberry Pi',
+		slug: 'raspberrypi',
+		aliases: [ 'raspberry-pi', 'rpi' ]
+	})
 &nbsp;
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  container.addChild(contract1)
+	container.addChild(contract1)
 &nbsp;
-  test.deepEqual(container.toJSON(), {
-    type: 'foo',
-    slug: 'bar',
-    children: {
-      hw: {
-        'device-type': contract1.raw
-      }
-    }
-  })
+	test.deepEqual(container.toJSON(), {
+		type: 'foo',
+		slug: 'bar',
+		children: {
+			hw: {
+				'device-type': contract1.raw
+			}
+		}
+	})
 &nbsp;
-  test.deepEqual(new Contract(container.toJSON()), container)
+	test.deepEqual(new Contract(container.toJSON()), container)
 })
 &nbsp;
-ava('should expand aliases in two children of the same type', (test) =&gt; {
-  const contract1 = new Contract({
-    type: 'hw.device-type',
-    name: 'Raspberry Pi',
-    slug: 'raspberrypi',
-    aliases: [ 'raspberry-pi', 'rpi' ]
-  })
+test('should expand aliases in two children of the same type', (test) =&gt; {
+	const contract1 = new Contract({
+		type: 'hw.device-type',
+		name: 'Raspberry Pi',
+		slug: 'raspberrypi',
+		aliases: [ 'raspberry-pi', 'rpi' ]
+	})
 &nbsp;
-  const contract2 = new Contract({
-    type: 'hw.device-type',
-    name: 'Intel NUC',
-    slug: 'intel-nuc',
-    aliases: [ 'nuc' ]
-  })
+	const contract2 = new Contract({
+		type: 'hw.device-type',
+		name: 'Intel NUC',
+		slug: 'intel-nuc',
+		aliases: [ 'nuc' ]
+	})
 &nbsp;
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  container.addChildren([ contract1, contract2 ])
+	container.addChildren([ contract1, contract2 ])
 &nbsp;
-  test.deepEqual(container.toJSON(), {
-    type: 'foo',
-    slug: 'bar',
-    children: {
-      hw: {
-        'device-type': {
-          raspberrypi: contract1.raw,
-          rpi: contract1.raw,
-          'raspberry-pi': contract1.raw,
-          'intel-nuc': contract2.raw,
-          nuc: contract2.raw
-        }
-      }
-    }
-  })
+	test.deepEqual(container.toJSON(), {
+		type: 'foo',
+		slug: 'bar',
+		children: {
+			hw: {
+				'device-type': {
+					raspberrypi: contract1.raw,
+					rpi: contract1.raw,
+					'raspberry-pi': contract1.raw,
+					'intel-nuc': contract2.raw,
+					nuc: contract2.raw
+				}
+			}
+		}
+	})
 &nbsp;
-  test.deepEqual(new Contract(container.toJSON()), container)
+	test.deepEqual(new Contract(container.toJSON()), container)
 })
 &nbsp;
-ava('should correctly handle one aliased and one non aliased child of the same type', (test) =&gt; {
-  const contract1 = new Contract({
-    type: 'hw.device-type',
-    name: 'Raspberry Pi',
-    slug: 'raspberrypi',
-    aliases: [ 'raspberry-pi', 'rpi' ]
-  })
+test('should correctly handle one aliased and one non aliased child of the same type', (test) =&gt; {
+	const contract1 = new Contract({
+		type: 'hw.device-type',
+		name: 'Raspberry Pi',
+		slug: 'raspberrypi',
+		aliases: [ 'raspberry-pi', 'rpi' ]
+	})
 &nbsp;
-  const contract2 = new Contract({
-    type: 'hw.device-type',
-    name: 'Intel NUC',
-    slug: 'intel-nuc'
-  })
+	const contract2 = new Contract({
+		type: 'hw.device-type',
+		name: 'Intel NUC',
+		slug: 'intel-nuc'
+	})
 &nbsp;
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  container.addChildren([ contract1, contract2 ])
+	container.addChildren([ contract1, contract2 ])
 &nbsp;
-  test.deepEqual(container.toJSON(), {
-    type: 'foo',
-    slug: 'bar',
-    children: {
-      hw: {
-        'device-type': {
-          raspberrypi: contract1.raw,
-          rpi: contract1.raw,
-          'raspberry-pi': contract1.raw,
-          'intel-nuc': contract2.raw
-        }
-      }
-    }
-  })
+	test.deepEqual(container.toJSON(), {
+		type: 'foo',
+		slug: 'bar',
+		children: {
+			hw: {
+				'device-type': {
+					raspberrypi: contract1.raw,
+					rpi: contract1.raw,
+					'raspberry-pi': contract1.raw,
+					'intel-nuc': contract2.raw
+				}
+			}
+		}
+	})
 &nbsp;
-  test.deepEqual(new Contract(container.toJSON()), container)
+	test.deepEqual(new Contract(container.toJSON()), container)
 })
 &nbsp;
-ava('should correctly handle one none aliased and one aliased child of the same type', (test) =&gt; {
-  const contract1 = new Contract({
-    type: 'hw.device-type',
-    name: 'Intel NUC',
-    slug: 'intel-nuc'
-  })
+test('should correctly handle one none aliased and one aliased child of the same type', (test) =&gt; {
+	const contract1 = new Contract({
+		type: 'hw.device-type',
+		name: 'Intel NUC',
+		slug: 'intel-nuc'
+	})
 &nbsp;
-  const contract2 = new Contract({
-    type: 'hw.device-type',
-    name: 'Raspberry Pi',
-    slug: 'raspberrypi',
-    aliases: [ 'raspberry-pi', 'rpi' ]
-  })
+	const contract2 = new Contract({
+		type: 'hw.device-type',
+		name: 'Raspberry Pi',
+		slug: 'raspberrypi',
+		aliases: [ 'raspberry-pi', 'rpi' ]
+	})
 &nbsp;
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  container.addChildren([ contract1, contract2 ])
+	container.addChildren([ contract1, contract2 ])
 &nbsp;
-  test.deepEqual(container.toJSON(), {
-    type: 'foo',
-    slug: 'bar',
-    children: {
-      hw: {
-        'device-type': {
-          raspberrypi: contract2.raw,
-          rpi: contract2.raw,
-          'raspberry-pi': contract2.raw,
-          'intel-nuc': contract1.raw
-        }
-      }
-    }
-  })
+	test.deepEqual(container.toJSON(), {
+		type: 'foo',
+		slug: 'bar',
+		children: {
+			hw: {
+				'device-type': {
+					raspberrypi: contract2.raw,
+					rpi: contract2.raw,
+					'raspberry-pi': contract2.raw,
+					'intel-nuc': contract1.raw
+				}
+			}
+		}
+	})
 &nbsp;
-  test.deepEqual(new Contract(container.toJSON()), container)
+	test.deepEqual(new Contract(container.toJSON()), container)
 })
 &nbsp;</pre></td></tr>
 </table></pre>
@@ -871,7 +859,7 @@ ava('should correctly handle one none aliased and one aliased child of the same 
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Apr 28 2021 17:05:03 GMT+1000 (Australian Eastern Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Apr 30 2021 11:36:21 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="../../prettify.js"></script>

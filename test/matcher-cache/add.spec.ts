@@ -16,16 +16,12 @@
 
 'use strict'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'MatcherCac... Remove this comment to see the full error message
-const MatcherCache = require('../../lib/matcher-cache')
+import MatcherCache from '../../lib/matcher-cache';
+import Contract from '../../lib/contract';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Contract'.
-const Contract = require('../../lib/contract')
-
-ava('should add one value to the cache', (test) => {
+test('should add one value to the cache', (test) => {
   const cache = new MatcherCache()
 
   const matcher1 = Contract.createMatcher({
@@ -45,7 +41,7 @@ ava('should add one value to the cache', (test) => {
   })
 })
 
-ava('should add two values to the cache using the same type', (test) => {
+test('should add two values to the cache using the same type', (test) => {
   const cache = new MatcherCache()
 
   const matcher1 = Contract.createMatcher({
@@ -75,7 +71,7 @@ ava('should add two values to the cache using the same type', (test) => {
   })
 })
 
-ava('should add two values to the cache using different types', (test) => {
+test('should add two values to the cache using different types', (test) => {
   const cache = new MatcherCache()
 
   const matcher1 = Contract.createMatcher({

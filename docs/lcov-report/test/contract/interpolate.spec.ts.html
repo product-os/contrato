@@ -169,10 +169,7 @@
 <a name='L121'></a><a href='#L121'>121</a>
 <a name='L122'></a><a href='#L122'>122</a>
 <a name='L123'></a><a href='#L123'>123</a>
-<a name='L124'></a><a href='#L124'>124</a>
-<a name='L125'></a><a href='#L125'>125</a>
-<a name='L126'></a><a href='#L126'>126</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L124'></a><a href='#L124'>124</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -191,7 +188,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -314,112 +310,110 @@
 &nbsp;
 'use strict'
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Contract'.
-const Contract = require('../../lib/contract')
+import Contract from '../../lib/contract';
 &nbsp;
-ava('should build missing templates', (test) =&gt; {
-  const contract = new Contract({
-    name: 'Debian {{this.data.codename}}',
-    slug: 'debian',
-    version: 'wheezy',
-    type: 'sw.os',
-    data: {
-      url: 'https://contracts.org/downloads/{{this.type}}/{{this.slug}}/{{this.version}}.tar.gz'
-    }
-  })
+test('should build missing templates', (test) =&gt; {
+	const contract = new Contract({
+		name: 'Debian {{this.data.codename}}',
+		slug: 'debian',
+		version: 'wheezy',
+		type: 'sw.os',
+		data: {
+			url: 'https://contracts.org/downloads/{{this.type}}/{{this.slug}}/{{this.version}}.tar.gz'
+		}
+	})
 &nbsp;
-  contract.raw.data.codename = 'Wheezy'
-  contract.interpolate()
+	contract.raw.data.codename = 'Wheezy'
+	contract.interpolate()
 &nbsp;
-  test.deepEqual(contract, new Contract({
-    name: 'Debian Wheezy',
-    slug: 'debian',
-    version: 'wheezy',
-    type: 'sw.os',
-    data: {
-      codename: 'Wheezy',
-      url: 'https://contracts.org/downloads/sw.os/debian/wheezy.tar.gz'
-    }
-  }))
+	test.deepEqual(contract, new Contract({
+		name: 'Debian Wheezy',
+		slug: 'debian',
+		version: 'wheezy',
+		type: 'sw.os',
+		data: {
+			codename: 'Wheezy',
+			url: 'https://contracts.org/downloads/sw.os/debian/wheezy.tar.gz'
+		}
+	}))
 })
 &nbsp;
-ava('should not rehash the contract if the rehash option is set to false', (test) =&gt; {
-  const contract = new Contract({
-    name: 'Debian {{this.data.codename}}',
-    slug: 'debian',
-    version: 'wheezy',
-    type: 'sw.os',
-    data: {
-      url: 'https://contracts.org/downloads/{{this.type}}/{{this.slug}}/{{this.version}}.tar.gz'
-    }
-  })
+test('should not rehash the contract if the rehash option is set to false', (test) =&gt; {
+	const contract = new Contract({
+		name: 'Debian {{this.data.codename}}',
+		slug: 'debian',
+		version: 'wheezy',
+		type: 'sw.os',
+		data: {
+			url: 'https://contracts.org/downloads/{{this.type}}/{{this.slug}}/{{this.version}}.tar.gz'
+		}
+	})
 &nbsp;
-  const hash = contract.metadata.hash
+	const hash = contract.metadata.hash
 &nbsp;
-  contract.raw.data.codename = 'Wheezy'
-  contract.interpolate({
-    rehash: false
-  })
+	contract.raw.data.codename = 'Wheezy'
+	contract.interpolate({
+		rehash: false
+	})
 &nbsp;
-  test.deepEqual(contract.raw, {
-    name: 'Debian Wheezy',
-    slug: 'debian',
-    version: 'wheezy',
-    type: 'sw.os',
-    data: {
-      codename: 'Wheezy',
-      url: 'https://contracts.org/downloads/sw.os/debian/wheezy.tar.gz'
-    }
-  })
+	test.deepEqual(contract.raw, {
+		name: 'Debian Wheezy',
+		slug: 'debian',
+		version: 'wheezy',
+		type: 'sw.os',
+		data: {
+			codename: 'Wheezy',
+			url: 'https://contracts.org/downloads/sw.os/debian/wheezy.tar.gz'
+		}
+	})
 &nbsp;
-  test.is(contract.metadata.hash, hash)
+	test.is(contract.metadata.hash, hash)
 })
 &nbsp;
-ava('should return the contract instance', (test) =&gt; {
-  const contract = new Contract({
-    name: 'Debian {{this.data.codename}}',
-    slug: 'debian',
-    version: 'wheezy',
-    type: 'sw.os',
-    data: {
-      url: 'https://contracts.org/downloads/{{this.type}}/{{this.slug}}/{{this.version}}.tar.gz'
-    }
-  })
+test('should return the contract instance', (test) =&gt; {
+	const contract = new Contract({
+		name: 'Debian {{this.data.codename}}',
+		slug: 'debian',
+		version: 'wheezy',
+		type: 'sw.os',
+		data: {
+			url: 'https://contracts.org/downloads/{{this.type}}/{{this.slug}}/{{this.version}}.tar.gz'
+		}
+	})
 &nbsp;
-  test.deepEqual(contract.interpolate(), contract)
+	test.deepEqual(contract.interpolate(), contract)
 })
 &nbsp;
-ava('should not perform interpolation on children', (test) =&gt; {
-  const contract = new Contract({
-    slug: 'debian',
-    version: 'wheezy',
-    type: 'sw.os',
-    children: {
-      foo: {
-        bar: {
-          slug: '{{this.version}}-child',
-          type: 'foo.bar'
-        }
-      }
-    }
-  })
+test('should not perform interpolation on children', (test) =&gt; {
+	const contract = new Contract({
+		slug: 'debian',
+		version: 'wheezy',
+		type: 'sw.os',
+		children: {
+			foo: {
+				bar: {
+					slug: '{{this.version}}-child',
+					type: 'foo.bar'
+				}
+			}
+		}
+	})
 &nbsp;
-  test.deepEqual(contract.interpolate().raw, {
-    slug: 'debian',
-    version: 'wheezy',
-    type: 'sw.os',
-    children: {
-      foo: {
-        bar: {
-          slug: '{{this.version}}-child',
-          type: 'foo.bar'
-        }
-      }
-    }
-  })
+	test.deepEqual(contract.interpolate().raw, {
+		slug: 'debian',
+		version: 'wheezy',
+		type: 'sw.os',
+		children: {
+			foo: {
+				bar: {
+					slug: '{{this.version}}-child',
+					type: 'foo.bar'
+				}
+			}
+		}
+	})
 })
 &nbsp;</pre></td></tr>
 </table></pre>
@@ -427,7 +421,7 @@ ava('should not perform interpolation on children', (test) =&gt; {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Apr 28 2021 17:05:03 GMT+1000 (Australian Eastern Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Apr 30 2021 11:36:21 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="../../prettify.js"></script>

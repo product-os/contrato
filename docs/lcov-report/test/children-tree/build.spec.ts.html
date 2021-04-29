@@ -284,13 +284,7 @@
 <a name='L236'></a><a href='#L236'>236</a>
 <a name='L237'></a><a href='#L237'>237</a>
 <a name='L238'></a><a href='#L238'>238</a>
-<a name='L239'></a><a href='#L239'>239</a>
-<a name='L240'></a><a href='#L240'>240</a>
-<a name='L241'></a><a href='#L241'>241</a>
-<a name='L242'></a><a href='#L242'>242</a>
-<a name='L243'></a><a href='#L243'>243</a>
-<a name='L244'></a><a href='#L244'>244</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L239'></a><a href='#L239'>239</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -310,12 +304,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -550,230 +540,225 @@
 &nbsp;
 'use strict'
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Contract'.
-const Contract = require('../../lib/contract')
+import { build } from '../../lib/children-tree';
+import Contract from '../../lib/contract';
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'childrenTr... Remove this comment to see the full error message
-const childrenTree = require('../../lib/children-tree')
+import CONTRACTS from '../contracts.json';
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'CONTRACTS'... Remove this comment to see the full error message
-const CONTRACTS = require('../contracts.json')
+test('should build a tree with one children', (test) =&gt; {
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-ava('should build a tree with one children', (test) =&gt; {
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	container.addChild(contract1)
 &nbsp;
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  container.addChild(contract1)
+	container.metadata.children = {
+		types: new Set([ 'sw.os' ]),
+		byType: {
+			'sw.os': new Set([ contract1.metadata.hash ])
+		},
+		byTypeSlug: {
+			'sw.os': {
+				debian: new Set([ contract1.metadata.hash ])
+			}
+		},
+		map: {
+			[contract1.metadata.hash]: contract1
+		}
+	}
 &nbsp;
-  container.metadata.children = {
-    types: new Set([ 'sw.os' ]),
-    byType: {
-      'sw.os': new Set([ contract1.metadata.hash ])
-    },
-    byTypeSlug: {
-      'sw.os': {
-        debian: new Set([ contract1.metadata.hash ])
-      }
-    },
-    map: {
-      [contract1.metadata.hash]: contract1
-    }
-  }
-&nbsp;
-  test.deepEqual(childrenTree.build(container), {
-    sw: {
-      os: contract1.raw
-    }
-  })
+	test.deepEqual(build(container), {
+		sw: {
+			os: contract1.raw
+		}
+	})
 })
 &nbsp;
-ava('should build a tree with two contracts of different types', (test) =&gt; {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
+test('should build a tree with two contracts of different types', (test) =&gt; {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.blob'].nodejs['4.8.0'].object)
 &nbsp;
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  container.addChild(contract1)
-  container.addChild(contract2)
+	container.addChild(contract1)
+	container.addChild(contract2)
 &nbsp;
-  container.metadata.children = {
-    types: new Set([ 'sw.os', 'sw.blob' ]),
-    byType: {
-      'sw.os': new Set([ contract1.metadata.hash ]),
-      'sw.blob': new Set([ contract2.metadata.hash ])
-    },
-    byTypeSlug: {
-      'sw.os': {
-        debian: new Set([ contract1.metadata.hash ])
-      },
-      'sw.blob': {
-        nodejs: new Set([ contract2.metadata.hash ])
-      }
-    },
-    map: {
-      [contract1.metadata.hash]: contract1,
-      [contract2.metadata.hash]: contract2
-    }
-  }
+	container.metadata.children = {
+		types: new Set([ 'sw.os', 'sw.blob' ]),
+		byType: {
+			'sw.os': new Set([ contract1.metadata.hash ]),
+			'sw.blob': new Set([ contract2.metadata.hash ])
+		},
+		byTypeSlug: {
+			'sw.os': {
+				debian: new Set([ contract1.metadata.hash ])
+			},
+			'sw.blob': {
+				nodejs: new Set([ contract2.metadata.hash ])
+			}
+		},
+		map: {
+			[contract1.metadata.hash]: contract1,
+			[contract2.metadata.hash]: contract2
+		}
+	}
 &nbsp;
-  test.deepEqual(childrenTree.build(container), {
-    sw: {
-      os: contract1.raw,
-      blob: contract2.raw
-    }
-  })
+	test.deepEqual(build(container), {
+		sw: {
+			os: contract1.raw,
+			blob: contract2.raw
+		}
+	})
 })
 &nbsp;
-ava('should build a tree with two contracts of the same type', (test) =&gt; {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
+test('should build a tree with two contracts of the same type', (test) =&gt; {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].fedora['25'].object)
 &nbsp;
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  container.addChild(contract1)
-  container.addChild(contract2)
+	container.addChild(contract1)
+	container.addChild(contract2)
 &nbsp;
-  container.metadata.children = {
-    types: new Set([ 'sw.os' ]),
-    byType: {
-      'sw.os': new Set([ contract1.metadata.hash, contract2.metadata.hash ])
-    },
-    byTypeSlug: {
-      'sw.os': {
-        debian: new Set([ contract1.metadata.hash ]),
-        fedora: new Set([ contract2.metadata.hash ])
-      }
-    },
-    map: {
-      [contract1.metadata.hash]: contract1,
-      [contract2.metadata.hash]: contract2
-    }
-  }
+	container.metadata.children = {
+		types: new Set([ 'sw.os' ]),
+		byType: {
+			'sw.os': new Set([ contract1.metadata.hash, contract2.metadata.hash ])
+		},
+		byTypeSlug: {
+			'sw.os': {
+				debian: new Set([ contract1.metadata.hash ]),
+				fedora: new Set([ contract2.metadata.hash ])
+			}
+		},
+		map: {
+			[contract1.metadata.hash]: contract1,
+			[contract2.metadata.hash]: contract2
+		}
+	}
 &nbsp;
-  test.deepEqual(childrenTree.build(container), {
-    sw: {
-      os: {
-        debian: contract1.raw,
-        fedora: contract2.raw
-      }
-    }
-  })
+	test.deepEqual(build(container), {
+		sw: {
+			os: {
+				debian: contract1.raw,
+				fedora: contract2.raw
+			}
+		}
+	})
 })
 &nbsp;
-ava('should build a tree with two versions of the same slug', (test) =&gt; {
-  const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
+test('should build a tree with two versions of the same slug', (test) =&gt; {
+	const contract1 = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	const contract2 = new Contract(CONTRACTS['sw.os'].debian.jessie.object)
 &nbsp;
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  container.addChild(contract1)
-  container.addChild(contract2)
+	container.addChild(contract1)
+	container.addChild(contract2)
 &nbsp;
-  container.metadata.children = {
-    types: new Set([ 'sw.os' ]),
-    byType: {
-      'sw.os': new Set([ contract1.metadata.hash, contract2.metadata.hash ])
-    },
-    byTypeSlug: {
-      'sw.os': {
-        debian: new Set([ contract1.metadata.hash, contract2.metadata.hash ])
-      }
-    },
-    map: {
-      [contract1.metadata.hash]: contract1,
-      [contract2.metadata.hash]: contract2
-    }
-  }
+	container.metadata.children = {
+		types: new Set([ 'sw.os' ]),
+		byType: {
+			'sw.os': new Set([ contract1.metadata.hash, contract2.metadata.hash ])
+		},
+		byTypeSlug: {
+			'sw.os': {
+				debian: new Set([ contract1.metadata.hash, contract2.metadata.hash ])
+			}
+		},
+		map: {
+			[contract1.metadata.hash]: contract1,
+			[contract2.metadata.hash]: contract2
+		}
+	}
 &nbsp;
-  test.deepEqual(childrenTree.build(container), {
-    sw: {
-      os: {
-        debian: [
-          contract1.raw,
-          contract2.raw
-        ]
-      }
-    }
-  })
+	test.deepEqual(build(container), {
+		sw: {
+			os: {
+				debian: [
+					contract1.raw,
+					contract2.raw
+				]
+			}
+		}
+	})
 })
 &nbsp;
-ava('should create a tree of two variants of the same contract', (test) =&gt; {
-  const contract1 = new Contract({
-    type: 'sw.os',
-    slug: 'Debian Wheezy',
-    version: 'wheezy',
-    requires: [
-      {
-        type: 'arch.sw',
-        slug: 'amd64'
-      }
-    ]
-  })
+test('should create a tree of two variants of the same contract', (test) =&gt; {
+	const contract1 = new Contract({
+		type: 'sw.os',
+		slug: 'Debian Wheezy',
+		version: 'wheezy',
+		requires: [
+			{
+				type: 'arch.sw',
+				slug: 'amd64'
+			}
+		]
+	})
 &nbsp;
-  const contract2 = new Contract({
-    type: 'sw.os',
-    slug: 'Debian Wheezy',
-    version: 'wheezy',
-    requires: [
-      {
-        type: 'arch.sw',
-        slug: 'armv7hf'
-      }
-    ]
-  })
+	const contract2 = new Contract({
+		type: 'sw.os',
+		slug: 'Debian Wheezy',
+		version: 'wheezy',
+		requires: [
+			{
+				type: 'arch.sw',
+				slug: 'armv7hf'
+			}
+		]
+	})
 &nbsp;
-  const container = new Contract({
-    type: 'foo',
-    slug: 'bar'
-  })
+	const container = new Contract({
+		type: 'foo',
+		slug: 'bar'
+	})
 &nbsp;
-  container.addChild(contract1)
-  container.addChild(contract2)
+	container.addChild(contract1)
+	container.addChild(contract2)
 &nbsp;
-  container.metadata.children = {
-    types: new Set([ 'sw.os' ]),
-    byType: {
-      'sw.os': new Set([
-        contract1.metadata.hash,
-        contract2.metadata.hash
-      ])
-    },
-    byTypeSlug: {
-      'sw.os': {
-        debian: new Set([
-          contract1.metadata.hash,
-          contract2.metadata.hash
-        ])
-      }
-    },
-    map: {
-      [contract1.metadata.hash]: contract1,
-      [contract2.metadata.hash]: contract2
-    }
-  }
+	container.metadata.children = {
+		types: new Set([ 'sw.os' ]),
+		byType: {
+			'sw.os': new Set([
+				contract1.metadata.hash,
+				contract2.metadata.hash
+			])
+		},
+		byTypeSlug: {
+			'sw.os': {
+				debian: new Set([
+					contract1.metadata.hash,
+					contract2.metadata.hash
+				])
+			}
+		},
+		map: {
+			[contract1.metadata.hash]: contract1,
+			[contract2.metadata.hash]: contract2
+		}
+	}
 &nbsp;
-  test.deepEqual(childrenTree.build(container), {
-    sw: {
-      os: {
-        debian: [ contract1.raw, contract2.raw ]
-      }
-    }
-  })
+	test.deepEqual(build(container), {
+		sw: {
+			os: {
+				debian: [ contract1.raw, contract2.raw ]
+			}
+		}
+	})
 })
 &nbsp;</pre></td></tr>
 </table></pre>
@@ -781,7 +766,7 @@ ava('should create a tree of two variants of the same contract', (test) =&gt; {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Apr 28 2021 17:05:03 GMT+1000 (Australian Eastern Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Apr 30 2021 11:36:21 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="../../prettify.js"></script>

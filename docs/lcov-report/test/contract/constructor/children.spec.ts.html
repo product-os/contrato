@@ -364,12 +364,7 @@
 <a name='L316'></a><a href='#L316'>316</a>
 <a name='L317'></a><a href='#L317'>317</a>
 <a name='L318'></a><a href='#L318'>318</a>
-<a name='L319'></a><a href='#L319'>319</a>
-<a name='L320'></a><a href='#L320'>320</a>
-<a name='L321'></a><a href='#L321'>321</a>
-<a name='L322'></a><a href='#L322'>322</a>
-<a name='L323'></a><a href='#L323'>323</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L319'></a><a href='#L319'>319</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -389,10 +384,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -708,309 +700,305 @@
 &nbsp;
 'use strict'
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'MatcherCac... Remove this comment to see the full error message
-const MatcherCache = require('../../../lib/matcher-cache')
+import MatcherCache from '../../../lib/matcher-cache';
+import Contract from '../../../lib/contract';
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Contract'.
-const Contract = require('../../../lib/contract')
+test('should take a contract with a single child', (test) =&gt; {
+	const contract = new Contract({
+		type: 'misc.collection',
+		slug: 'my-collection',
+		children: {
+			arch: {
+				sw: {
+					type: 'arch.sw',
+					name: 'armv7hf',
+					slug: 'armv7hf'
+				}
+			}
+		}
+	})
 &nbsp;
-ava('should take a contract with a single child', (test) =&gt; {
-  const contract = new Contract({
-    type: 'misc.collection',
-    slug: 'my-collection',
-    children: {
-      arch: {
-        sw: {
-          type: 'arch.sw',
-          name: 'armv7hf',
-          slug: 'armv7hf'
-        }
-      }
-    }
-  })
+	test.deepEqual(contract.metadata.children, {
+		typeMatchers: {},
+		searchCache: new MatcherCache(),
+		types: new Set([ 'arch.sw' ]),
+		byType: {
+			'arch.sw': new Set([ 'e3d3b7f2e5820db4b45975380a3f467bc2ff2999' ])
+		},
+		byTypeSlug: {
+			'arch.sw': {
+				armv7hf: new Set([ 'e3d3b7f2e5820db4b45975380a3f467bc2ff2999' ])
+			}
+		},
+		map: {
+			e3d3b7f2e5820db4b45975380a3f467bc2ff2999: new Contract({
+				type: 'arch.sw',
+				name: 'armv7hf',
+				slug: 'armv7hf'
+			})
+		}
+	})
 &nbsp;
-  test.deepEqual(contract.metadata.children, {
-    typeMatchers: {},
-    searchCache: new MatcherCache(),
-    types: new Set([ 'arch.sw' ]),
-    byType: {
-      'arch.sw': new Set([ 'e3d3b7f2e5820db4b45975380a3f467bc2ff2999' ])
-    },
-    byTypeSlug: {
-      'arch.sw': {
-        armv7hf: new Set([ 'e3d3b7f2e5820db4b45975380a3f467bc2ff2999' ])
-      }
-    },
-    map: {
-      e3d3b7f2e5820db4b45975380a3f467bc2ff2999: new Contract({
-        type: 'arch.sw',
-        name: 'armv7hf',
-        slug: 'armv7hf'
-      })
-    }
-  })
+	test.deepEqual(contract.raw, {
+		type: 'misc.collection',
+		slug: 'my-collection',
+		children: {
+			arch: {
+				sw: {
+					type: 'arch.sw',
+					name: 'armv7hf',
+					slug: 'armv7hf'
+				}
+			}
+		}
+	})
 &nbsp;
-  test.deepEqual(contract.raw, {
-    type: 'misc.collection',
-    slug: 'my-collection',
-    children: {
-      arch: {
-        sw: {
-          type: 'arch.sw',
-          name: 'armv7hf',
-          slug: 'armv7hf'
-        }
-      }
-    }
-  })
-&nbsp;
-  test.deepEqual(new Contract(contract.raw), contract)
+	test.deepEqual(new Contract(contract.raw), contract)
 })
 &nbsp;
-ava('should take a contract with two children of the same type', (test) =&gt; {
-  const contract = new Contract({
-    type: 'misc.collection',
-    slug: 'my-collection',
-    children: {
-      arch: {
-        sw: {
-          armv7hf: {
-            type: 'arch.sw',
-            name: 'armv7hf',
-            slug: 'armv7hf'
-          },
-          armel: {
-            type: 'arch.sw',
-            name: 'armel',
-            slug: 'armel'
-          }
-        }
-      }
-    }
-  })
+test('should take a contract with two children of the same type', (test) =&gt; {
+	const contract = new Contract({
+		type: 'misc.collection',
+		slug: 'my-collection',
+		children: {
+			arch: {
+				sw: {
+					armv7hf: {
+						type: 'arch.sw',
+						name: 'armv7hf',
+						slug: 'armv7hf'
+					},
+					armel: {
+						type: 'arch.sw',
+						name: 'armel',
+						slug: 'armel'
+					}
+				}
+			}
+		}
+	})
 &nbsp;
-  test.deepEqual(contract.metadata.children, {
-    typeMatchers: {},
-    searchCache: new MatcherCache(),
-    types: new Set([ 'arch.sw' ]),
-    byType: {
-      'arch.sw': new Set([
-        'e3d3b7f2e5820db4b45975380a3f467bc2ff2999',
-        '6e26947f07bcacc28733ef81eea2d33579c5502e'
-      ])
-    },
-    byTypeSlug: {
-      'arch.sw': {
-        armv7hf: new Set([ 'e3d3b7f2e5820db4b45975380a3f467bc2ff2999' ]),
-        armel: new Set([ '6e26947f07bcacc28733ef81eea2d33579c5502e' ])
-      }
-    },
-    map: {
-      e3d3b7f2e5820db4b45975380a3f467bc2ff2999: new Contract({
-        type: 'arch.sw',
-        name: 'armv7hf',
-        slug: 'armv7hf'
-      }),
-      '6e26947f07bcacc28733ef81eea2d33579c5502e': new Contract({
-        type: 'arch.sw',
-        name: 'armel',
-        slug: 'armel'
-      })
-    }
-  })
+	test.deepEqual(contract.metadata.children, {
+		typeMatchers: {},
+		searchCache: new MatcherCache(),
+		types: new Set([ 'arch.sw' ]),
+		byType: {
+			'arch.sw': new Set([
+				'e3d3b7f2e5820db4b45975380a3f467bc2ff2999',
+				'6e26947f07bcacc28733ef81eea2d33579c5502e'
+			])
+		},
+		byTypeSlug: {
+			'arch.sw': {
+				armv7hf: new Set([ 'e3d3b7f2e5820db4b45975380a3f467bc2ff2999' ]),
+				armel: new Set([ '6e26947f07bcacc28733ef81eea2d33579c5502e' ])
+			}
+		},
+		map: {
+			e3d3b7f2e5820db4b45975380a3f467bc2ff2999: new Contract({
+				type: 'arch.sw',
+				name: 'armv7hf',
+				slug: 'armv7hf'
+			}),
+			'6e26947f07bcacc28733ef81eea2d33579c5502e': new Contract({
+				type: 'arch.sw',
+				name: 'armel',
+				slug: 'armel'
+			})
+		}
+	})
 &nbsp;
-  test.deepEqual(contract.raw, {
-    type: 'misc.collection',
-    slug: 'my-collection',
-    children: {
-      arch: {
-        sw: {
-          armv7hf: {
-            type: 'arch.sw',
-            name: 'armv7hf',
-            slug: 'armv7hf'
-          },
-          armel: {
-            type: 'arch.sw',
-            name: 'armel',
-            slug: 'armel'
-          }
-        }
-      }
-    }
-  })
+	test.deepEqual(contract.raw, {
+		type: 'misc.collection',
+		slug: 'my-collection',
+		children: {
+			arch: {
+				sw: {
+					armv7hf: {
+						type: 'arch.sw',
+						name: 'armv7hf',
+						slug: 'armv7hf'
+					},
+					armel: {
+						type: 'arch.sw',
+						name: 'armel',
+						slug: 'armel'
+					}
+				}
+			}
+		}
+	})
 &nbsp;
-  test.deepEqual(new Contract(contract.raw), contract)
+	test.deepEqual(new Contract(contract.raw), contract)
 })
 &nbsp;
-ava('should take a contract with two children of the same type and slug', (test) =&gt; {
-  const contract = new Contract({
-    type: 'misc.collection',
-    slug: 'my-collection',
-    children: {
-      sw: {
-        distro: {
-          debian: [
-            {
-              type: 'sw.distro',
-              name: 'debian',
-              version: 'wheezy',
-              slug: 'debian'
-            },
-            {
-              type: 'sw.distro',
-              name: 'debian',
-              version: 'jessie',
-              slug: 'debian'
-            }
-          ]
-        }
-      }
-    }
-  })
+test('should take a contract with two children of the same type and slug', (test) =&gt; {
+	const contract = new Contract({
+		type: 'misc.collection',
+		slug: 'my-collection',
+		children: {
+			sw: {
+				distro: {
+					debian: [
+						{
+							type: 'sw.distro',
+							name: 'debian',
+							version: 'wheezy',
+							slug: 'debian'
+						},
+						{
+							type: 'sw.distro',
+							name: 'debian',
+							version: 'jessie',
+							slug: 'debian'
+						}
+					]
+				}
+			}
+		}
+	})
 &nbsp;
-  test.deepEqual(contract.metadata.children, {
-    typeMatchers: {},
-    searchCache: new MatcherCache(),
-    types: new Set([ 'sw.distro' ]),
-    byType: {
-      'sw.distro': new Set([
-        '73adf497b1e8cde552e3be4eab317032f8dd65a0',
-        '91c4f16ff328631011d49d2edc654cf3d9a36c75'
-      ])
-    },
-    byTypeSlug: {
-      'sw.distro': {
-        debian: new Set([
-          '73adf497b1e8cde552e3be4eab317032f8dd65a0',
-          '91c4f16ff328631011d49d2edc654cf3d9a36c75'
-        ])
-      }
-    },
-    map: {
-      '73adf497b1e8cde552e3be4eab317032f8dd65a0': new Contract({
-        type: 'sw.distro',
-        name: 'debian',
-        version: 'wheezy',
-        slug: 'debian'
-      }),
-      '91c4f16ff328631011d49d2edc654cf3d9a36c75': new Contract({
-        type: 'sw.distro',
-        name: 'debian',
-        version: 'jessie',
-        slug: 'debian'
-      })
-    }
-  })
+	test.deepEqual(contract.metadata.children, {
+		typeMatchers: {},
+		searchCache: new MatcherCache(),
+		types: new Set([ 'sw.distro' ]),
+		byType: {
+			'sw.distro': new Set([
+				'73adf497b1e8cde552e3be4eab317032f8dd65a0',
+				'91c4f16ff328631011d49d2edc654cf3d9a36c75'
+			])
+		},
+		byTypeSlug: {
+			'sw.distro': {
+				debian: new Set([
+					'73adf497b1e8cde552e3be4eab317032f8dd65a0',
+					'91c4f16ff328631011d49d2edc654cf3d9a36c75'
+				])
+			}
+		},
+		map: {
+			'73adf497b1e8cde552e3be4eab317032f8dd65a0': new Contract({
+				type: 'sw.distro',
+				name: 'debian',
+				version: 'wheezy',
+				slug: 'debian'
+			}),
+			'91c4f16ff328631011d49d2edc654cf3d9a36c75': new Contract({
+				type: 'sw.distro',
+				name: 'debian',
+				version: 'jessie',
+				slug: 'debian'
+			})
+		}
+	})
 &nbsp;
-  test.deepEqual(contract.raw, {
-    type: 'misc.collection',
-    slug: 'my-collection',
-    children: {
-      sw: {
-        distro: {
-          debian: [
-            {
-              type: 'sw.distro',
-              name: 'debian',
-              version: 'wheezy',
-              slug: 'debian'
-            },
-            {
-              type: 'sw.distro',
-              name: 'debian',
-              version: 'jessie',
-              slug: 'debian'
-            }
-          ]
-        }
-      }
-    }
-  })
+	test.deepEqual(contract.raw, {
+		type: 'misc.collection',
+		slug: 'my-collection',
+		children: {
+			sw: {
+				distro: {
+					debian: [
+						{
+							type: 'sw.distro',
+							name: 'debian',
+							version: 'wheezy',
+							slug: 'debian'
+						},
+						{
+							type: 'sw.distro',
+							name: 'debian',
+							version: 'jessie',
+							slug: 'debian'
+						}
+					]
+				}
+			}
+		}
+	})
 &nbsp;
-  test.deepEqual(new Contract(contract.raw), contract)
+	test.deepEqual(new Contract(contract.raw), contract)
 })
 &nbsp;
-ava('should take a contract with two children of different types', (test) =&gt; {
-  const contract = new Contract({
-    type: 'misc.collection',
-    slug: 'my-collection',
-    children: {
-      arch: {
-        sw: {
-          type: 'arch.sw',
-          name: 'armv7hf',
-          slug: 'armv7hf'
-        }
-      },
-      sw: {
-        distro: {
-          type: 'sw.distro',
-          name: 'debian',
-          version: 'wheezy',
-          slug: 'debian'
-        }
-      }
-    }
-  })
+test('should take a contract with two children of different types', (test) =&gt; {
+	const contract = new Contract({
+		type: 'misc.collection',
+		slug: 'my-collection',
+		children: {
+			arch: {
+				sw: {
+					type: 'arch.sw',
+					name: 'armv7hf',
+					slug: 'armv7hf'
+				}
+			},
+			sw: {
+				distro: {
+					type: 'sw.distro',
+					name: 'debian',
+					version: 'wheezy',
+					slug: 'debian'
+				}
+			}
+		}
+	})
 &nbsp;
-  test.deepEqual(contract.metadata.children, {
-    typeMatchers: {},
-    searchCache: new MatcherCache(),
-    types: new Set([ 'arch.sw', 'sw.distro' ]),
-    byType: {
-      'arch.sw': new Set([ 'e3d3b7f2e5820db4b45975380a3f467bc2ff2999' ]),
-      'sw.distro': new Set([ '73adf497b1e8cde552e3be4eab317032f8dd65a0' ])
-    },
-    byTypeSlug: {
-      'arch.sw': {
-        armv7hf: new Set([ 'e3d3b7f2e5820db4b45975380a3f467bc2ff2999' ])
-      },
-      'sw.distro': {
-        debian: new Set([ '73adf497b1e8cde552e3be4eab317032f8dd65a0' ])
-      }
-    },
-    map: {
-      e3d3b7f2e5820db4b45975380a3f467bc2ff2999: new Contract({
-        type: 'arch.sw',
-        name: 'armv7hf',
-        slug: 'armv7hf'
-      }),
-      '73adf497b1e8cde552e3be4eab317032f8dd65a0': new Contract({
-        type: 'sw.distro',
-        name: 'debian',
-        version: 'wheezy',
-        slug: 'debian'
-      })
-    }
-  })
+	test.deepEqual(contract.metadata.children, {
+		typeMatchers: {},
+		searchCache: new MatcherCache(),
+		types: new Set([ 'arch.sw', 'sw.distro' ]),
+		byType: {
+			'arch.sw': new Set([ 'e3d3b7f2e5820db4b45975380a3f467bc2ff2999' ]),
+			'sw.distro': new Set([ '73adf497b1e8cde552e3be4eab317032f8dd65a0' ])
+		},
+		byTypeSlug: {
+			'arch.sw': {
+				armv7hf: new Set([ 'e3d3b7f2e5820db4b45975380a3f467bc2ff2999' ])
+			},
+			'sw.distro': {
+				debian: new Set([ '73adf497b1e8cde552e3be4eab317032f8dd65a0' ])
+			}
+		},
+		map: {
+			e3d3b7f2e5820db4b45975380a3f467bc2ff2999: new Contract({
+				type: 'arch.sw',
+				name: 'armv7hf',
+				slug: 'armv7hf'
+			}),
+			'73adf497b1e8cde552e3be4eab317032f8dd65a0': new Contract({
+				type: 'sw.distro',
+				name: 'debian',
+				version: 'wheezy',
+				slug: 'debian'
+			})
+		}
+	})
 &nbsp;
-  test.deepEqual(contract.raw, {
-    type: 'misc.collection',
-    slug: 'my-collection',
-    children: {
-      arch: {
-        sw: {
-          type: 'arch.sw',
-          name: 'armv7hf',
-          slug: 'armv7hf'
-        }
-      },
-      sw: {
-        distro: {
-          type: 'sw.distro',
-          name: 'debian',
-          version: 'wheezy',
-          slug: 'debian'
-        }
-      }
-    }
-  })
+	test.deepEqual(contract.raw, {
+		type: 'misc.collection',
+		slug: 'my-collection',
+		children: {
+			arch: {
+				sw: {
+					type: 'arch.sw',
+					name: 'armv7hf',
+					slug: 'armv7hf'
+				}
+			},
+			sw: {
+				distro: {
+					type: 'sw.distro',
+					name: 'debian',
+					version: 'wheezy',
+					slug: 'debian'
+				}
+			}
+		}
+	})
 &nbsp;
-  test.deepEqual(new Contract(contract.raw), contract)
+	test.deepEqual(new Contract(contract.raw), contract)
 })
 &nbsp;</pre></td></tr>
 </table></pre>
@@ -1018,7 +1006,7 @@ ava('should take a contract with two children of different types', (test) =&gt; 
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Apr 28 2021 17:05:03 GMT+1000 (Australian Eastern Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Apr 30 2021 11:36:21 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="../../../prettify.js"></script>

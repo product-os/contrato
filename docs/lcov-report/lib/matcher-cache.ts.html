@@ -37,7 +37,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>18/18</span>
+        <span class='fraction'>17/17</span>
       </div>
     </div>
     <p class="quiet">
@@ -248,14 +248,7 @@
 <a name='L200'></a><a href='#L200'>200</a>
 <a name='L201'></a><a href='#L201'>201</a>
 <a name='L202'></a><a href='#L202'>202</a>
-<a name='L203'></a><a href='#L203'>203</a>
-<a name='L204'></a><a href='#L204'>204</a>
-<a name='L205'></a><a href='#L205'>205</a>
-<a name='L206'></a><a href='#L206'>206</a>
-<a name='L207'></a><a href='#L207'>207</a>
-<a name='L208'></a><a href='#L208'>208</a>
-<a name='L209'></a><a href='#L209'>209</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L203'></a><a href='#L203'>203</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -289,7 +282,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">42x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">483x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -298,9 +291,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">42x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -459,9 +450,6 @@
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">42x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/*
  * Copyright 2017 resin.io
  *
@@ -478,10 +466,10 @@
  * limitations under the License.
  */
 &nbsp;
-'use strict'
+'use strict';
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable '_'.
-const _ = require('lodash')
+import { concat, get, set } from 'lodash';
+import Contract from './contract';
 &nbsp;
 /**
  * @summary Get the path of a matcher in the cache
@@ -497,186 +485,180 @@ const _ = require('lodash')
  *   slug: 'debian'
  * }))
  */
-const getMatcherCachePath = (matcher) =&gt; {
-  return [
-    matcher.raw.data.type,
-    matcher.metadata.hash
-  ]
-}
+const getMatcherCachePath = (matcher: Contract): string[] =&gt; [
+	matcher.raw.data.type,
+	matcher.metadata.hash,
+];
 &nbsp;
 /**
  * @ignore
  */
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'MatcherCac... Remove this comment to see the full error message
-class MatcherCache {
-  data: any;
-  types: any;
-  /**
-   * @summary A data structure to store a cache of matchers
-   * @name MatcherCache
-   * @class
-   * @private
-   *
-   * @example
-   * const cache = new MatcherCache()
-   */
-  constructor () {
-    this.data = {}
-    this.types = new Set()
-  }
+export default class MatcherCache {
+	data: any;
+	types: Set&lt;string&gt;;
+	/**
+	 * @summary A data structure to store a cache of matchers
+	 * @name MatcherCache
+	 * @class
+	 * @private
+	 *
+	 * @example
+	 * const cache = new MatcherCache()
+	 */
+	constructor() {
+		this.data = {};
+		this.types = new Set();
+	}
 &nbsp;
-  /**
-   * @summary Add a value to the matcher cache
-   * @function
-   * @public
-   *
-   * @param {Object} matcher - matcher contract
-   * @param {Any} value - cached value
-   *
-   * @example
-   * const cache = new MatcherCache()
-   * const matcher = Contract.createMatcher({
-   *   type: 'sw.os',
-   *   slug: 'debian'
-   * })
-   *
-   * cache.add(matcher, {
-   *   foo: 'bar'
-   * })
-   */
-  add (matcher, value) {
-    _.set(this.data, getMatcherCachePath(matcher), {
-      value,
-      matcher
-    })
+	/**
+	 * @summary Add a value to the matcher cache
+	 * @function
+	 * @public
+	 *
+	 * @param {Object} matcher - matcher contract
+	 * @param {Any} value - cached value
+	 *
+	 * @example
+	 * const cache = new MatcherCache()
+	 * const matcher = Contract.createMatcher({
+	 *   type: 'sw.os',
+	 *   slug: 'debian'
+	 * })
+	 *
+	 * cache.add(matcher, {
+	 *   foo: 'bar'
+	 * })
+	 */
+	add(matcher: Contract, value: any) {
+		set(this.data, getMatcherCachePath(matcher), {
+			value,
+			matcher,
+		});
 &nbsp;
-    this.types.add(matcher.raw.data.type)
-  }
+		this.types.add(matcher.raw.data.type);
+	}
 &nbsp;
-  /**
-   * @summary Attempt to retrieve a value from the cache
-   * @function
-   * @public
-   *
-   * @param {Object} matcher - matcher contract
-   * @returns {Any} value
-   *
-   * @example
-   * const cache = new MatcherCache()
-   *
-   * const matcher = Contract.createMatcher({
-   *   type: 'sw.os',
-   *   slug: 'debian'
-   * })
-   *
-   * cache.add(matcher, {
-   *   foo: 'bar'
-   * })
-   *
-   * console.log(cache.get(matcher))
-   * &gt; {
-   * &gt;   foo: 'bar'
-   * &gt; }
-   */
-  get (matcher) {
-    const path = getMatcherCachePath(matcher)
-    return _.get(this.data, _.concat(path, [ 'value' ]), null)
-  }
+	/**
+	 * @summary Attempt to retrieve a value from the cache
+	 * @function
+	 * @public
+	 *
+	 * @param {Object} matcher - matcher contract
+	 * @returns {Any} value
+	 *
+	 * @example
+	 * const cache = new MatcherCache()
+	 *
+	 * const matcher = Contract.createMatcher({
+	 *   type: 'sw.os',
+	 *   slug: 'debian'
+	 * })
+	 *
+	 * cache.add(matcher, {
+	 *   foo: 'bar'
+	 * })
+	 *
+	 * console.log(cache.get(matcher))
+	 * &gt; {
+	 * &gt;   foo: 'bar'
+	 * &gt; }
+	 */
+	get(matcher: Contract): any {
+		const path = getMatcherCachePath(matcher);
+		return get(this.data, concat(path, ['value']), null);
+	}
 &nbsp;
-  /**
-   * @summary Get the list of types known in the cache
-   * @function
-   * @public
-   *
-   * @returns {Set} types
-   *
-   * @example
-   * const cache = new MatcherCache()
-   *
-   * cache.add(Contract.createMatcher({
-   *   type: 'sw.os',
-   *   slug: 'debian'
-   * }), {
-   *   foo: 'bar'
-   * })
-   *
-   * console.log(cache.getTypes())
-   * &gt; Set ('sw.os')
-   */
-  getTypes () {
-    return this.types
-  }
+	/**
+	 * @summary Get the list of types known in the cache
+	 * @function
+	 * @public
+	 *
+	 * @returns {Set} types
+	 *
+	 * @example
+	 * const cache = new MatcherCache()
+	 *
+	 * cache.add(Contract.createMatcher({
+	 *   type: 'sw.os',
+	 *   slug: 'debian'
+	 * }), {
+	 *   foo: 'bar'
+	 * })
+	 *
+	 * console.log(cache.getTypes())
+	 * &gt; Set ('sw.os')
+	 */
+	getTypes(): Set&lt;string&gt; {
+		return this.types;
+	}
 &nbsp;
-  /**
-   * @summary Remove all the cache entries of a specific type
-   * @function
-   * @public
-   *
-   * @param {String} type - contract type
-   *
-   * @example
-   * const cache = new MatcherCache()
-   *
-   * const matcher = Contract.createMatcher({
-   *   type: 'sw.os',
-   *   slug: 'debian'
-   * })
-   *
-   * cache.add(matcher, {
-   *   foo: 'bar'
-   * })
-   *
-   * cache.resetType('sw.os')
-   *
-   * console.log(cache.get(matcher))
-   * &gt; null
-   */
-  resetType (type) {
-    Reflect.deleteProperty(this.data, type)
-    this.types.delete(type)
-  }
+	/**
+	 * @summary Remove all the cache entries of a specific type
+	 * @function
+	 * @public
+	 *
+	 * @param {String} type - contract type
+	 *
+	 * @example
+	 * const cache = new MatcherCache()
+	 *
+	 * const matcher = Contract.createMatcher({
+	 *   type: 'sw.os',
+	 *   slug: 'debian'
+	 * })
+	 *
+	 * cache.add(matcher, {
+	 *   foo: 'bar'
+	 * })
+	 *
+	 * cache.resetType('sw.os')
+	 *
+	 * console.log(cache.get(matcher))
+	 * &gt; null
+	 */
+	resetType(type: string) {
+		Reflect.deleteProperty(this.data, type);
+		this.types.delete(type);
+	}
 &nbsp;
-  /**
-   * @summary Merge a cache with another cache
-   * @function
-   * @public
-   *
-   * @param {Object} cache - source cache
-   * @returns {Object} cache instance
-   *
-   * @example
-   * const cache1 = new MatcherCache()
-   * cache1.add({ ... }, [ ... [)
-   * cache1.add({ ... }, [ ... [)
-   *
-   * const cache2 = new MatcherCache()
-   * cache2.add({ ... }, [ ... [)
-   * cache2.add({ ... }, [ ... [)
-   *
-   * cache1.merge(cache2)
-   */
-  merge (cache) {
-    for (const type of cache.getTypes()) {
-      if (this.data[type]) {
-        this.resetType(type)
-      } else {
-        this.data[type] = cache.data[type]
-      }
-    }
+	/**
+	 * @summary Merge a cache with another cache
+	 * @function
+	 * @public
+	 *
+	 * @param {Object} cache - source cache
+	 * @returns {Object} cache instance
+	 *
+	 * @example
+	 * const cache1 = new MatcherCache()
+	 * cache1.add({ ... }, [ ... [)
+	 * cache1.add({ ... }, [ ... [)
+	 *
+	 * const cache2 = new MatcherCache()
+	 * cache2.add({ ... }, [ ... [)
+	 * cache2.add({ ... }, [ ... [)
+	 *
+	 * cache1.merge(cache2)
+	 */
+	merge(cache: MatcherCache): MatcherCache {
+		for (const type of cache.getTypes()) {
+			if (this.data[type]) {
+				this.resetType(type);
+			} else {
+				this.data[type] = cache.data[type];
+			}
+		}
 &nbsp;
-    return this
-  }
+		return this;
+	}
 }
-&nbsp;
-// @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'module'. Do you need to install ... Remove this comment to see the full error message
-module.exports = MatcherCache
 &nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Apr 28 2021 17:05:03 GMT+1000 (Australian Eastern Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Apr 30 2021 11:36:21 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="../prettify.js"></script>

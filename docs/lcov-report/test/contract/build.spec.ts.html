@@ -284,10 +284,7 @@
 <a name='L236'></a><a href='#L236'>236</a>
 <a name='L237'></a><a href='#L237'>237</a>
 <a name='L238'></a><a href='#L238'>238</a>
-<a name='L239'></a><a href='#L239'>239</a>
-<a name='L240'></a><a href='#L240'>240</a>
-<a name='L241'></a><a href='#L241'>241</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L239'></a><a href='#L239'>239</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -306,7 +303,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -544,227 +540,225 @@
 &nbsp;
 'use strict'
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Contract'.
-const Contract = require('../../lib/contract')
+import Contract from '../../lib/contract';
 &nbsp;
-ava('should build contract templates', (test) =&gt; {
-  const contracts = Contract.build({
-    name: 'Debian {{this.data.codename}}',
-    slug: 'debian',
-    version: 'wheezy',
-    type: 'sw.os',
-    data: {
-      codename: 'Wheezy',
-      url: 'https://contracts.org/downloads/{{this.type}}/{{this.slug}}/{{this.version}}.tar.gz'
-    }
-  })
+test('should build contract templates', (test) =&gt; {
+	const contracts = Contract.build({
+		name: 'Debian {{this.data.codename}}',
+		slug: 'debian',
+		version: 'wheezy',
+		type: 'sw.os',
+		data: {
+			codename: 'Wheezy',
+			url: 'https://contracts.org/downloads/{{this.type}}/{{this.slug}}/{{this.version}}.tar.gz'
+		}
+	})
 &nbsp;
-  test.deepEqual(contracts, [
-    new Contract({
-      name: 'Debian Wheezy',
-      slug: 'debian',
-      version: 'wheezy',
-      type: 'sw.os',
-      data: {
-        codename: 'Wheezy',
-        url: 'https://contracts.org/downloads/sw.os/debian/wheezy.tar.gz'
-      }
-    })
-  ])
+	test.deepEqual(contracts, [
+		new Contract({
+			name: 'Debian Wheezy',
+			slug: 'debian',
+			version: 'wheezy',
+			type: 'sw.os',
+			data: {
+				codename: 'Wheezy',
+				url: 'https://contracts.org/downloads/sw.os/debian/wheezy.tar.gz'
+			}
+		})
+	])
 })
 &nbsp;
-ava('should support slug and type templates', (test) =&gt; {
-  const contracts = Contract.build({
-    name: 'Debian Wheezy',
-    slug: '{{this.data.slug}}',
-    version: 'wheezy',
-    type: '{{this.data.type}}',
-    data: {
-      slug: 'debian',
-      type: 'sw.os'
-    }
-  })
+test('should support slug and type templates', (test) =&gt; {
+	const contracts = Contract.build({
+		name: 'Debian Wheezy',
+		slug: '{{this.data.slug}}',
+		version: 'wheezy',
+		type: '{{this.data.type}}',
+		data: {
+			slug: 'debian',
+			type: 'sw.os'
+		}
+	})
 &nbsp;
-  test.deepEqual(contracts, [
-    new Contract({
-      name: 'Debian Wheezy',
-      slug: 'debian',
-      version: 'wheezy',
-      type: 'sw.os',
-      data: {
-        slug: 'debian',
-        type: 'sw.os'
-      }
-    })
-  ])
+	test.deepEqual(contracts, [
+		new Contract({
+			name: 'Debian Wheezy',
+			slug: 'debian',
+			version: 'wheezy',
+			type: 'sw.os',
+			data: {
+				slug: 'debian',
+				type: 'sw.os'
+			}
+		})
+	])
 })
 &nbsp;
-ava('should expand contract variants', (test) =&gt; {
-  const contracts = Contract.build({
-    slug: 'debian',
-    type: 'sw.os',
-    variants: [
-      {
-        version: 'wheezy'
-      },
-      {
-        version: 'jessie'
-      },
-      {
-        version: 'sid'
-      }
-    ]
-  })
+test('should expand contract variants', (test) =&gt; {
+	const contracts = Contract.build({
+		slug: 'debian',
+		type: 'sw.os',
+		variants: [
+			{
+				version: 'wheezy'
+			},
+			{
+				version: 'jessie'
+			},
+			{
+				version: 'sid'
+			}
+		]
+	})
 &nbsp;
-  test.deepEqual(contracts, [
-    new Contract({
-      slug: 'debian',
-      version: 'wheezy',
-      type: 'sw.os'
-    }),
-    new Contract({
-      slug: 'debian',
-      version: 'jessie',
-      type: 'sw.os'
-    }),
-    new Contract({
-      slug: 'debian',
-      version: 'sid',
-      type: 'sw.os'
-    })
-  ])
+	test.deepEqual(contracts, [
+		new Contract({
+			slug: 'debian',
+			version: 'wheezy',
+			type: 'sw.os'
+		}),
+		new Contract({
+			slug: 'debian',
+			version: 'jessie',
+			type: 'sw.os'
+		}),
+		new Contract({
+			slug: 'debian',
+			version: 'sid',
+			type: 'sw.os'
+		})
+	])
 })
 &nbsp;
-ava('should build contracts with variants and templates', (test) =&gt; {
-  const contracts = Contract.build({
-    name: 'debian {{this.version}}',
-    slug: 'debian',
-    type: 'sw.os',
-    variants: [
-      {
-        version: 'wheezy'
-      },
-      {
-        version: 'jessie'
-      },
-      {
-        version: 'sid'
-      }
-    ]
-  })
+test('should build contracts with variants and templates', (test) =&gt; {
+	const contracts = Contract.build({
+		name: 'debian {{this.version}}',
+		slug: 'debian',
+		type: 'sw.os',
+		variants: [
+			{
+				version: 'wheezy'
+			},
+			{
+				version: 'jessie'
+			},
+			{
+				version: 'sid'
+			}
+		]
+	})
 &nbsp;
-  test.deepEqual(contracts, [
-    new Contract({
-      name: 'debian wheezy',
-      slug: 'debian',
-      version: 'wheezy',
-      type: 'sw.os'
-    }),
-    new Contract({
-      name: 'debian jessie',
-      slug: 'debian',
-      version: 'jessie',
-      type: 'sw.os'
-    }),
-    new Contract({
-      name: 'debian sid',
-      slug: 'debian',
-      version: 'sid',
-      type: 'sw.os'
-    })
-  ])
+	test.deepEqual(contracts, [
+		new Contract({
+			name: 'debian wheezy',
+			slug: 'debian',
+			version: 'wheezy',
+			type: 'sw.os'
+		}),
+		new Contract({
+			name: 'debian jessie',
+			slug: 'debian',
+			version: 'jessie',
+			type: 'sw.os'
+		}),
+		new Contract({
+			name: 'debian sid',
+			slug: 'debian',
+			version: 'sid',
+			type: 'sw.os'
+		})
+	])
 })
 &nbsp;
-ava('should expand contract aliases', (test) =&gt; {
-  const contracts = Contract.build({
-    slug: 'debian',
-    type: 'sw.os',
-    version: 'jessie',
-    aliases: [ 'foo', 'bar' ]
-  })
+test('should expand contract aliases', (test) =&gt; {
+	const contracts = Contract.build({
+		slug: 'debian',
+		type: 'sw.os',
+		version: 'jessie',
+		aliases: [ 'foo', 'bar' ]
+	})
 &nbsp;
-  test.deepEqual(contracts, [
-    new Contract({
-      slug: 'foo',
-      version: 'jessie',
-      type: 'sw.os',
-      canonicalSlug: 'debian'
-    }),
-    new Contract({
-      slug: 'bar',
-      version: 'jessie',
-      type: 'sw.os',
-      canonicalSlug: 'debian'
-    }),
-    new Contract({
-      slug: 'debian',
-      version: 'jessie',
-      type: 'sw.os'
-    })
-  ])
+	test.deepEqual(contracts, [
+		new Contract({
+			slug: 'foo',
+			version: 'jessie',
+			type: 'sw.os',
+			canonicalSlug: 'debian'
+		}),
+		new Contract({
+			slug: 'bar',
+			version: 'jessie',
+			type: 'sw.os',
+			canonicalSlug: 'debian'
+		}),
+		new Contract({
+			slug: 'debian',
+			version: 'jessie',
+			type: 'sw.os'
+		})
+	])
 })
 &nbsp;
-ava('should build contracts with variants and aliases', (test) =&gt; {
-  const contracts = Contract.build({
-    name: 'debian {{this.version}}',
-    slug: 'debian',
-    type: 'sw.os',
-    variants: [
-      {
-        version: 'wheezy'
-      },
-      {
-        version: 'jessie'
-      }
-    ],
-    aliases: [ 'foo', 'bar' ]
-  })
+test('should build contracts with variants and aliases', (test) =&gt; {
+	const contracts = Contract.build({
+		name: 'debian {{this.version}}',
+		slug: 'debian',
+		type: 'sw.os',
+		variants: [
+			{
+				version: 'wheezy'
+			},
+			{
+				version: 'jessie'
+			}
+		],
+		aliases: [ 'foo', 'bar' ]
+	})
 &nbsp;
-  test.deepEqual(contracts, [
-    new Contract({
-      name: 'debian wheezy',
-      slug: 'foo',
-      type: 'sw.os',
-      version: 'wheezy',
-      canonicalSlug: 'debian'
-    }),
-    new Contract({
-      name: 'debian wheezy',
-      slug: 'bar',
-      type: 'sw.os',
-      version: 'wheezy',
-      canonicalSlug: 'debian'
-    }),
-    new Contract({
-      name: 'debian wheezy',
-      slug: 'debian',
-      version: 'wheezy',
-      type: 'sw.os'
-    }),
-    new Contract({
-      name: 'debian jessie',
-      slug: 'foo',
-      type: 'sw.os',
-      version: 'jessie',
-      canonicalSlug: 'debian'
-    }),
-    new Contract({
-      name: 'debian jessie',
-      slug: 'bar',
-      type: 'sw.os',
-      version: 'jessie',
-      canonicalSlug: 'debian'
-    }),
-    new Contract({
-      name: 'debian jessie',
-      slug: 'debian',
-      version: 'jessie',
-      type: 'sw.os'
-    })
-  ])
+	test.deepEqual(contracts, [
+		new Contract({
+			name: 'debian wheezy',
+			slug: 'foo',
+			type: 'sw.os',
+			version: 'wheezy',
+			canonicalSlug: 'debian'
+		}),
+		new Contract({
+			name: 'debian wheezy',
+			slug: 'bar',
+			type: 'sw.os',
+			version: 'wheezy',
+			canonicalSlug: 'debian'
+		}),
+		new Contract({
+			name: 'debian wheezy',
+			slug: 'debian',
+			version: 'wheezy',
+			type: 'sw.os'
+		}),
+		new Contract({
+			name: 'debian jessie',
+			slug: 'foo',
+			type: 'sw.os',
+			version: 'jessie',
+			canonicalSlug: 'debian'
+		}),
+		new Contract({
+			name: 'debian jessie',
+			slug: 'bar',
+			type: 'sw.os',
+			version: 'jessie',
+			canonicalSlug: 'debian'
+		}),
+		new Contract({
+			name: 'debian jessie',
+			slug: 'debian',
+			version: 'jessie',
+			type: 'sw.os'
+		})
+	])
 })
 &nbsp;</pre></td></tr>
 </table></pre>
@@ -772,7 +766,7 @@ ava('should build contracts with variants and aliases', (test) =&gt; {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Apr 28 2021 17:05:03 GMT+1000 (Australian Eastern Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Apr 30 2021 11:36:21 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="../../prettify.js"></script>

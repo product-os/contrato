@@ -16,18 +16,16 @@
 
 'use strict'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Contract'.
-const Contract = require('../../lib/contract')
+import Contract from '../../lib/contract';
 
-ava('should return the slug', (test) => {
-  const contract = new Contract({
-    type: 'arch.sw',
-    name: 'armv7hf',
-    slug: 'armv7hf'
-  })
+test('should return the slug', (test) => {
+	const contract = new Contract({
+		type: 'arch.sw',
+		name: 'armv7hf',
+		slug: 'armv7hf'
+	})
 
-  test.is(contract.getSlug(), 'armv7hf')
+	test.is(contract.getSlug(), 'armv7hf')
 })

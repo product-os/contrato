@@ -16,29 +16,27 @@
 
 'use strict'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Contract'.
-const Contract = require('../../lib/contract')
+import Contract from '../../lib/contract';
 
-ava('should return the canonical slug', (test) => {
-  const contract = new Contract({
-    type: 'arch.sw',
-    name: 'armv7hf',
-    slug: 'armv7hf',
-    canonicalSlug: 'armhf'
-  })
+test('should return the canonical slug', (test) => {
+	const contract = new Contract({
+		type: 'arch.sw',
+		name: 'armv7hf',
+		slug: 'armv7hf',
+		canonicalSlug: 'armhf'
+	})
 
-  test.is(contract.getCanonicalSlug(), 'armhf')
+	test.is(contract.getCanonicalSlug(), 'armhf')
 })
 
-ava('should return the slug if canonical slug does not exist', (test) => {
-  const contract = new Contract({
-    type: 'arch.sw',
-    name: 'armv7hf',
-    slug: 'armv7hf'
-  })
+test('should return the slug if canonical slug does not exist', (test) => {
+	const contract = new Contract({
+		type: 'arch.sw',
+		name: 'armv7hf',
+		slug: 'armv7hf'
+	})
 
-  test.is(contract.getCanonicalSlug(), 'armv7hf')
+	test.is(contract.getCanonicalSlug(), 'armv7hf')
 })

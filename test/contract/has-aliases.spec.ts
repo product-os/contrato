@@ -16,40 +16,38 @@
 
 'use strict'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Contract'.
-const Contract = require('../../lib/contract')
+import Contract from '../../lib/contract';
 
-ava('should return false given a contract without aliases', (test) => {
-  const contract = new Contract({
-    type: 'arch.sw',
-    name: 'armv7hf',
-    slug: 'armv7hf'
-  })
+test('should return false given a contract without aliases', (test) => {
+	const contract = new Contract({
+		type: 'arch.sw',
+		name: 'armv7hf',
+		slug: 'armv7hf'
+	})
 
-  test.false(contract.hasAliases())
+	test.false(contract.hasAliases())
 })
 
-ava('should return true given a contract with aliases', (test) => {
-  const contract = new Contract({
-    type: 'hw.device-type',
-    name: 'Raspberry Pi',
-    slug: 'raspberrypi',
-    aliases: [ 'rpi', 'raspberry-pi' ]
-  })
+test('should return true given a contract with aliases', (test) => {
+	const contract = new Contract({
+		type: 'hw.device-type',
+		name: 'Raspberry Pi',
+		slug: 'raspberrypi',
+		aliases: [ 'rpi', 'raspberry-pi' ]
+	})
 
-  test.true(contract.hasAliases())
+	test.true(contract.hasAliases())
 })
 
-ava('should return false given a contract with empty aliases', (test) => {
-  const contract = new Contract({
-    type: 'arch.sw',
-    name: 'armv7hf',
-    slug: 'armv7hf',
-    aliases: []
-  })
+test('should return false given a contract with empty aliases', (test) => {
+	const contract = new Contract({
+		type: 'arch.sw',
+		name: 'armv7hf',
+		slug: 'armv7hf',
+		aliases: []
+	})
 
-  test.false(contract.hasAliases())
+	test.false(contract.hasAliases())
 })

@@ -16,24 +16,20 @@
 
 'use strict'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Contract'.
-const Contract = require('../../../lib/contract')
+import Contract from '../../../lib/contract';
+import CONTRACTS from '../../contracts.json';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'CONTRACTS'... Remove this comment to see the full error message
-const CONTRACTS = require('../../contracts.json')
-
-ava('should hash the contract by default', (test) => {
-  const contract = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
-  test.is(typeof contract.metadata.hash, 'string')
+test('should hash the contract by default', (test) => {
+	const contract = new Contract(CONTRACTS['sw.os'].debian.wheezy.object)
+	test.is(typeof contract.metadata.hash, 'string')
 })
 
-ava('should not hash the contract if hash is set to false', (test) => {
-  const contract = new Contract(CONTRACTS['sw.os'].debian.wheezy.object, {
-    hash: false
-  })
+test('should not hash the contract if hash is set to false', (test) => {
+	const contract = new Contract(CONTRACTS['sw.os'].debian.wheezy.object, {
+		hash: false
+	})
 
-  test.is(typeof contract.metadata.hash, 'undefined')
+	test.is(typeof contract.metadata.hash, 'undefined')
 })

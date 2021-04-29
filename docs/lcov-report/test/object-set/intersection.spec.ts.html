@@ -228,10 +228,7 @@
 <a name='L180'></a><a href='#L180'>180</a>
 <a name='L181'></a><a href='#L181'>181</a>
 <a name='L182'></a><a href='#L182'>182</a>
-<a name='L183'></a><a href='#L183'>183</a>
-<a name='L184'></a><a href='#L184'>184</a>
-<a name='L185'></a><a href='#L185'>185</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L183'></a><a href='#L183'>183</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -250,7 +247,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -432,171 +428,169 @@
 &nbsp;
 'use strict'
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ObjectSet'... Remove this comment to see the full error message
-const ObjectSet = require('../../lib/object-set')
+import ObjectSet from '../../lib/object-set';
 &nbsp;
-ava('should calculate the intersection of two sets', (test) =&gt; {
-  const set1 = new ObjectSet()
-  const set2 = new ObjectSet()
+test('should calculate the intersection of two sets', (test) =&gt; {
+	const set1 = new ObjectSet()
+	const set2 = new ObjectSet()
 &nbsp;
-  set1.add({
-    foo: 'bar'
-  })
+	set1.add({
+		foo: 'bar'
+	})
 &nbsp;
-  set1.add({
-    bar: 'baz'
-  })
+	set1.add({
+		bar: 'baz'
+	})
 &nbsp;
-  set2.add({
-    bar: 'baz'
-  })
+	set2.add({
+		bar: 'baz'
+	})
 &nbsp;
-  set2.add({
-    qux: 'foo'
-  })
+	set2.add({
+		qux: 'foo'
+	})
 &nbsp;
-  set1.intersection(set2)
+	set1.intersection(set2)
 &nbsp;
-  test.deepEqual(set1.getAll(), [
-    {
-      bar: 'baz'
-    }
-  ])
+	test.deepEqual(set1.getAll(), [
+		{
+			bar: 'baz'
+		}
+	])
 })
 &nbsp;
-ava('should return the instance', (test) =&gt; {
-  const set1 = new ObjectSet()
-  const set2 = new ObjectSet()
+test('should return the instance', (test) =&gt; {
+	const set1 = new ObjectSet()
+	const set2 = new ObjectSet()
 &nbsp;
-  set1.add({
-    foo: 'bar'
-  })
+	set1.add({
+		foo: 'bar'
+	})
 &nbsp;
-  set2.add({
-    foo: 'bar'
-  })
+	set2.add({
+		foo: 'bar'
+	})
 &nbsp;
-  test.deepEqual(set1.intersection(set2), set1)
+	test.deepEqual(set1.intersection(set2), set1)
 })
 &nbsp;
-ava('should calculate the intersection of two disjoint sets', (test) =&gt; {
-  const set1 = new ObjectSet()
-  const set2 = new ObjectSet()
+test('should calculate the intersection of two disjoint sets', (test) =&gt; {
+	const set1 = new ObjectSet()
+	const set2 = new ObjectSet()
 &nbsp;
-  set1.add({
-    foo: 'bar'
-  })
+	set1.add({
+		foo: 'bar'
+	})
 &nbsp;
-  set1.add({
-    bar: 'baz'
-  })
+	set1.add({
+		bar: 'baz'
+	})
 &nbsp;
-  set2.add({
-    qux: 'foo'
-  })
+	set2.add({
+		qux: 'foo'
+	})
 &nbsp;
-  set1.intersection(set2)
+	set1.intersection(set2)
 &nbsp;
-  test.deepEqual(set1.getAll(), [])
+	test.deepEqual(set1.getAll(), [])
 })
 &nbsp;
-ava('should return an empty array if the left set is empty', (test) =&gt; {
-  const set1 = new ObjectSet()
-  const set2 = new ObjectSet()
+test('should return an empty array if the left set is empty', (test) =&gt; {
+	const set1 = new ObjectSet()
+	const set2 = new ObjectSet()
 &nbsp;
-  set2.add({
-    qux: 'foo'
-  })
+	set2.add({
+		qux: 'foo'
+	})
 &nbsp;
-  set1.intersection(set2)
+	set1.intersection(set2)
 &nbsp;
-  test.deepEqual(set1.getAll(), [])
+	test.deepEqual(set1.getAll(), [])
 })
 &nbsp;
-ava('should return an empty array if the right set is empty', (test) =&gt; {
-  const set1 = new ObjectSet()
-  const set2 = new ObjectSet()
+test('should return an empty array if the right set is empty', (test) =&gt; {
+	const set1 = new ObjectSet()
+	const set2 = new ObjectSet()
 &nbsp;
-  set1.add({
-    qux: 'foo'
-  })
+	set1.add({
+		qux: 'foo'
+	})
 &nbsp;
-  set1.intersection(set2)
+	set1.intersection(set2)
 &nbsp;
-  test.deepEqual(set1.getAll(), [])
+	test.deepEqual(set1.getAll(), [])
 })
 &nbsp;
-ava('should take custom ids into account', (test) =&gt; {
-  const set1 = new ObjectSet()
-  const set2 = new ObjectSet()
+test('should take custom ids into account', (test) =&gt; {
+	const set1 = new ObjectSet()
+	const set2 = new ObjectSet()
 &nbsp;
-  set1.add({
-    foo: 'bar'
-  }, {
-    id: 'foobar'
-  })
+	set1.add({
+		foo: 'bar'
+	}, {
+		id: 'foobar'
+	})
 &nbsp;
-  set1.add({
-    bar: 'baz'
-  }, {
-    id: 'barbaz'
-  })
+	set1.add({
+		bar: 'baz'
+	}, {
+		id: 'barbaz'
+	})
 &nbsp;
-  set2.add({
-    bar: 'baz'
-  }, {
-    id: 'barbaz'
-  })
+	set2.add({
+		bar: 'baz'
+	}, {
+		id: 'barbaz'
+	})
 &nbsp;
-  set2.add({
-    qux: 'foo'
-  }, {
-    id: 'quxfoo'
-  })
+	set2.add({
+		qux: 'foo'
+	}, {
+		id: 'quxfoo'
+	})
 &nbsp;
-  set1.intersection(set2)
+	set1.intersection(set2)
 &nbsp;
-  test.deepEqual(set1.getAll(), [
-    {
-      bar: 'baz'
-    }
-  ])
+	test.deepEqual(set1.getAll(), [
+		{
+			bar: 'baz'
+		}
+	])
 })
 &nbsp;
-ava('should trust ids rather than objects', (test) =&gt; {
-  const set1 = new ObjectSet()
-  const set2 = new ObjectSet()
+test('should trust ids rather than objects', (test) =&gt; {
+	const set1 = new ObjectSet()
+	const set2 = new ObjectSet()
 &nbsp;
-  set1.add({
-    foo: 'bar'
-  }, {
-    id: 'foobar'
-  })
+	set1.add({
+		foo: 'bar'
+	}, {
+		id: 'foobar'
+	})
 &nbsp;
-  set1.add({
-    bar: 'baz'
-  }, {
-    id: 'barbaz'
-  })
+	set1.add({
+		bar: 'baz'
+	}, {
+		id: 'barbaz'
+	})
 &nbsp;
-  set2.add({
-    bar: 'baz'
-  }, {
-    id: 'barbaz2'
-  })
+	set2.add({
+		bar: 'baz'
+	}, {
+		id: 'barbaz2'
+	})
 &nbsp;
-  set2.add({
-    qux: 'foo'
-  }, {
-    id: 'quxfoo'
-  })
+	set2.add({
+		qux: 'foo'
+	}, {
+		id: 'quxfoo'
+	})
 &nbsp;
-  set1.intersection(set2)
+	set1.intersection(set2)
 &nbsp;
-  test.deepEqual(set1.getAll(), [])
+	test.deepEqual(set1.getAll(), [])
 })
 &nbsp;</pre></td></tr>
 </table></pre>
@@ -604,7 +598,7 @@ ava('should trust ids rather than objects', (test) =&gt; {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Apr 28 2021 17:05:03 GMT+1000 (Australian Eastern Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Apr 30 2021 11:36:21 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="../../prettify.js"></script>

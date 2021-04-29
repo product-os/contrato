@@ -16,44 +16,42 @@
 
 'use strict'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ObjectSet'... Remove this comment to see the full error message
-const ObjectSet = require('../../lib/object-set')
+import ObjectSet from '../../lib/object-set';
 
-ava('should return true if the id exists', (test) => {
-  const set = new ObjectSet()
+test('should return true if the id exists', (test) => {
+	const set = new ObjectSet()
 
-  set.add({
-    foo: 1
-  }, {
-    id: 'aaa'
-  })
+	set.add({
+		foo: 1
+	}, {
+		id: 'aaa'
+	})
 
-  set.add({
-    foo: 2
-  }, {
-    id: 'bbb'
-  })
+	set.add({
+		foo: 2
+	}, {
+		id: 'bbb'
+	})
 
-  test.true(set.hasId('aaa'))
+	test.true(set.hasId('aaa'))
 })
 
-ava('should return false if the id does not exist', (test) => {
-  const set = new ObjectSet()
+test('should return false if the id does not exist', (test) => {
+	const set = new ObjectSet()
 
-  set.add({
-    foo: 1
-  }, {
-    id: 'aaa'
-  })
+	set.add({
+		foo: 1
+	}, {
+		id: 'aaa'
+	})
 
-  set.add({
-    foo: 2
-  }, {
-    id: 'bbb'
-  })
+	set.add({
+		foo: 2
+	}, {
+		id: 'bbb'
+	})
 
-  test.false(set.hasId('ccc'))
+	test.false(set.hasId('ccc'))
 })

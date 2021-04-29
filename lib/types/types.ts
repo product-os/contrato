@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
-'use strict'
+'use strict';
 
-// @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'module'. Do you need to install ... Remove this comment to see the full error message
-module.exports = {
-  CONTEXT: 'meta.context',
-  UNIVERSE: 'meta.universe',
-  MATCHER: 'meta.matcher',
-  BLUEPRINT: 'meta.blueprint'
-}
+import { components } from './cuetypes';
+
+export type ContractType = components['schemas']['Contract'];
+export type BlueprintType = components['schemas']['Blueprint'];
+
+export const CONTEXT = 'meta.context';
+export const UNIVERSE = 'meta.universe';
+export const MATCHER = 'meta.matcher';
+export const BLUEPRINT = 'meta.blueprint';

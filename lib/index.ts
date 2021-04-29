@@ -14,35 +14,33 @@
  * limitations under the License.
  */
 
-'use strict'
+'use strict';
 
 /**
  * @module contrato
  * @public
  */
 
-// @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-exports.Contract = require('./contract')
+import { BlueprintType, ContractType } from './types/types';
+import Contract from './contract';
+import Blueprint from './blueprint';
+import { buildTemplate } from './partials';
+import { parse as parseCardinality } from './cardinality';
 
-// @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-exports.Blueprint = require('./blueprint')
+export {
+	ContractType,
+	BlueprintType,
+	Contract,
+	Blueprint,
+	buildTemplate,
+	parseCardinality,
+};
 
-// @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-exports.buildTemplate = require('./partials').buildTemplate
+export const query = (universe: Contract, layout: object, skeleton: object) =>
+	new Blueprint(layout, skeleton).reproduce(universe);
 
-// @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-exports.parseCardinality = require('./cardinality').parse
-
-// @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-exports.query = (universe, layout, skeleton) => {
-  // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-  const blueprint = new exports.Blueprint(layout, skeleton)
-  return blueprint.reproduce(universe)
-}
-
-// @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-exports.sequence = (universe, layout, skeleton) => {
-  // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-  const blueprint = new exports.Blueprint(layout, skeleton)
-  return blueprint.sequence(universe)
-}
+export const sequence = (
+	universe: Contract,
+	layout: object,
+	skeleton: object,
+) => new Blueprint(layout, skeleton).sequence(universe);

@@ -16,48 +16,39 @@
 
 'use strict'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable '_'.
-const _ = require('lodash')
+import * as _ from 'lodash';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Contract'.
-const Contract = require('../../../lib/contract')
-
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Blueprint'... Remove this comment to see the full error message
-const Blueprint = require('../../../lib/blueprint')
-
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'hash'.
-const hash = require('../../../lib/hash')
+import Contract from '../../../lib/contract';
+import Blueprint from '../../../lib/blueprint';
 
 _.each([
-  'path_finding'
+	'path_finding'
 ], (testName) => {
-  // @ts-expect-error ts-migrate(2580) FIXME: Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
-  const testCase = require(`./${testName}.json`)
+	const testCase = require(`./${testName}.json`);
 
-  ava(testName, (test) => {
-    const contracts = _.flatMap(testCase.universe1, Contract.build)
-    const container = new Contract({
-      type: 'meta.universe'
-    })
+	test(testName, (test) => {
+		const contracts = _.flatMap(testCase.universe1, Contract.build)
+		const container = new Contract({
+			type: 'meta.universe'
+		})
 
-    container.addChildren(contracts)
+		container.addChildren(contracts)
 
-    const contracts2 = _.flatMap(testCase.universe2, Contract.build)
-    const container2 = new Contract({
-      type: 'meta.universe'
-    })
+		const contracts2 = _.flatMap(testCase.universe2, Contract.build)
+		const container2 = new Contract({
+			type: 'meta.universe'
+		})
 
-    container2.addChildren(contracts2)
+		container2.addChildren(contracts2)
 
-    const blueprint = new Blueprint(testCase.blueprint1.layout, testCase.blueprint1.template)
-    const result = blueprint.sequence(container)
-    test.deepEqual(testCase.path1, _.invokeMap(result, 'toJSON'))
+		const blueprint = new Blueprint(testCase.blueprint1.layout, testCase.blueprint1.template)
+		const result = blueprint.sequence(container)
+		test.deepEqual(testCase.path1, _.invokeMap(result, 'toJSON'))
 
-    const blueprint2 = new Blueprint(testCase.blueprint2.layout, testCase.blueprint2.template)
-    const result2 = blueprint2.sequence(container2)
-    test.deepEqual(testCase.path2, _.invokeMap(result2, 'toJSON'))
-  })
+		const blueprint2 = new Blueprint(testCase.blueprint2.layout, testCase.blueprint2.template)
+		const result2 = blueprint2.sequence(container2)
+		test.deepEqual(testCase.path2, _.invokeMap(result2, 'toJSON'))
+	})
 })

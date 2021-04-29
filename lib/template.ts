@@ -14,11 +14,22 @@
  * limitations under the License.
  */
 'use strict';
+
+import {
+	concat,
+	get,
+	isArray,
+	isPlainObject,
+	isString,
+	map,
+	mapValues,
+} from 'lodash';
+import { ContractType } from './types/types';
+
 /**
  * @module template
  */
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable '_'.
-const _ = require('lodash');
+
 /**
  * @summary Map object values recursively
  * @function
@@ -45,24 +56,26 @@ const _ = require('lodash');
  * >   c: 6
  * > }
  */
-const deepMapValues = (object, callback, breadcrumb = []) => {
-    if (!_.isPlainObject(object)) {
-        return callback(object, breadcrumb);
-    }
-    return _.mapValues(object, (value, key) => {
-        const absoluteKey = _.concat(breadcrumb, [key]);
-        if (_.isPlainObject(value)) {
-            return deepMapValues(value, callback, absoluteKey);
-        }
-        return callback(value, absoluteKey);
-    });
-};
+const deepMapValues = (
+	object: object,
+	callback: (arg0: object, arg1: string[]) => object,
+	breadcrumb: string[] = [],
+): object =>
+	!isPlainObject(object)
+		? callback(object, breadcrumb)
+		: mapValues(object, (value: any, key) => {
+				const absoluteKey = concat(breadcrumb, [key]);
+				return isPlainObject(value)
+					? deepMapValues(value, callback, absoluteKey)
+					: callback(value, absoluteKey);
+		  });
+
 /**
  * @summary Contract template interpolation regex
  * @type {RegExp}
  * @constant
  */
-const TEMPLATE_REGEXP = /\{\{(.+?)\}\}/g;
+const TEMPLATE_REGEXP: RegExp = /\{\{(.+?)\}\}/g;
 /**
  * @summary Compile contract templates
  * @function
@@ -92,30 +105,42 @@ const TEMPLATE_REGEXP = /\{\{(.+?)\}\}/g;
  * >   slug: 'debian'
  * > }
  */
-// @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-exports.compileContract = (contract, options = {}, root, breadcrumb) => {
-    return deepMapValues(contract, (value, key) => {
-        if (_.isString(value)) {
-            if ((options as any).blacklist) {
-                for (const path of (options as any).blacklist) {
-                    if (key.join('.').startsWith(path)) {
-                        return value;
-                    }
-                }
-            }
-            const data = {
-                this: root || contract
-            };
-            return value.replace(TEMPLATE_REGEXP, (interpolation, path) => {
-                return _.get(data, path) || interpolation;
-            });
-        }
-        if (_.isArray(value)) {
-            return _.map(value, (object, index) => {
-                // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-                return exports.compileContract(object, options, contract, _.concat(key, [index]));
-            });
-        }
-        return value;
-    }, breadcrumb);
-};
+export const compileContract = (
+	contract: ContractType,
+	options: { blacklist?: Set<string> } = {},
+	root?: object,
+	breadcrumb?: string[],
+): ContractType =>
+	deepMapValues(
+		contract,
+		(value: any, key: string[]) => {
+			if (isString(value)) {
+				if (options.blacklist) {
+					for (const path of options.blacklist) {
+						if (key.join('.').startsWith(path)) {
+							return value;
+						}
+					}
+				}
+				const data = {
+					this: root || contract,
+				};
+				return value.replace(
+					TEMPLATE_REGEXP,
+					(interpolation, path) => get(data, path) || interpolation,
+				);
+			}
+			if (isArray(value)) {
+				return map(value, (object, index) =>
+					compileContract(
+						object,
+						options,
+						contract,
+						concat(key, [index.toString()]),
+					),
+				);
+			}
+			return value;
+		},
+		breadcrumb,
+	);

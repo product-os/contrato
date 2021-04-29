@@ -321,11 +321,7 @@
 <a name='L273'></a><a href='#L273'>273</a>
 <a name='L274'></a><a href='#L274'>274</a>
 <a name='L275'></a><a href='#L275'>275</a>
-<a name='L276'></a><a href='#L276'>276</a>
-<a name='L277'></a><a href='#L277'>277</a>
-<a name='L278'></a><a href='#L278'>278</a>
-<a name='L279'></a><a href='#L279'>279</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L276'></a><a href='#L276'>276</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -344,8 +340,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -620,265 +614,262 @@
 &nbsp;
 'use strict'
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
+import { build } from '../../lib/variants';
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'variants'.
-const variants = require('../../lib/variants')
-&nbsp;
-ava('should build a contract with no variants', (test) =&gt; {
-  test.deepEqual(variants.build({
-    slug: 'debian',
-    type: 'distro',
-    name: 'Debian'
-  }), [
-    {
-      slug: 'debian',
-      type: 'distro',
-      name: 'Debian'
-    }
-  ])
+test('should build a contract with no variants', (test) =&gt; {
+	test.deepEqual(build({
+		slug: 'debian',
+		type: 'distro',
+		name: 'Debian'
+	}), [
+		{
+			slug: 'debian',
+			type: 'distro',
+			name: 'Debian'
+		}
+	])
 })
 &nbsp;
-ava('should build a contract with empty variants', (test) =&gt; {
-  test.deepEqual(variants.build({
-    slug: 'debian',
-    type: 'distro',
-    name: 'Debian',
-    variants: []
-  }), [
-    {
-      slug: 'debian',
-      type: 'distro',
-      name: 'Debian'
-    }
-  ])
+test('should build a contract with empty variants', (test) =&gt; {
+	test.deepEqual(build({
+		slug: 'debian',
+		type: 'distro',
+		name: 'Debian',
+		variants: []
+	}), [
+		{
+			slug: 'debian',
+			type: 'distro',
+			name: 'Debian'
+		}
+	])
 })
 &nbsp;
-ava('should build a contract with two variants', (test) =&gt; {
-  test.deepEqual(variants.build({
-    slug: 'nodejs_{{data.arch}}',
-    type: 'blob',
-    name: 'Node.js',
-    data: {
-      libc: 'musl-libc'
-    },
-    variants: [
-      {
-        data: {
-          arch: 'amd64'
-        },
-        requires: [
-          {
-            type: 'arch.sw',
-            slug: 'amd64'
-          }
-        ]
-      },
-      {
-        data: {
-          arch: 'i386'
-        },
-        requires: [
-          {
-            type: 'arch.sw',
-            slug: 'i386'
-          }
-        ]
-      }
-    ]
-  }), [
-    {
-      slug: 'nodejs_{{data.arch}}',
-      type: 'blob',
-      name: 'Node.js',
-      requires: [
-        {
-          type: 'arch.sw',
-          slug: 'amd64'
-        }
-      ],
-      data: {
-        arch: 'amd64',
-        libc: 'musl-libc'
-      }
-    },
-    {
-      slug: 'nodejs_{{data.arch}}',
-      type: 'blob',
-      name: 'Node.js',
-      requires: [
-        {
-          type: 'arch.sw',
-          slug: 'i386'
-        }
-      ],
-      data: {
-        arch: 'i386',
-        libc: 'musl-libc'
-      }
-    }
-  ])
+test('should build a contract with two variants', (test) =&gt; {
+	test.deepEqual(build({
+		slug: 'nodejs_{{data.arch}}',
+		type: 'blob',
+		name: 'Node.js',
+		data: {
+			libc: 'musl-libc'
+		},
+		variants: [
+			{
+				data: {
+					arch: 'amd64'
+				},
+				requires: [
+					{
+						type: 'arch.sw',
+						slug: 'amd64'
+					}
+				]
+			},
+			{
+				data: {
+					arch: 'i386'
+				},
+				requires: [
+					{
+						type: 'arch.sw',
+						slug: 'i386'
+					}
+				]
+			}
+		]
+	}), [
+		{
+			slug: 'nodejs_{{data.arch}}',
+			type: 'blob',
+			name: 'Node.js',
+			requires: [
+				{
+					type: 'arch.sw',
+					slug: 'amd64'
+				}
+			],
+			data: {
+				arch: 'amd64',
+				libc: 'musl-libc'
+			}
+		},
+		{
+			slug: 'nodejs_{{data.arch}}',
+			type: 'blob',
+			name: 'Node.js',
+			requires: [
+				{
+					type: 'arch.sw',
+					slug: 'i386'
+				}
+			],
+			data: {
+				arch: 'i386',
+				libc: 'musl-libc'
+			}
+		}
+	])
 })
 &nbsp;
-ava('should supported nested variants', (test) =&gt; {
-  test.deepEqual(variants.build({
-    slug: 'nodejs_{{data.arch}}',
-    type: 'blob',
-    name: 'Node.js',
-    data: {
-      libc: 'musl-libc'
-    },
-    variants: [
-      {
-        data: {
-          arch: 'amd64'
-        },
-        requires: [
-          {
-            type: 'arch.sw',
-            slug: 'amd64'
-          }
-        ],
-        variants: [
-          {
-            version: '6.3.0'
-          },
-          {
-            version: '6.4.0'
-          }
-        ]
-      },
-      {
-        data: {
-          arch: 'i386'
-        },
-        requires: [
-          {
-            type: 'arch.sw',
-            slug: 'i386'
-          }
-        ],
-        variants: [
-          {
-            version: '6.3.0'
-          }
-        ]
-      }
-    ]
-  }), [
-    {
-      slug: 'nodejs_{{data.arch}}',
-      type: 'blob',
-      version: '6.3.0',
-      name: 'Node.js',
-      requires: [
-        {
-          type: 'arch.sw',
-          slug: 'amd64'
-        }
-      ],
-      data: {
-        arch: 'amd64',
-        libc: 'musl-libc'
-      }
-    },
-    {
-      slug: 'nodejs_{{data.arch}}',
-      type: 'blob',
-      version: '6.4.0',
-      name: 'Node.js',
-      requires: [
-        {
-          type: 'arch.sw',
-          slug: 'amd64'
-        }
-      ],
-      data: {
-        arch: 'amd64',
-        libc: 'musl-libc'
-      }
-    },
-    {
-      slug: 'nodejs_{{data.arch}}',
-      type: 'blob',
-      version: '6.3.0',
-      name: 'Node.js',
-      requires: [
-        {
-          type: 'arch.sw',
-          slug: 'i386'
-        }
-      ],
-      data: {
-        arch: 'i386',
-        libc: 'musl-libc'
-      }
-    }
-  ])
+test('should supported nested variants', (test) =&gt; {
+	test.deepEqual(build({
+		slug: 'nodejs_{{data.arch}}',
+		type: 'blob',
+		name: 'Node.js',
+		data: {
+			libc: 'musl-libc'
+		},
+		variants: [
+			{
+				data: {
+					arch: 'amd64'
+				},
+				requires: [
+					{
+						type: 'arch.sw',
+						slug: 'amd64'
+					}
+				],
+				variants: [
+					{
+						version: '6.3.0'
+					},
+					{
+						version: '6.4.0'
+					}
+				]
+			},
+			{
+				data: {
+					arch: 'i386'
+				},
+				requires: [
+					{
+						type: 'arch.sw',
+						slug: 'i386'
+					}
+				],
+				variants: [
+					{
+						version: '6.3.0'
+					}
+				]
+			}
+		]
+	}), [
+		{
+			slug: 'nodejs_{{data.arch}}',
+			type: 'blob',
+			version: '6.3.0',
+			name: 'Node.js',
+			requires: [
+				{
+					type: 'arch.sw',
+					slug: 'amd64'
+				}
+			],
+			data: {
+				arch: 'amd64',
+				libc: 'musl-libc'
+			}
+		},
+		{
+			slug: 'nodejs_{{data.arch}}',
+			type: 'blob',
+			version: '6.4.0',
+			name: 'Node.js',
+			requires: [
+				{
+					type: 'arch.sw',
+					slug: 'amd64'
+				}
+			],
+			data: {
+				arch: 'amd64',
+				libc: 'musl-libc'
+			}
+		},
+		{
+			slug: 'nodejs_{{data.arch}}',
+			type: 'blob',
+			version: '6.3.0',
+			name: 'Node.js',
+			requires: [
+				{
+					type: 'arch.sw',
+					slug: 'i386'
+				}
+			],
+			data: {
+				arch: 'i386',
+				libc: 'musl-libc'
+			}
+		}
+	])
 })
 &nbsp;
-ava('should merge arrays correctly', (test) =&gt; {
-  test.deepEqual(variants.build({
-    slug: 'foo',
-    type: 'blob',
-    name: 'Foo',
-    requires: [
-      {
-        type: 'bar',
-        slug: 'baz'
-      }
-    ],
-    variants: [
-      {
-        requires: [
-          {
-            type: 'arch.sw',
-            slug: 'amd64'
-          }
-        ]
-      },
-      {
-        requires: [
-          {
-            type: 'arch.sw',
-            slug: 'i386'
-          }
-        ]
-      }
-    ]
-  }), [
-    {
-      slug: 'foo',
-      type: 'blob',
-      name: 'Foo',
-      requires: [
-        {
-          type: 'bar',
-          slug: 'baz'
-        },
-        {
-          type: 'arch.sw',
-          slug: 'amd64'
-        }
-      ]
-    },
-    {
-      slug: 'foo',
-      type: 'blob',
-      name: 'Foo',
-      requires: [
-        {
-          type: 'bar',
-          slug: 'baz'
-        },
-        {
-          type: 'arch.sw',
-          slug: 'i386'
-        }
-      ]
-    }
-  ])
+test('should merge arrays correctly', (test) =&gt; {
+	test.deepEqual(build({
+		slug: 'foo',
+		type: 'blob',
+		name: 'Foo',
+		requires: [
+			{
+				type: 'bar',
+				slug: 'baz'
+			}
+		],
+		variants: [
+			{
+				requires: [
+					{
+						type: 'arch.sw',
+						slug: 'amd64'
+					}
+				]
+			},
+			{
+				requires: [
+					{
+						type: 'arch.sw',
+						slug: 'i386'
+					}
+				]
+			}
+		]
+	}), [
+		{
+			slug: 'foo',
+			type: 'blob',
+			name: 'Foo',
+			requires: [
+				{
+					type: 'bar',
+					slug: 'baz'
+				},
+				{
+					type: 'arch.sw',
+					slug: 'amd64'
+				}
+			]
+		},
+		{
+			slug: 'foo',
+			type: 'blob',
+			name: 'Foo',
+			requires: [
+				{
+					type: 'bar',
+					slug: 'baz'
+				},
+				{
+					type: 'arch.sw',
+					slug: 'i386'
+				}
+			]
+		}
+	])
 })
 &nbsp;</pre></td></tr>
 </table></pre>
@@ -886,7 +877,7 @@ ava('should merge arrays correctly', (test) =&gt; {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Apr 28 2021 17:05:03 GMT+1000 (Australian Eastern Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Apr 30 2021 11:36:21 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="../../prettify.js"></script>

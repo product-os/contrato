@@ -16,347 +16,343 @@
 
 'use strict'
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
 
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'Contract'.
-const Contract = require('../../../lib/contract')
-
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ObjectSet'... Remove this comment to see the full error message
-const ObjectSet = require('../../../lib/object-set')
+import Contract from '../../../lib/contract';
+import ObjectSet from '../../../lib/object-set';
 
 const createContractObjectSet = (contracts) => {
-  const set = new ObjectSet()
+	const set = new ObjectSet()
 
-  for (const contract of contracts) {
-    set.add(contract, {
-      id: contract.metadata.hash
-    })
-  }
+	for (const contract of contracts) {
+		set.add(contract, {
+			id: contract.metadata.hash
+		})
+	}
 
-  return set
+	return set
 }
 
-ava('should create a simple contract with empty requirements', (test) => {
-  const contract = new Contract({
-    type: 'arch.sw',
-    name: 'armv7hf',
-    slug: 'armv7hf',
-    requires: []
-  })
+test('should create a simple contract with empty requirements', (test) => {
+	const contract = new Contract({
+		type: 'arch.sw',
+		name: 'armv7hf',
+		slug: 'armv7hf',
+		requires: []
+	})
 
-  test.deepEqual(contract.metadata.requirements, {
-    matchers: {},
-    types: new Set(),
-    compiled: new ObjectSet()
-  })
+	test.deepEqual(contract.metadata.requirements, {
+		matchers: {},
+		types: new Set(),
+		compiled: new ObjectSet()
+	})
 
-  test.deepEqual(contract.raw, {
-    type: 'arch.sw',
-    name: 'armv7hf',
-    slug: 'armv7hf',
-    requires: []
-  })
+	test.deepEqual(contract.raw, {
+		type: 'arch.sw',
+		name: 'armv7hf',
+		slug: 'armv7hf',
+		requires: []
+	})
 })
 
-ava('should create a contract with a single top level requirement', (test) => {
-  const contract = new Contract({
-    type: 'arch.sw',
-    name: 'armv7hf',
-    slug: 'armv7hf',
-    requires: [
-      {
-        type: 'hw.device-type',
-        slug: 'raspberry-pi'
-      }
-    ]
-  })
+test('should create a contract with a single top level requirement', (test) => {
+	const contract = new Contract({
+		type: 'arch.sw',
+		name: 'armv7hf',
+		slug: 'armv7hf',
+		requires: [
+			{
+				type: 'hw.device-type',
+				slug: 'raspberry-pi'
+			}
+		]
+	})
 
-  test.deepEqual(contract.metadata.requirements, {
-    matchers: {
-      'hw.device-type': createContractObjectSet([
-        Contract.createMatcher({
-          type: 'hw.device-type',
-          slug: 'raspberry-pi'
-        })
-      ])
-    },
-    types: new Set([ 'hw.device-type' ]),
-    compiled: createContractObjectSet([
-      Contract.createMatcher({
-        type: 'hw.device-type',
-        slug: 'raspberry-pi'
-      })
-    ])
-  })
+	test.deepEqual(contract.metadata.requirements, {
+		matchers: {
+			'hw.device-type': createContractObjectSet([
+				Contract.createMatcher({
+					type: 'hw.device-type',
+					slug: 'raspberry-pi'
+				})
+			])
+		},
+		types: new Set([ 'hw.device-type' ]),
+		compiled: createContractObjectSet([
+			Contract.createMatcher({
+				type: 'hw.device-type',
+				slug: 'raspberry-pi'
+			})
+		])
+	})
 
-  test.deepEqual(contract.raw, {
-    type: 'arch.sw',
-    name: 'armv7hf',
-    slug: 'armv7hf',
-    requires: [
-      {
-        type: 'hw.device-type',
-        slug: 'raspberry-pi'
-      }
-    ]
-  })
+	test.deepEqual(contract.raw, {
+		type: 'arch.sw',
+		name: 'armv7hf',
+		slug: 'armv7hf',
+		requires: [
+			{
+				type: 'hw.device-type',
+				slug: 'raspberry-pi'
+			}
+		]
+	})
 })
 
-ava('should ignore duplicate top level requirements matchers', (test) => {
-  const contract = new Contract({
-    type: 'arch.sw',
-    name: 'armv7hf',
-    slug: 'armv7hf',
-    requires: [
-      {
-        type: 'hw.device-type',
-        slug: 'raspberry-pi'
-      },
-      {
-        type: 'hw.device-type',
-        slug: 'raspberry-pi'
-      }
-    ]
-  })
+test('should ignore duplicate top level requirements matchers', (test) => {
+	const contract = new Contract({
+		type: 'arch.sw',
+		name: 'armv7hf',
+		slug: 'armv7hf',
+		requires: [
+			{
+				type: 'hw.device-type',
+				slug: 'raspberry-pi'
+			},
+			{
+				type: 'hw.device-type',
+				slug: 'raspberry-pi'
+			}
+		]
+	})
 
-  test.deepEqual(contract.metadata.requirements, {
-    matchers: {
-      'hw.device-type': createContractObjectSet([
-        Contract.createMatcher({
-          type: 'hw.device-type',
-          slug: 'raspberry-pi'
-        })
-      ])
-    },
-    types: new Set([ 'hw.device-type' ]),
-    compiled: createContractObjectSet([
-      Contract.createMatcher({
-        type: 'hw.device-type',
-        slug: 'raspberry-pi'
-      }),
-      Contract.createMatcher({
-        type: 'hw.device-type',
-        slug: 'raspberry-pi'
-      })
-    ])
-  })
+	test.deepEqual(contract.metadata.requirements, {
+		matchers: {
+			'hw.device-type': createContractObjectSet([
+				Contract.createMatcher({
+					type: 'hw.device-type',
+					slug: 'raspberry-pi'
+				})
+			])
+		},
+		types: new Set([ 'hw.device-type' ]),
+		compiled: createContractObjectSet([
+			Contract.createMatcher({
+				type: 'hw.device-type',
+				slug: 'raspberry-pi'
+			}),
+			Contract.createMatcher({
+				type: 'hw.device-type',
+				slug: 'raspberry-pi'
+			})
+		])
+	})
 
-  test.deepEqual(contract.raw, {
-    type: 'arch.sw',
-    name: 'armv7hf',
-    slug: 'armv7hf',
-    requires: [
-      {
-        type: 'hw.device-type',
-        slug: 'raspberry-pi'
-      },
-      {
-        type: 'hw.device-type',
-        slug: 'raspberry-pi'
-      }
-    ]
-  })
+	test.deepEqual(contract.raw, {
+		type: 'arch.sw',
+		name: 'armv7hf',
+		slug: 'armv7hf',
+		requires: [
+			{
+				type: 'hw.device-type',
+				slug: 'raspberry-pi'
+			},
+			{
+				type: 'hw.device-type',
+				slug: 'raspberry-pi'
+			}
+		]
+	})
 })
 
-ava('should create a contract with two top level requirements', (test) => {
-  const contract = new Contract({
-    type: 'sw.os',
-    name: 'Debian',
-    slug: 'debian',
-    requires: [
-      {
-        type: 'hw.device-type',
-        slug: 'intel-nuc'
-      },
-      {
-        type: 'arch.sw',
-        slug: 'amd64'
-      }
-    ]
-  })
+test('should create a contract with two top level requirements', (test) => {
+	const contract = new Contract({
+		type: 'sw.os',
+		name: 'Debian',
+		slug: 'debian',
+		requires: [
+			{
+				type: 'hw.device-type',
+				slug: 'intel-nuc'
+			},
+			{
+				type: 'arch.sw',
+				slug: 'amd64'
+			}
+		]
+	})
 
-  test.deepEqual(contract.metadata.requirements, {
-    matchers: {
-      'hw.device-type': createContractObjectSet([
-        Contract.createMatcher({
-          type: 'hw.device-type',
-          slug: 'intel-nuc'
-        })
-      ]),
-      'arch.sw': createContractObjectSet([
-        Contract.createMatcher({
-          type: 'arch.sw',
-          slug: 'amd64'
-        })
-      ])
-    },
-    types: new Set([ 'hw.device-type', 'arch.sw' ]),
-    compiled: createContractObjectSet([
-      Contract.createMatcher({
-        type: 'hw.device-type',
-        slug: 'intel-nuc'
-      }),
-      Contract.createMatcher({
-        type: 'arch.sw',
-        slug: 'amd64'
-      })
-    ])
-  })
+	test.deepEqual(contract.metadata.requirements, {
+		matchers: {
+			'hw.device-type': createContractObjectSet([
+				Contract.createMatcher({
+					type: 'hw.device-type',
+					slug: 'intel-nuc'
+				})
+			]),
+			'arch.sw': createContractObjectSet([
+				Contract.createMatcher({
+					type: 'arch.sw',
+					slug: 'amd64'
+				})
+			])
+		},
+		types: new Set([ 'hw.device-type', 'arch.sw' ]),
+		compiled: createContractObjectSet([
+			Contract.createMatcher({
+				type: 'hw.device-type',
+				slug: 'intel-nuc'
+			}),
+			Contract.createMatcher({
+				type: 'arch.sw',
+				slug: 'amd64'
+			})
+		])
+	})
 
-  test.deepEqual(contract.raw, {
-    type: 'sw.os',
-    name: 'Debian',
-    slug: 'debian',
-    requires: [
-      {
-        type: 'hw.device-type',
-        slug: 'intel-nuc'
-      },
-      {
-        type: 'arch.sw',
-        slug: 'amd64'
-      }
-    ]
-  })
+	test.deepEqual(contract.raw, {
+		type: 'sw.os',
+		name: 'Debian',
+		slug: 'debian',
+		requires: [
+			{
+				type: 'hw.device-type',
+				slug: 'intel-nuc'
+			},
+			{
+				type: 'arch.sw',
+				slug: 'amd64'
+			}
+		]
+	})
 })
 
-ava('should create a contract with a single or requirement', (test) => {
-  const contract = new Contract({
-    type: 'arch.sw',
-    name: 'armv7hf',
-    slug: 'armv7hf',
-    requires: [
-      {
-        or: [
-          {
-            type: 'hw.device-type',
-            slug: 'raspberry-pi'
-          },
-          {
-            type: 'hw.device-type',
-            slug: 'raspberry-pi2'
-          }
-        ]
-      }
-    ]
-  })
+test('should create a contract with a single or requirement', (test) => {
+	const contract = new Contract({
+		type: 'arch.sw',
+		name: 'armv7hf',
+		slug: 'armv7hf',
+		requires: [
+			{
+				or: [
+					{
+						type: 'hw.device-type',
+						slug: 'raspberry-pi'
+					},
+					{
+						type: 'hw.device-type',
+						slug: 'raspberry-pi2'
+					}
+				]
+			}
+		]
+	})
 
-  test.deepEqual(contract.metadata.requirements, {
-    matchers: {
-      'hw.device-type': createContractObjectSet([
-        Contract.createMatcher({
-          type: 'hw.device-type',
-          slug: 'raspberry-pi'
-        }),
-        Contract.createMatcher({
-          slug: 'raspberry-pi2',
-          type: 'hw.device-type'
-        })
-      ])
-    },
-    types: new Set([ 'hw.device-type' ]),
-    compiled: createContractObjectSet([
-      Contract.createMatcher(createContractObjectSet([
-        Contract.createMatcher({
-          type: 'hw.device-type',
-          slug: 'raspberry-pi'
-        }),
-        Contract.createMatcher({
-          slug: 'raspberry-pi2',
-          type: 'hw.device-type'
-        })
-      ]), {
-        operation: 'or'
-      })
-    ])
-  })
+	test.deepEqual(contract.metadata.requirements, {
+		matchers: {
+			'hw.device-type': createContractObjectSet([
+				Contract.createMatcher({
+					type: 'hw.device-type',
+					slug: 'raspberry-pi'
+				}),
+				Contract.createMatcher({
+					slug: 'raspberry-pi2',
+					type: 'hw.device-type'
+				})
+			])
+		},
+		types: new Set([ 'hw.device-type' ]),
+		compiled: createContractObjectSet([
+			Contract.createMatcher(createContractObjectSet([
+				Contract.createMatcher({
+					type: 'hw.device-type',
+					slug: 'raspberry-pi'
+				}),
+				Contract.createMatcher({
+					slug: 'raspberry-pi2',
+					type: 'hw.device-type'
+				})
+			]), {
+				operation: 'or'
+			})
+		])
+	})
 
-  test.deepEqual(contract.raw, {
-    type: 'arch.sw',
-    name: 'armv7hf',
-    slug: 'armv7hf',
-    requires: [
-      {
-        or: [
-          {
-            type: 'hw.device-type',
-            slug: 'raspberry-pi'
-          },
-          {
-            type: 'hw.device-type',
-            slug: 'raspberry-pi2'
-          }
-        ]
-      }
-    ]
-  })
+	test.deepEqual(contract.raw, {
+		type: 'arch.sw',
+		name: 'armv7hf',
+		slug: 'armv7hf',
+		requires: [
+			{
+				or: [
+					{
+						type: 'hw.device-type',
+						slug: 'raspberry-pi'
+					},
+					{
+						type: 'hw.device-type',
+						slug: 'raspberry-pi2'
+					}
+				]
+			}
+		]
+	})
 })
 
-ava('should ignore duplicate matchers from or requirements', (test) => {
-  const contract = new Contract({
-    type: 'arch.sw',
-    name: 'armv7hf',
-    slug: 'armv7hf',
-    requires: [
-      {
-        or: [
-          {
-            type: 'hw.device-type',
-            slug: 'raspberry-pi'
-          },
-          {
-            type: 'hw.device-type',
-            slug: 'raspberry-pi'
-          }
-        ]
-      }
-    ]
-  })
+test('should ignore duplicate matchers from or requirements', (test) => {
+	const contract = new Contract({
+		type: 'arch.sw',
+		name: 'armv7hf',
+		slug: 'armv7hf',
+		requires: [
+			{
+				or: [
+					{
+						type: 'hw.device-type',
+						slug: 'raspberry-pi'
+					},
+					{
+						type: 'hw.device-type',
+						slug: 'raspberry-pi'
+					}
+				]
+			}
+		]
+	})
 
-  test.deepEqual(contract.metadata.requirements, {
-    matchers: {
-      'hw.device-type': createContractObjectSet([
-        Contract.createMatcher({
-          type: 'hw.device-type',
-          slug: 'raspberry-pi'
-        })
-      ])
-    },
-    types: new Set([ 'hw.device-type' ]),
-    compiled: createContractObjectSet([
-      Contract.createMatcher(createContractObjectSet([
-        Contract.createMatcher({
-          type: 'hw.device-type',
-          slug: 'raspberry-pi'
-        }),
-        Contract.createMatcher({
-          type: 'hw.device-type',
-          slug: 'raspberry-pi'
-        })
-      ]), {
-        operation: 'or'
-      })
-    ])
-  })
+	test.deepEqual(contract.metadata.requirements, {
+		matchers: {
+			'hw.device-type': createContractObjectSet([
+				Contract.createMatcher({
+					type: 'hw.device-type',
+					slug: 'raspberry-pi'
+				})
+			])
+		},
+		types: new Set([ 'hw.device-type' ]),
+		compiled: createContractObjectSet([
+			Contract.createMatcher(createContractObjectSet([
+				Contract.createMatcher({
+					type: 'hw.device-type',
+					slug: 'raspberry-pi'
+				}),
+				Contract.createMatcher({
+					type: 'hw.device-type',
+					slug: 'raspberry-pi'
+				})
+			]), {
+				operation: 'or'
+			})
+		])
+	})
 
-  test.deepEqual(contract.raw, {
-    type: 'arch.sw',
-    name: 'armv7hf',
-    slug: 'armv7hf',
-    requires: [
-      {
-        or: [
-          {
-            type: 'hw.device-type',
-            slug: 'raspberry-pi'
-          },
-          {
-            type: 'hw.device-type',
-            slug: 'raspberry-pi'
-          }
-        ]
-      }
-    ]
-  })
+	test.deepEqual(contract.raw, {
+		type: 'arch.sw',
+		name: 'armv7hf',
+		slug: 'armv7hf',
+		requires: [
+			{
+				or: [
+					{
+						type: 'hw.device-type',
+						slug: 'raspberry-pi'
+					},
+					{
+						type: 'hw.device-type',
+						slug: 'raspberry-pi'
+					}
+				]
+			}
+		]
+	})
 })

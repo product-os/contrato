@@ -22,7 +22,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>13/13</span>
+        <span class='fraction'>10/10</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -37,7 +37,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>13/13</span>
+        <span class='fraction'>9/9</span>
       </div>
     </div>
     <p class="quiet">
@@ -136,12 +136,7 @@
 <a name='L88'></a><a href='#L88'>88</a>
 <a name='L89'></a><a href='#L89'>89</a>
 <a name='L90'></a><a href='#L90'>90</a>
-<a name='L91'></a><a href='#L91'>91</a>
-<a name='L92'></a><a href='#L92'>92</a>
-<a name='L93'></a><a href='#L93'>93</a>
-<a name='L94'></a><a href='#L94'>94</a>
-<a name='L95'></a><a href='#L95'>95</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L91'></a><a href='#L91'>91</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -176,8 +171,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">42x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">42x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -216,20 +211,17 @@
 <span class="cline-any cline-yes">98x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">98x</span>
-<span class="cline-any cline-yes">90x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">18x</span>
 <span class="cline-any cline-yes">130x</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">128x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -250,7 +242,7 @@
  * limitations under the License.
  */
 &nbsp;
-'use strict'
+'use strict';
 &nbsp;
 /**
  * Contract variants are syntax sugar that allows the client
@@ -262,15 +254,15 @@
  * @module variants
  */
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable '_'.
-const _ = require('lodash')
+import { omit, reduce, map, concat, mergeWith, isArray } from 'lodash';
+import { ContractType } from './types/types';
 &nbsp;
 /**
  * @summary The name of the contract property that contains variants
  * @type {String}
  * @constant
  */
-const VARIANTS_PROPERTY = 'variants'
+const VARIANTS_PROPERTY = 'variants';
 &nbsp;
 /**
  * @summary Build contract variants
@@ -304,37 +296,33 @@ const VARIANTS_PROPERTY = 'variants'
  *   ]
  * })
  */
-// @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-exports.build = (contract) =&gt; {
-  const variants = contract[VARIANTS_PROPERTY] || []
-  const base = _.omit(contract, [ VARIANTS_PROPERTY ])
+export const build = (contract: ContractType): ContractType[] =&gt; {
+	const variants: object[] = contract[VARIANTS_PROPERTY] || [];
+	const base = omit(contract, [VARIANTS_PROPERTY]);
 &nbsp;
-  if (variants.length === 0) {
-    return [ base ]
-  }
-&nbsp;
-  return _.reduce(variants, (accumulator, variation) =&gt; {
-    // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'exports'.
-    return _.concat(accumulator, _.map(exports.build(variation), (template) =&gt; {
-      return _.mergeWith({}, base, template, (object, source) =&gt; {
-        if (_.isArray(object)) {
-          return _.concat(object, source)
-        }
-&nbsp;
-        // _.mergeWith expects "undefined"
-        // eslint-disable-next-line no-undefined
-        return undefined
-      })
-    }))
-  }, [])
-}
+	return variants.length === 0
+		? [base]
+		: reduce(
+				variants,
+				(accumulator, variation) =&gt;
+					concat(
+						accumulator,
+						map(build(variation), (template) =&gt;
+							mergeWith({}, base, template, (object, source) =&gt;
+								isArray(object) ? concat(object, source) : undefined,
+							),
+						),
+					),
+				[] as ContractType[],
+		  );
+};
 &nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Apr 28 2021 17:05:03 GMT+1000 (Australian Eastern Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Apr 30 2021 11:36:21 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="../prettify.js"></script>

@@ -320,11 +320,7 @@
 <a name='L272'></a><a href='#L272'>272</a>
 <a name='L273'></a><a href='#L273'>273</a>
 <a name='L274'></a><a href='#L274'>274</a>
-<a name='L275'></a><a href='#L275'>275</a>
-<a name='L276'></a><a href='#L276'>276</a>
-<a name='L277'></a><a href='#L277'>277</a>
-<a name='L278'></a><a href='#L278'>278</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L275'></a><a href='#L275'>275</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -343,8 +339,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -618,264 +612,261 @@
 &nbsp;
 'use strict'
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'ava'.
-const ava = require('ava')
+import test from 'ava';
+import { compileContract } from '../../lib/template';
 &nbsp;
-// @ts-expect-error ts-migrate(2451) FIXME: Cannot redeclare block-scoped variable 'template'.
-const template = require('../../lib/template')
-&nbsp;
-ava('should compile a contract without templates', (test) =&gt; {
-  test.deepEqual(template.compileContract({
-    type: 'distro',
-    name: 'Debian',
-    version: 'wheezy',
-    slug: 'debian'
-  }), {
-    type: 'distro',
-    name: 'Debian',
-    version: 'wheezy',
-    slug: 'debian'
-  })
+test('should compile a contract without templates', (test) =&gt; {
+	test.deepEqual(compileContract({
+		type: 'distro',
+		name: 'Debian',
+		version: 'wheezy',
+		slug: 'debian'
+	}), {
+		type: 'distro',
+		name: 'Debian',
+		version: 'wheezy',
+		slug: 'debian'
+	})
 })
 &nbsp;
-ava('should compile a single top level template', (test) =&gt; {
-  test.deepEqual(template.compileContract({
-    type: 'distro',
-    name: 'Debian {{this.version}}',
-    version: 'wheezy',
-    slug: 'debian'
-  }), {
-    type: 'distro',
-    name: 'Debian wheezy',
-    version: 'wheezy',
-    slug: 'debian'
-  })
+test('should compile a single top level template', (test) =&gt; {
+	test.deepEqual(compileContract({
+		type: 'distro',
+		name: 'Debian {{this.version}}',
+		version: 'wheezy',
+		slug: 'debian'
+	}), {
+		type: 'distro',
+		name: 'Debian wheezy',
+		version: 'wheezy',
+		slug: 'debian'
+	})
 })
 &nbsp;
-ava('should compile templates inside arrays', (test) =&gt; {
-  test.deepEqual(template.compileContract({
-    type: 'distro',
-    name: 'Debian',
-    slug: 'debian',
-    random: [
-      '{{this.name}}',
-      '{{this.name}}',
-      '{{this.name}}'
-    ],
-    requires: [
-      {
-        name: '{{this.name}} ({{this.type}})'
-      }
-    ]
-  }), {
-    type: 'distro',
-    name: 'Debian',
-    slug: 'debian',
-    random: [
-      'Debian',
-      'Debian',
-      'Debian'
-    ],
-    requires: [
-      {
-        name: 'Debian (distro)'
-      }
-    ]
-  })
+test('should compile templates inside arrays', (test) =&gt; {
+	test.deepEqual(compileContract({
+		type: 'distro',
+		name: 'Debian',
+		slug: 'debian',
+		random: [
+			'{{this.name}}',
+			'{{this.name}}',
+			'{{this.name}}'
+		],
+		requires: [
+			{
+				name: '{{this.name}} ({{this.type}})'
+			}
+		]
+	}), {
+		type: 'distro',
+		name: 'Debian',
+		slug: 'debian',
+		random: [
+			'Debian',
+			'Debian',
+			'Debian'
+		],
+		requires: [
+			{
+				name: 'Debian (distro)'
+			}
+		]
+	})
 })
 &nbsp;
-ava('should compile multiple top level templates', (test) =&gt; {
-  test.deepEqual(template.compileContract({
-    type: 'distro',
-    name: 'Debian {{this.version}}',
-    version: 'wheezy',
-    slug: 'debian-{{this.version}}'
-  }), {
-    type: 'distro',
-    name: 'Debian wheezy',
-    version: 'wheezy',
-    slug: 'debian-wheezy'
-  })
+test('should compile multiple top level templates', (test) =&gt; {
+	test.deepEqual(compileContract({
+		type: 'distro',
+		name: 'Debian {{this.version}}',
+		version: 'wheezy',
+		slug: 'debian-{{this.version}}'
+	}), {
+		type: 'distro',
+		name: 'Debian wheezy',
+		version: 'wheezy',
+		slug: 'debian-wheezy'
+	})
 })
 &nbsp;
-ava('should compile a single nested template', (test) =&gt; {
-  test.deepEqual(template.compileContract({
-    type: 'distro',
-    name: 'Debian',
-    version: 'wheezy',
-    slug: 'debian',
-    data: {
-      foo: {
-        bar: {
-          baz: '{{this.type}}'
-        }
-      }
-    }
-  }), {
-    type: 'distro',
-    name: 'Debian',
-    version: 'wheezy',
-    slug: 'debian',
-    data: {
-      foo: {
-        bar: {
-          baz: 'distro'
-        }
-      }
-    }
-  })
+test('should compile a single nested template', (test) =&gt; {
+	test.deepEqual(compileContract({
+		type: 'distro',
+		name: 'Debian',
+		version: 'wheezy',
+		slug: 'debian',
+		data: {
+			foo: {
+				bar: {
+					baz: '{{this.type}}'
+				}
+			}
+		}
+	}), {
+		type: 'distro',
+		name: 'Debian',
+		version: 'wheezy',
+		slug: 'debian',
+		data: {
+			foo: {
+				bar: {
+					baz: 'distro'
+				}
+			}
+		}
+	})
 })
 &nbsp;
-ava('should leave missing values as interpolations', (test) =&gt; {
-  test.deepEqual(template.compileContract({
-    type: 'distro',
-    name: 'Debian',
-    version: '{{this.data.distroName}}',
-    slug: 'debian'
-  }), {
-    type: 'distro',
-    name: 'Debian',
-    version: '{{this.data.distroName}}',
-    slug: 'debian'
-  })
+test('should leave missing values as interpolations', (test) =&gt; {
+	test.deepEqual(compileContract({
+		type: 'distro',
+		name: 'Debian',
+		version: '{{this.data.distroName}}',
+		slug: 'debian'
+	}), {
+		type: 'distro',
+		name: 'Debian',
+		version: '{{this.data.distroName}}',
+		slug: 'debian'
+	})
 })
 &nbsp;
-ava('should be able to blacklist a top level element', (test) =&gt; {
-  const result = template.compileContract({
-    type: 'distro',
-    version: '7',
-    name: 'Debian v{{this.version}}',
-    data: {
-      name: 'debian'
-    },
-    slug: '{{this.data.name}}'
-  }, {
-    blacklist: new Set([ 'name' ])
-  })
+test('should be able to blacklist a top level element', (test) =&gt; {
+	const result = compileContract({
+		type: 'distro',
+		version: '7',
+		name: 'Debian v{{this.version}}',
+		data: {
+			name: 'debian'
+		},
+		slug: '{{this.data.name}}'
+	}, {
+		blacklist: new Set([ 'name' ])
+	})
 &nbsp;
-  test.deepEqual(result, {
-    type: 'distro',
-    version: '7',
-    name: 'Debian v{{this.version}}',
-    data: {
-      name: 'debian'
-    },
-    slug: 'debian'
-  })
+	test.deepEqual(result, {
+		type: 'distro',
+		version: '7',
+		name: 'Debian v{{this.version}}',
+		data: {
+			name: 'debian'
+		},
+		slug: 'debian'
+	})
 })
 &nbsp;
-ava('should be able to blacklist a nested element', (test) =&gt; {
-  const result = template.compileContract({
-    type: 'distro',
-    version: '7',
-    name: 'Debian v{{this.version}}',
-    data: {
-      name: 'debian',
-      foo: {
-        type: '{{this.type}}'
-      }
-    },
-    slug: '{{this.data.name}}'
-  }, {
-    blacklist: new Set([ 'data.foo.type' ])
-  })
+test('should be able to blacklist a nested element', (test) =&gt; {
+	const result = compileContract({
+		type: 'distro',
+		version: '7',
+		name: 'Debian v{{this.version}}',
+		data: {
+			name: 'debian',
+			foo: {
+				type: '{{this.type}}'
+			}
+		},
+		slug: '{{this.data.name}}'
+	}, {
+		blacklist: new Set([ 'data.foo.type' ])
+	})
 &nbsp;
-  test.deepEqual(result, {
-    type: 'distro',
-    version: '7',
-    name: 'Debian v7',
-    data: {
-      name: 'debian',
-      foo: {
-        type: '{{this.type}}'
-      }
-    },
-    slug: 'debian'
-  })
+	test.deepEqual(result, {
+		type: 'distro',
+		version: '7',
+		name: 'Debian v7',
+		data: {
+			name: 'debian',
+			foo: {
+				type: '{{this.type}}'
+			}
+		},
+		slug: 'debian'
+	})
 })
 &nbsp;
-ava('should be able to blacklist more than one element', (test) =&gt; {
-  const result = template.compileContract({
-    type: 'distro',
-    version: '7',
-    name: 'Debian v{{this.version}}',
-    data: {
-      name: 'debian',
-      foo: {
-        type: '{{this.type}}'
-      }
-    },
-    slug: '{{this.data.name}}'
-  }, {
-    blacklist: new Set([ 'data.foo.type', 'name' ])
-  })
+test('should be able to blacklist more than one element', (test) =&gt; {
+	const result = compileContract({
+		type: 'distro',
+		version: '7',
+		name: 'Debian v{{this.version}}',
+		data: {
+			name: 'debian',
+			foo: {
+				type: '{{this.type}}'
+			}
+		},
+		slug: '{{this.data.name}}'
+	}, {
+		blacklist: new Set([ 'data.foo.type', 'name' ])
+	})
 &nbsp;
-  test.deepEqual(result, {
-    type: 'distro',
-    version: '7',
-    name: 'Debian v{{this.version}}',
-    data: {
-      name: 'debian',
-      foo: {
-        type: '{{this.type}}'
-      }
-    },
-    slug: 'debian'
-  })
+	test.deepEqual(result, {
+		type: 'distro',
+		version: '7',
+		name: 'Debian v{{this.version}}',
+		data: {
+			name: 'debian',
+			foo: {
+				type: '{{this.type}}'
+			}
+		},
+		slug: 'debian'
+	})
 })
 &nbsp;
-ava('should be able to blacklist elements inside arrays', (test) =&gt; {
-  const result = template.compileContract({
-    slug: 'debian',
-    type: 'distro',
-    random: [
-      '{{this.slug}}',
-      '{{this.slug}}',
-      '{{this.slug}}'
-    ]
-  }, {
-    blacklist: new Set([ 'random.1' ])
-  })
+test('should be able to blacklist elements inside arrays', (test) =&gt; {
+	const result = compileContract({
+		slug: 'debian',
+		type: 'distro',
+		random: [
+			'{{this.slug}}',
+			'{{this.slug}}',
+			'{{this.slug}}'
+		]
+	}, {
+		blacklist: new Set([ 'random.1' ])
+	})
 &nbsp;
-  test.deepEqual(result, {
-    slug: 'debian',
-    type: 'distro',
-    random: [
-      'debian',
-      '{{this.slug}}',
-      'debian'
-    ]
-  })
+	test.deepEqual(result, {
+		slug: 'debian',
+		type: 'distro',
+		random: [
+			'debian',
+			'{{this.slug}}',
+			'debian'
+		]
+	})
 })
 &nbsp;
-ava('should be able to blacklist a whole subtree', (test) =&gt; {
-  const result = template.compileContract({
-    type: 'distro',
-    version: '7',
-    name: 'Debian v{{this.version}}',
-    data: {
-      name: 'debian',
-      foo: {
-        type: '{{this.type}}'
-      }
-    },
-    slug: '{{this.data.name}}'
-  }, {
-    blacklist: new Set([ 'data' ])
-  })
+test('should be able to blacklist a whole subtree', (test) =&gt; {
+	const result = compileContract({
+		type: 'distro',
+		version: '7',
+		name: 'Debian v{{this.version}}',
+		data: {
+			name: 'debian',
+			foo: {
+				type: '{{this.type}}'
+			}
+		},
+		slug: '{{this.data.name}}'
+	}, {
+		blacklist: new Set([ 'data' ])
+	})
 &nbsp;
-  test.deepEqual(result, {
-    type: 'distro',
-    version: '7',
-    name: 'Debian v7',
-    data: {
-      name: 'debian',
-      foo: {
-        type: '{{this.type}}'
-      }
-    },
-    slug: 'debian'
-  })
+	test.deepEqual(result, {
+		type: 'distro',
+		version: '7',
+		name: 'Debian v7',
+		data: {
+			name: 'debian',
+			foo: {
+				type: '{{this.type}}'
+			}
+		},
+		slug: 'debian'
+	})
 })
 &nbsp;</pre></td></tr>
 </table></pre>
@@ -883,7 +874,7 @@ ava('should be able to blacklist a whole subtree', (test) =&gt; {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Apr 28 2021 17:05:03 GMT+1000 (Australian Eastern Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Apr 30 2021 11:36:21 GMT-0400 (Eastern Daylight Time)
 </div>
 </div>
 <script src="../../prettify.js"></script>
