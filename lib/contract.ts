@@ -1,39 +1,25 @@
 /*
- * Copyright 2017 resin.io
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Copyright (C) Balena.io - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * Proprietary and confidential.
  */
-'use strict';
 
-import {
-	chain,
-	concat,
-	defaults,
-	filter,
-	first,
-	flatMap,
-	intersectionWith,
-	isEqual,
-	keys,
-	map,
-	matches,
-	omit,
-	partial,
-	range,
-	reduce,
-	some,
-	uniqWith,
-} from 'lodash';
+import concat from 'lodash/concat';
+import defaults from 'lodash/defaults';
+import filter from 'lodash/filter';
+import first from 'lodash/first';
+import flatMap from 'lodash/flatMap';
+import intersectionWith from 'lodash/intersectionWith';
+import isEqual from 'lodash/isEqual';
+import keys from 'lodash/keys';
+import map from 'lodash/map';
+import matches from 'lodash/matches';
+import omit from 'lodash/omit';
+import partial from 'lodash/partial';
+import range from 'lodash/range';
+import reduce from 'lodash/reduce';
+import some from 'lodash/some';
+import uniqWith from 'lodash/uniqWith';
 import { isValid } from 'skhema';
 import { bigCombination } from 'js-combinatorics';
 import { compare, satisfies, valid, validRange } from 'semver';
@@ -41,19 +27,16 @@ import { compare, satisfies, valid, validRange } from 'semver';
 import ObjectSet from './object-set';
 import MatcherCache from './matcher-cache';
 import { hashObject } from './hash';
-import { ContractType, MATCHER } from './types/types';
+import { ContractObject, MATCHER } from './types/types';
 import { compileContract } from './template';
 import { build as buildVariants } from './variants';
 import { build as buildChildrentree } from './children-tree';
-import { areSetsDisjoint } from './utils';
 import { getAll } from './children-tree';
+import { areSetsDisjoint } from './utils';
 
-/**
- * @ignore
- */
 export default class Contract {
 	metadata: any;
-	raw: ContractType;
+	raw: ContractObject;
 	/**
 	 * @summary A contract data structure
 	 * @name Contract
@@ -61,7 +44,7 @@ export default class Contract {
 	 * @class
 	 * @public
 	 *
-	 * @param {ContractType} object - the contract plain object
+	 * @param {ContractObject} object - the contract plain object
 	 * @param {Object} [options] - options
 	 * @param {Boolean} [options.hash=true] - whether to hash the contract
 	 *
@@ -72,7 +55,7 @@ export default class Contract {
 	 *   slug: 'armv7hf'
 	 * })
 	 */
-	constructor(object: ContractType, options: object = {}) {
+	constructor(object: ContractObject, options: object = {}) {
 		this.raw = object;
 		this.metadata = {
 			children: {
@@ -1515,10 +1498,11 @@ export default class Contract {
 	 *   }
 	 * })
 	 */
-	static build(source: ContractType): Contract[] {
+	static build(source: ContractObject): Contract[] {
 		const rawContracts = buildVariants(source);
-		return chain(rawContracts)
-			.reduce((accumulator, variant) => {
+		return reduce(
+			rawContracts,
+			(accumulator, variant) => {
 				const aliases = variant['aliases'] || [];
 				const obj = omit(variant, ['aliases']);
 				const contracts = map(aliases, (alias) => {
@@ -1531,7 +1515,8 @@ export default class Contract {
 				});
 				contracts.push(new Contract(obj));
 				return accumulator.concat(contracts);
-			}, [] as Contract[])
-			.value();
+			},
+			[] as Contract[],
+		);
 	}
 }

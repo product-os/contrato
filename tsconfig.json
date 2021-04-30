@@ -11,7 +11,9 @@
 		"target": "es2015",
 		"declaration": true,
 		"skipLibCheck": true,
-		"noImplicitAny": false,
 		"resolveJsonModule": true
-  }
+	},
+	"include": [
+		"lib/**/*.ts"
+	]
 }

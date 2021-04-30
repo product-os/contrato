@@ -1,30 +1,18 @@
 /*
- * Copyright 2017 resin.io
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Copyright (C) Balena.io - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * Proprietary and confidential.
  */
-'use strict';
 
-import {
-	concat,
-	get,
-	isArray,
-	isPlainObject,
-	isString,
-	map,
-	mapValues,
-} from 'lodash';
-import { ContractType } from './types/types';
+import concat from 'lodash/concat';
+import get from 'lodash/get';
+import isArray from 'lodash/isArray';
+import isPlainObject from 'lodash/isPlainObject';
+import isString from 'lodash/isString';
+import map from 'lodash/map';
+import mapValues from 'lodash/mapValues';
+
+import { ContractObject } from './types/types';
 
 /**
  * @module template
@@ -106,11 +94,11 @@ const TEMPLATE_REGEXP: RegExp = /\{\{(.+?)\}\}/g;
  * > }
  */
 export const compileContract = (
-	contract: ContractType,
+	contract: ContractObject,
 	options: { blacklist?: Set<string> } = {},
 	root?: object,
 	breadcrumb?: string[],
-): ContractType =>
+): ContractObject =>
 	deepMapValues(
 		contract,
 		(value: any, key: string[]) => {

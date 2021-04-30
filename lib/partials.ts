@@ -1,45 +1,35 @@
 /*
- * Copyright 2017 resin.io
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Copyright (C) Balena.io - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * Proprietary and confidential.
  */
 
-'use strict';
-
 import Debug from 'debug';
-import fs from 'fs';
+import { fs } from 'memfs';
 import path from 'path';
 import Handlebars from 'handlebars';
-import {
-	attempt,
-	chain,
-	first,
-	invokeMap,
-	isError,
-	join,
-	last,
-	map,
-	merge,
-	range,
-	reduce,
-	split,
-	take,
-	trim,
-} from 'lodash';
+import attempt from 'lodash/attempt';
+import first from 'lodash/first';
+import invokeMap from 'lodash/invokeMap';
+import isError from 'lodash/isError';
+import join from 'lodash/join';
+import last from 'lodash/last';
+import map from 'lodash/map';
+import merge from 'lodash/merge';
+import range from 'lodash/range';
+import reduce from 'lodash/reduce';
+import sortBy from 'lodash/sortBy';
+import split from 'lodash/split';
+import take from 'lodash/take';
+import thru from 'lodash/thru';
+import trim from 'lodash/trim';
+import uniq from 'lodash/uniq';
 
-import { cartesianProductWith, stripExtraBlankLines } from './utils';
+import flow from 'lodash/flow';
+
 import Contract from './contract';
-import { ContractType } from './types/types';
+import { ContractObject } from './types/types';
+import { cartesianProductWith, stripExtraBlankLines } from './utils';
 
 const debug = Debug('partials');
 
@@ -79,65 +69,68 @@ const REFERENCE_DELIMITER: string = '+';
  */
 export const findPartial = (
 	name: string,
-	context: ContractType,
+	context: ContractObject,
 	options: { baseDirectory: string; structure: string[] },
-): string[] =>
-	chain(options.structure)
-		.map((type) => {
-			const children = context.getChildrenByType(type);
-			const contracts = chain(children)
-				.map((contract) => {
-					// We need to replace the alias slug with canonical slug when finding partial
-					// since the aliases will use canonical slug to avoid duplication.
-					const rawContract = contract.toJSON();
-					rawContract.slug = contract.getCanonicalSlug();
-					return new Contract(rawContract);
-				})
-				.sortBy((contract) => contract.getSlug())
-				.value();
+): string[] => {
+	return flow(
+		(structure: string[]) =>
+			map(structure, (type) => {
+				const children: ContractObject[] = context.getChildrenByType(type);
+				const contracts = flow(
+					(childrenRaw: ContractObject[]) =>
+						map(childrenRaw, (contract) => {
+							// We need to replace the alias slug with canonical slug when finding partial
+							// since the aliases will use canonical slug to avoid duplication.
+							const rawContract = contract.toJSON();
+							rawContract.slug = contract.getCanonicalSlug();
+							return new Contract(rawContract);
+						}),
+					(childrenContracts: Contract[]) =>
+						sortBy(childrenContracts, (contract) => contract.getSlug()),
+				)(children);
 
-			return [
-				join(invokeMap(contracts, 'getReferenceString'), REFERENCE_DELIMITER),
-				join(invokeMap(contracts, 'getSlug'), REFERENCE_DELIMITER),
-			];
-		})
-		.thru((combinations) => {
-			const products = cartesianProductWith<string, string[]>(
-				combinations,
-				(accumulator: string[], element: string) =>
-					accumulator.concat([element]),
-				[[]],
-			);
+				return [
+					join(invokeMap(contracts, 'getReferenceString'), REFERENCE_DELIMITER),
+					join(invokeMap(contracts, 'getSlug'), REFERENCE_DELIMITER),
+				];
+			}),
+		(structureReferences: string[][]) =>
+			thru(structureReferences, (combinations) => {
+				const products = cartesianProductWith<string, string[]>(
+					combinations,
+					(accumulator: string[], element: string) =>
+						accumulator.concat([element]),
+					[[]],
+				);
 
-			const slices = reduce(
-				range(options.structure.length, 1, -1),
-				(accumulator, slice) =>
-					accumulator.concat(invokeMap(products, 'slice', 0, slice)),
-				[] as string[][],
-			);
+				const slices = reduce(
+					range(options.structure.length, 1, -1),
+					(accumulator, slice) =>
+						accumulator.concat(invokeMap(products, 'slice', 0, slice)),
+					[] as string[][],
+				);
 
-			const fallbackPaths = chain(combinations)
-				.reduce(
+				const fallbackPaths = combinations.reduce(
 					(accumulator, _, index, collection) =>
 						map([map(collection, first), map(collection, last)], (list) =>
 							take(list, index + 1),
 						).concat(accumulator),
 					[] as Array<Array<string | undefined>>,
-				)
-				.value();
+				);
 
-			return (products as Array<Array<string | undefined>>)
-				.concat(slices)
-				.concat(fallbackPaths);
-		})
-		.map((references) => [join(references, REFERENCE_DELIMITER), name])
-		.concat([[name]])
-		.map((paths) => {
-			const absolutePath = [options.baseDirectory].concat(paths);
-			return `${path.join(...absolutePath)}.tpl`;
-		})
-		.uniq()
-		.value();
+				return (products as Array<Array<string | undefined>>)
+					.concat(slices)
+					.concat(fallbackPaths);
+			})
+				.map((references) => [join(references, REFERENCE_DELIMITER), name])
+				.concat([[name]])
+				.map((paths) => {
+					const absolutePath = [options.baseDirectory].concat(paths);
+					return `${path.join(...absolutePath)}.tpl`;
+				}),
+		uniq,
+	)(options.structure);
+};
 
 Handlebars.registerHelper('import', (options) => {
 	const settings = options.data.root.settings;
@@ -231,7 +224,7 @@ Handlebars.registerHelper({
  */
 export const buildTemplate = (
 	template: string,
-	context: ContractType,
+	context: ContractObject,
 	options: { directory: string },
 ): string => {
 	const data = merge(

@@ -1,22 +1,13 @@
 /*
- * Copyright 2017 resin.io
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Copyright (C) Balena.io - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * Proprietary and confidential.
  */
 
-'use strict';
-
-import { flatMap, isEmpty, reduce, trim } from 'lodash';
+import flatMap from 'lodash/flatMap';
+import isEmpty from 'lodash/isEmpty';
+import reduce from 'lodash/reduce';
+import trim from 'lodash/trim';
 
 /**
  * @module utils
@@ -83,7 +74,7 @@ export const setUnion = <T>(set1: Set<T>, set2: Set<T>): Set<T> => {
  * @memberof module:utils
  * @public
  *
- * @param {Set} set - set
+ * @param {Set} set1 - set
  * @returns {*} the first set element
  *
  * @example
@@ -92,7 +83,7 @@ export const setUnion = <T>(set1: Set<T>, set2: Set<T>): Set<T> => {
  * console.log(element)
  * > 'foo'
  */
-export const setFirst = <T>(set: Set<T>): T => set.values().next().value;
+export const setFirst = <T>(set1: Set<T>): T => set1.values().next().value;
 
 /**
  * @summary Map a set using an iteratee function
@@ -100,7 +91,7 @@ export const setFirst = <T>(set: Set<T>): T => set.values().next().value;
  * @memberof module:utils
  * @public
  *
- * @param {Set} set - set
+ * @param {Set} set1 - set
  * @param {Function} iteratee - iteratee (value)
  * @returns {Array} mapped set
  *
@@ -112,10 +103,10 @@ export const setFirst = <T>(set: Set<T>): T => set.values().next().value;
  * console.log(result)
  * > [ 2, 4, 6 ]
  */
-export const setMap = <T, V>(set: Set<T>, iteratee: (arg0: T) => V): V[] => {
+export const setMap = <T, V>(set1: Set<T>, iteratee: (arg0: T) => V): V[] => {
 	const result: V[] = [];
 
-	for (const element of set) {
+	for (const element of set1) {
 		result.push(iteratee(element));
 	}
 
@@ -162,12 +153,12 @@ export const cartesianProductWith = <T, V>(
 ): V[] => {
 	const product = reduce(
 		sets,
-		(accumulator, set) =>
-			set.length === 0
+		(accumulator, set1) =>
+			set1.length === 0
 				? accumulator
 				: flatMap(accumulator, (array) =>
 						reduce(
-							set,
+							set1,
 							(combinations, element) => {
 								const combination = iteratee(array, element);
 								if (combination) {

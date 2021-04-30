@@ -1,20 +1,8 @@
 /*
- * Copyright 2017 resin.io
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Copyright (C) Balena.io - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * Proprietary and confidential.
  */
-
-'use strict';
 
 /**
  * Contract variants are syntax sugar that allows the client
@@ -26,15 +14,21 @@
  * @module variants
  */
 
-import { omit, reduce, map, concat, mergeWith, isArray } from 'lodash';
-import { ContractType } from './types/types';
+import concat from 'lodash/concat';
+import isArray from 'lodash/isArray';
+import map from 'lodash/map';
+import mergeWith from 'lodash/mergeWith';
+import omit from 'lodash/omit';
+import reduce from 'lodash/reduce';
+
+import { ContractObject } from './types/types';
 
 /**
  * @summary The name of the contract property that contains variants
  * @type {String}
  * @constant
  */
-const VARIANTS_PROPERTY = 'variants';
+const VARIANTS_PROPERTY: string = 'variants';
 
 /**
  * @summary Build contract variants
@@ -68,7 +62,7 @@ const VARIANTS_PROPERTY = 'variants';
  *   ]
  * })
  */
-export const build = (contract: ContractType): ContractType[] => {
+export const build = (contract: ContractObject): ContractObject[] => {
 	const variants: object[] = contract[VARIANTS_PROPERTY] || [];
 	const base = omit(contract, [VARIANTS_PROPERTY]);
 
@@ -85,6 +79,6 @@ export const build = (contract: ContractType): ContractType[] => {
 							),
 						),
 					),
-				[] as ContractType[],
+				[] as ContractObject[],
 		  );
 };

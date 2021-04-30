@@ -1,23 +1,13 @@
 /*
- * Copyright 2017 resin.io
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Copyright (C) Balena.io - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * Proprietary and confidential.
  */
 
-'use strict';
+import reduce from 'lodash/reduce';
+import set from 'lodash/set';
 
-import { reduce, set } from 'lodash';
-import { ContractType } from '.';
+import { ContractObject } from '.';
 import Contract from './contract';
 import { setFirst } from './utils';
 
@@ -103,7 +93,7 @@ export const build = (contract: Contract): object => {
  *   console.log(sourceContract.slug, sourceContract.version)
  * })
  */
-export const getAll = (tree: any): ContractType[] =>
+export const getAll = (tree: any): ContractObject[] =>
 	reduce(
 		tree,
 		(accumulator, value, _) => {
@@ -115,5 +105,5 @@ export const getAll = (tree: any): ContractType[] =>
 			accumulator.push(value);
 			return accumulator;
 		},
-		[] as ContractType[],
+		[] as ContractObject[],
 	);

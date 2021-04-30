@@ -1,45 +1,28 @@
 /*
- * Copyright 2017 resin.io
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Copyright (C) Balena.io - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * Proprietary and confidential.
  */
 
-'use strict';
-
-import {
-	clone,
-	concat,
-	fill,
-	filter,
-	flatMap,
-	flatten,
-	forEach,
-	includes,
-	isEmpty,
-	isEqual,
-	reduce,
-	uniqWith,
-} from 'lodash';
+import clone from 'lodash/clone';
+import concat from 'lodash/concat';
+import fill from 'lodash/fill';
+import filter from 'lodash/filter';
+import flatMap from 'lodash/flatMap';
+import flatten from 'lodash/flatten';
+import forEach from 'lodash/forEach';
+import includes from 'lodash/includes';
+import isEmpty from 'lodash/isEmpty';
+import isEqual from 'lodash/isEqual';
+import reduce from 'lodash/reduce';
+import uniqWith from 'lodash/uniqWith';
 import { compare } from 'semver';
 
 import Contract from './contract';
 import { parse } from './cardinality';
-import { BLUEPRINT, BlueprintType } from './types/types';
+import { BLUEPRINT, BlueprintObject } from './types/types';
 import { cartesianProductWith } from './utils';
 
-/**
- * @ignore
- */
 export default class Blueprint extends Contract {
 	/**
 	 * @summary A blueprint contract data structure
@@ -60,7 +43,7 @@ export default class Blueprint extends Contract {
 	 *   slug: '{{children.arch.sw.slug}}-{{children.hw.device-type.slug}}'
 	 * })
 	 */
-	constructor(layout: BlueprintType, skeleton?: any) {
+	constructor(layout: BlueprintObject, skeleton?: any) {
 		super({
 			type: BLUEPRINT,
 			skeleton,

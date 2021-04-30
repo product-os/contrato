@@ -1,7 +1,14 @@
+/*
+ * Copyright (C) Balena.io - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * Proprietary and confidential.
+ */
+
 import cue from 'cuelang-js';
 import openapiTS from 'openapi-typescript';
 
 import { promises as fs } from 'fs';
+import path from 'path';
 
 const cueToTSTypes = async (input: string) => {
 	const exportResults = await cue('export', [input], { '--out': 'openapi' });
@@ -12,10 +19,13 @@ const cueToTSTypes = async (input: string) => {
 	return openapiTS(openapi);
 };
 
+const typeDir = path.join('lib', 'types')
+const typeFile = (filename: string) => path.join(typeDir, filename);
+
 const main = async () => {
-  const ts = await cueToTSTypes('lib/types/definitions.cue');
-  const output = "lib/types/cuetypes.ts";
-  await fs.writeFile(output, ts);
+  const ts = await cueToTSTypes(typeFile('definitions.cue'));
+  const output = typeFile('cuetypes.ts');
+  await fs.writeFile(output, `/* tslint:disable:class-name no-empty-interface */\n${ts}`);
   console.log(`Built types to ${output}`);
 };
 
