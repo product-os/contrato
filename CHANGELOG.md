@@ -5,6 +5,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v0.0.6 - 2018-08-17
 
+## 0.6.1 - 2021-05-05
+
+* align repo with official Balena typescript skeleton [Micah Halter]
+* finished migration to Typescript and added cue type generation [Micah Halter]
+* patch: use ts-migrate to convert to TypeScript [Thomas Manning]
+* patch: Update ava from 0.22.0 to 3.15.0 [Thomas Manning]
+
 ## 0.6.0 - 2020-09-18
 
 * Add support for a "not" operator in "requires" [Juan Cruz Viotti]

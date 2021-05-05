@@ -1,4 +1,39 @@
 - commits:
+    - subject: align repo with official Balena typescript skeleton
+      hash: edd518539bd00532efaed4d38db37747897c4555
+      body: ''
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Micah Halter <micah@balena.io>
+        signed-off-by: Micah Halter <micah@balena.io>
+      author: Micah Halter
+      nested: []
+    - subject: finished migration to Typescript and added cue type generation
+      hash: 72220e58cdf5ee92c80e3e509f28a1237fca2b15
+      body: ''
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Micah Halter <micah@balena.io>
+        signed-off-by: Micah Halter <micah@balena.io>
+      author: Micah Halter
+      nested: []
+    - subject: 'patch: use ts-migrate to convert to TypeScript'
+      hash: d2df996e00e71a7f0cddc36e925063f578db5561
+      body: ''
+      footer: {}
+      author: Thomas Manning
+      nested: []
+    - subject: 'patch: Update ava from 0.22.0 to 3.15.0'
+      hash: 39526770e40347128472138e96518ff518f6129f
+      body: ''
+      footer: {}
+      author: Thomas Manning
+      nested: []
+  version: 0.6.1
+  date: 2021-05-05T13:56:30.842Z
+- commits:
     - subject: Add support for a "not" operator in "requires"
       hash: 82a601e47236594ae761c1ac814cb1007c6f9319
       body: |
