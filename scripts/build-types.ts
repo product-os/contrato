@@ -19,14 +19,17 @@ const cueToTSTypes = async (input: string) => {
 	return openapiTS(openapi);
 };
 
-const typeDir = path.join('lib', 'types')
+const typeDir = path.join('lib', 'types');
 const typeFile = (filename: string) => path.join(typeDir, filename);
 
 const main = async () => {
-  const ts = await cueToTSTypes(typeFile('definitions.cue'));
-  const output = typeFile('cuetypes.ts');
-  await fs.writeFile(output, `/* tslint:disable:class-name no-empty-interface */\n${ts}`);
-  console.log(`Built types to ${output}`);
+	const ts = await cueToTSTypes(typeFile('definitions.cue'));
+	const output = typeFile('cuetypes.ts');
+	await fs.writeFile(
+		output,
+		`/* tslint:disable:class-name no-empty-interface */\n${ts}`,
+	);
+	console.log(`Built types to ${output}`);
 };
 
-main().catch(err => console.error(err));
+main().catch((err) => console.error(err));
