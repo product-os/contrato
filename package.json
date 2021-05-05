@@ -1,6 +1,6 @@
 {
   "name": "@balena/contrato",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "The official contract implementation",
   "homepage": "https://github.com/balena-io/contrato",
   "main": "build/index.js",
