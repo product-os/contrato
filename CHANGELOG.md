@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v0.0.6 - 2018-08-17
 
+## 0.6.4 - 2021-05-06
+
+* add circleCI tests [Micah Halter]
+
 ## 0.6.3 - 2021-05-06
 
 * Updated to new product-os repo location [Micah Halter]

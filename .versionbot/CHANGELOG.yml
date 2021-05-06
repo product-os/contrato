@@ -1,4 +1,17 @@
 - commits:
+    - subject: add circleCI tests
+      hash: c72c9bef1fa3d77f61e78d4a32580a603d97bafc
+      body: ''
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Micah Halter <micah@balena.io>
+        signed-off-by: Micah Halter <micah@balena.io>
+      author: Micah Halter
+      nested: []
+  version: 0.6.4
+  date: 2021-05-06T13:04:40.882Z
+- commits:
     - subject: Updated to new product-os repo location
       hash: fd9c540aa19f208aa2473a8014a077ef71f53651
       body: ''
