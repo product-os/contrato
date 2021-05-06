@@ -1,4 +1,17 @@
 - commits:
+    - subject: Updated to new product-os repo location
+      hash: fd9c540aa19f208aa2473a8014a077ef71f53651
+      body: ''
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Micah Halter <micah@balena.io>
+        signed-off-by: Micah Halter <micah@balena.io>
+      author: Micah Halter
+      nested: []
+  version: 0.6.3
+  date: 2021-05-06T12:15:37.660Z
+- commits:
     - subject: Add linting of the scripts folder
       hash: 3332fa7291e10cfaff0a1dc959cdb3e6143f06c4
       body: ''

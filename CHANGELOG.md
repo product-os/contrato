@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v0.0.6 - 2018-08-17
 
+## 0.6.3 - 2021-05-06
+
+* Updated to new product-os repo location [Micah Halter]
+
 ## 0.6.2 - 2021-05-05
 
 * Add linting of the scripts folder [Micah Halter]
