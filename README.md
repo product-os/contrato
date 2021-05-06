@@ -3,7 +3,7 @@ Contrato
 
 > The official contracts implementation
 
-[**Documentation**](https://balena-io.github.io/contrato/)
+[![Documentation](https://github.com/product-os/contrato/actions/workflows/docs.yml/badge.svg)](https://product-os.github.io/contrato/modules/contrato.html)
 
 Tests
 -----
@@ -17,8 +17,8 @@ npm test
 Contribute
 ----------
 
-- Issue Tracker: [github.com/balena-io/contrato/issues](https://github.com/balena-io/contrato/issues)
-- Source Code: [github.com/balena-io/contrato](https://github.com/balena-io/contrato)
+- Issue Tracker: [github.com/product-os/contrato/issues](https://github.com/product-os/contrato/issues)
+- Source Code: [github.com/product-os/contrato](https://github.com/product-os/contrato)
 
 Before submitting a PR, please make sure that you include tests, and that the
 linter runs without any warning:
@@ -31,7 +31,7 @@ Support
 -------
 
 If you're having any problem, please [raise an
-issue](https://github.com/balena-io/contrato/issues/new) on GitHub.
+issue](https://github.com/product-os/contrato/issues/new) on GitHub.
 
 License
 -------
