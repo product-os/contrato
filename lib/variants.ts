@@ -63,8 +63,8 @@ const VARIANTS_PROPERTY: string = 'variants';
  * })
  */
 export const build = (contract: ContractObject): ContractObject[] => {
-	const variants: object[] = contract[VARIANTS_PROPERTY] || [];
-	const base = omit(contract, [VARIANTS_PROPERTY]);
+	const variants: ContractObject[] = contract[VARIANTS_PROPERTY] || [];
+	const base = omit(contract, [VARIANTS_PROPERTY]) as ContractObject;
 
 	return variants.length === 0
 		? [base]

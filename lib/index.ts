@@ -9,13 +9,18 @@
  * @public
  */
 
-import { BlueprintObject, ContractObject } from './types/types';
+import {
+	BlueprintLayout,
+	BlueprintObject,
+	ContractObject,
+} from './types/types';
 import Contract from './contract';
 import Blueprint from './blueprint';
 import { buildTemplate } from './partials';
 import { parse as parseCardinality } from './cardinality';
 
 export {
+	BlueprintLayout,
 	ContractObject,
 	BlueprintObject,
 	Contract,
@@ -24,11 +29,14 @@ export {
 	parseCardinality,
 };
 
-export const query = (universe: Contract, layout: object, skeleton: object) =>
-	new Blueprint(layout, skeleton).reproduce(universe);
+export const query = (
+	universe: Contract,
+	layout: BlueprintLayout,
+	skeleton: object,
+) => new Blueprint(layout, skeleton).reproduce(universe);
 
 export const sequence = (
 	universe: Contract,
-	layout: object,
+	layout: BlueprintLayout,
 	skeleton: object,
 ) => new Blueprint(layout, skeleton).sequence(universe);

@@ -96,7 +96,7 @@ const TEMPLATE_REGEXP: RegExp = /\{\{(.+?)\}\}/g;
 export const compileContract = (
 	contract: ContractObject,
 	options: { blacklist?: Set<string> } = {},
-	root?: object,
+	root?: ContractObject,
 	breadcrumb?: string[],
 ): ContractObject =>
 	deepMapValues(
@@ -119,7 +119,7 @@ export const compileContract = (
 				);
 			}
 			if (isArray(value)) {
-				return map(value, (object, index) =>
+				return map(value as ContractObject[], (object, index) =>
 					compileContract(
 						object,
 						options,
@@ -131,4 +131,4 @@ export const compileContract = (
 			return value;
 		},
 		breadcrumb,
-	);
+	) as ContractObject;

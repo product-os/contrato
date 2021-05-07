@@ -1,3 +1,12 @@
-#Contract: {...}
+#Contract: {
+  type: string
+}
 
-#Blueprint: #Contract
+#BlueprintLayout: {...}
+
+#Blueprint: {
+  #Contract
+  type: "meta.blueprint"
+  layout: #BlueprintLayout
+  skeleton?: _
+}

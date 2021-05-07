@@ -361,7 +361,7 @@ export default class Contract {
 	 * const object = contract.toJSON()
 	 * console.log(JSON.stringify(object))
 	 */
-	toJSON(): object {
+	toJSON(): ContractObject {
 		// Ensure changes to the returned reference don't
 		// accidentally mutate the contract's internal state
 		return Object.assign({}, this.raw);
@@ -1504,7 +1504,7 @@ export default class Contract {
 			rawContracts,
 			(accumulator, variant) => {
 				const aliases = variant['aliases'] || [];
-				const obj = omit(variant, ['aliases']);
+				const obj = omit(variant, ['aliases']) as ContractObject;
 				const contracts = map(aliases, (alias) => {
 					return new Contract(
 						Object.assign({}, obj, {

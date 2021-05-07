@@ -69,15 +69,15 @@ const REFERENCE_DELIMITER: string = '+';
  */
 export const findPartial = (
 	name: string,
-	context: ContractObject,
+	context: Contract,
 	options: { baseDirectory: string; structure: string[] },
 ): string[] => {
 	return flow(
 		(structure: string[]) =>
 			map(structure, (type) => {
-				const children: ContractObject[] = context.getChildrenByType(type);
+				const children: Contract[] = context.getChildrenByType(type);
 				const contracts = flow(
-					(childrenRaw: ContractObject[]) =>
+					(childrenRaw: Contract[]) =>
 						map(childrenRaw, (contract) => {
 							// We need to replace the alias slug with canonical slug when finding partial
 							// since the aliases will use canonical slug to avoid duplication.
