@@ -5,6 +5,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v0.0.6 - 2018-08-17
 
+## 0.6.5 - 2021-05-08
+
+* Removed unnecessary ci files [Micah Halter]
+* Added more strict types to cue definitions [Micah Halter]
+
 ## 0.6.4 - 2021-05-06
 
 * add circleCI tests [Micah Halter]

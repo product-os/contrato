@@ -1,4 +1,27 @@
 - commits:
+    - subject: Removed unnecessary ci files
+      hash: af117886bb357432e2042c527fe8fc56faf7697f
+      body: ''
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Micah Halter <micah@balena.io>
+        signed-off-by: Micah Halter <micah@balena.io>
+      author: Micah Halter
+      nested: []
+    - subject: Added more strict types to cue definitions
+      hash: fb379949c2749e2b0fce40d24b764abaf02b0c64
+      body: ''
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Micah Halter <micah@balena.io>
+        signed-off-by: Micah Halter <micah@balena.io>
+      author: Micah Halter
+      nested: []
+  version: 0.6.5
+  date: 2021-05-08T15:38:00.915Z
+- commits:
     - subject: add circleCI tests
       hash: c72c9bef1fa3d77f61e78d4a32580a603d97bafc
       body: ''
