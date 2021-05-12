@@ -20,7 +20,7 @@ import { compare } from 'semver';
 
 import Contract from './contract';
 import { parse } from './cardinality';
-import { BLUEPRINT, BlueprintObject } from './types/types';
+import { BLUEPRINT, BlueprintLayout, BlueprintObject } from './types/types';
 import { cartesianProductWith } from './utils';
 
 export default class Blueprint extends Contract {
@@ -43,12 +43,12 @@ export default class Blueprint extends Contract {
 	 *   slug: '{{children.arch.sw.slug}}-{{children.hw.device-type.slug}}'
 	 * })
 	 */
-	constructor(layout: BlueprintObject, skeleton?: any) {
+	constructor(layout: BlueprintLayout, skeleton?: any) {
 		super({
 			type: BLUEPRINT,
 			skeleton,
 			layout,
-		});
+		} as BlueprintObject);
 
 		this.metadata.layout = reduce(
 			this.raw.layout,

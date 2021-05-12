@@ -8,8 +8,15 @@ export interface paths {}
 
 export interface components {
 	schemas: {
-		Blueprint: components['schemas']['Contract'];
-		Contract: { [key: string]: any };
+		Blueprint: components['schemas']['Contract'] & { [key: string]: any } & {
+			type?: 'meta.blueprint';
+			layout?: components['schemas']['BlueprintLayout'];
+			skeleton?: { [key: string]: any };
+		} & { [key: string]: any };
+		BlueprintLayout: { [key: string]: any };
+		Contract: {
+			type: string;
+		} & { [key: string]: any };
 	};
 }
 
