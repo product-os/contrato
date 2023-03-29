@@ -16,7 +16,7 @@ const cueToTSTypes = async (input: string) => {
 		throw new Error(`Failed to export cue to openapi: ${exportResults.stderr}`);
 	}
 	const openapi = JSON.parse(exportResults.stdout);
-	return openapiTS(openapi);
+	return openapiTS(openapi, { additionalProperties: true });
 };
 
 const typeDir = path.join('lib', 'types');
