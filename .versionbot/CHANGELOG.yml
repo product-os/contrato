@@ -1,7 +1,27 @@
 - commits:
+    - subject: Use flowzone docs instead of custom action
+      hash: 5ad5768b19663d1f9ab364cd07461a88c869664c
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Felipe Lalanne
+      nested: []
+    - subject: Setup flowzone
+      hash: 4639229f780e1b5174649ff0fa1d90836499c7ce
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: Felipe Lalanne
+      nested: []
+  version: 0.7.0
+  title: ""
+  date: 2023-03-29T18:49:46.992Z
+- commits:
     - subject: Removed unnecessary ci files
       hash: af117886bb357432e2042c527fe8fc56faf7697f
-      body: ''
+      body: ""
       footer:
         Change-type: patch
         change-type: patch
@@ -11,7 +31,7 @@
       nested: []
     - subject: Added more strict types to cue definitions
       hash: fb379949c2749e2b0fce40d24b764abaf02b0c64
-      body: ''
+      body: ""
       footer:
         Change-type: patch
         change-type: patch
@@ -24,7 +44,7 @@
 - commits:
     - subject: add circleCI tests
       hash: c72c9bef1fa3d77f61e78d4a32580a603d97bafc
-      body: ''
+      body: ""
       footer:
         Change-type: patch
         change-type: patch
@@ -37,7 +57,7 @@
 - commits:
     - subject: Updated to new product-os repo location
       hash: fd9c540aa19f208aa2473a8014a077ef71f53651
-      body: ''
+      body: ""
       footer:
         Change-type: patch
         change-type: patch
@@ -50,7 +70,7 @@
 - commits:
     - subject: Add linting of the scripts folder
       hash: 3332fa7291e10cfaff0a1dc959cdb3e6143f06c4
-      body: ''
+      body: ""
       footer:
         Change-type: patch
         change-type: patch
@@ -63,7 +83,7 @@
 - commits:
     - subject: align repo with official Balena typescript skeleton
       hash: edd518539bd00532efaed4d38db37747897c4555
-      body: ''
+      body: ""
       footer:
         Change-type: patch
         change-type: patch
@@ -73,7 +93,7 @@
       nested: []
     - subject: finished migration to Typescript and added cue type generation
       hash: 72220e58cdf5ee92c80e3e509f28a1237fca2b15
-      body: ''
+      body: ""
       footer:
         Change-type: patch
         change-type: patch
@@ -81,15 +101,15 @@
         signed-off-by: Micah Halter <micah@balena.io>
       author: Micah Halter
       nested: []
-    - subject: 'patch: use ts-migrate to convert to TypeScript'
+    - subject: "patch: use ts-migrate to convert to TypeScript"
       hash: d2df996e00e71a7f0cddc36e925063f578db5561
-      body: ''
+      body: ""
       footer: {}
       author: Thomas Manning
       nested: []
-    - subject: 'patch: Update ava from 0.22.0 to 3.15.0'
+    - subject: "patch: Update ava from 0.22.0 to 3.15.0"
       hash: 39526770e40347128472138e96518ff518f6129f
-      body: ''
+      body: ""
       footer: {}
       author: Thomas Manning
       nested: []
@@ -107,8 +127,8 @@
       footer:
         Change-type: minor
         change-type: minor
-        Fixes: 'https://github.com/balena-io/balena-supervisor/issues/1388'
-        fixes: 'https://github.com/balena-io/balena-supervisor/issues/1388'
+        Fixes: https://github.com/balena-io/balena-supervisor/issues/1388
+        fixes: https://github.com/balena-io/balena-supervisor/issues/1388
         Signed-off-by: Juan Cruz Viotti <juan@balena.io>
         signed-off-by: Juan Cruz Viotti <juan@balena.io>
       author: Juan Cruz Viotti
@@ -141,7 +161,7 @@
         - commits:
             - subject: Switch to typed-error
               hash: 234c6da3d4b2ca6784d7714a7b7d46813b43310a
-              body: ''
+              body: ""
               footer:
                 Change-type: patch
                 change-type: patch
@@ -151,7 +171,7 @@
         - commits:
             - subject: Add .versionbot/CHANGELOG.yml for nested changelogs
               hash: 7c61cf2f1e120944c3aef29dfe208f2e37139a6a
-              body: ''
+              body: ""
               footer:
                 Change-type: patch
                 change-type: patch
@@ -160,79 +180,77 @@
           date: 2020-08-04T21:07:49.365Z
         - commits:
             - author: Juan Cruz Viotti
-              body: ''
+              body: ""
               footers:
                 change-type: minor
                 signed-off-by: Juan Cruz Viotti <juan@balena.io>
               hash: 7e3fd20fb84d71c67e2f11206c4cf60b4b2866c1
-              subject: 'filter: Throw a custom error if the schema is invalid'
-          date: '2020-05-05T15:22:49Z'
+              subject: "filter: Throw a custom error if the schema is invalid"
+          date: 2020-05-05T15:22:49Z
           version: skhema-5.3.0
         - commits:
             - author: StefKors
-              body: ''
+              body: ""
               footers:
                 change-type: patch
                 signed-off-by: Stef Kors <stef@balena.io>
               hash: e90802b28b908dfcd4c54e432e72cd36ba390b09
               subject: Add test to show .filter() not working correctly
             - author: StefKors
-              body: ''
+              body: ""
               footers:
                 change-type: patch
                 signed-off-by: Stef Kors <stef@balena.io>
               hash: 4ff1988ca8c78192ad0f92afb7f2bb3d2679fdd2
               subject: When combining with baseSchema merge enum with AND operator
-          date: '2019-12-12T11:38:32Z'
+          date: 2019-12-12T11:38:32Z
           version: skhema-5.2.9
         - commits:
             - author: Juan Cruz Viotti
-              body: ''
+              body: ""
               footers:
                 change-type: patch
                 signed-off-by: Juan Cruz Viotti <juan@balena.io>
               hash: 2f8725cde8fc23de39346860a4fc283ada408eab
               subject: Ensure values in "enum" are unique
-          date: '2019-11-27T20:30:03Z'
+          date: 2019-11-27T20:30:03Z
           version: skhema-5.2.8
         - commits:
             - author: Juan Cruz Viotti
-              body: ''
+              body: ""
               footers:
                 change-type: patch
                 signed-off-by: Juan Cruz Viotti <juan@balena.io>
               hash: 5afd0f25d791fe1f0d85957369a46292212de79e
               subject: 'filter: Correctly handle "enum" inside "anyOf"'
-          date: '2019-11-27T19:34:08Z'
+          date: 2019-11-27T19:34:08Z
           version: skhema-5.2.7
         - commits:
             - author: Juan Cruz Viotti
-              body: ''
+              body: ""
               footers:
                 change-type: patch
                 signed-off-by: Juan Cruz Viotti <juan@balena.io>
               hash: 0bb8c525b58dc358b80ddd7a2ed53dc95fe662ae
-              subject: 'merge: Be explicit about additionalProperties'
-          date: '2019-11-19T09:19:11Z'
+              subject: "merge: Be explicit about additionalProperties"
+          date: 2019-11-19T09:19:11Z
           version: skhema-5.2.6
         - commits:
             - author: Lucian
-              body: ''
+              body: ""
               footers:
                 change-type: patch
                 signed-off-by: Lucian <lucian.buzzo@gmail.com>
               hash: 864db6644a2cddfada888c3cb979498b2107eabe
               subject: Add a resolver for the const keyword
-          date: '2019-05-09T15:49:10Z'
+          date: 2019-05-09T15:49:10Z
           version: skhema-5.2.5
         - commits:
             - author: Juan Cruz Viotti
               body: >-
-                This is very similar to the cache class they use by default,
-                with the
+                This is very similar to the cache class they use by default, with the
 
-                difference that it has a limit and won't grow indefinitely,
-                causing
+                difference that it has a limit and won't grow indefinitely, causing
 
                 memory leaks on long running applications like Jellyfish.
               footers:
@@ -240,7 +258,7 @@
                 signed-off-by: Juan Cruz Viotti <juan@balena.io>
               hash: 8dcdde578bdae9dad5786270b451bd45a7204115
               subject: Configure AJV instances with an LRU cache
-          date: '2019-04-15T15:32:41Z'
+          date: 2019-04-15T15:32:41Z
           version: skhema-5.2.4
         - commits:
             - author: Juan Cruz Viotti
@@ -250,73 +268,70 @@
                 signed-off-by: Juan Cruz Viotti <juan@balena.io>
               hash: f55993458fe587fa2884f116506bd27cb2aa3e87
               subject: Set addUsedSchema to false in all AJV instances
-          date: '2019-04-15T15:15:23Z'
+          date: 2019-04-15T15:15:23Z
           version: skhema-5.2.3
         - commits:
             - author: Lucian
-              body: 'Fixes #43'
+              body: "Fixes #43"
               footers:
                 change-type: patch
                 signed-off-by: Lucian <lucian.buzzo@gmail.com>
               hash: 90dd1490303d06c0e44be715464ddc4f598f4adb
               subject: Fix bug in scoreMatch when handling arrays
-          date: '2019-03-20T10:24:26Z'
+          date: 2019-03-20T10:24:26Z
           version: skhema-5.2.2
         - commits:
             - author: Lucian
-              body: ''
+              body: ""
               footers:
                 change-type: patch
                 signed-off-by: Lucian <lucian.buzzo@gmail.com>
               hash: 846dc2265f73018870d88c704630578e6715afa8
               subject: Fix bad require name and .only in tests
-          date: '2019-03-19T15:47:17Z'
+          date: 2019-03-19T15:47:17Z
           version: skhema-5.2.1
         - commits:
             - author: Lucian Buzzo
               body: >-
-                Only match elements with .filter() if the base schema (the
-                schema with no
+                Only match elements with .filter() if the base schema (the schema with no
 
                 anyOf branches) matches the element.
               footers:
                 change-type: patch
                 signed-off-by: Lucian Buzzo <lucian.buzzo@gmail.com>
               hash: 9652d825d07fd8de0b51a5ae2645f3f6f79ee860
-              subject: '.filter(): Only match if the base schema matches'
-          date: '2020-04-30T16:22:18Z'
+              subject: ".filter(): Only match if the base schema matches"
+          date: 2020-04-30T16:22:18Z
           version: skhema-5.2.10
         - commits:
             - author: Lucian
-              body: ''
+              body: ""
               footers:
                 change-type: minor
                 signed-off-by: Lucian <lucian.buzzo@gmail.com>
               hash: 647943a9d7fad1338ad800509a85636b150d576e
               subject: Add ability to provide custom resolvers to merge()
-          date: '2019-03-19T12:14:12Z'
+          date: 2019-03-19T12:14:12Z
           version: skhema-5.2.0
         - commits:
             - author: Lucian
-              body: ''
+              body: ""
               footers:
                 change-type: patch
                 signed-off-by: Lucian <lucian.buzzo@gmail.com>
               hash: c00be29c12b14858982cd2997088d065ff173870
               subject: Split up and optimize lodash dependencies
-          date: '2019-02-08T11:58:56Z'
+          date: 2019-02-08T11:58:56Z
           version: skhema-5.1.1
         - commits:
             - author: Lucian Buzzo
-              body: ''
+              body: ""
               footers:
                 change-type: minor
                 signed-off-by: Lucian Buzzo <lucian.buzzo@gmail.com>
               hash: 5c48f980bfad6eb0a15d6c18d0898fbe226ddddd
-              subject: >-
-                feature: Implement method for restricting a schema by another
-                schema
-          date: '2019-01-08T11:00:52Z'
+              subject: "feature: Implement method for restricting a schema by another schema"
+          date: 2019-01-08T11:00:52Z
           version: skhema-5.1.0
         - commits:
             - author: Lucian
@@ -326,47 +341,47 @@
                 signed-off-by: Lucian <lucian.buzzo@gmail.com>
               hash: 04f497a509e4129977e696a6637fe2724a7fb7e0
               subject: Remove ability to add custom keywords or formats
-          date: '2018-12-31T07:38:57Z'
+          date: 2018-12-31T07:38:57Z
           version: skhema-5.0.0
         - commits:
             - author: Lucian
-              body: ''
+              body: ""
               footers:
                 change-type: patch
                 signed-off-by: Lucian <lucian.buzzo@gmail.com>
               hash: 219f90ed5751e2211d9acb0bbd3311c39e12a180
               subject: Improve performance of clone operations
-          date: '2018-12-31T07:20:46Z'
+          date: 2018-12-31T07:20:46Z
           version: skhema-4.0.4
         - commits:
             - author: Lucian
-              body: ''
+              body: ""
               footers:
                 change-type: patch
                 signed-off-by: Lucian <lucian.buzzo@gmail.com>
               hash: 61318967874690eb3b85a9921fe27d3ce5c2494d
               subject: Don't bust AJV cache
-          date: '2018-12-10T12:09:43Z'
+          date: 2018-12-10T12:09:43Z
           version: skhema-4.0.3
         - commits:
             - author: Giovanni Garufi
-              body: ''
+              body: ""
               footers:
                 change-type: patch
                 signed-off-by: Giovanni Garufi <giovanni@balena.io>
               hash: 1f6c87de94ef905ea39972630364c74beb55057a
               subject: Add benchmark tests
-          date: '2018-12-10T11:47:01Z'
+          date: 2018-12-10T11:47:01Z
           version: skhema-4.0.2
         - commits:
             - author: Lucian
-              body: 'Fixes #30'
+              body: "Fixes #30"
               footers:
                 change-type: patch
                 signed-off-by: Lucian <lucian.buzzo@gmail.com>
               hash: d59a81567bf84a90182687a5385538ff7a599ce0
               subject: Recurse through nested `anyOf` statements when filtering
-          date: '2018-12-04T13:29:31Z'
+          date: 2018-12-04T13:29:31Z
           version: skhema-4.0.1
         - commits:
             - author: Lucian
@@ -376,24 +391,24 @@
                 signed-off-by: Lucian <lucian.buzzo@gmail.com>
               hash: 7c479564ca6c611c1576c32b63ac9dba06c8b2c7
               subject: Treat undefined additionalProperties as true instead of false
-          date: '2018-12-03T13:40:59Z'
+          date: 2018-12-03T13:40:59Z
           version: skhema-4.0.0
         - commits:
             - author: Juan Cruz Viotti
-              body: ''
+              body: ""
               footers:
                 change-type: patch
                 signed-off-by: Juan Cruz Viotti <juan@balena.io>
               hash: 842aaf252085b9a80a1cd84776b0c871c8c949aa
-              subject: 'stryker: Increase test timeout'
+              subject: "stryker: Increase test timeout"
             - author: Juan Cruz Viotti
-              body: ''
+              body: ""
               footers:
                 change-type: patch
                 signed-off-by: Juan Cruz Viotti <juan@balena.io>
               hash: 781b74d9ca847acfbfa3883fda66f4828824e3bc
-              subject: 'test: Configure Stryker for mutative testing'
-          date: '2018-11-30T16:58:05Z'
+              subject: "test: Configure Stryker for mutative testing"
+          date: 2018-11-30T16:58:05Z
           version: skhema-3.0.1
         - commits:
             - author: Giovanni Garufi
@@ -406,86 +421,83 @@
               hash: 23cec34382d98b6c10a1d5483113a1155ba6565a
               subject: Define additionalProperty inheritance in anyOf
             - author: Lucian
-              body: ''
+              body: ""
               footers:
                 change-type: major
                 signed-off-by: Lucian <lucian.buzzo@gmail.com>
               hash: 93a65b6edb10397b3417a3719d4471cd0eeb4f68
               subject: Formalising filtering logic
             - author: Lucian
-              body: ''
+              body: ""
               hash: d55a7cac6bd9ce238918eea99ed64894e5e7d066
               subject: Added failing test case with mutation
-          date: '2018-11-29T17:53:28Z'
+          date: 2018-11-29T17:53:28Z
           version: skhema-3.0.0
         - commits:
             - author: Juan Cruz Viotti
               body: >-
-                This is a hack, and should be reverted once we get to the bottom
-                of it.
+                This is a hack, and should be reverted once we get to the bottom of it.
 
-                It will impact performance, but right now there are things that
-                should
+                It will impact performance, but right now there are things that should
 
-                be filtered and are not, so lets get this merged for security
-                purposes.
+                be filtered and are not, so lets get this merged for security purposes.
 
                 Hopefully this library will be re-written soon.
               footers:
                 change-type: patch
-                see: 'https://github.com/balena-io/jellyfish/pull/878'
+                see: https://github.com/balena-io/jellyfish/pull/878
                 signed-off-by: Juan Cruz Viotti <juan@balena.io>
               hash: fd9841b296007e1ddc04d092c3b28c61a438be6c
-              subject: 'hotfix: Make sure things that should be filtered are filtered'
-          date: '2018-11-07T13:42:47Z'
+              subject: "hotfix: Make sure things that should be filtered are filtered"
+          date: 2018-11-07T13:42:47Z
           version: skhema-2.5.2
         - commits:
             - author: Juan Cruz Viotti
-              body: ''
+              body: ""
               footers:
                 change-type: patch
-                see: 'https://github.com/balena-io/jellyfish/issues/845'
+                see: https://github.com/balena-io/jellyfish/issues/845
                 signed-off-by: Juan Cruz Viotti <juan@balena.io>
               hash: 3ef59f5e552a11dffa72c6ff758210aebfe35bcb
-              subject: 'filter: Force additionalProperties: true on match schemas'
-          date: '2018-11-06T17:26:53Z'
+              subject: "filter: Force additionalProperties: true on match schemas"
+          date: 2018-11-06T17:26:53Z
           version: skhema-2.5.1
         - commits:
             - author: Lucian Buzzo
-              body: ''
+              body: ""
               footers:
                 change-type: minor
                 signed-off-by: Lucian Buzzo <lucian.buzzo@gmail.com>
               hash: 3536e75a128f7b79d13727d3a5562df48e6f9d00
               subject: Validate against just the schema if `options.schemaOnly` is true
-          date: '2018-10-16T11:59:41Z'
+          date: 2018-10-16T11:59:41Z
           version: skhema-2.5.0
         - commits:
             - author: Lucian Buzzo
-              body: ''
+              body: ""
               footers:
                 change-type: patch
                 signed-off-by: Lucian Buzzo <lucian.buzzo@gmail.com>
               hash: 513eeb6d006270ac25a2fb9a802df9c398658548
-              subject: 'merge: When merging an empty array, return a wildcard schema'
-          date: '2018-10-09T20:19:28Z'
+              subject: "merge: When merging an empty array, return a wildcard schema"
+          date: 2018-10-09T20:19:28Z
           version: skhema-2.4.1
         - commits:
             - author: Lucian Buzzo
-              body: ''
+              body: ""
               footers:
                 change-type: minor
                 signed-off-by: Lucian Buzzo <lucian.buzzo@gmail.com>
               hash: 5a3844a72a7bb0bad355d6a991a9a2f005c3a3b9
-              subject: 'validate: Make object optional'
-          date: '2018-10-09T16:52:53Z'
+              subject: "validate: Make object optional"
+          date: 2018-10-09T16:52:53Z
           version: skhema-2.4.0
   version: 0.4.0
   date: 2020-08-04T21:58:55.782Z
 - commits:
     - subject: Add .versionbot/CHANGELOG.yml for nested changelogs
       hash: 783273aac70fd631d5a80e33b55ef468be4c3ec7
-      body: ''
+      body: ""
       footer:
         Change-type: patch
         change-type: patch
@@ -498,14 +510,11 @@
         Handlebars supports very basic if condition checking, but it only checks
         for
 
-        existence of a field. There are times when we want to combine conditions
-        in order
+        existence of a field. There are times when we want to combine conditions in order
 
-        to generate something as part of a blueprint, without defining a
-        completely separate
+        to generate something as part of a blueprint, without defining a completely separate
 
-        blueprint for it (like generating network config schema if a dt has a
-        wifi chip or
+        blueprint for it (like generating network config schema if a dt has a wifi chip or
 
         a usb port to which we can connect a dongle).
       footers:
@@ -513,27 +522,27 @@
         signed-off-by: Stevche Radevski <stevche@balena.io>
       hash: 90c3356b356920b8a6dd95a478dd6cb39e6ad148
       subject: Add logical operator support in templates
-  date: '2020-07-17T12:02:34Z'
+  date: 2020-07-17T12:02:34Z
   version: 0.3.0
 - commits:
     - author: Cameron Diver
-      body: ''
+      body: ""
       footers:
         change-type: patch
         signed-off-by: Cameron Diver <cameron@balena.io>
       hash: c3c9b195470b99e817554c679079c2b81c519c35
       subject: Fix typings module name and optional params
-  date: '2019-08-23T09:38:58Z'
+  date: 2019-08-23T09:38:58Z
   version: 0.2.1
 - commits:
     - author: Cameron Diver
-      body: ''
+      body: ""
       footers:
         change-type: minor
         signed-off-by: Cameron Diver <cameron@balena.io>
       hash: 9ac1ee649cf45492d36aa8efa750e6a0cbb3e77a
       subject: Add typescript types to project
-  date: '2019-08-22T11:27:13Z'
+  date: 2019-08-22T11:27:13Z
   version: 0.2.0
 - commits:
     - author: Andreas Fitzek
@@ -545,7 +554,7 @@
         change-type: minor
         signed-off-by: Andreas Fitzek <andreas@resin.io>
       hash: 59f4634503cff3ee0203deb248135472c2212186
-      subject: 'Feature: Add support for skhema filters in blueprint selectors'
+      subject: "Feature: Add support for skhema filters in blueprint selectors"
     - author: Andreas Fitzek
       body: |-
         This adds a sequence method to Blueprints, which will build a path
@@ -563,7 +572,7 @@
         change-type: patch
         signed-off-by: Andreas Fitzek <andreas@resin.io>
       hash: 4f9e5ac31cb4f0a523f221dba806e978c54586b0
-      subject: 'Feature: Add sequence generation for Blueprints'
+      subject: "Feature: Add sequence generation for Blueprints"
     - author: Andreas Fitzek
       body: |-
         The `version` field in selectors can now hold the `latest`
@@ -574,51 +583,51 @@
         change-type: patch
         signed-off-by: Andreas Fitzek <andreas@resin.io>
       hash: 8df73c5340311dc341c94a7fd28645e9aa710073
-      subject: 'Feature: Add support for ''latest'' in selectors'
+      subject: "Feature: Add support for 'latest' in selectors"
     - author: Andreas Fitzek
-      body: ''
+      body: ""
       hash: 8a3a954b555ea7187b9bb7ff6e81d98b43ec94cf
       subject: bubble-up-requirements for features
     - author: Andreas Fitzek
-      body: ''
+      body: ""
       hash: 6c425225944422072ecc4a33adaae5fc0b2c7d57
       subject: handle single selector edge case
     - author: Andreas Fitzek
-      body: ''
+      body: ""
       hash: f08dc1c786623f3724e7ef6cc145ea28db071edf
       subject: bubble up capabilities
     - author: Cameron Diver
-      body: ''
+      body: ""
       footers:
         change-type: patch
         signed-off-by: Cameron Diver <cameron@balena.io>
       hash: fcff89632b202d1326ba5755fc85b1a979061a2f
       subject: Only perform a version check if child version is valid
     - author: Cameron Diver
-      body: ''
+      body: ""
       footers:
         change-type: minor
         signed-off-by: Cameron Diver <cameron@balena.io>
       hash: 860f896be05636eb6aa1dd17c05b143468023c12
       subject: Add circleci configuration file
-  date: '2019-08-20T08:12:13Z'
+  date: 2019-08-20T08:12:13Z
   version: 0.1.0
 - commits:
     - author: Trong Nghia Nguyen
-      body: ''
+      body: ""
       footers:
         change-type: patch
         signed-off-by: Trong Nghia Nguyen <nghiant2710@gmail.com>
       hash: 0507f6e912e65db2537947864b959455305a9564
-      subject: 'test: Add missing test case for find partial'
+      subject: "test: Add missing test case for find partial"
     - author: Juan Cruz Viotti
-      body: ''
+      body: ""
       footers:
         change-type: patch
         signed-off-by: Juan Cruz Viotti <juan@balena.io>
       hash: 9ec696838ad22e19092958b9fe1c6c2bdaa0c573
-      subject: 'partials: Return correct path combinations given 3 versioned contracts'
-  date: '2018-10-19T13:31:07Z'
+      subject: "partials: Return correct path combinations given 3 versioned contracts"
+  date: 2018-10-19T13:31:07Z
   version: 0.0.7
 - commits:
     - author: Trong Nghia Nguyen
@@ -630,57 +639,54 @@
         change-type: minor
         signed-off-by: Trong Nghia Nguyen <nghiant2710@gmail.com>
       hash: 63d65d1c6c0297da1adffaf8dde6cb4b4af64a78
-      subject: 'aliases: Add contract aliases support'
+      subject: "aliases: Add contract aliases support"
     - author: Trong Nghia Nguyen
-      body: ''
+      body: ""
       footers:
         signed-off-by: Trong Nghia Nguyen <nghiant2710@gmail.com>
       hash: e059fdc16aa6c1687866d56db5f97003f45d4b8e
-      subject: 'test: Add test cases for aliases support'
+      subject: "test: Add test cases for aliases support"
     - author: Giovanni Garufi
-      body: ''
+      body: ""
       footers:
         change-type: major
       hash: 62fa88dbee7e6c719172d02c348e8e85e8d0b848
-      subject: >-
-        Changed template references so that each reference to the current
+      subject: Changed template references so that each reference to the current
         contract must be qualified via `this`
-  date: '2018-08-17T10:37:41Z'
+  date: 2018-08-17T10:37:41Z
   version: 0.0.6
 - commits:
     - author: Juan Cruz Viotti
-      body: ''
+      body: ""
       footers:
         signed-off-by: Juan Cruz Viotti <jv@jviotti.com>
       hash: 7ff9fb135e764c7fe99cb24438beda28b3bffaf3
       subject: Add handlebars helpers
-  date: '2018-04-18T16:09:11Z'
+  date: 2018-04-18T16:09:11Z
   version: 0.0.5
 - commits:
     - author: Trong Nghia Nguyen
-      body: >-
-        Combinatorics.combination only works with array is less than 31 in
-        length
+      body: Combinatorics.combination only works with array is less than 31 in length
       hash: 06f9747766d554deef4e81ed2a96edbfd2496253
       subject: Use bigCombination instead of Combination to handle larger array.
-  date: '2018-04-09T11:59:52Z'
+  date: 2018-04-09T11:59:52Z
   version: 0.0.4
 - commits:
     - author: Juan Cruz Viotti
-      body: ''
+      body: ""
       footers:
-        fixes: 'https://github.com/resin-io-playground/base-img-generator/issues/2'
+        fixes: https://github.com/resin-io-playground/base-img-generator/issues/2
         signed-off-by: Juan Cruz Viotti <jv@jviotti.com>
       hash: 9fad84a88e5c7db5e7f8bb018f4f8255986c7f8f
       subject: Use versioned contracts in partials default paths
-  date: '2018-03-07T17:14:19Z'
+  date: 2018-03-07T17:14:19Z
   version: 0.0.3
 - commits:
     - author: Juan Cruz Viotti
-      body: ''
+      body: ""
       footers:
         signed-off-by: Juan Cruz Viotti <jv@jviotti.com>
       hash: 4c50ab2dbc07dbfd31d571aa516a52aaf31c177d
       subject: Expose partials.buildTemplate()
-  date: '2017-10-13T11:28:00Z'
+  date: 2017-10-13T11:28:00Z
   version: 0.0.2

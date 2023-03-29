@@ -5,6 +5,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v0.0.6 - 2018-08-17
 
+## 0.7.0 - 2023-03-29
+
+* Use flowzone docs instead of custom action [Felipe Lalanne]
+* Setup flowzone [Felipe Lalanne]
+
 ## 0.6.5 - 2021-05-08
 
 * Removed unnecessary ci files [Micah Halter]
