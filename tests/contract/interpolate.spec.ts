@@ -16,8 +16,7 @@ describe('Contract interpolate', () => {
 			version: 'wheezy',
 			type: 'sw.os',
 			data: {
-				url:
-					'https://contracts.org/downloads/{{this.type}}/{{this.slug}}/{{this.version}}.tar.gz',
+				url: 'https://contracts.org/downloads/{{this.type}}/{{this.slug}}/{{this.version}}.tar.gz',
 			},
 		});
 
@@ -45,8 +44,7 @@ describe('Contract interpolate', () => {
 			version: 'wheezy',
 			type: 'sw.os',
 			data: {
-				url:
-					'https://contracts.org/downloads/{{this.type}}/{{this.slug}}/{{this.version}}.tar.gz',
+				url: 'https://contracts.org/downloads/{{this.type}}/{{this.slug}}/{{this.version}}.tar.gz',
 			},
 		});
 
@@ -78,8 +76,7 @@ describe('Contract interpolate', () => {
 			version: 'wheezy',
 			type: 'sw.os',
 			data: {
-				url:
-					'https://contracts.org/downloads/{{this.type}}/{{this.slug}}/{{this.version}}.tar.gz',
+				url: 'https://contracts.org/downloads/{{this.type}}/{{this.slug}}/{{this.version}}.tar.gz',
 			},
 		});
 

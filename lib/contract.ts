@@ -922,10 +922,9 @@ export default class Contract {
 	 *   console.log(reference.toJSON())
 	 * }
 	 */
-	getReferencedContracts(options: {
-		types: Set<string>;
-		from: Contract;
-	}): { [index: string]: Contract[] } {
+	getReferencedContracts(options: { types: Set<string>; from: Contract }): {
+		[index: string]: Contract[];
+	} {
 		const references: { [index: string]: Contract[] } = {};
 		for (const type of options.types) {
 			if (!this.metadata.requirements.types.has(type)) {
