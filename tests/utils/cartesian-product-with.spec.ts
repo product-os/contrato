@@ -18,7 +18,7 @@ describe('cartesianProductWith', () => {
 			[[]],
 		);
 
-		expect(product).to.deep.equal([]);
+		expect([...product]).to.deep.equal([]);
 	});
 
 	it('should perform a cartesian product of a valid and an empty set', () => {
@@ -30,7 +30,7 @@ describe('cartesianProductWith', () => {
 			[[]],
 		);
 
-		expect(product).to.deep.equal([['foo']]);
+		expect([...product]).to.deep.equal([['foo']]);
 	});
 
 	it('should perform a cartesian product of no sets', () => {
@@ -42,7 +42,7 @@ describe('cartesianProductWith', () => {
 			[[]],
 		);
 
-		expect(product).to.deep.equal([]);
+		expect([...product]).to.deep.equal([]);
 	});
 
 	it('should perform a cartesian product of a one element set', () => {
@@ -54,7 +54,7 @@ describe('cartesianProductWith', () => {
 			[[]],
 		);
 
-		expect(product).to.deep.equal([['foo']]);
+		expect([...product]).to.deep.equal([['foo']]);
 	});
 
 	it('should calculate the cartesian product of two string sets', () => {
@@ -69,7 +69,7 @@ describe('cartesianProductWith', () => {
 			[[]],
 		);
 
-		expect(product).deep.equal([
+		expect([...product]).deep.equal([
 			['hello', 'there'],
 			['hello', 'world'],
 			['hello', 'yo'],
@@ -95,7 +95,7 @@ describe('cartesianProductWith', () => {
 			[[]],
 		);
 
-		expect(product).deep.equal([
+		expect([...product]).deep.equal([
 			['hello', '!', 'there'],
 			['hello', '!', 'world'],
 			['hello', '!', 'yo'],
@@ -141,7 +141,7 @@ describe('cartesianProductWith', () => {
 			[[]],
 		);
 
-		expect(product).deep.equal([
+		expect([...product]).deep.equal([
 			['hello', 'world'],
 			['hi', 'there'],
 			['hi', 'yo'],
@@ -176,7 +176,7 @@ describe('cartesianProductWith', () => {
 			[[]],
 		);
 
-		expect(product).deep.equal([
+		expect([...product]).deep.equal([
 			[1, 4, 7],
 			[1, 4, 8],
 			[1, 4, 9],

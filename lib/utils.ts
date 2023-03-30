@@ -208,7 +208,7 @@ function* nextCartesianProduct<T, V>(
 }
 
 /**
- * @summary Compute the cartisian product of a set of sets and return an iterator over the results
+ * @summary Compute the cartisian product of a set of sets and return an iterable over the results
  * @function
  * @memberof module:utils
  * @public
@@ -245,7 +245,7 @@ function* nextCartesianProduct<T, V>(
  * > [ 2, 4 ]
  */
 
-export function* iterableCartesianProductWith<T, V>(
+export function* cartesianProductWith<T, V>(
 	sets: T[][],
 	iteratee: (arg0: V, arg1: T) => V | undefined,
 	init: V[],
@@ -254,51 +254,6 @@ export function* iterableCartesianProductWith<T, V>(
 		yield* nextCartesianProduct(sets, iteratee, combination, 0, 0);
 	}
 }
-
-/**
- * @summary Compute the cartesian product of a set of sets
- * @function
- * @memberof module:utils
- * @public
- *
- * @description
- * This function combines the first two sets, and then combines
- * the resulting set if the third set, and so on.
- *
- * The iteratee function is called every step, and clients may
- * return undefined to stop evaluating a possible combination.
- *
- * This function calculates all possible combinations before returning, which means
- * that for large sets it may use a lot of memory. If this is a concern, use the `iterableCartesianProductWith`
- * function instead;
- *
- * @param {Array[]} sets - sets of sets
- * @param {Function} iteratee - iteratee (accumulator, element)
- * @returns {Array[]} cartesian product
- *
- * @example
- * const product = utils.cartesianProductWith([
- *   [ 1, 2 ],
- *   [ 3, 4 ]
- * ], (accumulator, element) => {
- *   return accumulator.concat([ element ])
- * })
- *
- * console.log(product)
- * > [
- * >   [ 1, 3 ],
- * >   [ 1, 4 ],
- * >   [ 2, 3 ],
- * >   [ 2, 4 ]
- * > ]
- */
-export const cartesianProductWith = <T, V>(
-	sets: T[][],
-	iteratee: (arg0: V, arg1: T) => V | undefined,
-	init: V[],
-): V[] => {
-	return [...iterableCartesianProductWith(sets, iteratee, init)];
-};
 
 /**
  * @summary Strip extra blank lines from a multi-line text

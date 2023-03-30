@@ -96,12 +96,16 @@ export const findPartial = (
 			}),
 		(structureReferences: string[][]) =>
 			thru(structureReferences, (combinations) => {
-				const products = cartesianProductWith<string, string[]>(
-					combinations,
-					(accumulator: string[], element: string) =>
-						accumulator.concat([element]),
-					[[]],
-				);
+				const products = [
+					...cartesianProductWith<string, string[]>(
+						combinations,
+						(accumulator: string[], element: string) => {
+							accumulator.push(element);
+							return accumulator;
+						},
+						[[]],
+					),
+				];
 
 				const slices = reduce(
 					range(options.structure.length, 1, -1),

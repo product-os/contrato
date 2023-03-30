@@ -22,7 +22,7 @@ import Contract from './contract';
 import { parse } from './cardinality';
 import { BLUEPRINT, BlueprintLayout, BlueprintObject } from './types/types';
 import {
-	iterableCartesianProductWith,
+	cartesianProductWith,
 	flatten as flattenIterator,
 	filter as filterIterator,
 } from './utils';
@@ -418,7 +418,7 @@ export default class Blueprint extends Contract {
 			[] as Contract[][][],
 		);
 
-		const productIterator = iterableCartesianProductWith<
+		const productIterator = cartesianProductWith<
 			Contract[],
 			Contract | Contract[]
 		>(
