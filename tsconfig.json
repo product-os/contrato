@@ -8,12 +8,10 @@
 		"removeComments": true,
 		"sourceMap": true,
 		"strict": true,
-		"target": "es2015",
+		"target": "es2022",
 		"declaration": true,
 		"skipLibCheck": true,
 		"resolveJsonModule": true
 	},
-	"include": [
-		"lib/**/*.ts"
-	]
+	"include": ["lib/**/*.ts"]
 }
