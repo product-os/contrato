@@ -82,6 +82,41 @@ describe('cartesianProductWith', () => {
 		]);
 	});
 
+	it('should calculate the cartesian product of three string sets with different lengths', () => {
+		const product = cartesianProductWith(
+			[
+				['hello', 'hi', 'hey'],
+				['!', ','],
+				['there', 'world', 'yo'],
+			],
+			(accumulator: string[], element: string) => {
+				return _.concat(accumulator, [element]);
+			},
+			[[]],
+		);
+
+		expect(product).deep.equal([
+			['hello', '!', 'there'],
+			['hello', '!', 'world'],
+			['hello', '!', 'yo'],
+			['hello', ',', 'there'],
+			['hello', ',', 'world'],
+			['hello', ',', 'yo'],
+			['hi', '!', 'there'],
+			['hi', '!', 'world'],
+			['hi', '!', 'yo'],
+			['hi', ',', 'there'],
+			['hi', ',', 'world'],
+			['hi', ',', 'yo'],
+			['hey', '!', 'there'],
+			['hey', '!', 'world'],
+			['hey', '!', 'yo'],
+			['hey', ',', 'there'],
+			['hey', ',', 'world'],
+			['hey', ',', 'yo'],
+		]);
+	});
+
 	it('should be able to discard combinations by returning undefined', () => {
 		const product = cartesianProductWith(
 			[
