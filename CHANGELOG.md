@@ -5,6 +5,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v0.0.6 - 2018-08-17
 
+## 0.7.1 - 2023-03-30
+
+* Fix linting [Felipe Lalanne]
+* Allow additional properties for type generation [Felipe Lalanne]
+* Remove unused memfs dependency [Felipe Lalanne]
+* Do not use package-lock [Felipe Lalanne]
+* Read partials from filesystem instead of memfs [Felipe Lalanne]
+
 ## 0.7.0 - 2023-03-29
 
 * Use flowzone docs instead of custom action [Felipe Lalanne]

@@ -1,4 +1,57 @@
 - commits:
+    - subject: Fix linting
+      hash: 2402e9419fe2d6964063735cefa2a034c9c67d69
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Felipe Lalanne
+      nested: []
+    - subject: Allow additional properties for type generation
+      hash: 4b9a363a3a93da0174f8a2235df6b912f086b4dc
+      body: |
+        It seems that openapi-typescript changed the default behavior for type
+        generation with regards of additional properties between 3.2.x and
+        3.4.x. This would cause builds to fail due to type checking now that we
+        removed package-lock.json. This passes the option to the openapi
+        function to maintain compatibility.
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Felipe Lalanne
+      nested: []
+    - subject: Remove unused memfs dependency
+      hash: 101487a86da61363c345abbacff5bfeef4df4ee6
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Felipe Lalanne
+      nested: []
+    - subject: Do not use package-lock
+      hash: 4da078dd6e533dcc11d713b79f4376a5db6cdab6
+      body: |
+        It is not part of conventions to use package-lock on npm modules
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Felipe Lalanne
+      nested: []
+    - subject: Read partials from filesystem instead of memfs
+      hash: d9f665b804634933d034e51b7f816f6bc8fd5a21
+      body: |
+        Fixes a bug in partial resolution where files were being read using
+        memfs module instead of the actual filesystem. This would cause template
+        rendering to fail.
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Felipe Lalanne
+      nested: []
+  version: 0.7.1
+  title: ""
+  date: 2023-03-30T00:43:39.963Z
+- commits:
     - subject: Use flowzone docs instead of custom action
       hash: 5ad5768b19663d1f9ab364cd07461a88c869664c
       body: ""
