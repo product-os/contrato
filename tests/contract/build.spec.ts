@@ -17,8 +17,7 @@ describe('Contract build', () => {
 			type: 'sw.os',
 			data: {
 				codename: 'Wheezy',
-				url:
-					'https://contracts.org/downloads/{{this.type}}/{{this.slug}}/{{this.version}}.tar.gz',
+				url: 'https://contracts.org/downloads/{{this.type}}/{{this.slug}}/{{this.version}}.tar.gz',
 			},
 		});
 

@@ -5,7 +5,7 @@
  */
 
 import Debug from 'debug';
-import { fs } from 'memfs';
+import * as fs from 'fs';
 import path from 'path';
 import Handlebars from 'handlebars';
 import attempt from 'lodash/attempt';
