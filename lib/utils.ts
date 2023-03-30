@@ -112,6 +112,58 @@ export const setMap = <T, V>(set1: Set<T>, iteratee: (arg0: T) => V): V[] => {
 	return result;
 };
 
+/**
+ * @summary Perform a depth 1 flatten operation on an iterable
+ * @function
+ * @memberof module:utils
+ * @public
+ *
+ * @description
+ * This function performs the equivalent of Array.flat but for an iterable input.
+ * Given an iterable of arrays, this function will return an iterator over the elements of the arrays.
+ *
+ * @param {Iterable} iterable - iterator
+ * @returns {Iterable} mapped iterator
+ */
+export function* flatten<T>(iterable: Iterable<T | T[]>): IterableIterator<T> {
+	for (const it of iterable) {
+		if (!Array.isArray(it)) {
+			yield it;
+			continue;
+		}
+
+		for (const item of it) {
+			yield item;
+		}
+	}
+}
+
+/**
+ * @summary Perform a filter operation on an iterable input
+ * @function
+ * @memberof module:utils
+ * @public
+ *
+ * @description
+ * This function performs the equivalent of Array.filter() but for an iterable input.
+ * Given an iterable and a predicate function, this function will return an iterator
+ * over the elements of the iterable that satisfy the predicate.
+ *
+ * @param {Iterable} iterable - iterator
+ * @param {Function} predicate - predicate function
+ * @returns {Iterable} filtered iterator
+ */
+export function* filter<T>(
+	iterable: Iterable<T>,
+	predicate: (t: T) => boolean,
+): IterableIterator<T> {
+	for (const it of iterable) {
+		if (predicate(it)) {
+			yield it;
+		}
+	}
+}
+
 function* nextCartesianProduct<T, V>(
 	sets: T[][],
 	iteratee: (arg0: V, arg1: T) => V | undefined,
