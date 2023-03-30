@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v0.0.6 - 2018-08-17
 
+## 0.7.2 - 2023-03-30
+
+* Remove console.log commited by mistake [Felipe Lalanne]
+
 ## 0.7.1 - 2023-03-30
 
 * Fix linting [Felipe Lalanne]

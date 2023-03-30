@@ -1,4 +1,18 @@
 - commits:
+    - subject: Remove console.log commited by mistake
+      hash: e19fb3127d388312efbc9010edb44125c72c100b
+      body: |
+        PR #55 added a few unnecesary console.log statements,
+        this removes them as they are unnecessary.
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Felipe Lalanne
+      nested: []
+  version: 0.7.2
+  title: ""
+  date: 2023-03-30T21:47:43.941Z
+- commits:
     - subject: Fix linting
       hash: 2402e9419fe2d6964063735cefa2a034c9c67d69
       body: ""
