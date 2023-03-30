@@ -123,7 +123,6 @@ export default class Blueprint extends Contract {
 	): Contract[] {
 		const layout = this.metadata.layout;
 
-		console.time('calculate combinations');
 		const combinations = reduce(
 			layout.finite.selectors,
 			(accumulator, value) => {
@@ -141,15 +140,12 @@ export default class Blueprint extends Contract {
 			},
 			[] as Contract[][][],
 		);
-		console.timeEnd('calculate combinations');
 
-		console.time('compare combinations');
 		forEach(combinations, (dimension) => {
 			dimension.sort((left, right) => {
 				return compare(left[0].raw.version, right[0].raw.version);
 			});
 		});
-		console.timeEnd('compare combinations');
 
 		const currentPointer = new Array<number>(combinations.length);
 		fill(currentPointer, 0);
