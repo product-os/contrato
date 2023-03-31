@@ -33,7 +33,8 @@ export const query = (
 	universe: Contract,
 	layout: BlueprintLayout,
 	skeleton: object,
-) => new Blueprint(layout, skeleton).reproduce(universe);
+	asIterable = false,
+) => new Blueprint(layout, skeleton).reproduce(universe, asIterable);
 
 export const sequence = (
 	universe: Contract,

@@ -21,7 +21,11 @@ import { compare } from 'semver';
 import Contract from './contract';
 import { parse } from './cardinality';
 import { BLUEPRINT, BlueprintLayout, BlueprintObject } from './types/types';
-import { cartesianProductWith } from './utils';
+import {
+	cartesianProductWith,
+	flatten as flattenIterator,
+	filter as filterIterator,
+} from './utils';
 
 export default class Blueprint extends Contract {
 	/**
@@ -346,15 +350,60 @@ export default class Blueprint extends Contract {
 	 *   'arch.sw': 1
 	 * })
 	 *
-	 * const contexts = blueprint.reproduce(contract)
-	 *
+	 * const contexts = blueprint.reproduceAsIterable(contract)
 	 * contexts.forEach((context) => {
-	 *   console.log(context.toJSON())
+	 *   console.log(context.toJSON());
 	 * })
 	 */
-	reproduce(contract: Contract): Contract[] {
-		const layout = this.metadata.layout;
+	reproduce(contract: Contract): Contract[];
 
+	/**
+	 * @summary Reproduce the blueprint in a universe and return as an iterable
+	 * @function
+	 * @name module:contrato.Blueprint#reproduce
+	 * @public
+	 *
+	 * @description
+	 * This method will generate a set of contexts that consist of
+	 * every possible valid combination that matches the blueprint
+	 * layout. It uses depth first search to calculate the product of
+	 * contract combinations and returns the results as an iterable.
+	 * This allows to reduce the memory usage when dealing with a large
+	 * universe of contracts.
+	 *
+	 * @param {Object} contract - contract
+	 * @param {boolean} asIterable - flag to indicate that the result should be an iterable
+	 * @returns {Iterable<Object>} - an iterable over the valid contexts
+	 *
+	 * @example
+	 * const contract = new Contract({ ... })
+	 * contract.addChildren([ ... ])
+	 *
+	 * const blueprint = new Blueprint({
+	 *   'hw.device-type': 1,
+	 *   'arch.sw': 1
+	 * })
+	 *
+	 * const contexts = blueprint.reproduceAsIterable(contract)
+	 * for (const context of contexts) {
+	 *   console.log(context.toJSON());
+	 * }
+	 */
+	reproduce(contract: Contract, asIterable: true): IterableIterator<Contract>;
+
+	reproduce(
+		contract: Contract,
+		asIterable?: boolean,
+	): Contract[] | IterableIterator<Contract>;
+	reproduce(
+		contract: Contract,
+		asIterable = false,
+	): IterableIterator<Contract> | Contract[] {
+		if (!asIterable) {
+			return [...this.reproduce(contract, true)];
+		}
+
+		const layout = this.metadata.layout;
 		const combinations = reduce(
 			layout.finite.selectors,
 			(accumulator, value) => {
@@ -369,7 +418,10 @@ export default class Blueprint extends Contract {
 			[] as Contract[][][],
 		);
 
-		const product = cartesianProductWith<Contract[], Contract | Contract[]>(
+		const productIterator = cartesianProductWith<
+			Contract[],
+			Contract | Contract[]
+		>(
 			combinations,
 			(accumulator, element) => {
 				if (accumulator instanceof Contract) {
@@ -393,6 +445,7 @@ export default class Blueprint extends Contract {
 					return prodContext;
 				}
 
+				// If the accumulator is an array of contracts
 				const context = new Contract(this.raw.skeleton, {
 					hash: false,
 				});
@@ -404,7 +457,7 @@ export default class Blueprint extends Contract {
 			[[]],
 		);
 
-		return flatten(product).filter((context: any) => {
+		return filterIterator(flattenIterator(productIterator), (context: any) => {
 			const references = context.getChildrenCrossReferencedContracts({
 				from: contract,
 				types: layout.infinite.types,

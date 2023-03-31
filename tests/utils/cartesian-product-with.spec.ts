@@ -18,7 +18,7 @@ describe('cartesianProductWith', () => {
 			[[]],
 		);
 
-		expect(product).to.deep.equal([]);
+		expect([...product]).to.deep.equal([]);
 	});
 
 	it('should perform a cartesian product of a valid and an empty set', () => {
@@ -30,7 +30,7 @@ describe('cartesianProductWith', () => {
 			[[]],
 		);
 
-		expect(product).to.deep.equal([['foo']]);
+		expect([...product]).to.deep.equal([['foo']]);
 	});
 
 	it('should perform a cartesian product of no sets', () => {
@@ -42,7 +42,7 @@ describe('cartesianProductWith', () => {
 			[[]],
 		);
 
-		expect(product).to.deep.equal([]);
+		expect([...product]).to.deep.equal([]);
 	});
 
 	it('should perform a cartesian product of a one element set', () => {
@@ -54,7 +54,7 @@ describe('cartesianProductWith', () => {
 			[[]],
 		);
 
-		expect(product).to.deep.equal([['foo']]);
+		expect([...product]).to.deep.equal([['foo']]);
 	});
 
 	it('should calculate the cartesian product of two string sets', () => {
@@ -69,7 +69,7 @@ describe('cartesianProductWith', () => {
 			[[]],
 		);
 
-		expect(product).deep.equal([
+		expect([...product]).deep.equal([
 			['hello', 'there'],
 			['hello', 'world'],
 			['hello', 'yo'],
@@ -79,6 +79,41 @@ describe('cartesianProductWith', () => {
 			['hey', 'there'],
 			['hey', 'world'],
 			['hey', 'yo'],
+		]);
+	});
+
+	it('should calculate the cartesian product of three string sets with different lengths', () => {
+		const product = cartesianProductWith(
+			[
+				['hello', 'hi', 'hey'],
+				['!', ','],
+				['there', 'world', 'yo'],
+			],
+			(accumulator: string[], element: string) => {
+				return _.concat(accumulator, [element]);
+			},
+			[[]],
+		);
+
+		expect([...product]).deep.equal([
+			['hello', '!', 'there'],
+			['hello', '!', 'world'],
+			['hello', '!', 'yo'],
+			['hello', ',', 'there'],
+			['hello', ',', 'world'],
+			['hello', ',', 'yo'],
+			['hi', '!', 'there'],
+			['hi', '!', 'world'],
+			['hi', '!', 'yo'],
+			['hi', ',', 'there'],
+			['hi', ',', 'world'],
+			['hi', ',', 'yo'],
+			['hey', '!', 'there'],
+			['hey', '!', 'world'],
+			['hey', '!', 'yo'],
+			['hey', ',', 'there'],
+			['hey', ',', 'world'],
+			['hey', ',', 'yo'],
 		]);
 	});
 
@@ -106,7 +141,7 @@ describe('cartesianProductWith', () => {
 			[[]],
 		);
 
-		expect(product).deep.equal([
+		expect([...product]).deep.equal([
 			['hello', 'world'],
 			['hi', 'there'],
 			['hi', 'yo'],
@@ -141,7 +176,7 @@ describe('cartesianProductWith', () => {
 			[[]],
 		);
 
-		expect(product).deep.equal([
+		expect([...product]).deep.equal([
 			[1, 4, 7],
 			[1, 4, 8],
 			[1, 4, 9],
