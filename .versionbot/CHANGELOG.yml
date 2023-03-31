@@ -1,4 +1,80 @@
 - commits:
+    - subject: Remove non iterable cartesian product calculation
+      hash: caa60c51494d5dd45f838d64c7c25d9850176fb9
+      body: |
+        The non iterable function is unncessary as the full result can be
+        calculated using the spread operator `[...calculateProductWith()]`.
+
+        This is an internal API only function so this is a non breaking change.
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: Felipe Lalanne
+      nested: []
+    - subject: Add option to query to return results as iterable
+      hash: b84c406ad12365a2351653abf5859ff7403664c7
+      body: |
+        If given an optional argument `asIterable` when calling `query`, the
+        function will now return results as an iterable for a low-memory
+        alternative.
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: Felipe Lalanne
+      nested: []
+    - subject: Add option to return iterable to Blueprint.reproduce
+      hash: 2bc730041898aa593ec0bd36c52f2d37f8c7a0e5
+      body: >
+        This is a low memory alternative to Blueprint.reproduce which used to
+        calculate
+
+        all results in memory before returning. Using the new depth first
+
+        cartesian product calculation, the new method can return the results as
+
+        an iterable as soon as they are available instead of keeping the full
+
+        set of combinations in memory.
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: Felipe Lalanne
+      nested: []
+    - subject: Add iteration versions of flatten and filter
+      hash: 9e8f94962a6b64ae3ea2e9df8a574e558ad36b1f
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: Felipe Lalanne
+      nested: []
+    - subject: Use depth first search to calculate cartesian product
+      hash: 130b201564f1e4789ef02c11909cd7db4bca2174
+      body: |
+        Using depth first search allows to return the product results as an
+        iterable and reduces the need to keep all results in memory.
+
+        The `cartesianProductWith` maintains the function signature to return an
+        array of results, but this adds a new function
+        `iterableCartesianProductWith` that returns the results an iterator over
+        the results.
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: Felipe Lalanne
+      nested: []
+    - subject: Update typescript and ES target to use latest API
+      hash: 6ae5699e5898167c64a23bb573a4149d9c6ac010
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Felipe Lalanne
+      nested: []
+  version: 0.8.0
+  title: ""
+  date: 2023-03-31T17:14:44.525Z
+- commits:
     - subject: Remove console.log commited by mistake
       hash: e19fb3127d388312efbc9010edb44125c72c100b
       body: |

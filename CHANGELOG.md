@@ -5,6 +5,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v0.0.6 - 2018-08-17
 
+## 0.8.0 - 2023-03-31
+
+* Remove non iterable cartesian product calculation [Felipe Lalanne]
+* Add option to query to return results as iterable [Felipe Lalanne]
+* Add option to return iterable to Blueprint.reproduce [Felipe Lalanne]
+* Add iteration versions of flatten and filter [Felipe Lalanne]
+* Use depth first search to calculate cartesian product [Felipe Lalanne]
+* Update typescript and ES target to use latest API [Felipe Lalanne]
+
 ## 0.7.2 - 2023-03-30
 
 * Remove console.log commited by mistake [Felipe Lalanne]
