@@ -7,11 +7,10 @@
 import Debug from 'debug';
 import * as fs from 'fs';
 import path from 'path';
-import Handlebars from 'handlebars';
-import attempt from 'lodash/attempt';
+import handlebars from 'handlebars';
+import asyncHelpers from 'handlebars-async-helpers';
 import first from 'lodash/first';
 import invokeMap from 'lodash/invokeMap';
-import isError from 'lodash/isError';
 import join from 'lodash/join';
 import last from 'lodash/last';
 import map from 'lodash/map';
@@ -30,6 +29,8 @@ import flow from 'lodash/flow';
 import Contract from './contract';
 import { ContractObject } from './types/types';
 import { cartesianProductWith, stripExtraBlankLines } from './utils';
+
+const hb = asyncHelpers(handlebars);
 
 const debug = Debug('partials');
 
@@ -136,7 +137,7 @@ export const findPartial = (
 	)(options.structure);
 };
 
-Handlebars.registerHelper('import', (options) => {
+hb.registerHelper('import', async (options) => {
 	const settings = options.data.root.settings;
 
 	const partialPaths = findPartial(options.hash.partial, settings.context, {
@@ -145,33 +146,31 @@ Handlebars.registerHelper('import', (options) => {
 	});
 
 	for (const partialPath of partialPaths) {
-		const partialContent = attempt(fs.readFileSync, partialPath, {
-			encoding: 'utf8',
-		});
+		try {
+			const partialContent = await fs.promises.readFile(partialPath, {
+				encoding: 'utf8',
+			});
 
-		if (isError(partialContent)) {
-			if ((partialContent as NodeJS.ErrnoException).code === 'ENOENT') {
+			debug(`Using ${partialPath}`);
+
+			// We need to prevent handlebars from encoding the string as HTML,
+			// and then we need to parse and recurse through the imported partials,
+			// in case they have any interpolation that needs to be resolved.
+			const safeContent = new hb.SafeString(
+				partialContent.slice(0, partialContent.length - 1),
+			);
+			const builtContent = await hb.compile(safeContent.toString())(
+				options.data.root,
+			);
+			return new hb.SafeString(builtContent);
+		} catch (err) {
+			if ((err as NodeJS.ErrnoException).code === 'ENOENT') {
 				debug(`Ignoring ${partialPath}`);
 				continue;
 			}
 
-			throw partialContent;
-		} else if (partialContent instanceof Buffer) {
-			throw new Error(`Error reading file: ${partialPath}`);
+			throw err;
 		}
-
-		debug(`Using ${partialPath}`);
-
-		// We need to prevent handlebars from encoding the string as HTML,
-		// and then we need to parse and recurse through the imported partials,
-		// in case they have any interpolation that needs to be resolved.
-		const safeContent = new Handlebars.SafeString(
-			partialContent.slice(0, partialContent.length - 1),
-		);
-		const builtContent = Handlebars.compile(safeContent.toString())(
-			options.data.root,
-		);
-		return new Handlebars.SafeString(builtContent);
 	}
 
 	throw new Error(`Partial not found: ${options.hash.partial}`);
@@ -191,7 +190,7 @@ Handlebars.registerHelper('import', (options) => {
  *   Choose network interface
  * {{/if}}
  */
-Handlebars.registerHelper({
+hb.registerHelper({
 	eq: (v1, v2) => v1 === v2,
 	ne: (v1, v2) => v1 !== v2,
 	lt: (v1, v2) => v1 < v2,
@@ -226,11 +225,11 @@ Handlebars.registerHelper({
  *
  * console.log(result)
  */
-export const buildTemplate = (
+export const buildTemplate = async (
 	template: string,
 	context: ContractObject,
 	options: { directory: string },
-): string => {
+): Promise<string> => {
 	const data = merge(
 		{
 			settings: {
@@ -241,5 +240,5 @@ export const buildTemplate = (
 		context.toJSON().children,
 	);
 
-	return stripExtraBlankLines(Handlebars.compile(template)(data));
+	return stripExtraBlankLines(await hb.compile(template)(data));
 };
