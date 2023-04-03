@@ -1,4 +1,16 @@
 - commits:
+    - subject: Switch to an async `buildTemplate` to avoid blocking fs operations
+      hash: ab8b426f02cd159678e06b88035a768e17931ce6
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: Pagan Gazzard
+      nested: []
+  version: 0.9.0
+  title: ""
+  date: 2023-04-03T22:02:17.184Z
+- commits:
     - subject: Remove non iterable cartesian product calculation
       hash: caa60c51494d5dd45f838d64c7c25d9850176fb9
       body: |

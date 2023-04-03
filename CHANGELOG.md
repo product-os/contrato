@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v0.0.6 - 2018-08-17
 
+## 0.9.0 - 2023-04-03
+
+* Switch to an async `buildTemplate` to avoid blocking fs operations [Pagan Gazzard]
+
 ## 0.8.0 - 2023-03-31
 
 * Remove non iterable cartesian product calculation [Felipe Lalanne]
