@@ -29,12 +29,26 @@ export {
 	parseCardinality,
 };
 
-export const query = (
+export function query(
+	universe: Contract,
+	layout: BlueprintLayout,
+	skeleton: object,
+	asIterable: true,
+): IterableIterator<Contract>;
+export function query(
+	universe: Contract,
+	layout: BlueprintLayout,
+	skeleton: object,
+	asIterable?: false,
+): Contract[];
+export function query(
 	universe: Contract,
 	layout: BlueprintLayout,
 	skeleton: object,
 	asIterable = false,
-) => new Blueprint(layout, skeleton).reproduce(universe, asIterable);
+): IterableIterator<Contract> | Contract[] {
+	return new Blueprint(layout, skeleton).reproduce(universe, asIterable);
+}
 
 export const sequence = (
 	universe: Contract,
