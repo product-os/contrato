@@ -355,7 +355,7 @@ export default class Blueprint extends Contract {
 	 *   console.log(context.toJSON());
 	 * })
 	 */
-	reproduce(contract: Contract): Contract[];
+	reproduce(contract: Contract, asIterable?: false): Contract[];
 
 	/**
 	 * @summary Reproduce the blueprint in a universe and return as an iterable
@@ -390,11 +390,10 @@ export default class Blueprint extends Contract {
 	 * }
 	 */
 	reproduce(contract: Contract, asIterable: true): IterableIterator<Contract>;
-
 	reproduce(
 		contract: Contract,
 		asIterable?: boolean,
-	): Contract[] | IterableIterator<Contract>;
+	): IterableIterator<Contract> | Contract[];
 	reproduce(
 		contract: Contract,
 		asIterable = false,
