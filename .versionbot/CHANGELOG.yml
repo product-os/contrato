@@ -1,4 +1,16 @@
 - commits:
+    - subject: Improve typing of `query` function
+      hash: 529407f9f7bb44abb83a17afba139733d49c6218
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+      nested: []
+  version: 0.9.1
+  title: ""
+  date: 2023-04-04T12:03:16.879Z
+- commits:
     - subject: Switch to an async `buildTemplate` to avoid blocking fs operations
       hash: ab8b426f02cd159678e06b88035a768e17931ce6
       body: ""
