@@ -33,6 +33,7 @@ import { build as buildVariants } from './variants';
 import { build as buildChildrentree } from './children-tree';
 import { getAll } from './children-tree';
 import { areSetsDisjoint } from './utils';
+import { forEach } from 'lodash';
 
 export default class Contract {
 	metadata: any;
@@ -388,6 +389,7 @@ export default class Contract {
 			return this;
 		}
 		if (!this.metadata.children.types.has(type)) {
+			this.metadata.children.types.add(type);
 			this.metadata.children.byType[type] = new Set();
 			this.metadata.children.byTypeSlug[type] = {};
 		}
@@ -397,7 +399,6 @@ export default class Contract {
 			}
 			this.metadata.children.byTypeSlug[type][slug].add(contract.metadata.hash);
 		}
-		this.metadata.children.types.add(type);
 		this.metadata.children.map[contract.metadata.hash] = contract;
 		this.metadata.children.byType[type].add(contract.metadata.hash);
 		this.metadata.children.searchCache.resetType(type);
@@ -573,19 +574,17 @@ export default class Contract {
 	 * }
 	 */
 	getChildren(options: object = {}): Contract[] {
-		return reduce(
-			this.metadata.children.map,
-			(accumulator, contract) => {
-				if (
-					!(options as any).types ||
-					(options as any).types.has(contract.raw.type)
-				) {
-					accumulator.push(contract);
-				}
-				return accumulator.concat(contract.getChildren(options));
-			},
-			[] as Contract[],
-		);
+		const contracts: Contract[] = [];
+		forEach(this.metadata.children.map, (contract) => {
+			if (
+				!(options as any).types ||
+				(options as any).types.has(contract.raw.type)
+			) {
+				contracts.push(contract);
+			}
+			contracts.push(...contract.getChildren(options));
+		});
+		return contracts;
 	}
 	/**
 	 * @summary Get all the children contracts of a specific type

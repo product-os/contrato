@@ -4,7 +4,6 @@
  * Proprietary and confidential.
  */
 
-import concat from 'lodash/concat';
 import get from 'lodash/get';
 import isArray from 'lodash/isArray';
 import isPlainObject from 'lodash/isPlainObject';
@@ -52,7 +51,7 @@ const deepMapValues = (
 	!isPlainObject(object)
 		? callback(object, breadcrumb)
 		: mapValues(object, (value: any, key) => {
-				const absoluteKey = concat(breadcrumb, [key]);
+				const absoluteKey = [...breadcrumb, key];
 				return isPlainObject(value)
 					? deepMapValues(value, callback, absoluteKey)
 					: callback(value, absoluteKey);
@@ -96,39 +95,53 @@ const TEMPLATE_REGEXP: RegExp = /\{\{(.+?)\}\}/g;
 export const compileContract = (
 	contract: ContractObject,
 	options: { blacklist?: Set<string> } = {},
-	root?: ContractObject,
+	root = contract,
 	breadcrumb?: string[],
-): ContractObject =>
-	deepMapValues(
+): ContractObject => {
+	let isMultiLevelBlacklist = false;
+	if (options.blacklist) {
+		for (const path of options.blacklist) {
+			if (path.includes('.')) {
+				isMultiLevelBlacklist = true;
+				break;
+			}
+		}
+	}
+	return deepMapValues(
 		contract,
 		(value: any, key: string[]) => {
 			if (isString(value)) {
 				if (options.blacklist) {
+					const checkKey = isMultiLevelBlacklist ? key.join('.') : key[0];
 					for (const path of options.blacklist) {
-						if (key.join('.').startsWith(path)) {
+						if (checkKey.startsWith(path)) {
 							return value;
 						}
 					}
 				}
-				const data = {
-					this: root || contract,
-				};
 				return value.replace(
 					TEMPLATE_REGEXP,
-					(interpolation, path) => get(data, path) || interpolation,
+					(interpolation: string, path: string) => {
+						const pathArr = path.split('.');
+						if (pathArr.shift() !== 'this') {
+							// Ensure we started with `this` as it's the only path we allow
+							// and checking in this way avoids creating an unnecessary object
+							return interpolation;
+						}
+						return get(root, pathArr) || interpolation;
+					},
 				);
 			}
 			if (isArray(value)) {
 				return map(value as ContractObject[], (object, index) =>
-					compileContract(
-						object,
-						options,
-						contract,
-						concat(key, [index.toString()]),
-					),
+					compileContract(object, options, contract, [
+						...key,
+						index.toString(),
+					]),
 				);
 			}
 			return value;
 		},
 		breadcrumb,
 	) as ContractObject;
+};
