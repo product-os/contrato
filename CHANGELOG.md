@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v0.0.6 - 2018-08-17
 
+## 0.9.2 - 2023-04-05
+
+* Various optimizations [Pagan Gazzard]
+
 ## 0.9.1 - 2023-04-04
 
 * Improve typing of `query` function [Pagan Gazzard]
