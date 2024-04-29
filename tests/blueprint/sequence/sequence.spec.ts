@@ -13,6 +13,7 @@ import Blueprint from '../../../lib/blueprint';
 
 describe('Blueprint sequence', () => {
 	_.each(['path_finding'], (testName) => {
+		// eslint-disable-next-line @typescript-eslint/no-var-requires
 		const testCase = require(`./${testName}.json`);
 
 		it(testName, () => {

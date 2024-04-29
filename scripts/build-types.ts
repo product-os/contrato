@@ -27,7 +27,7 @@ const main = async () => {
 	const output = typeFile('cuetypes.ts');
 	await fs.writeFile(
 		output,
-		`/* tslint:disable:class-name no-empty-interface */\n${ts}`,
+		`/* eslint @typescript-eslint/no-empty-interface: 0 */\n${ts}`,
 	);
 	console.log(`Built types to ${output}`);
 };

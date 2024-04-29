@@ -28,6 +28,7 @@ describe('Blueprint reproduce', () => {
 			'requirements-simple-2-aliases',
 		],
 		(testName) => {
+			// eslint-disable-next-line @typescript-eslint/no-var-requires
 			const testCase = require(`./${testName}.json`);
 
 			it(testName, () => {

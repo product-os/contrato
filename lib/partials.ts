@@ -27,7 +27,7 @@ import uniq from 'lodash/uniq';
 import flow from 'lodash/flow';
 
 import Contract from './contract';
-import { ContractObject } from './types/types';
+import type { ContractObject } from './types/types';
 import { cartesianProductWith, stripExtraBlankLines } from './utils';
 
 const hb = asyncHelpers(handlebars);
