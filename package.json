@@ -68,7 +68,7 @@
   },
   "engines": {
     "node": "^20.0.0",
-    "npm": "^9.4.1"
+    "npm": "^10.0.0"
   },
   "versionist": {
     "publishedAt": "2024-04-30T20:57:37.954Z"
