@@ -1,4 +1,81 @@
 - commits:
+    - subject: "NPM: Use legacy peer dependencies"
+      hash: bbcfa28f61a94a2c90ff948e8df7fc4862d12c68
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Christina Ying Wang <christina@balena.io>
+        signed-off-by: Christina Ying Wang <christina@balena.io>
+      author: Christina Ying Wang
+      nested: []
+    - subject: Update @types/node to 20
+      hash: 0fcb50d78a6efe5dfb6ae94ce17b62373b2d8ebe
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Christina Ying Wang <christina@balena.io>
+        signed-off-by: Christina Ying Wang <christina@balena.io>
+      author: Christina Ying Wang
+      nested: []
+    - subject: Up/downgrade handlebars and handlebars-async-helpers
+      hash: f5a8745b427e953ca9e0554313bb42592dc5da16
+      body: |
+        This avoids a critical dependency in handlebars 4.7.6 while
+        maintaining compatibility with handlebars-async-helpers.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Christina Ying Wang <christina@balena.io>
+        signed-off-by: Christina Ying Wang <christina@balena.io>
+      author: Christina Ying Wang
+      nested: []
+    - subject: Update mocha to v10
+      hash: f40ef6b30bb155ee052ee75a8484602c01745a27
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Christina Ying Wang <christina@balena.io>
+        signed-off-by: Christina Ying Wang <christina@balena.io>
+      author: Christina Ying Wang
+      nested: []
+    - subject: Update @balena/lint to v8
+      hash: b502b3716595ac70a6d22ecb26d1b1581ff06fdf
+      body: |
+        Add a development tsconfig.json that lints test and script files.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Christina Ying Wang <christina@balena.io>
+        signed-off-by: Christina Ying Wang <christina@balena.io>
+      author: Christina Ying Wang
+      nested: []
+    - subject: Move @types to devDependencies
+      hash: ea74c69ed575858b18575d9fb87aac792cc750e9
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Christina Ying Wang <christina@balena.io>
+        signed-off-by: Christina Ying Wang <christina@balena.io>
+      author: Christina Ying Wang
+      nested: []
+    - subject: Bump NPM to ^10
+      hash: e1f2c0431822d406c510ba2652efcb7730ea1091
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Christina Ying Wang <christina@balena.io>
+        signed-off-by: Christina Ying Wang <christina@balena.io>
+      author: Christina Ying Wang
+      nested: []
+  version: 0.9.4
+  title: ""
+  date: 2024-04-30T23:37:32.286Z
+- commits:
     - subject: Update Node.js to v20
       hash: d25e8fc0d8c320c662a2f55b1de23e8f4dc4aca8
       body: |

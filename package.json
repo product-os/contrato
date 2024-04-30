@@ -1,6 +1,6 @@
 {
   "name": "@balena/contrato",
-  "version": "0.9.3",
+  "version": "0.9.4",
   "description": "The official contract implementation",
   "homepage": "https://github.com/product-os/contrato",
   "main": "build/index.js",
@@ -71,6 +71,6 @@
     "npm": "^10.0.0"
   },
   "versionist": {
-    "publishedAt": "2024-04-30T20:57:37.954Z"
+    "publishedAt": "2024-04-30T23:37:32.408Z"
   }
 }

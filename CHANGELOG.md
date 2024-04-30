@@ -5,6 +5,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v0.0.6 - 2018-08-17
 
+## 0.9.4 - 2024-04-30
+
+* NPM: Use legacy peer dependencies [Christina Ying Wang]
+* Update @types/node to 20 [Christina Ying Wang]
+* Up/downgrade handlebars and handlebars-async-helpers [Christina Ying Wang]
+* Update mocha to v10 [Christina Ying Wang]
+* Update @balena/lint to v8 [Christina Ying Wang]
+* Move @types to devDependencies [Christina Ying Wang]
+* Bump NPM to ^10 [Christina Ying Wang]
+
 ## 0.9.3 - 2024-04-30
 
 * Update Node.js to v20 [Self-hosted Renovate Bot]
