@@ -4,7 +4,7 @@
  * Proprietary and confidential.
  */
 
-import { components } from './cuetypes';
+import type { components } from './cuetypes';
 
 export type ContractObject = components['schemas']['Contract'];
 export type BlueprintObject = components['schemas']['Blueprint'];

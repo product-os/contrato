@@ -7,8 +7,8 @@
 import reduce from 'lodash/reduce';
 import set from 'lodash/set';
 
-import { ContractObject } from '.';
-import Contract from './contract';
+import type { ContractObject } from '.';
+import type Contract from './contract';
 import { setFirst } from './utils';
 
 /**
@@ -96,7 +96,7 @@ export const build = (contract: Contract): object => {
 export const getAll = (tree: any): ContractObject[] =>
 	reduce(
 		tree,
-		(accumulator, value, _) => {
+		(accumulator, value) => {
 			if (!value.slug) {
 				const out = accumulator.concat(getAll(value));
 				return out;

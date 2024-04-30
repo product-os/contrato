@@ -11,7 +11,7 @@ import isString from 'lodash/isString';
 import map from 'lodash/map';
 import mapValues from 'lodash/mapValues';
 
-import { ContractObject } from './types/types';
+import type { ContractObject } from './types/types';
 
 /**
  * @module template
@@ -55,7 +55,7 @@ const deepMapValues = (
 				return isPlainObject(value)
 					? deepMapValues(value, callback, absoluteKey)
 					: callback(value, absoluteKey);
-		  });
+			});
 
 /**
  * @summary Contract template interpolation regex

@@ -20,7 +20,8 @@ import { compare } from 'semver';
 
 import Contract from './contract';
 import { parse } from './cardinality';
-import { BLUEPRINT, BlueprintLayout, BlueprintObject } from './types/types';
+import type { BlueprintLayout, BlueprintObject } from './types/types';
+import { BLUEPRINT } from './types/types';
 import {
 	cartesianProductWith,
 	flatten as flattenIterator,
@@ -180,7 +181,7 @@ export default class Blueprint extends Contract {
 				references.length === 0
 					? contract.getChildren({
 							types: layout.infinite.types,
-					  })
+						})
 					: references;
 
 			context.addChildren(contracts, {
@@ -237,7 +238,7 @@ export default class Blueprint extends Contract {
 				? false
 				: context.areChildrenSatisfied({
 						types: layout.types,
-				  });
+					});
 		};
 
 		const checked: number[][] = [];
@@ -466,7 +467,7 @@ export default class Blueprint extends Contract {
 				references.length === 0
 					? contract.getChildren({
 							types: layout.infinite.types,
-					  })
+						})
 					: references;
 
 			context.addChildren(contracts, {

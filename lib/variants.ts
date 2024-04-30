@@ -21,7 +21,7 @@ import mergeWith from 'lodash/mergeWith';
 import omit from 'lodash/omit';
 import reduce from 'lodash/reduce';
 
-import { ContractObject } from './types/types';
+import type { ContractObject } from './types/types';
 
 /**
  * @summary The name of the contract property that contains variants
@@ -80,5 +80,5 @@ export const build = (contract: ContractObject): ContractObject[] => {
 						),
 					),
 				[] as ContractObject[],
-		  );
+			);
 };

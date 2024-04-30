@@ -27,7 +27,8 @@ import { compare, satisfies, valid, validRange } from 'semver';
 import ObjectSet from './object-set';
 import MatcherCache from './matcher-cache';
 import { hashObject } from './hash';
-import { ContractObject, MATCHER } from './types/types';
+import type { ContractObject } from './types/types';
+import { MATCHER } from './types/types';
 import { compileContract } from './template';
 import { build as buildVariants } from './variants';
 import { build as buildChildrentree } from './children-tree';
@@ -689,7 +690,7 @@ export default class Contract {
 	 *   console.log(child)
 	 * })
 	 */
-	findChildren(matcher: Contract | {}): Contract[] {
+	findChildren(matcher: Contract | object): Contract[] {
 		if (
 			!(matcher instanceof Contract) ||
 			!matcher.raw ||

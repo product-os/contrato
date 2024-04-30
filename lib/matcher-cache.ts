@@ -7,7 +7,7 @@
 import concat from 'lodash/concat';
 import get from 'lodash/get';
 import set from 'lodash/set';
-import Contract from './contract';
+import type Contract from './contract';
 
 /**
  * @summary Get the path of a matcher in the cache
