@@ -1,4 +1,17 @@
 - commits:
+    - subject: Update Node.js to v20
+      hash: d25e8fc0d8c320c662a2f55b1de23e8f4dc4aca8
+      body: |
+        Update node from 18.20.1 to 20.12.1
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Self-hosted Renovate Bot
+      nested: []
+  version: 0.9.3
+  title: ""
+  date: 2024-04-30T20:57:37.856Z
+- commits:
     - subject: Various optimizations
       hash: 59d52335ca8d783cd7f9730df086c4d504b2d2cb
       body: ""
@@ -427,9 +440,11 @@
         - commits:
             - author: Juan Cruz Viotti
               body: >-
-                This is very similar to the cache class they use by default, with the
+                This is very similar to the cache class they use by default,
+                with the
 
-                difference that it has a limit and won't grow indefinitely, causing
+                difference that it has a limit and won't grow indefinitely,
+                causing
 
                 memory leaks on long running applications like Jellyfish.
               footers:
@@ -472,7 +487,8 @@
         - commits:
             - author: Lucian Buzzo
               body: >-
-                Only match elements with .filter() if the base schema (the schema with no
+                Only match elements with .filter() if the base schema (the
+                schema with no
 
                 anyOf branches) matches the element.
               footers:
@@ -615,11 +631,14 @@
         - commits:
             - author: Juan Cruz Viotti
               body: >-
-                This is a hack, and should be reverted once we get to the bottom of it.
+                This is a hack, and should be reverted once we get to the bottom
+                of it.
 
-                It will impact performance, but right now there are things that should
+                It will impact performance, but right now there are things that
+                should
 
-                be filtered and are not, so lets get this merged for security purposes.
+                be filtered and are not, so lets get this merged for security
+                purposes.
 
                 Hopefully this library will be re-written soon.
               footers:
@@ -689,11 +708,14 @@
         Handlebars supports very basic if condition checking, but it only checks
         for
 
-        existence of a field. There are times when we want to combine conditions in order
+        existence of a field. There are times when we want to combine conditions
+        in order
 
-        to generate something as part of a blueprint, without defining a completely separate
+        to generate something as part of a blueprint, without defining a
+        completely separate
 
-        blueprint for it (like generating network config schema if a dt has a wifi chip or
+        blueprint for it (like generating network config schema if a dt has a
+        wifi chip or
 
         a usb port to which we can connect a dongle).
       footers:
