@@ -54,7 +54,7 @@
     "@types/node": "^20.12.7",
     "@types/object-hash": "^2.1.0",
     "@types/semver": "^7.3.5",
-    "chai": "^4.2.0",
+    "chai": "^5.0.0",
     "chai-as-promised": "^7.1.1",
     "cuelang-js": "^1.1.1",
     "husky": "^4.2.5",
