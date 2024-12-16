@@ -8,7 +8,7 @@ import Debug from 'debug';
 import * as fs from 'fs';
 import path from 'path';
 import handlebars from 'handlebars';
-import asyncHelpers from 'handlebars-async-helpers';
+import promisedHandlebars from 'promised-handlebars';
 import first from 'lodash/first';
 import invokeMap from 'lodash/invokeMap';
 import join from 'lodash/join';
@@ -30,7 +30,7 @@ import Contract from './contract';
 import type { ContractObject } from './types/types';
 import { cartesianProductWith, stripExtraBlankLines } from './utils';
 
-const hb = asyncHelpers(handlebars);
+const hb = promisedHandlebars(handlebars);
 
 const debug = Debug('partials');
 
