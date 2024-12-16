@@ -32,4 +32,6 @@ const main = async () => {
 	console.log(`Built types to ${output}`);
 };
 
-main().catch((err) => console.error(err));
+main().catch((err) => {
+	console.error(err);
+});

@@ -82,7 +82,8 @@ export const setUnion = <T>(set1: Set<T>, set2: Set<T>): Set<T> => {
  * console.log(element)
  * > 'foo'
  */
-export const setFirst = <T>(set1: Set<T>): T => set1.values().next().value;
+export const setFirst = <T>(set1: Set<T>): T | undefined =>
+	set1.values().next().value;
 
 /**
  * @summary Map a set using an iteratee function

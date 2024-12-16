@@ -36,6 +36,10 @@ export const build = (contract: Contract): object => {
 	for (const type of contract.metadata.children.types) {
 		if (contract.metadata.children.byType[type].size === 1) {
 			const hash = setFirst<string>(contract.metadata.children.byType[type]);
+			if (hash === undefined) {
+				throw new Error('Error retrieving child');
+			}
+
 			const child = contract.getChildByHash(hash);
 			if (child === undefined) {
 				throw new Error('Error retrieving child');
