@@ -1,4 +1,49 @@
 - commits:
+    - subject: Switch to promised-handlebars to fix dependencies
+      hash: 19f58ae3c12d5061ae8fe07a4bdf7e7c5dfaa4b4
+      body: |
+        handlebars-async-helpers had a dependency on handlebars 4.7.6 which has
+        a vulnerability according to `npm audit`. This moves to
+        promised-handlebars, which while it's older, it has almost no
+        dependencies
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Felipe Lalanne
+      nested: []
+    - subject: Update Node support to v20 and above
+      hash: 8ed7a4fbbabac16d36a6c7ed9424b729c8d84fe3
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Felipe Lalanne
+      nested: []
+    - subject: Update typescript to v5 and fix build errors
+      hash: d6439a6932a5b07acc4764f19ec5a6a4a74cc17b
+      body: |
+        - Fixes a wrong return type on `setFirst`
+        - Fixes a void expression return
+        - Fixes a build error due to bad type inference
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Felipe Lalanne
+      nested: []
+    - subject: Fix test command to search all spec files
+      hash: 23d74c360762b1e8aaaea24988fe2340fdfbddbe
+      body: |
+        The test:node command was not properly recursing over the directories
+        under `tests` leading to some tests being skipped.
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Felipe Lalanne
+      nested: []
+  version: 0.9.5
+  title: ""
+  date: 2024-12-18T11:44:51.286Z
+- commits:
     - subject: "NPM: Use legacy peer dependencies"
       hash: bbcfa28f61a94a2c90ff948e8df7fc4862d12c68
       body: ""

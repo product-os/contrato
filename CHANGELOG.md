@@ -5,6 +5,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v0.0.6 - 2018-08-17
 
+## 0.9.5 - 2024-12-18
+
+* Switch to promised-handlebars to fix dependencies [Felipe Lalanne]
+* Update Node support to v20 and above [Felipe Lalanne]
+* Update typescript to v5 and fix build errors [Felipe Lalanne]
+* Fix test command to search all spec files [Felipe Lalanne]
+
 ## 0.9.4 - 2024-04-30
 
 * NPM: Use legacy peer dependencies [Christina Ying Wang]
