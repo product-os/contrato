@@ -12,7 +12,7 @@ export interface components {
 			type?: 'meta.blueprint';
 			layout?: components['schemas']['BlueprintLayout'];
 			skeleton?: { [key: string]: any };
-		} & { [key: string]: any };
+		};
 		BlueprintLayout: { [key: string]: any };
 		Contract: {
 			type: string;

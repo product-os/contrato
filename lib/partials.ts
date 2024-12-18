@@ -8,7 +8,7 @@ import Debug from 'debug';
 import * as fs from 'fs';
 import path from 'path';
 import handlebars from 'handlebars';
-import asyncHelpers from 'handlebars-async-helpers';
+import promisedHandlebars from 'promised-handlebars';
 import first from 'lodash/first';
 import invokeMap from 'lodash/invokeMap';
 import join from 'lodash/join';
@@ -30,7 +30,7 @@ import Contract from './contract';
 import type { ContractObject } from './types/types';
 import { cartesianProductWith, stripExtraBlankLines } from './utils';
 
-const hb = asyncHelpers(handlebars);
+const hb = promisedHandlebars(handlebars);
 
 const debug = Debug('partials');
 
@@ -39,7 +39,7 @@ const debug = Debug('partials');
  * @type {String}
  * @private
  */
-const REFERENCE_DELIMITER: string = '+';
+const REFERENCE_DELIMITER = '+';
 
 /**
  * @summary Calculate the paths to search for a partial given a contract
@@ -112,15 +112,23 @@ export const findPartial = (
 					range(options.structure.length, 1, -1),
 					(accumulator, slice) =>
 						accumulator.concat(invokeMap(products, 'slice', 0, slice)),
-					[] as string[][],
+					[] as string[],
 				);
 
-				const fallbackPaths = combinations.reduce(
+				const fallbackPaths = combinations.reduce<
+					Array<Array<string | undefined>>
+				>(
 					(accumulator, _, index, collection) =>
-						map([map(collection, first), map(collection, last)], (list) =>
-							take(list, index + 1),
+						map(
+							[
+								// For some reason typescript does not infer correctly the return
+								// type of first
+								map<string[], string | undefined>(collection, first),
+								map(collection, last),
+							],
+							(list) => take(list, index + 1),
 						).concat(accumulator),
-					[] as Array<Array<string | undefined>>,
+					[],
 				);
 
 				return (products as Array<Array<string | undefined>>)
