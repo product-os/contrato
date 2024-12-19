@@ -20,10 +20,10 @@ import range from 'lodash/range';
 import reduce from 'lodash/reduce';
 import some from 'lodash/some';
 import uniqWith from 'lodash/uniqWith';
-import { isValid } from 'skhema';
 import { bigCombination } from 'js-combinatorics';
 import { compare, satisfies, valid, validRange } from 'semver';
 
+import { isValid } from './json-schema';
 import ObjectSet from './object-set';
 import MatcherCache from './matcher-cache';
 import { hashObject } from './hash';
@@ -180,7 +180,7 @@ export default class Contract {
 	 * const contract = new Contract({ ... })
 	 * contract.interpolate()
 	 */
-	interpolate(options: object = { rehash: Boolean }): Contract {
+	interpolate(options: object = { rehash: Boolean }): this {
 		// TODO: Find a way to keep track of whether the contract
 		// has already been fully templated, and if so, avoid
 		// running this function.
@@ -384,7 +384,7 @@ export default class Contract {
 	 * const contract = new Contract({ ... })
 	 * contract.addChild(new Contract({ ... }))
 	 */
-	addChild(contract: Contract, options: object = {}): Contract {
+	addChild(contract: Contract, options: object = {}): this {
 		const type = contract.getType();
 		if (this.metadata.children.map[contract.metadata.hash]) {
 			return this;
@@ -433,7 +433,7 @@ export default class Contract {
 	 * contract.addChild(child)
 	 * contract.removeChild(child)
 	 */
-	removeChild(contract: Contract, options: object = {}): Contract {
+	removeChild(contract: Contract, options: object = {}): this {
 		defaults(options, {
 			rehash: true,
 		});
@@ -486,7 +486,7 @@ export default class Contract {
 	 *   new Contract({ ... })
 	 * ])
 	 */
-	addChildren(contracts: Contract[] = [], options: object = {}): Contract {
+	addChildren(contracts: Contract[] = [], options: object = {}): this {
 		if (!contracts) {
 			return this;
 		}
