@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## v0.0.6 - 2018-08-17
 
+## 0.10.0 - 2024-12-20
+
+* Remove skhema as dependency [Felipe Lalanne]
+
 ## 0.9.5 - 2024-12-18
 
 * Switch to promised-handlebars to fix dependencies [Felipe Lalanne]

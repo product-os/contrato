@@ -1,4 +1,24 @@
 - commits:
+    - subject: Remove skhema as dependency
+      hash: dffa41e7e81399c03b612a5205e221460b30d7b9
+      body: >
+        This moves the `isValid` method from the [skhema
+        module](https://github.com/balena-io-modules/skhema)
+
+        into an internal json-schema module since skhema is not being maintained
+
+        or used anywhere else.
+      footer:
+        Change-type: minor
+        change-type: minor
+        Depends-on: "#74"
+        depends-on: "#74"
+      author: Felipe Lalanne
+      nested: []
+  version: 0.10.0
+  title: ""
+  date: 2024-12-20T13:33:11.598Z
+- commits:
     - subject: Switch to promised-handlebars to fix dependencies
       hash: 19f58ae3c12d5061ae8fe07a4bdf7e7c5dfaa4b4
       body: |
